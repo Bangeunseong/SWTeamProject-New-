@@ -57,4 +57,5 @@ void InvalidateMap() {
 
 //UI °»½Å
 void InvalidateUI() { InvalidateLifeGauge(); InvalidateMap(); }
+
 #endif // !UI_H

@@ -60,8 +60,12 @@ void ShowEnemy() {
 }
 
 int DetectCollision_Enemy(int x, int y) {
-	for (int i = 0; i < 6; i++) {
-		if (UniBoard[y - GAMEBOARD_ORIGIN_Y][x - GAMEBOARD_ORIGIN_X + i] == 1) return 1;
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 5; j++) {
+			if (EnemyUniModel[i][j] == ENEMY) {
+				if (UniBoard[y - GAMEBOARD_ORIGIN_Y + i][x - GAMEBOARD_ORIGIN_X + j] == 1) return 1;
+			}
+		}
 	}
 	return 0;
 }

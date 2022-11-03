@@ -62,36 +62,43 @@ int DetectCollision_PlayerwithWall(int x, int y) {
 }
 int DetectCollision_PlayerwithEnemy(int x, int y) {
 	for (int i = 0; i < 6; i++) {
-		if (UniBoard[y - GAMEBOARD_ORIGIN_Y][x - GAMEBOARD_ORIGIN_X + i] == ENEMY) return 1;
+		for (int j = 0; j < 3; j++) {
+			for (int k = 0; k < 5; k++) {
+				if (EnemyUniModel[j][k] == ENEMY) { 
+					if (ENEMY_POS_Y + j == PLAYER_POS_Y && ENEMY_POS_X + k == PLAYER_POS_X + i) return 1;
+				}
+			}
+		}
 	}
 	return 0;
+}
+
+//데미지 처리함수
+void GetDamagedFromEnemy() {
+	if (DetectCollision_PlayerwithEnemy(PLAYER_POS_X, PLAYER_POS_Y)) { ReduceLifeGauge(ENEMYDAMAGE); };
 }
 
 //사용자 입력 키에 따라 위치 변환 함수
 void shiftUp() {
 	HidePlayer();
 	if (!DetectCollision_PlayerwithWall(PLAYER_POS_X, PLAYER_POS_Y - 1)) PLAYER_POS_Y--;
-	if (DetectCollision_PlayerwithEnemy(PLAYER_POS_X, PLAYER_POS_Y)) { ReduceLifeGauge(ENEMYDAMAGE); };
 	ShowPlayer();
 }
 void shiftDown() {
 	HidePlayer();
 	if (!DetectCollision_PlayerwithWall(PLAYER_POS_X, PLAYER_POS_Y + 1)) PLAYER_POS_Y++;
-	if (DetectCollision_PlayerwithEnemy(PLAYER_POS_X, PLAYER_POS_Y)) { ReduceLifeGauge(ENEMYDAMAGE); };
 	ShowPlayer();
 }
 void shiftLeft() {
 	HidePlayer();
 	if (!DetectCollision_PlayerwithWall(PLAYER_POS_X - speed, PLAYER_POS_Y)) PLAYER_POS_X -= speed;
 	else PLAYER_POS_X = GAMEBOARD_ORIGIN_X + 2;
-	if (DetectCollision_PlayerwithEnemy(PLAYER_POS_X, PLAYER_POS_Y)) { ReduceLifeGauge(ENEMYDAMAGE); };
 	ShowPlayer();
 }
 void shiftRight() {
 	HidePlayer();
 	if (!DetectCollision_PlayerwithWall(PLAYER_POS_X + speed, PLAYER_POS_Y)) PLAYER_POS_X += speed;
 	else PLAYER_POS_X = GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW - strlen(PlayerModel);
-	if (DetectCollision_PlayerwithEnemy(PLAYER_POS_X, PLAYER_POS_Y)) { ReduceLifeGauge(ENEMYDAMAGE); };
 	ShowPlayer();
 }
 
@@ -104,5 +111,6 @@ void InvalidatePlayer() {
 		if (GetAsyncKeyState(UP) & 0x8000) shiftUp();
 		if (GetAsyncKeyState(DOWN) & 0x8000) shiftDown();
 	}
+	GetDamagedFromEnemy();
 }
 #endif // !PLAYER_H
