@@ -5,7 +5,7 @@
 #include "CursorFunctions.h"
 #include "BackGround.h"
 #include "Enemy.h"
-#include "UI.h"
+#include "UIandInfo.h"
 #ifndef PLAYER_H
 #define PLAYER_H
 
@@ -20,11 +20,8 @@
 int PLAYER_POS_X = GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW / 2 - 3;
 int PLAYER_POS_Y = GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN - 8;
 
-//플레이어 속도 및 라이프 게이지
-int speed = 2;
-
 //플레이어 우주선
-char PlayerModel[6] = { '>','-','A','A','-','<' };
+char PlayerModel[6];
 char PlayerUniModel[6] = { 4,4,4,4,4,4 };
 
 //플레이어 유니보드 위치 갱신 함수

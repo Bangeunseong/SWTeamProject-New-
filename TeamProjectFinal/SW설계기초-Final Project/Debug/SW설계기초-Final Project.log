@@ -1,3 +1,6 @@
 ﻿  main.c
 c:\users\bange\onedrive\바탕 화면\documents\github\swteamproject-new-\teamprojectfinal\sw설계기초-final project\enemy.h : warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+c:\users\bange\onedrive\바탕 화면\documents\github\swteamproject-new-\teamprojectfinal\sw설계기초-final project\characterselectionmenu.h(90): warning C4047: '=': 'DWORD'의 간접 참조 수준이 'HANDLE'과(와) 다릅니다.
+c:\users\bange\onedrive\바탕 화면\documents\github\swteamproject-new-\teamprojectfinal\sw설계기초-final project\characterselectionmenu.h(91): warning C4022: 'GetConsoleMode': 실제 매개 변수 1의 포인터가 일치하지 않습니다.
+c:\users\bange\onedrive\바탕 화면\documents\github\swteamproject-new-\teamprojectfinal\sw설계기초-final project\characterselectionmenu.h(92): warning C4022: 'SetConsoleMode': 실제 매개 변수 1의 포인터가 일치하지 않습니다.
   SW설계기초-Final Project.vcxproj -> C:\Users\bange\OneDrive\바탕 화면\Documents\GitHub\SWTeamProject-New-\TeamProjectFinal\Debug\SW설계기초-Final Project.exe
