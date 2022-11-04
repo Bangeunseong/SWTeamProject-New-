@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "UIandInfo.h"
+#include "Timer.h"
 int main() {
 	ResizeConsole();
 	RemoveCursor();
@@ -14,6 +15,7 @@ int main() {
 	ShowCharacterSelectionMenu();
 	ShowBackGround();
 	InitializeLifeGauge();
+	TimeCheckerStart();
 	while (1) { InvalidateUI(); InvalidateEnemy(); InvalidatePlayer(); Sleep(20); }
 	return 0;
 }

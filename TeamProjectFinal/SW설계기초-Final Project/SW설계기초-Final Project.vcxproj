@@ -133,6 +133,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="ResizeConsole.h" />
     <ClInclude Include="StartMenu.h" />
+    <ClInclude Include="Timer.h" />
     <ClInclude Include="UIandInfo.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -5,9 +5,12 @@
 #include <time.h>
 #include "BackGround.h"
 #include "Player.h"
+#include "Timer.h"
 #ifndef UI_H
 #define UI_H
 
+
+//-----------------다양한 변수들-----------------
 //Modified 함수
 int Strlen(const char *src) {
 	int cnt = 0;
@@ -16,14 +19,16 @@ int Strlen(const char *src) {
 }
 
 //플레이어의 위치, 라이프 게이지, 속도, 스킬명
-int SelectedLife = 5; int CurrentLife; int *LifeGauge; int PlayerPos = 0; int speed = 2; int CurrentSkill = 1, SubSkill = 3;
-char Skillstr[] = { "Skill-" }; char SubSkillstr[] = { "SubSkill-" };
+int SelectedLife = 5; int CurrentLife; int *LifeGauge; int PlayerPos = 0; int speed = 2; int CurrentSkill = 0, SubSkill = 0;
+char Skillstr[] = { "Skill1 -" }; char SubSkillstr[] = { "Skill2 -" };
 char SkillSets[][101] = { "NONE-", "DASH-","SLOW-", "INVINSIBLE-" };
 
 //초기 X, Y좌표
 int modifiedX_Text = BACKGROUND_ORIGIN_X + 18;
 int modifiedY_Text = BACKGROUND_ORIGIN_Y + 1;
+//----------------------------------------------------
 
+//---------------라이프 게이지 관련 함수----------------
 //라이프 게이지 동적할당
 void InitializeLifeGauge() { 
 	LifeGauge = (int *)malloc(sizeof(int)*SelectedLife); for (int i = 0; i < SelectedLife; i++) LifeGauge[i] = 1;
@@ -53,6 +58,20 @@ void InvalidateLifeGauge() {
 	}
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
 }
+//----------------------------------------------------------
+
+//-----------------맵 관련 함수----------------------
+//맵 내 캐릭터 위치 커서 숨기는 함수
+void HidePlayerPosCursor(int x, int y) {
+	SetCurrentCursorPos(x, y);
+	printf("  ");
+}
+
+//맵 내 캐릭터 위치 커서 나타내는 함수
+void ShowPlayerPosCursor(int x, int y) {
+	SetCurrentCursorPos(x, y);
+	printf("↑");
+}
 
 //맵 내 캐릭터 위치 갱신
 void InvalidateMap() {
@@ -64,12 +83,18 @@ void InvalidateMap() {
 		else if (i == 18) printf("┤");
 		else if (i % 6 == 0) printf("┼");
 		else printf("┬");
-		SetCurrentCursorPos(modifiedX + 2 * PlayerPos, modifiedY + 1);
-		printf("↑");
+
+		ShowPlayerPosCursor(modifiedX + second - 1, modifiedY + 1);
+		if (DetectTimeFromTimeChecker()) { 
+			HidePlayerPosCursor(modifiedX + second - 1, modifiedY + 1);
+			second++; PlayerPos++;
+		}
 	}
 	SetCurrentCursorPos(GAMEBOARD_ORIGIN_X, GAMEBOARD_ORIGIN_Y);
 }
+//-----------------------------------------------------
 
+//--------------스킬 관련 함수-----------------
 //스킬 사용 시 스킬 갱신
 int InvalidateCurrentSkill() {
 	if (SubSkill == 0) return 0;
@@ -109,8 +134,9 @@ void InvalidateSkillUI() {
 	if (InvalidateCurrentSkill())
 		HidePreviousCurrentNSubSkill();
 }
+//---------------------------------------------------
 
 //UI 갱신
-void InvalidateUI() { InvalidateSkillUI(); InvalidateLifeGauge(); InvalidateMap(); }
+void InvalidateUI() { InvalidateMap(); InvalidateLifeGauge(); InvalidateSkillUI(); }
 
 #endif // !UI_H

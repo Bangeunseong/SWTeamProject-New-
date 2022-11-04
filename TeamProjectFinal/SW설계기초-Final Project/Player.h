@@ -15,6 +15,8 @@
 #define UP VK_UP
 #define DOWN VK_DOWN
 #define PLAYER 4
+#define PLAYERCOLOR 3
+#define PLAYERINVINSIBLEINDICATECOLOR 6
 
 //플레이어 시작 위치
 int PLAYER_POS_X = GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW / 2 - 3;
@@ -23,6 +25,9 @@ int PLAYER_POS_Y = GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN - 8;
 //플레이어 우주선
 char PlayerModel[6];
 char PlayerUniModel[6] = { 4,4,4,4,4,4 };
+
+//플레이어 무적상태 및 무적상태 지속시간, 총알 및 적 우주선과 충돌한 시간
+int Invinsible = 0; int InvinsibleTime = 1; double CollisionTime = 0;
 
 //플레이어 유니보드 위치 갱신 함수
 void ErasePlayer() {
@@ -40,8 +45,11 @@ void InsertPlayer() {
 void ShowPlayer() {
 	COORD ptr = { PLAYER_POS_X, PLAYER_POS_Y };
 	InsertPlayer();
+	if (Invinsible) SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), PLAYERINVINSIBLEINDICATECOLOR);
+	else SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), PLAYERCOLOR);
 	for (int i = 0; i < 6; i++) { SetCurrentCursorPos(ptr.X + i, ptr.Y); printf("%c", PlayerModel[i]); }
 	SetCurrentCursorPos(ptr.X, ptr.Y);
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
 }
 void HidePlayer() {
 	COORD ptr = { PLAYER_POS_X, PLAYER_POS_Y };
@@ -72,7 +80,11 @@ int DetectCollision_PlayerwithEnemy(int x, int y) {
 
 //데미지 처리함수
 void GetDamagedFromEnemy() {
-	if (DetectCollision_PlayerwithEnemy(PLAYER_POS_X, PLAYER_POS_Y)) { ReduceLifeGauge(ENEMYDAMAGE); };
+	if (Invinsible == 1) { if (TimeCheckerEnd() - CollisionTime > InvinsibleTime) Invinsible = 0; }
+	if (DetectCollision_PlayerwithEnemy(PLAYER_POS_X, PLAYER_POS_Y) && Invinsible == 0) { 
+		ReduceLifeGauge(ENEMYDAMAGE); 
+		Invinsible = 1; CollisionTime = TimeCheckerEnd();		//무적상태로 만들고 충돌한 시간 갱신
+	}
 }
 
 //사용자 입력 키에 따라 위치 변환 함수
