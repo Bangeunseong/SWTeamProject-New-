@@ -10,10 +10,10 @@
 #define PLAYER_H
 
 //사용자 입력 키 아스키 코드
-#define LEFT 0x41
-#define RIGHT 0x44
-#define UP 0x57
-#define DOWN 0x53
+#define LEFT VK_LEFT
+#define RIGHT VK_RIGHT
+#define UP VK_UP
+#define DOWN VK_DOWN
 #define PLAYER 4
 
 //플레이어 시작 위치

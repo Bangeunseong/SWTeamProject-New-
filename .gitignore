@@ -1,2 +1,5 @@
 
 TeamProjectFinal/.vs/SW설계기초-Final Project/v15/Browse.VC.opendb
+*.db
+TeamProjectFinal/.vs/SW설계기초-Final Project/v15/.suo
+*.ipch

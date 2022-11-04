@@ -87,7 +87,7 @@ void HideCharacterBox() {
 
 void ShowCharacterSelectionMenu() {
 	//system 함수를 쓴 이후엔 INPUT 핸들 다시 재활성화
-	CIN = GetStdHandle(STD_INPUT_HANDLE);
+	HANDLE CIN = GetStdHandle(STD_INPUT_HANDLE);
 	GetConsoleMode(CIN, &mode);
 	SetConsoleMode(CIN, mode | ENABLE_MOUSE_INPUT);
 
