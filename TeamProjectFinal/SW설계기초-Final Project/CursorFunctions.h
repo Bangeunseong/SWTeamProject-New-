@@ -23,7 +23,7 @@ COORD GetCurrentCursorPos() {
 void RemoveCursor() {
 	CONSOLE_CURSOR_INFO cursorInfo;
 	GetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursorInfo);
-	cursorInfo.bVisible = FALSE;
+	cursorInfo.bVisible = 0;
 	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursorInfo);
 }
 #endif // !CURSORFUNCTION_H

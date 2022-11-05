@@ -10,19 +10,21 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-//플레이어 유니보드 위치 갱신 함수
+//플레이어 유니보드 위치 소거 함수
 void ErasePlayer() {
 	for (int i = 0; i < 6; i++) {
 		UniBoard[PLAYER_POS_Y - GAMEBOARD_ORIGIN_Y][PLAYER_POS_X - GAMEBOARD_ORIGIN_X + i] = 0;
 	}
 }
+
+//플레이어 유니보드 위치 추가 함수
 void InsertPlayer() {
 	for (int i = 0; i < 6; i++) {
 		UniBoard[PLAYER_POS_Y - GAMEBOARD_ORIGIN_Y][PLAYER_POS_X - GAMEBOARD_ORIGIN_X + i] = PLAYER;
 	}
 }
 
-//플레이어 출력 및 삭제 함수
+//플레이어 출력 함수
 void ShowPlayer() {
 	COORD ptr = { PLAYER_POS_X, PLAYER_POS_Y };
 	InsertPlayer();
@@ -33,6 +35,7 @@ void ShowPlayer() {
 	SetCurrentCursorPos(ptr.X, ptr.Y);
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
 }
+//플레이어 숨김 함수
 void HidePlayer() {
 	COORD ptr = { PLAYER_POS_X, PLAYER_POS_Y };
 	ErasePlayer();
@@ -41,13 +44,15 @@ void HidePlayer() {
 }
 
 //---------------------데미지 및 라이프 게이지 관련 처리 함수--------------------------
-//플레이어 기준 충돌 함수
+
+//플레이어 기준 벽과 부딫혔을 때 사용하는 함수
 int DetectCollision_PlayerwithWall(int x, int y) {
 	for (int i = 0; i < 6; i++) {
 		if (UniBoard[y - GAMEBOARD_ORIGIN_Y][x - GAMEBOARD_ORIGIN_X + i] == 1) return 1;
 	}
 	return 0;
 }
+//플레이어 기준 적과 부딫혔을 때 사용하는 함수
 int DetectCollision_PlayerwithEnemy(int x, int y) {
 	for (int i = 0; i < 6; i++) {
 		for (int j = 0; j < 3; j++) {
@@ -79,6 +84,7 @@ void GetDamagedFromEnemy() {
 
 //--------------------------사용자 입력 키에 따른 위치 변환 및 스킬 사용 함수------------------------------
 //사용자 입력 키에 따라 위치 변환 함수
+
 void shiftUp() {
 	HidePlayer();
 	if (!DetectCollision_PlayerwithWall(PLAYER_POS_X, PLAYER_POS_Y - 1)) PLAYER_POS_Y--;
@@ -102,13 +108,15 @@ void shiftRight() {
 	ShowPlayer();
 }
 
-//스킬 발동 및 해제 함수
+//스킬 발동 함수
 void ActivateSkill() { 
 	if (!CurrentSkill) return;
 	if (UsingSkill != 0) return;
 	UsingSkill = CurrentSkill; CurrentSkill = 0; 
 	SkillActivationTime = TimeCheckerEnd();
 }
+
+//스킬 해제 함수
 void DeactivateSkill() { UsingSkill = 0; }
 
 //스킬 지속시간 체크 함수
@@ -117,7 +125,8 @@ void SkillTimeCheck() {
 	if (TimeCheckerEnd() - SkillActivationTime > SkillTime) DeactivateSkill();
 }
 //------------------------------------------------------------------------------------------------------------------
-//플레이어 갱신 함수
+
+//-------------------------------------플레이어 갱신 함수-------------------------------------------------------
 void InvalidatePlayer() {
 	ShowPlayer();
 	if (kbhit()) {
@@ -130,4 +139,5 @@ void InvalidatePlayer() {
 	SkillTimeCheck();
 	GetDamagedFromEnemy();
 }
+//--------------------------------------------------------------------------------------------------------------------
 #endif // !PLAYER_H
