@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include "CursorFunctions.h"
 #include "Player.h"
-#include "UIandInfo.h"
+#include "PlayerInfo.h"
 #ifndef CHARACTERSELECTION_H
 #define CHARACTERSELECTION_H
 
@@ -11,13 +11,14 @@
 #define CHARACTERBOX_ROW 28
 #define CHARACTERBOX_COLUMN 20
 #define CHARACTERBOX_ORIGIN_X 6
-#define CHARACTERBOX_ORIGIN_Y 4
+#define CHARACTERBOX_ORIGIN_Y 12
 
 INPUT_RECORD rec;
 DWORD dwNOER;
 DWORD CIN;
 DWORD mode;
 
+//캐릭터 선택 박스 만드는 함수
 void CreateSelectionBox(int x, int y) {
 	COORD ptr = { x,y };
 	for (int i = 0; i <= CHARACTERBOX_COLUMN; i++) {
@@ -56,35 +57,43 @@ void click(int *xx, int *yy) {
 		}
 	}
 }
+
+//캐릭터 선택 박스 출력 함수
 void ShowCharacterBox() {
+	//Print Text
+	SetCurrentCursorPos(CHARACTERBOX_ORIGIN_X + CHARACTERBOX_ROW * 2 - CHARACTERBOX_ROW / 2 - 17, CHARACTERBOX_ORIGIN_Y - 5);
+	printf("------------SELECT YOUR CHARACTER------------");
+
 	//Character Box Number 1
 	CreateSelectionBox(CHARACTERBOX_ORIGIN_X, CHARACTERBOX_ORIGIN_Y);
 	SetCurrentCursorPos(CHARACTERBOX_ORIGIN_X + CHARACTERBOX_ROW / 2 - 2, CHARACTERBOX_ORIGIN_Y + CHARACTERBOX_COLUMN / 2);
 	printf("<OAAO>");
-	SetCurrentCursorPos(CHARACTERBOX_ORIGIN_X + CHARACTERBOX_ROW / 2 - 12, CHARACTERBOX_ORIGIN_Y + CHARACTERBOX_COLUMN + 2);
-	printf("내구도 : 7    이동속도 : 1");
+	SetCurrentCursorPos(CHARACTERBOX_ORIGIN_X + CHARACTERBOX_ROW / 2 - 10, CHARACTERBOX_ORIGIN_Y + CHARACTERBOX_COLUMN + 2);
+	printf("Health : 7   Speed : 1");
 
 	//Character Box Number 2
 	CreateSelectionBox(CHARACTERBOX_ORIGIN_X + CHARACTERBOX_ROW + 5, CHARACTERBOX_ORIGIN_Y);
 	SetCurrentCursorPos(CHARACTERBOX_ORIGIN_X + CHARACTERBOX_ROW * 2 - CHARACTERBOX_ROW / 2 + 3, CHARACTERBOX_ORIGIN_Y + CHARACTERBOX_COLUMN / 2);
 	printf("<-AA->");
-	SetCurrentCursorPos(CHARACTERBOX_ORIGIN_X + CHARACTERBOX_ROW * 2 - CHARACTERBOX_ROW / 2 - 7, CHARACTERBOX_ORIGIN_Y + CHARACTERBOX_COLUMN + 2);
-	printf("내구도 : 5    이동속도 : 2");
+	SetCurrentCursorPos(CHARACTERBOX_ORIGIN_X + CHARACTERBOX_ROW * 2 - CHARACTERBOX_ROW / 2 - 5, CHARACTERBOX_ORIGIN_Y + CHARACTERBOX_COLUMN + 2);
+	printf("Health : 5   Speed : 2");
 
 	//Character Box Number 3
 	CreateSelectionBox(CHARACTERBOX_ORIGIN_X + CHARACTERBOX_ROW * 2 + 10, CHARACTERBOX_ORIGIN_Y);
 	SetCurrentCursorPos(CHARACTERBOX_ORIGIN_X + CHARACTERBOX_ROW * 3 - CHARACTERBOX_ROW / 2 + 8, CHARACTERBOX_ORIGIN_Y + CHARACTERBOX_COLUMN / 2);
 	printf("<-[]->");
-	SetCurrentCursorPos(CHARACTERBOX_ORIGIN_X + CHARACTERBOX_ROW * 3 - CHARACTERBOX_ROW / 2 - 2, CHARACTERBOX_ORIGIN_Y + CHARACTERBOX_COLUMN + 2);
-	printf("내구도 : 3    이동속도 : 3");
+	SetCurrentCursorPos(CHARACTERBOX_ORIGIN_X + CHARACTERBOX_ROW * 3 - CHARACTERBOX_ROW / 2, CHARACTERBOX_ORIGIN_Y + CHARACTERBOX_COLUMN + 2);
+	printf("Health : 3   Speed : 3");
 }
 
+//캐릭터 박스 숨기는 함수
 void HideCharacterBox() {
 	COORD ptr = { 0,0 };
 	DWORD dw;
 	FillConsoleOutputCharacter(GetStdHandle(STD_OUTPUT_HANDLE), ' ', 108 * 45, ptr, &dw);
 }
 
+//캐릭터 선택 화면 출력 함수
 void ShowCharacterSelectionMenu() {
 	//system 함수를 쓴 이후엔 INPUT 핸들 다시 재활성화
 	HANDLE CIN = GetStdHandle(STD_INPUT_HANDLE);

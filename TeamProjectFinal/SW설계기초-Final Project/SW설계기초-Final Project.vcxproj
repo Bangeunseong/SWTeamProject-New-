@@ -130,11 +130,13 @@
     <ClInclude Include="CharacterSelectionMenu.h" />
     <ClInclude Include="CursorFunctions.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyInfo.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerInfo.h" />
     <ClInclude Include="ResizeConsole.h" />
     <ClInclude Include="StartMenu.h" />
     <ClInclude Include="Timer.h" />
-    <ClInclude Include="UIandInfo.h" />
+    <ClInclude Include="UI.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

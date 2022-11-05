@@ -14,10 +14,6 @@
 #define GAMEBOARD_ORIGIN_X 8
 #define GAMEBOARD_ORIGIN_Y 4
 
-//사용자 입력키 아스키 코드
-#define SPACE 32
-#define QUIT 120
-
 //게임화면의 이산 모델
 int UniBoard[GAMEBOARD_COLUMN + 1][GAMEBOARD_ROW + 2];
 

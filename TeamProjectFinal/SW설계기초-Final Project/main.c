@@ -5,7 +5,7 @@
 #include "CharacterSelectionMenu.h"
 #include "Player.h"
 #include "Enemy.h"
-#include "UIandInfo.h"
+#include "UI.h"
 #include "Timer.h"
 int main() {
 	ResizeConsole();
