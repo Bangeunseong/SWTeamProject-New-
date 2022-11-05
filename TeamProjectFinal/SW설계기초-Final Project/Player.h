@@ -126,7 +126,6 @@ void InvalidatePlayer() {
 		if (GetAsyncKeyState(UP) & 0x8000) shiftUp();
 		if (GetAsyncKeyState(DOWN) & 0x8000) shiftDown();
 		if (GetAsyncKeyState(SPACE) & 0x8000) ActivateSkill();
-		else if (GetAsyncKeyState(SPACE) & 0x8001);
 	}
 	SkillTimeCheck();
 	GetDamagedFromEnemy();
