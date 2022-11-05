@@ -6,6 +6,9 @@
 #ifndef STARTMENU_H
 #define STARTMENU_H
 
+#define SPACE 32
+#define QUIT 120
+
 //인트로 화면 출력
 void ShowIntro() {
 	COORD center = { BACKGROUND_ORIGIN_X + BACKGROUND_ROW / 2, BACKGROUND_ORIGIN_Y + BACKGROUND_COLUMN / 2 };

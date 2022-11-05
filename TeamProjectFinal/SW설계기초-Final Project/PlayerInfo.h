@@ -14,7 +14,7 @@
 //플레이어 고유 번호 및 색깔, 무적일 때 색깔
 #define PLAYER 4
 #define PLAYERCOLOR 3
-#define PLAYERUSINGSKILLCOLOR 7
+#define PLAYERUSINGSKILLCOLOR 13
 #define PLAYERINVINSIBLEINDICATECOLOR 6
 
 //플레이어 시작 위치
@@ -38,7 +38,7 @@ int PlayerPos = 0;
 int speed = 2;
 
 //플레이어의 주 스킬, 보조 스킬, 사용 중인 스킬
-int CurrentSkill = 0, SubSkill = 0, UsingSkill = 0, SkillTime = 3; double SkillActivationTime = 0;
+int CurrentSkill = 1, SubSkill = 2, UsingSkill = 0, SkillTime = 3; double SkillActivationTime = 0;
 
 //플레이어의 스킬 셋 string
 char Skillstr[] = { "Skill1 -" }; char SubSkillstr[] = { "Skill2 -" };
