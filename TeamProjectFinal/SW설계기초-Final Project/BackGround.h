@@ -1,8 +1,9 @@
 #pragma once
-#ifndef BACKGROUND_H
-#define BACKGROUND_H
 #include <stdio.h>
 #include <Windows.h>
+#include "Timer.h"
+#ifndef BACKGROUND_H
+#define BACKGROUND_H
 
 //게임영역 정의
 #define BACKGROUND_ROW 90
@@ -13,6 +14,23 @@
 #define GAMEBOARD_COLUMN 40
 #define GAMEBOARD_ORIGIN_X 8
 #define GAMEBOARD_ORIGIN_Y 4
+
+//타임 버퍼 지속시간
+#define TIMEBUFFER 0.02
+
+//게임 시간 버퍼 시작시간
+double GameTimeBuffer = 0;
+
+//게임 버퍼 시간 계산 함수
+int CalculateTimeBuffer() {
+	if (TimeCheckerEnd() - GameTimeBuffer > TIMEBUFFER) { GameTimeBuffer += TIMEBUFFER; return 0; }
+	else return 1;
+}
+
+//게임 타임 버퍼 함수
+void RunGameAfterTimeBuffer() {
+	while (CalculateTimeBuffer());
+}
 
 //게임화면의 이산 모델
 int UniBoard[GAMEBOARD_COLUMN + 1][GAMEBOARD_ROW + 2];

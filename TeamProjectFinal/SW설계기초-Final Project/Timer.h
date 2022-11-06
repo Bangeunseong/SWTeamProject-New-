@@ -1,11 +1,10 @@
 #pragma once
 #pragma warning(disable:4996)
-#ifndef TIMER_H
-#define TIMER_H
-
 #include <time.h>
 #include <Windows.h>
 #include <stdbool.h>
+#ifndef TIMER_H
+#define TIMER_H
 
 LARGE_INTEGER ticksPerSec;
 LARGE_INTEGER start, end, diff;
