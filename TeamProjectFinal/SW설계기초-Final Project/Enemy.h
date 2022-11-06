@@ -24,26 +24,24 @@ void InsertEnemy() {
 
 //적 출력 및 삭제 함수
 void HideEnemy() {
-	COORD ptr = { ENEMY_POS_X,ENEMY_POS_Y };
 	EraseEnemy();
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 5; j++) {
-			SetCurrentCursorPos(ptr.X + j, ptr.Y + i);
+			SetCurrentCursorPos(ENEMY_POS_X + j, ENEMY_POS_Y + i);
 			if (EnemyModel[i][j] != ' ') printf(" ");
 		}
 	}
-	SetCurrentCursorPos(ptr.X, ptr.Y);
+	SetCurrentCursorPos(ENEMY_POS_X, ENEMY_POS_Y);
 }
 void ShowEnemy() {
-	COORD ptr = { ENEMY_POS_X,ENEMY_POS_Y };
 	InsertEnemy();
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 5; j++) {
-			SetCurrentCursorPos(ptr.X + j, ptr.Y + i);
+			SetCurrentCursorPos(ENEMY_POS_X + j, ENEMY_POS_Y + i);
 			if (EnemyModel[i][j] != ' ') printf("%c", EnemyModel[i][j]);
 		}
 	}
-	SetCurrentCursorPos(ptr.X, ptr.Y);
+	SetCurrentCursorPos(ENEMY_POS_X, ENEMY_POS_Y);
 }
 
 int DetectCollision_Enemy(int x, int y) {

@@ -20,8 +20,8 @@ int Strlen(const char *src) {
 }
 
 //초기 X, Y좌표
-int modifiedX_Text = BACKGROUND_ORIGIN_X + 18;
-int modifiedY_Text = BACKGROUND_ORIGIN_Y + 1;
+int modifiedX_Text = BACKGROUND_ORIGIN_X + 2;
+int modifiedY_Text = BACKGROUND_ORIGIN_Y + 2;
 //----------------------------------------------------
 
 //---------------라이프 게이지 관련 함수----------------
@@ -34,6 +34,7 @@ void InitializeLifeGauge() {
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
 	for (int i = 0; i < SelectedLife; i++) { SetCurrentCursorPos(modifiedX + i * 2, modifiedY); if (LifeGauge[i] == 1) printf("♥"); }
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
+	SetCurrentCursorPos(ptr.X, ptr.Y);
 }
 
 //라이프 게이지 UI 갱신
@@ -47,6 +48,7 @@ void InvalidateLifeGauge() {
 		else { SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7); printf("♥"); }
 	}
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
+	SetCurrentCursorPos(ptr.X, ptr.Y);
 }
 //----------------------------------------------------------
 
@@ -127,6 +129,6 @@ void InvalidateSkillUI() {
 //---------------------------------------------------
 
 //UI 갱신
-void InvalidateUI() { InvalidateMap(); InvalidateLifeGauge(); InvalidateSkillUI(); }
+void InvalidateUI() { InvalidateMap(); InvalidateSkillUI(); }
 
 #endif // !UI_H

@@ -16,6 +16,6 @@ int main() {
 	ShowBackGround();
 	InitializeLifeGauge();
 	TimeCheckerStart();
-	while (1) { InvalidateUI(); InvalidateEnemy(); InvalidatePlayer(); Sleep(20); }
+	while (1) { InvalidateUI(); InvalidateEnemy(); InvalidatePlayer(); Sleep(25); }
 	return 0;
 }

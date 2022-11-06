@@ -7,6 +7,7 @@
 #include "Enemy.h"
 #include "PlayerInfo.h"
 #include "Timer.h"
+#include "UI.h"
 #ifndef PLAYER_H
 #define PLAYER_H
 
@@ -26,21 +27,19 @@ void InsertPlayer() {
 
 //플레이어 출력 함수
 void ShowPlayer() {
-	COORD ptr = { PLAYER_POS_X, PLAYER_POS_Y };
 	InsertPlayer();
 	if (Invinsible) SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), PLAYERINVINSIBLEINDICATECOLOR);
 	else if (UsingSkill > 0) SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), PLAYERUSINGSKILLCOLOR);
 	else SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), PLAYERCOLOR);
-	for (int i = 0; i < 6; i++) { SetCurrentCursorPos(ptr.X + i, ptr.Y); printf("%c", PlayerModel[i]); }
-	SetCurrentCursorPos(ptr.X, ptr.Y);
+	for (int i = 0; i < 6; i++) { SetCurrentCursorPos(PLAYER_POS_X + i, PLAYER_POS_Y); printf("%c", PlayerModel[i]); }
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
+	SetCurrentCursorPos(PLAYER_POS_X, PLAYER_POS_Y);
 }
 //플레이어 숨김 함수
 void HidePlayer() {
-	COORD ptr = { PLAYER_POS_X, PLAYER_POS_Y };
 	ErasePlayer();
-	for (int i = 0; i < 6; i++) { SetCurrentCursorPos(ptr.X + i, ptr.Y); printf(" "); }
-	SetCurrentCursorPos(ptr.X, ptr.Y);
+	for (int i = 0; i < 6; i++) { SetCurrentCursorPos(PLAYER_POS_X + i, PLAYER_POS_Y); printf(" "); }
+	SetCurrentCursorPos(PLAYER_POS_X, PLAYER_POS_Y);
 }
 
 //---------------------데미지 및 라이프 게이지 관련 처리 함수--------------------------
@@ -76,7 +75,8 @@ void ReduceLifeGauge(int damage) {
 void GetDamagedFromEnemy() {
 	if (Invinsible == 1) { if (TimeCheckerEnd() - CollisionTime > InvinsibleTime) Invinsible = 0; }
 	if (DetectCollision_PlayerwithEnemy(PLAYER_POS_X, PLAYER_POS_Y) && Invinsible == 0) { 
-		ReduceLifeGauge(ENEMYDAMAGE); 
+		ReduceLifeGauge(ENEMYDAMAGE);
+		InvalidateLifeGauge();												//라이프 게이지 갱신은 데미지를 받을 때만 수행
 		Invinsible = 1; CollisionTime = TimeCheckerEnd();		//무적상태로 만들고 충돌한 시간 갱신
 	}
 }
@@ -97,14 +97,14 @@ void shiftDown() {
 }
 void shiftLeft() {
 	HidePlayer();
-	if (!DetectCollision_PlayerwithWall(PLAYER_POS_X - speed, PLAYER_POS_Y)) PLAYER_POS_X -= speed;
+	if (!DetectCollision_PlayerwithWall(PLAYER_POS_X - speed, PLAYER_POS_Y)) PLAYER_POS_X  = PLAYER_POS_X - speed;
 	else PLAYER_POS_X = GAMEBOARD_ORIGIN_X + 2;
 	ShowPlayer();
 }
 void shiftRight() {
 	HidePlayer();
-	if (!DetectCollision_PlayerwithWall(PLAYER_POS_X + speed, PLAYER_POS_Y)) PLAYER_POS_X += speed;
-	else PLAYER_POS_X = GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW - strlen(PlayerModel);
+	if (!DetectCollision_PlayerwithWall(PLAYER_POS_X + speed, PLAYER_POS_Y)) PLAYER_POS_X = PLAYER_POS_X + speed;
+	else PLAYER_POS_X = GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW - 6;
 	ShowPlayer();
 }
 

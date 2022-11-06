@@ -35,7 +35,7 @@ int SelectedLife = 5; int CurrentLife; int *LifeGauge;
 int PlayerPos = 0;
 
 //플레이어의 속도
-int speed = 2;
+int speed;
 
 //플레이어의 주 스킬, 보조 스킬, 사용 중인 스킬
 int CurrentSkill = 1, SubSkill = 2, UsingSkill = 0, SkillTime = 3; double SkillActivationTime = 0;
