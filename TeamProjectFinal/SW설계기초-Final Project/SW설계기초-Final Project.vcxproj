@@ -131,6 +131,7 @@
     <ClInclude Include="CursorFunctions.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyInfo.h" />
+    <ClInclude Include="GameFile.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerInfo.h" />
     <ClInclude Include="ResizeConsole.h" />

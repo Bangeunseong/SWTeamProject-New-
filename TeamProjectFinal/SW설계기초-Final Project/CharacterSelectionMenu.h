@@ -1,6 +1,7 @@
 #pragma once
 #include <Windows.h>
 #include <stdio.h>
+#include "ResizeConsole.h"
 #include "CursorFunctions.h"
 #include "Player.h"
 #include "PlayerInfo.h"
@@ -41,7 +42,7 @@ void CreateSelectionBox(int x, int y) {
 }
 
 //마우스 클릭 이벤트 받는 함수
-void click(int *xx, int *yy) {
+void CharacterBoxClick(int *xx, int *yy) {
 	while (1)
 	{
 		ReadConsoleInput(GetStdHandle(STD_INPUT_HANDLE), &rec, 1, &dwNOER); // 콘솔창 입력을 받아들임.
@@ -90,15 +91,11 @@ void ShowCharacterBox() {
 void HideCharacterBox() {
 	COORD ptr = { 0,0 };
 	DWORD dw;
-	FillConsoleOutputCharacter(GetStdHandle(STD_OUTPUT_HANDLE), ' ', 108 * 45, ptr, &dw);
+	FillConsoleOutputCharacter(GetStdHandle(STD_OUTPUT_HANDLE), ' ', CONSOLE_ROW * CONSOLE_COLUMN, ptr, &dw);
 }
 
 //캐릭터 선택 화면 출력 함수
 void ShowCharacterSelectionMenu() {
-	//system 함수를 쓴 이후엔 INPUT 핸들 다시 재활성화
-	HANDLE CIN = GetStdHandle(STD_INPUT_HANDLE);
-	GetConsoleMode(CIN, &mode);
-	SetConsoleMode(CIN, mode | ENABLE_MOUSE_INPUT);
 
 	//캐릭터 선택 창 띄우기
 	ShowCharacterBox();
@@ -107,7 +104,7 @@ void ShowCharacterSelectionMenu() {
 	SetConsoleMode(GetStdHandle(STD_OUTPUT_HANDLE), ENABLE_PROCESSED_INPUT | ENABLE_MOUSE_INPUT);
 	int xx, yy;
 	while (1) {
-		click(&xx, &yy);
+		CharacterBoxClick(&xx, &yy);
 		if (yy >= CHARACTERBOX_ORIGIN_Y && yy <= CHARACTERBOX_ORIGIN_Y + CHARACTERBOX_COLUMN) {
 			if (xx >= CHARACTERBOX_ORIGIN_X && xx <= CHARACTERBOX_ORIGIN_X + CHARACTERBOX_ROW) {
 				SelectedLife = 7; speed = 1; memcpy(PlayerModel, "<OAAO>", sizeof(char) * 6); break;

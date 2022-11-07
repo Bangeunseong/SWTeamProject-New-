@@ -16,7 +16,7 @@
 #define GAMEBOARD_ORIGIN_Y 4
 
 //타임 버퍼 지속시간
-#define TIMEBUFFER 0.02
+#define TIMEBUFFER 0.025
 
 //게임 시간 버퍼 시작시간
 double GameTimeBuffer = 0;
