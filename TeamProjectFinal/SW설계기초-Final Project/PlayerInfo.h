@@ -17,6 +17,12 @@
 #define PLAYERUSINGSKILLCOLOR 13
 #define PLAYERINVINSIBLEINDICATECOLOR 6
 
+//플레이어 인풋타임 버퍼시간
+double PLAYERTIMEBUFFER = 0.045;
+
+//플레이어 인풋타임 시작시간
+double PlayerInputTime = 0;
+
 //플레이어 시작 위치
 int PLAYER_POS_X = GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW / 2 - 3;
 int PLAYER_POS_Y = GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN - 8;
@@ -35,10 +41,10 @@ int SelectedLife = 5; int CurrentLife; int *LifeGauge;
 int PlayerPos = 0;
 
 //플레이어의 속도
-int speed;
+int SelectedSpeed, CurSpeed;
 
 //플레이어의 주 스킬, 보조 스킬, 사용 중인 스킬
-int CurrentSkill = 0, SubSkill = 0, UsingSkill = 0, SkillTime = 3; double SkillActivationTime = 0;
+int CurSkill = 1, SubSkill = 2, UsingSkill = 0, SkillTime = 3; double SkillActivationTime = 0;
 
 //플레이어의 스킬 셋 string
 char Skillstr[] = { "Skill1 -" }; char SubSkillstr[] = { "Skill2 -" };

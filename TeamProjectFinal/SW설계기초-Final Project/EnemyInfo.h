@@ -14,7 +14,7 @@ int ENEMY_POS_Y = GAMEBOARD_ORIGIN_Y + 1;
 int direction = 0;
 
 //적 우주선 모델링
-char EnemyModel[3][5] = { {' ','A','V','A',' '},{'<','O','O','O','>'},{' ','V','A','V',' '} };
+char EnemyModel[3][5] = { {' ','^','V','^',' '},{'<','<','O','>','>'},{' ','^','V','^',' '} };
 char EnemyUniModel[3][5] = { {0,ENEMY,ENEMY,ENEMY,0},{ENEMY,ENEMY,ENEMY,ENEMY,ENEMY},{0,ENEMY,ENEMY,ENEMY,0} };
 
 #endif // !ENEMYINFO_H
