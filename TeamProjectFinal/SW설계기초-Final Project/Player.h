@@ -11,23 +11,20 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-//플레이어 유니보드 위치 소거 함수
-void ErasePlayer() {
-	for (int i = 0; i < 6; i++) {
-		UniBoard[PLAYER_POS_Y - GAMEBOARD_ORIGIN_Y][PLAYER_POS_X - GAMEBOARD_ORIGIN_X + i] = 0;
-	}
-}
+//플레이어 인풋타임 버퍼 시간
+double PLAYERTIMEBUFFER = 0.045;
 
-//플레이어 유니보드 위치 추가 함수
-void InsertPlayer() {
-	for (int i = 0; i < 6; i++) {
-		UniBoard[PLAYER_POS_Y - GAMEBOARD_ORIGIN_Y][PLAYER_POS_X - GAMEBOARD_ORIGIN_X + i] = PLAYER;
-	}
+//플레이어 인풋타임 시작시간
+double PlayerInputTime= 0;
+
+//플레이어 인풋타임 버퍼 시간 계산 함수
+int CalculatePlayerTimeBuffer() {
+	if (TimeCheckerEnd() - PlayerInputTime > PLAYERTIMEBUFFER / CurSpeed) { PlayerInputTime += PLAYERTIMEBUFFER / CurSpeed; return 0; }
+	else return 1;
 }
 
 //플레이어 출력 함수
 void ShowPlayer() {
-	InsertPlayer();
 	if (Invinsible) SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), PLAYERINVINSIBLEINDICATECOLOR);
 	else if (UsingSkill > 0) SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), PLAYERUSINGSKILLCOLOR);
 	else SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), PLAYERCOLOR);
@@ -37,7 +34,6 @@ void ShowPlayer() {
 }
 //플레이어 숨김 함수
 void HidePlayer() {
-	ErasePlayer();
 	for (int i = 0; i < 6; i++) { SetCurrentCursorPos(PLAYER_POS_X + i, PLAYER_POS_Y); printf(" "); }
 	SetCurrentCursorPos(PLAYER_POS_X, PLAYER_POS_Y);
 }
@@ -97,22 +93,22 @@ void shiftDown() {
 }
 void shiftLeft() {
 	HidePlayer();
-	if (!DetectCollision_PlayerwithWall(PLAYER_POS_X - speed, PLAYER_POS_Y)) PLAYER_POS_X  = PLAYER_POS_X - speed;
+	if (!DetectCollision_PlayerwithWall(PLAYER_POS_X - 2, PLAYER_POS_Y)) PLAYER_POS_X  = PLAYER_POS_X -=2 ;
 	else PLAYER_POS_X = GAMEBOARD_ORIGIN_X + 2;
 	ShowPlayer();
 }
 void shiftRight() {
 	HidePlayer();
-	if (!DetectCollision_PlayerwithWall(PLAYER_POS_X + speed, PLAYER_POS_Y)) PLAYER_POS_X = PLAYER_POS_X + speed;
+	if (!DetectCollision_PlayerwithWall(PLAYER_POS_X + 2, PLAYER_POS_Y)) PLAYER_POS_X = PLAYER_POS_X += 2;
 	else PLAYER_POS_X = GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW - 6;
 	ShowPlayer();
 }
 
 //스킬 발동 함수
 void ActivateSkill() { 
-	if (!CurrentSkill) return;
+	if (!CurSkill) return;
 	if (UsingSkill != 0) return;
-	UsingSkill = CurrentSkill; CurrentSkill = 0; 
+	UsingSkill = CurSkill; CurSkill = 0; 
 	SkillActivationTime = TimeCheckerEnd();
 }
 
@@ -129,12 +125,14 @@ void SkillTimeCheck() {
 //-------------------------------------플레이어 갱신 함수-------------------------------------------------------
 void InvalidatePlayer() {
 	ShowPlayer();
-	if (kbhit()) {
-		if (GetAsyncKeyState(LEFT) & 0x8000) shiftLeft();
-		if (GetAsyncKeyState(RIGHT) & 0x8000) shiftRight();
-		if (GetAsyncKeyState(UP) & 0x8000) shiftUp();
-		if (GetAsyncKeyState(DOWN) & 0x8000) shiftDown();
-		if (GetAsyncKeyState(SPACE) & 0x8000) ActivateSkill();
+	if (!CalculatePlayerTimeBuffer()) {
+		if (kbhit()) {
+			if (GetAsyncKeyState(LEFT) & 0x8000) shiftLeft();
+			if (GetAsyncKeyState(RIGHT) & 0x8000) shiftRight();
+			if (GetAsyncKeyState(UP) & 0x8000) shiftUp();
+			if (GetAsyncKeyState(DOWN) & 0x8000) shiftDown();
+			if (GetAsyncKeyState(SPACE) & 0x0001) ActivateSkill();
+		}
 	}
 	SkillTimeCheck();
 	GetDamagedFromEnemy();

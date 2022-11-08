@@ -90,14 +90,14 @@ void InvalidateMap() {
 //스킬 사용 시 스킬 갱신
 int InvalidateCurrentSkill() {
 	if (SubSkill == 0) return 0;
-	if (CurrentSkill == 0) { int tmp = CurrentSkill; CurrentSkill = SubSkill; SubSkill = tmp; return 1; }
+	if (CurSkill == 0) { int tmp = CurSkill; CurSkill = SubSkill; SubSkill = tmp; return 1; }
 	else return 0;
 }
 
 //전 보유스킬 및 보조스킬 숨기기
 void HidePreviousCurrentNSubSkill() {
 	int Skillstrlen = Strlen(Skillstr), SubSkillstrlen = Strlen(SubSkillstr);
-	int Currentlen = Strlen(SkillSets[CurrentSkill]), Sublen = Strlen(SkillSets[SubSkill]);
+	int Currentlen = Strlen(SkillSets[CurSkill]), Sublen = Strlen(SkillSets[SubSkill]);
 	for (int i = 0; i < Skillstrlen + SubSkillstrlen + Currentlen + Sublen + 2; i++) {
 		SetCurrentCursorPos(modifiedX_Text + i, modifiedY_Text);
 		if (i >= Skillstrlen && i < Currentlen + Skillstrlen) printf(" ");
@@ -108,10 +108,10 @@ void HidePreviousCurrentNSubSkill() {
 //현재 보유스킬 및 보조스킬  출력
 void ShowCurrentNSubSkill() {
 	int Skillstrlen = Strlen(Skillstr), SubSkillstrlen = Strlen(SubSkillstr);
-	int Currentlen = Strlen(SkillSets[CurrentSkill]), Sublen = Strlen(SkillSets[SubSkill]);
+	int Currentlen = Strlen(SkillSets[CurSkill]), Sublen = Strlen(SkillSets[SubSkill]);
 	for (int i = 0; i < Skillstrlen + SubSkillstrlen + Currentlen + Sublen + 2; i++) {
 		SetCurrentCursorPos(modifiedX_Text + i, modifiedY_Text);
-		if (i >= Skillstrlen && i < Currentlen + Skillstrlen) printf("%c", SkillSets[CurrentSkill][i - Skillstrlen]);
+		if (i >= Skillstrlen && i < Currentlen + Skillstrlen) printf("%c", SkillSets[CurSkill][i - Skillstrlen]);
 		else if (i >= Currentlen + Skillstrlen + SubSkillstrlen + 2) printf("%c", SkillSets[SubSkill][i - (Currentlen + Skillstrlen + SubSkillstrlen + 2)]);
 	}
 }
@@ -120,7 +120,7 @@ void ShowCurrentNSubSkill() {
 void InvalidateSkillUI() {
 	SetCurrentCursorPos(modifiedX_Text, modifiedY_Text);
 	printf(Skillstr);
-	SetCurrentCursorPos(modifiedX_Text + Strlen(SkillSets[CurrentSkill]) + Strlen(Skillstr) + 2, modifiedY_Text);
+	SetCurrentCursorPos(modifiedX_Text + Strlen(SkillSets[CurSkill]) + Strlen(Skillstr) + 2, modifiedY_Text);
 	printf(SubSkillstr);
 	ShowCurrentNSubSkill();
 	if (InvalidateCurrentSkill())

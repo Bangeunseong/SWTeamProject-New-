@@ -12,7 +12,7 @@
 #define GAMEFILE_H
 
 //스토리 모드
-void StoryMode() { while (1) { InvalidateUI(); InvalidateEnemy(); InvalidatePlayer(); RunGameAfterTimeBuffer(); } }
+void StoryMode() { while (1) { InvalidateUI(); InvalidateEnemy(); InvalidatePlayer(); } }
 
 //무한 모드
 

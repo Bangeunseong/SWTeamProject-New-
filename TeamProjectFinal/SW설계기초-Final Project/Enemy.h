@@ -6,25 +6,20 @@
 #ifndef ENEMY_H
 #define ENEMY_H
 
-//적 유니보드 위치 갱신 함수
-void EraseEnemy() {
-	for (int i = 0; i < 3; i++) {
-		for (int j = 0; j < 5; j++) {
-			if (EnemyUniModel[i][j] == ENEMY) UniBoard[ENEMY_POS_Y - GAMEBOARD_ORIGIN_Y + i][ENEMY_POS_X - GAMEBOARD_ORIGIN_X + j] = 0;
-		}
-	}
-}
-void InsertEnemy() {
-	for (int i = 0; i < 3; i++) {
-		for (int j = 0; j < 5; j++) {
-			if (EnemyUniModel[i][j] == ENEMY) UniBoard[ENEMY_POS_Y - GAMEBOARD_ORIGIN_Y + i][ENEMY_POS_X - GAMEBOARD_ORIGIN_X + j] = ENEMY;
-		}
-	}
+//적 NPC 인풋타임 버퍼 시간
+double ENEMYTIMEBUFFER = 0.02;
+
+//적 NPC 인풋타임 시작시간
+double EnemyInputTime = 0;
+
+//적 NPC 버퍼 시간 계산 함수
+int CalculateEnemyTimeBuffer() {
+	if (TimeCheckerEnd() - EnemyInputTime > ENEMYTIMEBUFFER) { EnemyInputTime += ENEMYTIMEBUFFER; return 0; }
+	else return 1;
 }
 
 //적 출력 및 삭제 함수
 void HideEnemy() {
-	EraseEnemy();
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 5; j++) {
 			SetCurrentCursorPos(ENEMY_POS_X + j, ENEMY_POS_Y + i);
@@ -34,7 +29,6 @@ void HideEnemy() {
 	SetCurrentCursorPos(ENEMY_POS_X, ENEMY_POS_Y);
 }
 void ShowEnemy() {
-	InsertEnemy();
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 5; j++) {
 			SetCurrentCursorPos(ENEMY_POS_X + j, ENEMY_POS_Y + i);
@@ -71,7 +65,10 @@ void shiftEnemyRight() {
 
 //적 갱신 함수
 void InvalidateEnemy() {
-	if (direction) shiftEnemyRight();
-	else shiftEnemyLeft();
+	ShowEnemy();
+	if (!CalculateEnemyTimeBuffer()) {
+		if (direction) shiftEnemyRight();
+		else shiftEnemyLeft();
+	}
 }
 #endif // !ENEMY_H
