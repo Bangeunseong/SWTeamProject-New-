@@ -73,8 +73,8 @@ void GetDamagedFromEnemy() {
 //-----------------------------------------------------------------------------------------------
 
 //--------------------------사용자 입력 키에 따른 위치 변환 및 스킬 사용 함수------------------------------
-
 //사용자 입력 키에 따라 위치 변환 함수
+
 void shiftUp() {
 	HidePlayer();
 	if (!DetectCollision_PlayerwithWall(PLAYER_POS_X, PLAYER_POS_Y - 1)) PLAYER_POS_Y--;
@@ -87,13 +87,13 @@ void shiftDown() {
 }
 void shiftLeft() {
 	HidePlayer();
-	if (!DetectCollision_PlayerwithWall(PLAYER_POS_X - 1, PLAYER_POS_Y)) PLAYER_POS_X = PLAYER_POS_X--;
+	if (!DetectCollision_PlayerwithWall(PLAYER_POS_X - 2, PLAYER_POS_Y)) PLAYER_POS_X  = PLAYER_POS_X -=2 ;
 	else PLAYER_POS_X = GAMEBOARD_ORIGIN_X + 2;
 	ShowPlayer();
 }
 void shiftRight() {
 	HidePlayer();
-	if (!DetectCollision_PlayerwithWall(PLAYER_POS_X + 1, PLAYER_POS_Y)) PLAYER_POS_X = PLAYER_POS_X++;
+	if (!DetectCollision_PlayerwithWall(PLAYER_POS_X + 2, PLAYER_POS_Y)) PLAYER_POS_X = PLAYER_POS_X += 2;
 	else PLAYER_POS_X = GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW - 6;
 	ShowPlayer();
 }
