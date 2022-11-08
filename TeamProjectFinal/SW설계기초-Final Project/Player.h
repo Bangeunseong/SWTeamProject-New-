@@ -87,13 +87,13 @@ void shiftDown() {
 }
 void shiftLeft() {
 	HidePlayer();
-	if (!DetectCollision_PlayerwithWall(PLAYER_POS_X - 2, PLAYER_POS_Y)) PLAYER_POS_X  = PLAYER_POS_X -=2 ;
+	if (!DetectCollision_PlayerwithWall(PLAYER_POS_X - 1, PLAYER_POS_Y)) PLAYER_POS_X = PLAYER_POS_X--;
 	else PLAYER_POS_X = GAMEBOARD_ORIGIN_X + 2;
 	ShowPlayer();
 }
 void shiftRight() {
 	HidePlayer();
-	if (!DetectCollision_PlayerwithWall(PLAYER_POS_X + 2, PLAYER_POS_Y)) PLAYER_POS_X = PLAYER_POS_X += 2;
+	if (!DetectCollision_PlayerwithWall(PLAYER_POS_X + 1, PLAYER_POS_Y)) PLAYER_POS_X = PLAYER_POS_X++;
 	else PLAYER_POS_X = GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW - 6;
 	ShowPlayer();
 }
