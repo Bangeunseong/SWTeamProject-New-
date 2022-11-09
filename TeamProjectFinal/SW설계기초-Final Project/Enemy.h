@@ -1,21 +1,21 @@
 #pragma once
 #pragma warning(disable:4996)
 #include "CursorFunctions.h"
-#include "BackGround.h"
-#include "EnemyInfo.h"
+#include "VariableSets.h"
 #ifndef ENEMY_H
 #define ENEMY_H
-
-//적 NPC 인풋타임 버퍼 시간
-double ENEMYTIMEBUFFER = 0.02;
-
-//적 NPC 인풋타임 시작시간
-double EnemyInputTime = 0;
 
 //적 NPC 버퍼 시간 계산 함수
 int CalculateEnemyTimeBuffer() {
 	if (TimeCheckerEnd() - EnemyInputTime > ENEMYTIMEBUFFER) { EnemyInputTime += ENEMYTIMEBUFFER; return 0; }
 	else return 1;
+}
+
+//적 위치 초기화 함수
+void ClearEnemyPosition() {
+	ENEMY_POS_X = GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW / 2 - 3;
+	ENEMY_POS_Y = GAMEBOARD_ORIGIN_Y + 1;
+	direction = 0;
 }
 
 //적 출력 및 삭제 함수

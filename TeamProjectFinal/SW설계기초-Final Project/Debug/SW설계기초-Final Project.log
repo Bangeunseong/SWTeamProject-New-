@@ -1,3 +1,6 @@
 ﻿  main.c
+c:\users\bange\onedrive\바탕 화면\documents\github\swteamproject-new-\teamprojectfinal\sw설계기초-final project\background.h(3): warning C4067: 전처리기 지시문 다음에 예기치 않은 토큰이 있습니다. 줄 바꿈 문자가 필요합니다.
+c:\users\bange\onedrive\바탕 화면\documents\github\swteamproject-new-\teamprojectfinal\sw설계기초-final project\ui.h(83): warning C4244: '함수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\bange\onedrive\바탕 화면\documents\github\swteamproject-new-\teamprojectfinal\sw설계기초-final project\ui.h(85): warning C4244: '함수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
 c:\users\bange\onedrive\바탕 화면\documents\github\swteamproject-new-\teamprojectfinal\sw설계기초-final project\enemy.h : warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
   SW설계기초-Final Project.vcxproj -> C:\Users\bange\OneDrive\바탕 화면\Documents\GitHub\SWTeamProject-New-\TeamProjectFinal\Debug\SW설계기초-Final Project.exe

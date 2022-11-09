@@ -1,20 +1,13 @@
 #pragma once
 #pragma warning(disable:4996)
 #include <conio.h>
+#include "VariableSets.h"
 #include "ResizeConsole.h"
 #include "CursorFunctions.h"
 #include "BackGround.h"
 #include "GameFile.h"
 #ifndef STARTMENU_H
 #define STARTMENU_H
-
-#define MODESELECTIONBOX_ROW 18 //게임 모드 선택박스 가로 길이
-#define MODESELECTIONBOX_COLUMN 3 // 게임 모드 선택박스 세로 길이
-int ModeSelectionBox_Origin_X = BACKGROUND_ORIGIN_X + 14; //게임 모드 선택 박스 초기 X좌표
-int ModeSelectionBox_Origin_Y = BACKGROUND_ORIGIN_Y + BACKGROUND_COLUMN / 2 + 6; //게임 모드 선택 박스 초기 Y좌표
-
-//게임 모드
-int GameMode = 0;
 
 INPUT_RECORD rec;
 DWORD dwNOER;

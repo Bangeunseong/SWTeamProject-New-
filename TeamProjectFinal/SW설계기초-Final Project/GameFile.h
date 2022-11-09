@@ -4,6 +4,7 @@
 #include "BackGround.h"
 #include "StartMenu.h"
 #include "CharacterSelectionMenu.h"
+#include "StageMenu.h"
 #include "Player.h"
 #include "Enemy.h"
 #include "UI.h"
@@ -12,7 +13,16 @@
 #define GAMEFILE_H
 
 //스토리 모드
-void StoryMode() { while (1) { InvalidateUI(); InvalidateEnemy(); InvalidatePlayer(); } }
+void StoryMode() { 
+	while (StageNumber < 4) {
+		InvalidateStageNumber();
+		ShowCurrentNSubSkill();
+		ShowMap();
+		ShowStageNumber();
+		TimeCheckerStart();
+		while (1) { InvalidateUI(); InvalidateEnemy(); InvalidatePlayer(); if (GameOver()) return; if (StageOver()) break; }
+	}
+}
 
 //무한 모드
 
@@ -24,7 +34,6 @@ void RunGame() {
 		ShowCharacterSelectionMenu();
 		ShowBackGround();
 		InitializeLifeGauge();
-		TimeCheckerStart();
 		switch (GameMode) {
 		case 0: StoryMode(); break;
 		case 1: break;
@@ -32,4 +41,4 @@ void RunGame() {
 	}
 	return;
 }
-#endif // !GAMEMODE_H
+#endif // !GAMEFILE_H

@@ -1,35 +1,10 @@
 #pragma once
 #include <stdio.h>
-#include <Windows.h>
+#include <Windows.h>'
+#include "VariableSets.h"
 #include "Timer.h"
 #ifndef BACKGROUND_H
 #define BACKGROUND_H
-
-//게임영역 정의
-#define BACKGROUND_ROW 90
-#define BACKGROUND_COLUMN 43
-#define BACKGROUND_ORIGIN_X 8
-#define BACKGROUND_ORIGIN_Y 1
-#define GAMEBOARD_ROW 90
-#define GAMEBOARD_COLUMN 40
-#define GAMEBOARD_ORIGIN_X 8
-#define GAMEBOARD_ORIGIN_Y 4
-
-//게임화면의 이산 모델
-int UniBoard[GAMEBOARD_COLUMN + 1][GAMEBOARD_ROW + 2];
-
-//게임 인트로 제목
-char IntroModel[][5][5] = {
-	{{0,0,1,0,0},{0,1,0,1,0},{0,1,1,1,0},{1,0,0,0,1},{1,0,0,0,1}},
-	{{0,1,1,1,1},{1,0,0,0,0},{0,1,1,1,0},{0,0,0,0,1},{1,1,1,1,0}},
-	{{1,1,1,1,1},{0,0,1,0,0},{0,0,1,0,0},{0,0,1,0,0},{0,0,1,0,0}},
-	{{1,1,1,1,0},{1,0,0,0,1},{1,1,1,1,0},{1,0,0,0,1},{1,0,0,0,1}},
-	{{0,1,1,1,0},{1,0,0,0,1},{1,0,0,0,1},{1,0,0,0,1},{0,1,1,1,0}},
-	{{1,0,0,0,1},{1,1,0,0,1},{1,0,1,0,1},{1,0,0,1,1},{1,0,0,0,1}},
-	{{0,0,1,0,0},{0,1,0,1,0},{0,1,1,1,0},{1,0,0,0,1},{1,0,0,0,1}},
-	{{1,0,0,0,1},{1,0,0,0,1},{1,0,0,0,1},{1,0,0,0,1},{0,1,1,1,0}},
-	{{1,1,1,1,1},{0,0,1,0,0},{0,0,1,0,0},{0,0,1,0,0},{0,0,1,0,0}}
-};
 
 //게임영역 이산 테이블 선언
 void InitUniBoard() {

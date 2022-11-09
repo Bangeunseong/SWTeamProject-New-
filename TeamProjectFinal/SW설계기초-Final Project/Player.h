@@ -2,10 +2,8 @@
 #pragma warning(disable:4996)
 #include <conio.h>
 #include <WinUser.h>
+#include "VariableSets.h"
 #include "CursorFunctions.h"
-#include "BackGround.h"
-#include "Enemy.h"
-#include "PlayerInfo.h"
 #include "Timer.h"
 #include "UI.h"
 #ifndef PLAYER_H
@@ -15,6 +13,12 @@
 int CalculatePlayerTimeBuffer() {
 	if (TimeCheckerEnd() - PlayerInputTime > PLAYERTIMEBUFFER / CurSpeed) { PlayerInputTime += PLAYERTIMEBUFFER / CurSpeed; return 0; }
 	else return 1;
+}
+
+//플레이어 위치 초기화 함수
+void ClearPlayerPosition() {
+	PLAYER_POS_X = GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW / 2 - 3;
+	PLAYER_POS_Y = GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN - 8;
 }
 
 //플레이어 출력 함수
@@ -102,8 +106,10 @@ void shiftRight() {
 void ActivateSkill() { 
 	if (!CurSkill) return;
 	if (UsingSkill != 0) return;
-	UsingSkill = CurSkill; CurSkill = 0; 
-	SkillActivationTime = TimeCheckerEnd();
+	HidePreviousCurrentNSubSkill();									//UI 갱신을 위해 넣은 숨김함수
+	UsingSkill = CurSkill; CurSkill = SubSkill; SubSkill = 0;	//주 스킬과 보조 스킬 Swap
+	SkillActivationTime = TimeCheckerEnd();						//스킬 발동 시간 기록
+	ShowCurrentNSubSkill();												//UI 갱신을 위해 넣은 출력함수
 }
 
 //스킬 해제 함수

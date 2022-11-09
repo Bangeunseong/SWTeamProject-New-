@@ -1,18 +1,11 @@
 #pragma once
 #include <Windows.h>
 #include <stdio.h>
+#include "VariableSets.h"
 #include "ResizeConsole.h"
 #include "CursorFunctions.h"
-#include "Player.h"
-#include "PlayerInfo.h"
-#ifndef CHARACTERSELECTION_H
-#define CHARACTERSELECTION_H
-
-//캐릭터 박스 Dimension
-#define CHARACTERBOX_ROW 28
-#define CHARACTERBOX_COLUMN 20
-#define CHARACTERBOX_ORIGIN_X 6
-#define CHARACTERBOX_ORIGIN_Y 12
+#ifndef CHARACTERSELECTIONMENU_H
+#define CHARACTERSELECTIONMENU_H
 
 INPUT_RECORD rec;
 DWORD dwNOER;
@@ -129,4 +122,4 @@ void ShowCharacterSelectionMenu() {
 	HideCharacterBox();
 }
 
-#endif // !CHARACTERSELECTION_H
+#endif // !CHARACTERSELECTIONMENU_H
