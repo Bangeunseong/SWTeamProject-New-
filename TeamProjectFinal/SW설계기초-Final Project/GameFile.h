@@ -20,7 +20,7 @@ void StoryMode() {
 		ShowMap();
 		ShowStageNumber();
 		TimeCheckerStart();
-		while (1) { InvalidateUI(); InvalidateEnemy(); InvalidatePlayer(); if (GameOver()) return; if (StageOver()) break; }
+		while (1) { InvalidateMap(); InvalidateItem(); InvalidateEnemy();  InvalidatePlayer(); if (GameOver()) return; if (StageOver()) break; }
 	}
 }
 

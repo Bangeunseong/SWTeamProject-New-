@@ -60,6 +60,9 @@ int StageNumber = 1;
 //스테이지별 플레이 시간
 int StageTime[] = { 60,90,120 };
 
+//다음 스테이지로 넘어갈 때 Duration time
+#define STAGEDURATIONTIME 2.0
+
 //-------------------------------------------------------------
 //-----------------------Player 상수--------------------------
 
@@ -104,12 +107,6 @@ int PlayerPos = 0;
 //플레이어의 속도
 double SelectedSpeed, CurSpeed;
 
-//플레이어의 주 스킬, 보조 스킬, 사용 중인 스킬
-int CurSkill = 0, SubSkill = 0, UsingSkill = 0, SkillTime = 3; double SkillActivationTime = 0;
-
-//플레이어의 스킬 셋 string
-char Skillstr[] = { "MainSkill " }; char SubSkillstr[] = { "SubSkill  " };
-char SkillSets[][101] = { "-NONE-", "-DASH-","-SLOW-", "-INVINSIBLE-" };
 //---------------------------------------------------------------
 //----------------------Enemy 상수----------------------------
 
@@ -157,5 +154,39 @@ int Strlen(const char *src) {
 #define MAPLENGTH 15
 
 //--------------------------------------------------------------------
+//-----------------------ITEM 상수----------------------------------
+
+//아이템 움직임 버퍼 시간
+#define ITEMTIMEBUFFER 0.2
+double ItemInputTime = 0;
+double ItemCreationLoop = 1;
+
+//아이템 효과 모음집
+#define SPEEDINCREASERATE 0.5
+int BulletSpeed = 2;
+
+//게임보드내 아이템 출력 여부
+int itemFLAG = 0;
+
+//아이템 X, Y 좌표
+int ITEM_POS_X, ITEM_POS_Y;
+
+//아이템과 플레이어 충돌 감지 변수
+int ItemCollisionDetected = 0;
+
+int ItemNumber = 0;
+
+//플레이어의 주 스킬, 보조 스킬, 사용 중인 스킬
+int CurSkill = 0, SubSkill = 0, UsingSkill = 0;
+
+//스킬 지속시간, 스킬 발동 시작시간
+int SkillTime = 3; double SkillActivationTime = 0;
+
+//플레이어의 스킬 셋 string
+char Skillstr[] = { "MainSkill " }; char SubSkillstr[] = { "SubSkill  " };
+char SkillSets[][101] = { "-NONE-", "-SPEEDUP-","-SLOW-", "-INVINSIBLE-","-DASH-","-ERASEBULLET-" };
+
+//아이템 출력 아이콘 리스트
+int itemList[5] = { 1, 2, 3, 4, 5 };
 
 #endif // !VARIABLESETS_H

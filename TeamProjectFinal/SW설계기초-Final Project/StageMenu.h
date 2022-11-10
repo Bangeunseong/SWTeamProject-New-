@@ -11,7 +11,7 @@ void ShowStageNumber() {
 	SetCurrentCursorPos(BACKGROUND_ORIGIN_X + BACKGROUND_ROW / 2 - 4, BACKGROUND_ORIGIN_Y + BACKGROUND_COLUMN / 2);
 	printf("Stage %d", StageNumber);
 	TimeCheckerStart();
-	while (TimeCheckerEnd() < 1);
+	while (TimeCheckerEnd() < STAGEDURATIONTIME);
 	SetCurrentCursorPos(BACKGROUND_ORIGIN_X + BACKGROUND_ROW / 2 - 4, BACKGROUND_ORIGIN_Y + BACKGROUND_COLUMN / 2);
 	for (int i = 0; i < 7; i++) printf(" ");
 }
@@ -23,7 +23,11 @@ int StageOver() {
 		HideEnemy();
 		ClearPlayerPosition();
 		ClearEnemyPosition();
-		PlayerInputTime = 0; PlayerPos = 0; Invinsible = 0; EnemyInputTime = 0; CurrentTime = 1; StageNumber++;  
+		PlayerInputTime = 0; PlayerPos = 0; Invinsible = 0; 
+		EnemyInputTime = 0; 
+		ItemInputTime = 0;
+		ItemCreationLoop = 1;
+		CurrentTime = 1; StageNumber++;
 		return 1; 
 	}
 	return 0;

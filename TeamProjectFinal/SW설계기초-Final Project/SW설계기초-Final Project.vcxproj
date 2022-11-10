@@ -132,7 +132,6 @@
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="GameFile.h" />
     <ClInclude Include="Item.h" />
-    <ClInclude Include="ItemInfo.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="ResizeConsole.h" />
     <ClInclude Include="StageMenu.h" />

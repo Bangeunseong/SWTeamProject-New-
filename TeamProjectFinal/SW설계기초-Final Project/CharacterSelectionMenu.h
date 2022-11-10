@@ -107,13 +107,6 @@ void ShowCharacterSelectionMenu() {
 			}
 			else if (xx >= CHARACTERBOX_ORIGIN_X + CHARACTERBOX_ROW * 2 + 10 && xx <= CHARACTERBOX_ORIGIN_X + CHARACTERBOX_ROW * 3 + 10) {
 				SelectedLife = 3; SelectedSpeed = CurSpeed = 2.0; memcpy(PlayerModel, "<-[]->", sizeof(char) * 6); break;
-				SelectedLife = 7; SelectedSpeed = CurSpeed = 1; memcpy(PlayerModel, "<OAAO>", sizeof(char) * 6); break;
-			}
-			else if (xx >= CHARACTERBOX_ORIGIN_X + CHARACTERBOX_ROW + 5 && xx <= CHARACTERBOX_ORIGIN_X + CHARACTERBOX_ROW * 2 + 5) {
-				SelectedLife = 5; SelectedSpeed = CurSpeed = 2; memcpy(PlayerModel, "<-AA->", sizeof(char) * 6); break;
-			}
-			else if (xx >= CHARACTERBOX_ORIGIN_X + CHARACTERBOX_ROW * 2 + 10 && xx <= CHARACTERBOX_ORIGIN_X + CHARACTERBOX_ROW * 3 + 10) {
-				SelectedLife = 3; SelectedSpeed = CurSpeed = 3; memcpy(PlayerModel, "<-[]->", sizeof(char) * 6); break;
 			}
 		}
 	}

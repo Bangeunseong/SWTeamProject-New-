@@ -81,7 +81,7 @@ void InvalidateMap() {
 	COORD ptr = { BACKGROUND_ORIGIN_X + BACKGROUND_ROW, BACKGROUND_ORIGIN_Y };
 	int modifiedX = ptr.X - 32, modifiedY = ptr.Y + 1;
 	ShowPlayerPosCursor(modifiedX + CurrentTime - 1, modifiedY + 1);
-	if (TimeCheckerEnd() > CurrentTime * (StageTime[StageNumber] / (MAPLENGTH * 2))) {
+	if (TimeCheckerEnd() > CurrentTime * (StageTime[StageNumber - 1] / (MAPLENGTH * 2))) {
 		HidePlayerPosCursor(modifiedX + CurrentTime - 1, modifiedY + 1);
 		CurrentTime++; PlayerPos++;
 	}
@@ -95,7 +95,7 @@ void InvalidateMap() {
 void HidePreviousCurrentNSubSkill() {
 	int Skillstrlen = Strlen(Skillstr), SubSkillstrlen = Strlen(SubSkillstr);
 	int Currentlen = Strlen(SkillSets[CurSkill]), Sublen = Strlen(SkillSets[SubSkill]);
-	int len = max(Skillstrlen + Currentlen, SubSkillstrlen + Sublen);
+	int len = 23;
 	for (int i = 1; i <= 2; i++) {
 		for (int j = 0; j <= len; j++) {
 			SetCurrentCursorPos(modifiedX_Text + j, modifiedY_Text + i);
@@ -113,8 +113,5 @@ void ShowCurrentNSubSkill() {
 }
 
 //---------------------------------------------------
-
-//UI °»½Å
-void InvalidateUI() { InvalidateMap(); ShowCurrentNSubSkill(); }
 
 #endif // !UI_H

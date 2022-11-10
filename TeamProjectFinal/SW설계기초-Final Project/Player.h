@@ -4,6 +4,7 @@
 #include <WinUser.h>
 #include "VariableSets.h"
 #include "CursorFunctions.h"
+#include "Item.h"
 #include "Timer.h"
 #include "UI.h"
 #ifndef PLAYER_H
@@ -50,10 +51,18 @@ int DetectCollision_PlayerwithEnemy(int x, int y) {
 	for (int i = 0; i < 6; i++) {
 		for (int j = 0; j < 3; j++) {
 			for (int k = 0; k < 5; k++) {
-				if (EnemyUniModel[j][k] == ENEMY) { 
-					if (ENEMY_POS_Y + j == PLAYER_POS_Y && ENEMY_POS_X + k == PLAYER_POS_X + i) return 1;
-				}
+				if (ENEMY_POS_Y + j == PLAYER_POS_Y && ENEMY_POS_X + k == PLAYER_POS_X + i) return 1;
 			}
+		}
+	}
+	return 0;
+}
+
+//플레이어 기준 아이템과 부딪혔을 때 검사하는 함수
+int DetectCollision_PlayerwithItem(int x, int y) {
+	if (y == PLAYER_POS_Y && itemFLAG == 1) {
+		for (int i = 0; i < 6; i++) {
+			if (x == PLAYER_POS_X + i) return 1;
 		}
 	}
 	return 0;
@@ -67,13 +76,16 @@ void ReduceLifeGauge(int damage) {
 
 //데미지 처리함수
 void GetDamagedFromEnemy() {
-	if (Invinsible == 1) { if (TimeCheckerEnd() - CollisionTime > InvinsibleTime) Invinsible = 0; }
+	if (UsingSkill == 3) return;
+	if (Invinsible == 1) { if (TimeCheckerEnd() - CollisionTime > InvinsibleTime) Invinsible = 0; }		//무적인 상태에서 지속시간이 지나면 해제하는 함수
 	if (DetectCollision_PlayerwithEnemy(PLAYER_POS_X, PLAYER_POS_Y) && Invinsible == 0) { 
 		ReduceLifeGauge(ENEMYDAMAGE);
 		InvalidateLifeGauge();												//라이프 게이지 갱신은 데미지를 받을 때만 수행
 		Invinsible = 1; CollisionTime = TimeCheckerEnd();		//무적상태로 만들고 충돌한 시간 갱신
 	}
 }
+
+
 //-----------------------------------------------------------------------------------------------
 
 //--------------------------사용자 입력 키에 따른 위치 변환 및 스킬 사용 함수------------------------------
@@ -102,36 +114,20 @@ void shiftRight() {
 	ShowPlayer();
 }
 
-//스킬 발동 함수
-void ActivateSkill() { 
-	if (!CurSkill) return;
-	if (UsingSkill != 0) return;
-	HidePreviousCurrentNSubSkill();									//UI 갱신을 위해 넣은 숨김함수
-	UsingSkill = CurSkill; CurSkill = SubSkill; SubSkill = 0;	//주 스킬과 보조 스킬 Swap
-	SkillActivationTime = TimeCheckerEnd();						//스킬 발동 시간 기록
-	ShowCurrentNSubSkill();												//UI 갱신을 위해 넣은 출력함수
-}
-
-//스킬 해제 함수
-void DeactivateSkill() { UsingSkill = 0; }
-
-//스킬 지속시간 체크 함수
-void SkillTimeCheck() {
-	if (!UsingSkill) return;
-	if (TimeCheckerEnd() - SkillActivationTime > SkillTime) DeactivateSkill();
-}
 //------------------------------------------------------------------------------------------------------------------
 
 //-------------------------------------플레이어 갱신 함수-------------------------------------------------------
 void InvalidatePlayer() {
 	ShowPlayer();
+	if (DetectCollision_PlayerwithItem(ITEM_POS_X, ITEM_POS_Y)) ItemCollisionDetected = 1;
 	if (!CalculatePlayerTimeBuffer()) {
 		if (kbhit()) {
+			if (GetAsyncKeyState(SPACE) & 0x0001) ActivateSkillItem();
+			if (GetAsyncKeyState(VK_LSHIFT) & 0x0001) SwapItem();
 			if (GetAsyncKeyState(LEFT) & 0x8000) shiftLeft();
 			if (GetAsyncKeyState(RIGHT) & 0x8000) shiftRight();
 			if (GetAsyncKeyState(UP) & 0x8000) shiftUp();
 			if (GetAsyncKeyState(DOWN) & 0x8000) shiftDown();
-			if (GetAsyncKeyState(SPACE) & 0x0001) ActivateSkill();
 		}
 	}
 	SkillTimeCheck();
