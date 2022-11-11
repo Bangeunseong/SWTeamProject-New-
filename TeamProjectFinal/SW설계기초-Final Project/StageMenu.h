@@ -2,6 +2,7 @@
 #include "VariableSets.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "Bullet.h"
 #include "UI.h"
 #ifndef STAGEMENU_H
 #define STAGEMENU_H
@@ -23,6 +24,7 @@ int StageOver() {
 		HideEnemy();
 		ClearPlayerPosition();
 		ClearEnemyPosition();
+		ClearBulletPosition(); // ---- ClearBulletPosition »ðÀÔ
 		PlayerInputTime = 0; PlayerPos = 0; Invinsible = 0; 
 		EnemyInputTime = 0; 
 		ItemInputTime = 0;

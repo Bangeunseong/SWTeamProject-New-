@@ -6,6 +6,7 @@
 #include "CharacterSelectionMenu.h"
 #include "StageMenu.h"
 #include "Player.h"
+#include "Bullet.h"
 #include "Enemy.h"
 #include "UI.h"
 #include "Timer.h"
@@ -20,8 +21,8 @@ void StoryMode() {
 		ShowMap();
 		ShowStageNumber();
 		TimeCheckerStart();
-		while (1) { InvalidateMap(); InvalidateItem(); InvalidateEnemy();  InvalidatePlayer(); if (GameOver()) return; if (StageOver()) break; }
-	}
+		while (1) { InvalidateMap(); InvalidateItem(); InvalidateEnemy(); InvalidateBullet(); InvalidatePlayer(); if (GameOver()) return; if (StageOver()) break; }
+	}	// InvalidateBullet추가
 }
 
 //무한 모드

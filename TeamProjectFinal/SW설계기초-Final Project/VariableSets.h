@@ -163,7 +163,7 @@ double ItemCreationLoop = 1;
 
 //아이템 효과 모음집
 #define SPEEDINCREASERATE 0.5
-int BulletSpeed = 2;
+double BulletSpeed = 2; // bulletspeed int형에서 double형으로 변환
 
 //게임보드내 아이템 출력 여부
 int itemFLAG = 0;
