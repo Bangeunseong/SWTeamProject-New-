@@ -163,10 +163,14 @@ double ItemCreationLoop = 1;
 
 //아이템 효과 모음집
 #define SPEEDINCREASERATE 0.5
+#define FLASHDISTANCE 3
 int BulletSpeed = 2;
 
 //게임보드내 아이템 출력 여부
 int itemFLAG = 0;
+
+// 점멸 확인 용 변수
+int flashFLAG = 0;
 
 //아이템 X, Y 좌표
 int ITEM_POS_X, ITEM_POS_Y;
@@ -177,7 +181,7 @@ int ItemCollisionDetected = 0;
 int ItemNumber = 0;
 
 //플레이어의 주 스킬, 보조 스킬, 사용 중인 스킬
-int CurSkill = 0, SubSkill = 0, UsingSkill = 0;
+int CurSkill = 4, SubSkill = 4, UsingSkill = 0;
 
 //스킬 지속시간, 스킬 발동 시작시간
 int SkillTime = 3; double SkillActivationTime = 0;
@@ -187,6 +191,6 @@ char Skillstr[] = { "MainSkill " }; char SubSkillstr[] = { "SubSkill  " };
 char SkillSets[][101] = { "-NONE-", "-SPEEDUP-","-SLOW-", "-INVINSIBLE-","-DASH-","-ERASEBULLET-" };
 
 //아이템 출력 아이콘 리스트
-int itemList[5] = { 1, 2, 3, 4, 5 };
+int itemList[] = { 1, 2, 3, 4, 5 };
 
 #endif // !VARIABLESETS_H

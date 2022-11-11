@@ -10,12 +10,67 @@
 #ifndef ITEM_H
 #define ITEM_H
 
+//플레이어 출력 함수
+void ShowFlashPlayer() {
+	if (Invinsible) SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), PLAYERINVINSIBLEINDICATECOLOR);
+	else if (UsingSkill > 0) SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), PLAYERUSINGSKILLCOLOR);
+	else SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), PLAYERCOLOR);
+	for (int i = 0; i < 6; i++) { SetCurrentCursorPos(PLAYER_POS_X + i, PLAYER_POS_Y); printf("%c", PlayerModel[i]); }
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
+	SetCurrentCursorPos(PLAYER_POS_X, PLAYER_POS_Y);
+}
+//플레이어 숨김 함수
+void HideFlashPlayer() {
+	for (int i = 0; i < 6; i++) { SetCurrentCursorPos(PLAYER_POS_X + i, PLAYER_POS_Y); printf(" "); }
+	SetCurrentCursorPos(PLAYER_POS_X, PLAYER_POS_Y);
+}
+
+//대쉬 스킬 사용 시 충돌 검사 함수
+int DetectCollision_FlashPlayerwithWall(int x, int y) {
+	for (int i = 0; i < 6; i++) {
+		if ((x + i < GAMEBOARD_ORIGIN_X + 2 || x + i > GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW) || (y <= GAMEBOARD_ORIGIN_Y || y >= GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN)) return 1;
+	}
+	return 0;
+}
+
+//대쉬 스킬 함수
+void flashUp() {
+	HideFlashPlayer();
+	if (!DetectCollision_PlayerwithWall(PLAYER_POS_X, PLAYER_POS_Y - FLASHDISTANCE)) PLAYER_POS_Y -= FLASHDISTANCE;
+	else PLAYER_POS_Y = GAMEBOARD_ORIGIN_Y + 1;
+	ShowFlashPlayer();
+}
+void flashDown() {
+	HideFlashPlayer();
+	if (!DetectCollision_PlayerwithWall(PLAYER_POS_X, PLAYER_POS_Y + FLASHDISTANCE)) PLAYER_POS_Y+= FLASHDISTANCE;
+	else PLAYER_POS_Y = GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN - 1;
+	ShowFlashPlayer();
+}
+void flashLeft() {
+	HideFlashPlayer();
+	if (!DetectCollision_PlayerwithWall(PLAYER_POS_X - FLASHDISTANCE * 2, PLAYER_POS_Y)) PLAYER_POS_X = PLAYER_POS_X -= FLASHDISTANCE * 2;
+	else PLAYER_POS_X = GAMEBOARD_ORIGIN_X + 2;
+	ShowFlashPlayer();
+}
+void flashRight() {
+	HideFlashPlayer();
+	if (!DetectCollision_PlayerwithWall(PLAYER_POS_X + FLASHDISTANCE * 2, PLAYER_POS_Y)) PLAYER_POS_X = PLAYER_POS_X += FLASHDISTANCE *2;
+	else PLAYER_POS_X = GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW - 6;
+	ShowFlashPlayer();
+}
+
 //-------------------아이템별 작동함수-----------------------
 
 void itemSpeedUp() { CurSpeed += SPEEDINCREASERATE; }	//플레이어 캐릭터 속도 증가
 void itemBulletSpeedDown() {};													//탄막 속도 감소
 void itemInvinsibility() { Invinsible = 1; }										//무적 판정
-void itemFlash() {};																	//대쉬 스킬
+void itemFlash() {																		//대쉬 스킬
+	if (!flashFLAG) flashFLAG = 1;
+	if (GetAsyncKeyState(LEFT) & 0x8000) flashLeft();
+	if (GetAsyncKeyState(RIGHT) & 0x8000) flashRight();
+	if (GetAsyncKeyState(UP) & 0x8000) flashUp();
+	if (GetAsyncKeyState(DOWN) & 0x8000) flashDown();
+};						
 void itemDeleteBullet() {};															//보드판에 존재하는 총알들 모두 삭제
 
 //----------------------------------------------------------------
@@ -64,7 +119,7 @@ void DeactivateSkillItem() {
 	case 1: CurSpeed -= SPEEDINCREASERATE; break;
 	case 2: break;
 	case 3: Invinsible = 0; break;
-	case 4: break;
+	case 4: flashFLAG = 0; break;
 	case 5: break;
 	default: break;
 	}
@@ -73,8 +128,8 @@ void DeactivateSkillItem() {
 
 //아이템 스킬 발동 함수
 void ActivateSkillItem() {
+	if (UsingSkill != 0) { if (flashFLAG != 0) { itemFlash(); } return; }
 	if (!CurSkill) return;
-	if (UsingSkill != 0) return;
 	HidePreviousCurrentNSubSkill();									//UI 갱신을 위해 넣은 숨김함수
 	UsingSkill = CurSkill; CurSkill = SubSkill; SubSkill = 0;	//주 스킬과 보조 스킬 Swap
 	itemTrigger(UsingSkill);													//스킬 발동

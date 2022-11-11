@@ -41,8 +41,9 @@ void HidePlayer() {
 
 //플레이어 기준 벽과 부딫혔을 때 사용하는 함수
 int DetectCollision_PlayerwithWall(int x, int y) {
+	if ((y <= GAMEBOARD_ORIGIN_Y) || (y >= GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN)) return 1;
 	for (int i = 0; i < 6; i++) {
-		if (UniBoard[y - GAMEBOARD_ORIGIN_Y][x - GAMEBOARD_ORIGIN_X + i] == 1) return 1;
+		if ((x + i < GAMEBOARD_ORIGIN_X + 2) || (x + i >= GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW)) return 1;
 	}
 	return 0;
 }
@@ -103,14 +104,12 @@ void shiftDown() {
 }
 void shiftLeft() {
 	HidePlayer();
-	if (!DetectCollision_PlayerwithWall(PLAYER_POS_X - 2, PLAYER_POS_Y)) PLAYER_POS_X  = PLAYER_POS_X -=2 ;
-	else PLAYER_POS_X = GAMEBOARD_ORIGIN_X + 2;
+	if (!DetectCollision_PlayerwithWall(PLAYER_POS_X - 1, PLAYER_POS_Y)) PLAYER_POS_X--;
 	ShowPlayer();
 }
 void shiftRight() {
 	HidePlayer();
-	if (!DetectCollision_PlayerwithWall(PLAYER_POS_X + 2, PLAYER_POS_Y)) PLAYER_POS_X = PLAYER_POS_X += 2;
-	else PLAYER_POS_X = GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW - 6;
+	if (!DetectCollision_PlayerwithWall(PLAYER_POS_X + 1, PLAYER_POS_Y)) PLAYER_POS_X++;
 	ShowPlayer();
 }
 
