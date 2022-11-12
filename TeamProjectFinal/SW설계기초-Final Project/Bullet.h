@@ -7,9 +7,6 @@
 #ifndef BULLET_H
 #define BULLET_H
 
-//총알 인풋타임 버퍼시간
-double BULLETTIMEBUFFER = 0.2;
-
 //총알 인풋타임 시작시간
 double BulletInputTime = 0;
 
@@ -21,11 +18,15 @@ int BULLET_POS_Y[50];
 int BULLET_BEFORE_POS_X[50];
 int BULLET_BEFORE_POS_Y[50];
 
-//총알 개수
+//총알을 세기 위한 변수
 int BULLET_COUNT;
 
-//총알 발사 속도
-double BULLETLAUNCHSPEED = 0.001;
+//총알 발사 속도를 위한 변수
+double BulletTimeCheckerStart = 3.5;
+double BulletTimeCheckerEnd = 9.5;
+
+//총알을 지울 때 세기 위한 변수
+int BULLET_ERASE_COUNT;
 
 //총알 인풋타임 버퍼 시간 계산 함수
 int CalculateBulletTimeBuffer() {
@@ -36,15 +37,17 @@ int CalculateBulletTimeBuffer() {
 //총알 위치 초기화 함수
 void ClearBulletPosition() {
 	for (int i = 0; i < 50; i++) {
-		BULLET_POS_X[i] = GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW / 2 - 3;
-		BULLET_POS_Y[i] = GAMEBOARD_ORIGIN_Y + 5;
+		BULLET_POS_X[i] = BULLET_BEFORE_POS_X[i] = GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW / 2 - 3;
+		BULLET_POS_Y[i] = BULLET_BEFORE_POS_Y[i] = GAMEBOARD_ORIGIN_Y + 5;
+
 	}
 }
 
 //총알 위치 갱신 함수
 void BulletPostionRenewal() {
-	for (int i = 0; i < 20; i++) {
+	for (int i = 0; i < 50; i++) {
 		BULLET_POS_X[i] = ENEMY_POS_X;
+		BULLET_POS_Y[i] = GAMEBOARD_ORIGIN_Y + 5;
 	}
 }
 
@@ -71,38 +74,36 @@ int DetectCollision_BulletwithWall(int x, int y) {
 
 //총알 down
 void BulletDown(int i) {
-	HideBullet(i);
 	if (DetectCollision_BulletwithWall(BULLET_POS_X[i], BULLET_POS_Y[i] + 1))
+		return;
+	else if (DetectCollision_BulletwithWall(BULLET_POS_X[i], BULLET_POS_Y[i] + 2))
 		return ;
 	ShowBullet(i);
 }
 
-//총알 수학식
-void BulletFormula(int i) {
-	for (int j = 0; j < i; j++) {
-		SetCurrentCursorPos(BULLET_POS_X[i], BULLET_POS_Y[i]);
+//총알 수학식 1
+void BulletFormula1(int i) {
+	int Before_count = 0;
+	if (i > BULLET_MAX)
+		Before_count = i - BULLET_MAX;
+	for (int j = Before_count; j < i; j++) {
+		SetCurrentCursorPos(BULLET_POS_X[j], BULLET_POS_Y[j]);
 		BulletDown(j);
-		if (BULLET_POS_Y[j] < GAMEBOARD_COLUMN - 10);
-			(BULLET_POS_Y[j])++;
+		if (j > BULLET_MAX / 2) {
+			HideBullet(j);
+		}
+		(BULLET_POS_Y[j]) += 2;
 	}
 }
 
 //총알 가동 시간
 int BulletLaunchTime() {
-	if (TimeCheckerEnd() > 3.0 && TimeCheckerEnd() < 10.0) {
+	if (TimeCheckerEnd() > BulletTimeCheckerStart && TimeCheckerEnd() < BulletTimeCheckerEnd) {
 		return 1;
 	}
-	else if (TimeCheckerEnd() > 13.0 && TimeCheckerEnd() < 20.0) {
-		return 1;
-	}
-	else if (TimeCheckerEnd() > 23.0 && TimeCheckerEnd() < 30.0) {
-		return 1;
-	}
-	else if (TimeCheckerEnd() > 33.0 && TimeCheckerEnd() < 40.0) {
-		return 1;
-	}
-	else if (TimeCheckerEnd() > 43.0 && TimeCheckerEnd() < 50.0) {
-		return 1;
+	else if (TimeCheckerEnd() > BulletTimeCheckerEnd) {
+		BulletTimeCheckerStart += 10.0;
+		BulletTimeCheckerEnd += 10.0;
 	}
 	return 0;
 }
@@ -111,20 +112,21 @@ int BulletLaunchTime() {
 
 //-------------------------------------총알 갱신 함수-------------------------------------------------------
 void InvalidateBullet() {
-	BulletPostionRenewal();
+
 	if (!CalculateBulletTimeBuffer()) {
 		if (BulletLaunchTime()) {
-			BulletPostionRenewal();
-			BulletFormula(BULLET_COUNT);
-			if (BULLET_COUNT < 20) {
+			BulletFormula1(BULLET_COUNT);
+			if (BULLET_COUNT < (BULLET_MAX * 3) / 2) {
 				BULLET_COUNT++;
+			}
+			else {
+				BULLET_COUNT = 0;
+				BulletPostionRenewal();
 			}
 		}
 		else {
-			for (int j = 0; j < 20; j++) {
-				BULLET_POS_Y[j] = GAMEBOARD_ORIGIN_Y + 5;
-			}
 			BULLET_COUNT = 0;
+			BulletPostionRenewal();
 		}
 	}
 }

@@ -163,7 +163,7 @@ double ItemCreationLoop = 1;
 
 //아이템 효과 모음집
 #define SPEEDINCREASERATE 0.5
-double BulletSpeed = 2; // bulletspeed int형에서 double형으로 변환
+double BulletSpeed = 2.35; // bulletspeed int형에서 double형으로 변환
 
 //게임보드내 아이템 출력 여부
 int itemFLAG = 0;
@@ -188,5 +188,15 @@ char SkillSets[][101] = { "-NONE-", "-SPEEDUP-","-SLOW-", "-INVINSIBLE-","-DASH-
 
 //아이템 출력 아이콘 리스트
 int itemList[5] = { 1, 2, 3, 4, 5 };
+
+//--------------------------------------------------------------------
+//-----------------------BULLET 상수----------------------------------
+
+
+//총알 인풋타임 버퍼시간
+double BULLETTIMEBUFFER = 0.125;
+
+//총알 개수
+int BULLET_MAX = 18;
 
 #endif // !VARIABLESETS_H
