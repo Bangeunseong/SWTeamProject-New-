@@ -81,7 +81,7 @@ void InvalidateMap() {
 	COORD ptr = { BACKGROUND_ORIGIN_X + BACKGROUND_ROW, BACKGROUND_ORIGIN_Y };
 	int modifiedX = ptr.X - 32, modifiedY = ptr.Y + 1;
 	ShowPlayerPosCursor(modifiedX + CurrentTime - 1, modifiedY + 1);
-	if (TimeCheckerEnd() > CurrentTime * (StageTime[StageNumber - 1] / (MAPLENGTH * 2))) {
+	if (TimeCheckerEnd() - PausingTime > CurrentTime * (StageTime[StageNumber - 1] / (MAPLENGTH * 2))) {
 		HidePlayerPosCursor(modifiedX + CurrentTime - 1, modifiedY + 1);
 		CurrentTime++; PlayerPos++;
 	}

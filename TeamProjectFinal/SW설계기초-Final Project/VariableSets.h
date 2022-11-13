@@ -72,7 +72,7 @@ int StageTime[] = { 60,90,120 };
 #define UP VK_UP
 #define DOWN VK_DOWN
 #define SPACE 0x20
-#define QUIT 0x1A
+#define QUIT VK_ESCAPE
 
 //플레이어 고유 번호 및 색깔, 무적일 때 색깔
 #define PLAYER 4
@@ -140,6 +140,12 @@ LARGE_INTEGER start, end, diff;
 //초 단위로 저장
 double CurrentTime = 1;
 
+//게임 Pause Time
+double PausedTime = 0;
+
+//게임 정지시간
+double PausingTime = 0;
+
 //-------------------------------------------------------------------
 //------------------------UI 상수-----------------------------------
 
@@ -164,7 +170,7 @@ double ItemCreationLoop = 1;
 //아이템 효과 모음집
 #define SPEEDINCREASERATE 0.5
 #define FLASHDISTANCE 3
-int BulletSpeed = 2;
+int flashCount = 0;
 
 //게임보드내 아이템 출력 여부
 int itemFLAG = 0;
@@ -191,6 +197,44 @@ char Skillstr[] = { "MainSkill " }; char SubSkillstr[] = { "SubSkill  " };
 char SkillSets[][101] = { "-NONE-", "-SPEEDUP-","-SLOW-", "-INVINSIBLE-","-DASH-","-ERASEBULLET-" };
 
 //아이템 출력 아이콘 리스트
-int itemList[] = { 1, 2, 3, 4, 5 };
+char itemList[] = { 'S', 'L', 'I', 'D', 'E' };
+
+//----------------------BULLET 상수--------------------------
+
+//Bullet 위치 저장 공간
+typedef struct Bullet {
+	int BULLET_POS_X, BULLET_POS_Y;
+	int BulletActivation;
+}Bullet;
+
+//Bullet 구조체 배열
+#define BULLETLISTSIZE 1000
+#define PATTERNTIME_SPREAD 10
+Bullet bullet[1000];
+
+double BulletLaunchStartTime = 0;
+
+int PatternStart = 0;
+
+int PatternNumber = 0;
+
+int PatternCycle = 0;
+
+int BULLETCOUNT = 0;
+
+//Bullet 속도
+double BulletSpeed = 1;
+
+//Bullet 고유번호
+#define BULLET 3
+
+//Bullet Damage
+#define BULLETDAMAGE 1
+
+//Bullet 갱신 버퍼 시간
+#define BULLETTIMEBUFFER 0.3
+
+//Bullet 인풋 시작 시간
+double BulletInputTime = 0;
 
 #endif // !VARIABLESETS_H

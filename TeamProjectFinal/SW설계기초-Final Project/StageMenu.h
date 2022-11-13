@@ -2,6 +2,7 @@
 #include "VariableSets.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "Bullet.h"
 #include "UI.h"
 #ifndef STAGEMENU_H
 #define STAGEMENU_H
@@ -23,11 +24,12 @@ int StageOver() {
 		HideEnemy();
 		ClearPlayerPosition();
 		ClearEnemyPosition();
+		ClearBulletPosition();
 		PlayerInputTime = 0; PlayerPos = 0; Invinsible = 0; 
 		EnemyInputTime = 0; 
 		ItemInputTime = 0;
 		ItemCreationLoop = 1;
-		CurrentTime = 1; StageNumber++;
+		PausingTime = 0; CurrentTime = 1; StageNumber++;
 		return 1; 
 	}
 	return 0;

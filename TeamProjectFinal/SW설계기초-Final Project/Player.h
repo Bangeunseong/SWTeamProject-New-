@@ -12,8 +12,18 @@
 
 //플레이어 인풋타임 버퍼 시간 계산 함수
 int CalculatePlayerTimeBuffer() {
-	if (TimeCheckerEnd() - PlayerInputTime > PLAYERTIMEBUFFER / CurSpeed) { PlayerInputTime += PLAYERTIMEBUFFER / CurSpeed; return 0; }
+	if (TimeCheckerEnd() - PlayerInputTime - PausingTime > PLAYERTIMEBUFFER / CurSpeed) { PlayerInputTime += PLAYERTIMEBUFFER / CurSpeed; return 0; }
 	else return 1;
+}
+
+//게임 정지함수
+void GamePause() {
+ 	PausedTime = TimeCheckerEnd();
+	SetCurrentCursorPos(BACKGROUND_ORIGIN_X + BACKGROUND_ROW / 2 - 2, BACKGROUND_ORIGIN_Y + BACKGROUND_COLUMN / 2);
+	printf("Pause");
+	while (1) { if (GetAsyncKeyState(QUIT) & 0x0001) { PausingTime += TimeCheckerEnd() - PausedTime; break; } }
+	SetCurrentCursorPos(BACKGROUND_ORIGIN_X + BACKGROUND_ROW / 2 - 2, BACKGROUND_ORIGIN_Y + BACKGROUND_COLUMN / 2);
+	for (int i = 0; i < 5; i++) printf(" ");
 }
 
 //플레이어 위치 초기화 함수
@@ -123,6 +133,7 @@ void InvalidatePlayer() {
 		if (kbhit()) {
 			if (GetAsyncKeyState(SPACE) & 0x0001) ActivateSkillItem();
 			if (GetAsyncKeyState(VK_LSHIFT) & 0x0001) SwapItem();
+			if (GetAsyncKeyState(QUIT) & 0x0001) GamePause();
 			if (GetAsyncKeyState(LEFT) & 0x8000) shiftLeft();
 			if (GetAsyncKeyState(RIGHT) & 0x8000) shiftRight();
 			if (GetAsyncKeyState(UP) & 0x8000) shiftUp();

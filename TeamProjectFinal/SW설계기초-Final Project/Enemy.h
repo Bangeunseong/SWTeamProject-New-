@@ -7,7 +7,7 @@
 
 //적 NPC 버퍼 시간 계산 함수
 int CalculateEnemyTimeBuffer() {
-	if (TimeCheckerEnd() - EnemyInputTime > ENEMYTIMEBUFFER) { EnemyInputTime += ENEMYTIMEBUFFER; return 0; }
+	if (TimeCheckerEnd() - EnemyInputTime - PausingTime > ENEMYTIMEBUFFER) { EnemyInputTime += ENEMYTIMEBUFFER; return 0; }
 	else return 1;
 }
 
@@ -67,8 +67,10 @@ void shiftEnemyRight() {
 void InvalidateEnemy() {
 	ShowEnemy();
 	if (!CalculateEnemyTimeBuffer()) {
-		if (direction) shiftEnemyRight();
-		else shiftEnemyLeft();
+		if (PatternNumber == 1) {
+			if (direction) shiftEnemyRight();
+			else shiftEnemyLeft();
+		}
 	}
 }
 #endif // !ENEMY_H

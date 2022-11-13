@@ -127,6 +127,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BackGround.h" />
+    <ClInclude Include="Bullet.h" />
     <ClInclude Include="CharacterSelectionMenu.h" />
     <ClInclude Include="CursorFunctions.h" />
     <ClInclude Include="Enemy.h" />

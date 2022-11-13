@@ -10,7 +10,7 @@
 #ifndef ITEM_H
 #define ITEM_H
 
-//í”Œë ˆì´ì–´ ì¶œë ¥ í•¨ìˆ˜
+//ÇÃ·¹ÀÌ¾î Ãâ·Â ÇÔ¼ö
 void ShowFlashPlayer() {
 	if (Invinsible) SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), PLAYERINVINSIBLEINDICATECOLOR);
 	else if (UsingSkill > 0) SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), PLAYERUSINGSKILLCOLOR);
@@ -19,13 +19,13 @@ void ShowFlashPlayer() {
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
 	SetCurrentCursorPos(PLAYER_POS_X, PLAYER_POS_Y);
 }
-//í”Œë ˆì´ì–´ ìˆ¨ê¹€ í•¨ìˆ˜
+//ÇÃ·¹ÀÌ¾î ¼û±è ÇÔ¼ö
 void HideFlashPlayer() {
 	for (int i = 0; i < 6; i++) { SetCurrentCursorPos(PLAYER_POS_X + i, PLAYER_POS_Y); printf(" "); }
 	SetCurrentCursorPos(PLAYER_POS_X, PLAYER_POS_Y);
 }
 
-//ëŒ€ì‰¬ ìŠ¤í‚¬ ì‚¬ìš© ì‹œ ì¶©ëŒ ê²€ì‚¬ í•¨ìˆ˜
+//´ë½¬ ½ºÅ³ »ç¿ë ½Ã Ãæµ¹ °Ë»ç ÇÔ¼ö
 int DetectCollision_FlashPlayerwithWall(int x, int y) {
 	for (int i = 0; i < 6; i++) {
 		if ((x + i < GAMEBOARD_ORIGIN_X + 2 || x + i >= GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW) || (y <= GAMEBOARD_ORIGIN_Y || y >= GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN)) return 1;
@@ -33,7 +33,7 @@ int DetectCollision_FlashPlayerwithWall(int x, int y) {
 	return 0;
 }
 
-//ëŒ€ì‰¬ ìŠ¤í‚¬ í•¨ìˆ˜
+//´ë½¬ ½ºÅ³ ÇÔ¼ö
 void flashUp() {
 	HideFlashPlayer();
 	if (!DetectCollision_PlayerwithWall(PLAYER_POS_X, PLAYER_POS_Y - FLASHDISTANCE)) PLAYER_POS_Y -= FLASHDISTANCE;
@@ -59,23 +59,26 @@ void flashRight() {
 	ShowFlashPlayer();
 }
 
-//-------------------ì•„ì´í…œë³„ ì‘ë™í•¨ìˆ˜-----------------------
+//-------------------¾ÆÀÌÅÛº° ÀÛµ¿ÇÔ¼ö-----------------------
 
-void itemSpeedUp() { CurSpeed += SPEEDINCREASERATE; }	//í”Œë ˆì´ì–´ ìºë¦­í„° ì†ë„ ì¦ê°€
-void itemBulletSpeedDown() {};													//íƒ„ë§‰ ì†ë„ ê°ì†Œ
-void itemInvinsibility() { Invinsible = 1; }										//ë¬´ì  íŒì •
-void itemFlash() {																		//ëŒ€ì‰¬ ìŠ¤í‚¬
+void itemSpeedUp() { CurSpeed += SPEEDINCREASERATE; }	//ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ ¼Óµµ Áõ°¡
+void itemBulletSpeedDown() {};													//Åº¸· ¼Óµµ °¨¼Ò
+void itemInvinsibility() { Invinsible = 1; }										//¹«Àû ÆÇÁ¤
+void itemFlash() {																		//´ë½¬ ½ºÅ³
+	if (flashCount >= 2) return;
 	if (!flashFLAG) flashFLAG = 1;
 	if (GetAsyncKeyState(LEFT) & 0x8000) flashLeft();
 	if (GetAsyncKeyState(RIGHT) & 0x8000) flashRight();
 	if (GetAsyncKeyState(UP) & 0x8000) flashUp();
 	if (GetAsyncKeyState(DOWN) & 0x8000) flashDown();
+	flashCount++; 
 };						
-void itemDeleteBullet() {};															//ë³´ë“œíŒì— ì¡´ì¬í•˜ëŠ” ì´ì•Œë“¤ ëª¨ë‘ ì‚­ì œ
+void itemDeleteBullet() {};															//º¸µåÆÇ¿¡ Á¸ÀçÇÏ´Â ÃÑ¾Ëµé ¸ğµÎ »èÁ¦
 
 //----------------------------------------------------------------
-//------------------ì•„ì´í…œ ì¸ë²¤í† ë¦¬ ê´€ë ¨ í•¨ìˆ˜--------------------
-//ì•„ì´í…œ ìŠ¤í‚¬ ì¸ë²¤í† ë¦¬ ìƒíƒœ í™•ì¸
+//------------------¾ÆÀÌÅÛ ÀÎº¥Åä¸® °ü·Ã ÇÔ¼ö--------------------
+
+//¾ÆÀÌÅÛ ½ºÅ³ ÀÎº¥Åä¸® »óÅÂ È®ÀÎ
 int inventoryCheck() {
 	if (SubSkill != 0) return 2;
 	else { 
@@ -84,7 +87,7 @@ int inventoryCheck() {
 	}
 }
 
-//ì•„ì´í…œ ìŠ¤í‚¬ êµì²´ í•¨ìˆ˜
+//¾ÆÀÌÅÛ ½ºÅ³ ±³Ã¼ ÇÔ¼ö
 void SwapItem() {
 	if (inventoryCheck() == 2) {
 		HidePreviousCurrentNSubSkill();
@@ -95,13 +98,13 @@ void SwapItem() {
 	}
 }
 
-//ì•„ì´í…œ ìŠµë“í•¨ìˆ˜
+//¾ÆÀÌÅÛ ½ÀµæÇÔ¼ö
 void getItem() { SubSkill = CurSkill; CurSkill = ItemNumber; }
 
 //---------------------------------------------------------------
-//------------------ì•„ì´í…œ ì‚¬ìš© ê´€ë ¨ í•¨ìˆ˜---------------------
+//------------------¾ÆÀÌÅÛ »ç¿ë °ü·Ã ÇÔ¼ö---------------------
 
-//ì•„ì´í…œì˜ ì¢…ë¥˜ì— ë”°ë¼ ì‘ë™í•˜ëŠ” ìŠ¤í‚¬
+//¾ÆÀÌÅÛÀÇ Á¾·ù¿¡ µû¶ó ÀÛµ¿ÇÏ´Â ½ºÅ³
 void itemTrigger(int UsingSkill) {
 	switch (UsingSkill) {
 	case 1: itemSpeedUp();  break;
@@ -113,82 +116,82 @@ void itemTrigger(int UsingSkill) {
 	}
 }
 
-//ì•„ì´í…œ ìŠ¤í‚¬ í•´ì œ í•¨ìˆ˜
+//¾ÆÀÌÅÛ ½ºÅ³ ÇØÁ¦ ÇÔ¼ö
 void DeactivateSkillItem() { 
 	switch (UsingSkill) {
 	case 1: CurSpeed -= SPEEDINCREASERATE; break;
 	case 2: break;
 	case 3: Invinsible = 0; break;
-	case 4: flashFLAG = 0; break;
+	case 4: flashFLAG = 0; flashCount = 0; break;
 	case 5: break;
 	default: break;
 	}
 	UsingSkill = 0;
 }
 
-//ì•„ì´í…œ ìŠ¤í‚¬ ë°œë™ í•¨ìˆ˜
+//¾ÆÀÌÅÛ ½ºÅ³ ¹ßµ¿ ÇÔ¼ö
 void ActivateSkillItem() {
-	if (UsingSkill != 0) { if (flashFLAG != 0) { itemFlash(); } return; }
+	if (UsingSkill != 0) { if (flashFLAG != 0) itemFlash(); return; }
 	if (!CurSkill) return;
-	HidePreviousCurrentNSubSkill();									//UI ê°±ì‹ ì„ ìœ„í•´ ë„£ì€ ìˆ¨ê¹€í•¨ìˆ˜
-	UsingSkill = CurSkill; CurSkill = SubSkill; SubSkill = 0;	//ì£¼ ìŠ¤í‚¬ê³¼ ë³´ì¡° ìŠ¤í‚¬ Swap
-	itemTrigger(UsingSkill);													//ìŠ¤í‚¬ ë°œë™
-	SkillActivationTime = TimeCheckerEnd();						//ìŠ¤í‚¬ ë°œë™ ì‹œê°„ ê¸°ë¡
-	ShowCurrentNSubSkill();												//UI ê°±ì‹ ì„ ìœ„í•´ ë„£ì€ ì¶œë ¥í•¨ìˆ˜
+	HidePreviousCurrentNSubSkill();									//UI °»½ÅÀ» À§ÇØ ³ÖÀº ¼û±èÇÔ¼ö
+	UsingSkill = CurSkill; CurSkill = SubSkill; SubSkill = 0;	//ÁÖ ½ºÅ³°ú º¸Á¶ ½ºÅ³ Swap
+	itemTrigger(UsingSkill);													//½ºÅ³ ¹ßµ¿
+	SkillActivationTime = TimeCheckerEnd();						//½ºÅ³ ¹ßµ¿ ½Ã°£ ±â·Ï
+	ShowCurrentNSubSkill();												//UI °»½ÅÀ» À§ÇØ ³ÖÀº Ãâ·ÂÇÔ¼ö
 }
 
-//ì•„ì´í…œ ìŠ¤í‚¬ ì§€ì†ì‹œê°„ ì²´í¬ í•¨ìˆ˜
+//¾ÆÀÌÅÛ ½ºÅ³ Áö¼Ó½Ã°£ Ã¼Å© ÇÔ¼ö
 void SkillTimeCheck() {
 	if (!UsingSkill) return;
-	if (TimeCheckerEnd() - SkillActivationTime > SkillTime) DeactivateSkillItem();
+	if (TimeCheckerEnd() - SkillActivationTime - PausingTime > SkillTime) DeactivateSkillItem();
 }
 
 
 //----------------------------------------------------------------
-//-----------------ì•„ì´í…œ ë¬´ë¸Œë¨¼íŠ¸ ê´€ë ¨ í•¨ìˆ˜------------------
+//-----------------¾ÆÀÌÅÛ ¹«ºê¸ÕÆ® °ü·Ã ÇÔ¼ö------------------
 
-//ì•„ì´í…œ ì›€ì§ì„ ë”œë ˆì´ í•¨ìˆ˜
+//¾ÆÀÌÅÛ ¿òÁ÷ÀÓ µô·¹ÀÌ ÇÔ¼ö
 int CalculateItemTimeBuffer() {
-	if (TimeCheckerEnd() - ItemInputTime > ITEMTIMEBUFFER) { ItemInputTime += ITEMTIMEBUFFER; return 0; }
+	if (TimeCheckerEnd() - ItemInputTime - PausingTime > ITEMTIMEBUFFER) { ItemInputTime += ITEMTIMEBUFFER; return 0; }
 	else return 1;
 }
 
-//ì•„ì´í…œ ì‚­ì œ í•¨ìˆ˜
+//¾ÆÀÌÅÛ »èÁ¦ ÇÔ¼ö
 void HideItem() {
 	SetCurrentCursorPos(ITEM_POS_X, ITEM_POS_Y);
 	printf(" ");
 }
 
-//ì•„ì´í…œ ì¶œë ¥ í•¨ìˆ˜
+//¾ÆÀÌÅÛ Ãâ·Â ÇÔ¼ö
 void ShowItem() {
 	SetCurrentCursorPos(ITEM_POS_X, ITEM_POS_Y);
-	printf("%d", itemList[ItemNumber - 1]);
+	printf("%c", itemList[ItemNumber - 1]);
 }
 
-//ì•„ì´í…œ ì¶©ëŒ ê²€ì‚¬ í•¨ìˆ˜
+//¾ÆÀÌÅÛ Ãæµ¹ °Ë»ç ÇÔ¼ö
 int DetectCollision_Item(int x, int y) {
 	if (y >= GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN) return 1;
 	return 0;
 }
 
-//ì•„ì´í…œ ìƒì„± í•¨ìˆ˜
+//¾ÆÀÌÅÛ »ı¼º ÇÔ¼ö
 void CreateItem() {
 	if (TimeCheckerEnd() > ItemCreationLoop *(StageTime[StageNumber - 1]) / 3.0 && ItemCreationLoop < 3) {
 		srand((unsigned)time(NULL));
-		ITEM_POS_X = rand() % GAMEBOARD_ROW + GAMEBOARD_ORIGIN_X + 2;	//ì´ˆê¸° ëœë¤ Xì¢Œí‘œ
-		ITEM_POS_Y = GAMEBOARD_ORIGIN_Y + 1;	//ì´ˆê¸° Yì¢Œí‘œ
-		ItemNumber = rand() % 5 + 1;							//ì•„ì´í…œ ë„˜ë²„ ëœë¤ ìƒì„±
-		ItemInputTime = TimeCheckerEnd();					//ì•„ì´í…œ ìƒì„± ì‹œê°„ ê¸°ë¡
-		itemFLAG = 1;													//ê²Œì„ ë³´ë“œ ë‚´ ì•„ì´í…œ ì•„ì´ì½˜ ì¡´ì¬ ìœ ë¬´ 1
-		ShowItem();														//ì•„ì´í…œ ì¶œë ¥
-		ItemCreationLoop++;										//í˜„ì¬ê¹Œì§€ ì¶œë ¥í•œ ì•„ì´í…œ ê°¯ìˆ˜
+		ITEM_POS_X = rand() % GAMEBOARD_ROW + GAMEBOARD_ORIGIN_X + 2;	//ÃÊ±â ·£´ı XÁÂÇ¥
+		ITEM_POS_Y = GAMEBOARD_ORIGIN_Y + 1;	//ÃÊ±â YÁÂÇ¥
+		ItemNumber = rand() % 5 + 1;							//¾ÆÀÌÅÛ ³Ñ¹ö ·£´ı »ı¼º
+		ItemInputTime = TimeCheckerEnd();					//¾ÆÀÌÅÛ »ı¼º ½Ã°£ ±â·Ï
+		itemFLAG = 1;													//°ÔÀÓ º¸µå ³» ¾ÆÀÌÅÛ ¾ÆÀÌÄÜ Á¸Àç À¯¹« 1
+		ShowItem();														//¾ÆÀÌÅÛ Ãâ·Â
+		ItemCreationLoop++;										//ÇöÀç±îÁö Ãâ·ÂÇÑ ¾ÆÀÌÅÛ °¹¼ö
 	}
 }
 
-//ì•„ì´í…œ í•­ëª© ì´ˆê¸°í™” í•¨ìˆ˜
+//¾ÆÀÌÅÛ Ç×¸ñ ÃÊ±âÈ­ ÇÔ¼ö
 void ResetItem() { HideItem(); itemFLAG = 0; }
 
-//ì•„ì´í…œ ì¢Œí‘œ 1ì”© ê°ì†Œì‹œí‚¤ëŠ” í•¨ìˆ˜
+//¾ÆÀÌÅÛ ÁÂÇ¥ 1¾¿ °¨¼Ò½ÃÅ°´Â ÇÔ¼ö
 void shiftItemDown() {
 	HideItem();
 	if (ItemCollisionDetected) {
@@ -206,7 +209,7 @@ void shiftItemDown() {
 }
 
 //-------------------------------------------------------------
-//-----------------ì•„ì´í…œ ê°±ì‹  í•¨ìˆ˜(ë³¸ì²´)--------------------
+//-----------------¾ÆÀÌÅÛ °»½Å ÇÔ¼ö(º»Ã¼)--------------------
 void InvalidateItem() {
 	if (!itemFLAG) CreateItem();
 	else { if (!CalculateItemTimeBuffer()) { shiftItemDown(); } }
