@@ -35,6 +35,7 @@ void RunGame() {
 		ShowCharacterSelectionMenu();
 		ShowBackGround();
 		InitializeLifeGauge();
+		ClearBulletPosition();
 		switch (GameMode) {
 		case 0: StoryMode(); break;
 		case 1: break;

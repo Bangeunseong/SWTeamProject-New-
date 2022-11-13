@@ -205,6 +205,8 @@ char itemList[] = { 'S', 'L', 'I', 'D', 'E' };
 typedef struct Bullet {
 	int BULLET_POS_X, BULLET_POS_Y;
 	int BulletActivation;
+	int CollisionPlayer;
+	int CollisionWall;
 }Bullet;
 
 //Bullet 구조체 배열
