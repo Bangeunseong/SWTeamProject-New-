@@ -2,8 +2,8 @@
 #pragma warning(disable:4996)
 #include <conio.h>
 #include <WinUser.h>
-#include "VariableSets.h"
 #include "CursorFunctions.h"
+#include "VariableSets.h"
 #include "Item.h"
 #include "Timer.h"
 #include "UI.h"
@@ -69,6 +69,13 @@ int DetectCollision_PlayerwithEnemy(int x, int y) {
 	return 0;
 }
 
+int DetectCollision_PlayerwithBullet(int x, int y) {
+	for (int i = 0; i < 6; i++) {
+		if (UniBoard[y - GAMEBOARD_ORIGIN_Y][x - GAMEBOARD_ORIGIN_X + i] == BULLET) return 1;
+	}
+	return 0;
+}
+
 //플레이어 기준 아이템과 부딪혔을 때 검사하는 함수
 int DetectCollision_PlayerwithItem(int x, int y) {
 	if (y == PLAYER_POS_Y && itemFLAG == 1) {
@@ -89,10 +96,17 @@ void ReduceLifeGauge(int damage) {
 void GetDamagedFromEnemy() {
 	if (UsingSkill == 3) return;
 	if (Invinsible == 1) { if (TimeCheckerEnd() - CollisionTime > InvinsibleTime) Invinsible = 0; }		//무적인 상태에서 지속시간이 지나면 해제하는 함수
+	if (DetectCollision_PlayerwithBullet(PLAYER_POS_X, PLAYER_POS_Y) && Invinsible == 0) {
+		ReduceLifeGauge(BULLETDAMAGE);
+		InvalidateLifeGauge();												//라이프 게이지 갱신은 데미지를 받을 때만 수행
+		Invinsible = 1; CollisionTime = TimeCheckerEnd();		//무적상태로 만들고 충돌한 시간 갱신
+		return;
+	}
 	if (DetectCollision_PlayerwithEnemy(PLAYER_POS_X, PLAYER_POS_Y) && Invinsible == 0) { 
 		ReduceLifeGauge(ENEMYDAMAGE);
 		InvalidateLifeGauge();												//라이프 게이지 갱신은 데미지를 받을 때만 수행
 		Invinsible = 1; CollisionTime = TimeCheckerEnd();		//무적상태로 만들고 충돌한 시간 갱신
+		return;
 	}
 }
 

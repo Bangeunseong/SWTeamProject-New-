@@ -187,7 +187,7 @@ int ItemCollisionDetected = 0;
 int ItemNumber = 0;
 
 //플레이어의 주 스킬, 보조 스킬, 사용 중인 스킬
-int CurSkill = 4, SubSkill = 4, UsingSkill = 0;
+int CurSkill = 0, SubSkill = 0, UsingSkill = 0;
 
 //스킬 지속시간, 스킬 발동 시작시간
 int SkillTime = 3; double SkillActivationTime = 0;
@@ -211,7 +211,7 @@ typedef struct Bullet {
 
 //Bullet 구조체 배열
 #define BULLETLISTSIZE 1000
-#define PATTERNTIME_SPREAD 10
+#define PATTERNTIME_SPREAD 10.0
 Bullet bullet[1000];
 
 double BulletLaunchStartTime = 0;
@@ -234,7 +234,7 @@ double BulletSpeed = 1;
 #define BULLETDAMAGE 1
 
 //Bullet 갱신 버퍼 시간
-#define BULLETTIMEBUFFER 0.3
+#define BULLETTIMEBUFFER 0.25
 
 //Bullet 인풋 시작 시간
 double BulletInputTime = 0;

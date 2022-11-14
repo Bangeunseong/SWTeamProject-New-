@@ -29,6 +29,7 @@ int StageOver() {
 		EnemyInputTime = 0; 
 		ItemInputTime = 0;
 		ItemCreationLoop = 1;
+		BulletInputTime = 0;
 		PausingTime = 0; CurrentTime = 1; StageNumber++;
 		return 1; 
 	}

@@ -2,9 +2,8 @@
 #pragma warning(disable:4996)
 #include <stdio.h>
 #include <string.h>
-#include <math.h>
-#include "VariableSets.h"
 #include "CursorFunctions.h"
+#include "VariableSets.h"
 #include "Timer.h"
 #ifndef UI_H
 #define UI_H

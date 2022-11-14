@@ -1,9 +1,7 @@
 #pragma once
 #pragma warning(disable:4996)
 #include "CursorFunctions.h"
-#include "BackGround.h"
 #include "VariableSets.h"
-#include "Player.h"
 #include "Timer.h"
 #include "UI.h"
 
@@ -169,7 +167,7 @@ void ShowItem() {
 }
 
 //아이템 충돌 검사 함수
-int DetectCollision_Item(int x, int y) {
+int DetectCollision_ItemwithWall(int x, int y) {
 	if (y >= GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN) return 1;
 	return 0;
 }
@@ -177,7 +175,6 @@ int DetectCollision_Item(int x, int y) {
 //아이템 생성 함수
 void CreateItem() {
 	if (TimeCheckerEnd() > ItemCreationLoop *(StageTime[StageNumber - 1]) / 3.0 && ItemCreationLoop < 3) {
-		srand((unsigned)time(NULL));
 		ITEM_POS_X = rand() % GAMEBOARD_ROW + GAMEBOARD_ORIGIN_X + 2;	//초기 랜덤 X좌표
 		ITEM_POS_Y = GAMEBOARD_ORIGIN_Y + 1;	//초기 Y좌표
 		ItemNumber = rand() % 5 + 1;							//아이템 넘버 랜덤 생성
@@ -202,7 +199,7 @@ void shiftItemDown() {
 		ShowCurrentNSubSkill();
 		return; 
 	}
-	if (DetectCollision_Item(ITEM_POS_X, ITEM_POS_Y + 1)) { ResetItem(); return; }
+	if (DetectCollision_ItemwithWall(ITEM_POS_X, ITEM_POS_Y + 1)) { ResetItem(); return; }
 	else ITEM_POS_Y++;
 	
 	ShowItem();
