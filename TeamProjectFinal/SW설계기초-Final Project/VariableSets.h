@@ -81,7 +81,7 @@ int StageTime[] = { 60,90,120 };
 #define PLAYERINVINSIBLEINDICATECOLOR 6
 
 //플레이어 인풋타임 버퍼시간
-double PLAYERTIMEBUFFER = 0.035;
+double PLAYERTIMEBUFFER = 0.04;
 
 //플레이어 인풋타임 시작시간
 double PlayerInputTime = 0;
@@ -203,7 +203,7 @@ char itemList[] = { 'S', 'L', 'I', 'D', 'E' };
 
 #define BULLET 3								//Bullet 고유번호
 #define BULLETDAMAGE 1				//Bullet Damage
-#define BULLETTIMEBUFFER 0.25		//Bullet 갱신 버퍼 시간
+#define BULLETTIMEBUFFER 0.3		//Bullet 갱신 버퍼 시간
 
 typedef struct Bullet {						//Bullet 위치 저장 공간 구조체
 	int BULLET_POS_X, BULLET_POS_Y;
