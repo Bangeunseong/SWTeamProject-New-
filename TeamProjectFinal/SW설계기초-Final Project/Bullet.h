@@ -13,6 +13,9 @@ int CalculateBulletTimeBuffer() {
 	else return 1;
 }
 
+//랜덤 패턴 넘버 지정
+int SetRandomPatternNumber(int max) { PatternNumber = rand() % max + 1; }
+
 void HideBullet(int bulletnumber) {
 	SetCurrentCursorPos(bullet[bulletnumber].BULLET_POS_X, bullet[bulletnumber].BULLET_POS_Y);
 	UniBoard[bullet[bulletnumber].BULLET_POS_Y - GAMEBOARD_ORIGIN_Y][bullet[bulletnumber].BULLET_POS_X - GAMEBOARD_ORIGIN_X] = 0;
@@ -33,7 +36,9 @@ void ClearBulletPosition() {
 		bullet[i].BULLET_POS_Y = GAMEBOARD_ORIGIN_Y + 5;
 		bullet[i].BulletActivation = bullet[i].CollisionPlayer = bullet[i].CollisionWall = 0;
 	}
+	PatternStart = 0;
 	PatternCycle = 0;
+	PatternNumber = 0;
 	BULLETCOUNT = 0;
 }
 
@@ -114,14 +119,18 @@ int MoveBullet_E(int bulletnumber) {
 
 void BulletLaunchTime() {
 	if (!PatternStart) { 
-		if (TimeCheckerEnd() > 3.0) { PatternStart = 1; PatternNumber = 1; BulletLaunchStartTime = TimeCheckerEnd(); }
+		double CheckedTime = TimeCheckerEnd() - PausingTime;
+		if (CheckedTime > 3.0 && CheckedTime < 13.0) { SetRandomPatternNumber(TOTALPATTERNCOUNT); PatternStart = 1; BulletLaunchStartTime = CheckedTime; }
+		else if (CheckedTime > 13.0 && CheckedTime < 23.0) { SetRandomPatternNumber(TOTALPATTERNCOUNT); PatternStart = 1; BulletLaunchStartTime = CheckedTime; }
 	}
+	else return;
 }
 
 //Bullet Pattern
 int BulletPattern_Spread() {
 	int flag = 0; 
-	if (TimeCheckerEnd() < PATTERNTIME_SPREAD + BulletLaunchStartTime && TimeCheckerEnd() > BulletLaunchStartTime) BULLETCOUNT = (++PatternCycle) * 3;
+	double CheckedTime = TimeCheckerEnd() - PausingTime;
+	if (CheckedTime < PATTERNTIME_SPREAD + BulletLaunchStartTime && CheckedTime > BulletLaunchStartTime) BULLETCOUNT = (++PatternCycle) * 3;
 	for (int i = 0; i < 3 * PatternCycle; i++) {
 		switch (i % 3) {
 		case 0: flag += MoveBullet_SE(i); break;
@@ -129,14 +138,21 @@ int BulletPattern_Spread() {
 		case 2: flag += MoveBullet_SW(i); break;
 		}
 	}
-	if (!flag) { PatternNumber = 0; PatternStart = 0; return 1; } return 0;
+	if (!flag) return 1;
+	return 0;
 }
 
 //
 void InvalidateBullet() {
 	if (!CalculateBulletTimeBuffer()) {
 		BulletLaunchTime();
-		if (PatternStart) if (BulletPattern_Spread()) ClearBulletPosition();
+		if (PatternStart) {
+			switch (PatternNumber) {
+			case 1: if (BulletPattern_Spread()) ClearBulletPosition(); break;
+			default: break;
+			}
+		}
+		else return;
 	}
 }
 #endif // !BULLET_H

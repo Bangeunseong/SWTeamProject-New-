@@ -201,40 +201,30 @@ char itemList[] = { 'S', 'L', 'I', 'D', 'E' };
 
 //----------------------BULLET 상수--------------------------
 
-//Bullet 위치 저장 공간
-typedef struct Bullet {
+#define BULLET 3								//Bullet 고유번호
+#define BULLETDAMAGE 1				//Bullet Damage
+#define BULLETTIMEBUFFER 0.25		//Bullet 갱신 버퍼 시간
+
+typedef struct Bullet {						//Bullet 위치 저장 공간 구조체
 	int BULLET_POS_X, BULLET_POS_Y;
 	int BulletActivation;
 	int CollisionPlayer;
 	int CollisionWall;
-}Bullet;
+}Bullet;						
+Bullet bullet[1000];							//Bullet 구조체 배열
 
-//Bullet 구조체 배열
-#define BULLETLISTSIZE 1000
-#define PATTERNTIME_SPREAD 10.0
-Bullet bullet[1000];
+#define TOTALPATTERNCOUNT 1
+#define PATTERNTIME_SPREAD 10.0//Spread 패턴 지속시간
 
-double BulletLaunchStartTime = 0;
+double BulletLaunchStartTime = 0;	//총알 발사 시작 시간
+int PatternStart = 0;							//패턴 시작 유무
+int PatternNumber = 0;					//패턴 넘버
+int PatternCycle = 0;							//패턴 사이클
+int BULLETCOUNT = 0;						//총알 개수
+double BulletSpeed = 1;					//Bullet 속도
 
-int PatternStart = 0;
 
-int PatternNumber = 0;
 
-int PatternCycle = 0;
-
-int BULLETCOUNT = 0;
-
-//Bullet 속도
-double BulletSpeed = 1;
-
-//Bullet 고유번호
-#define BULLET 3
-
-//Bullet Damage
-#define BULLETDAMAGE 1
-
-//Bullet 갱신 버퍼 시간
-#define BULLETTIMEBUFFER 0.25
 
 //Bullet 인풋 시작 시간
 double BulletInputTime = 0;
