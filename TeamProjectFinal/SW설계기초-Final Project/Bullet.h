@@ -75,8 +75,8 @@ int MoveBullet_W(int bulletnumber) {
 	if (DetectCollision_BulletwithPlayer(bullet[bulletnumber].BULLET_POS_X, bullet[bulletnumber].BULLET_POS_Y)) {		//플레이어와 부딪혔으면 총알 비활성화, 플레이어와 부딪혔다는 인디케이터 1로 갱신 0을 리턴하며 종료
 		bullet[bulletnumber].BulletActivation = 0; bullet[bulletnumber].CollisionPlayer = 1;
 	}
-	if (!DetectCollision_BulletwithWall(bullet[bulletnumber].BULLET_POS_X - 2, bullet[bulletnumber].BULLET_POS_Y)) //벽에 부딪히지 않았으면 X좌표 - 2
-		bullet[bulletnumber].BULLET_POS_X -= 2;
+	if (!DetectCollision_BulletwithWall(bullet[bulletnumber].BULLET_POS_X - 1, bullet[bulletnumber].BULLET_POS_Y)) //벽에 부딪히지 않았으면 X좌표 - 2
+		bullet[bulletnumber].BULLET_POS_X--;
 	else { bullet[bulletnumber].BulletActivation = 0; bullet[bulletnumber].CollisionWall = 1; return 0; }	//부딪혔다면 총알 비활성화, 벽에 부딪혔다는 인디케이터 1로 갱신 0을 리턴하며 종료
 	//--------------------------------------------------------------
 
@@ -89,8 +89,8 @@ int MoveBullet_SW(int bulletnumber) {
 
 	HideBullet(bulletnumber);
 	if (DetectCollision_BulletwithPlayer(bullet[bulletnumber].BULLET_POS_X, bullet[bulletnumber].BULLET_POS_Y)) { bullet[bulletnumber].BulletActivation = 0; bullet[bulletnumber].CollisionPlayer = 1; }//플레이어와 부딪혔으면 총알 비활성화, 플레이어와 부딪혔다는 인디케이터 1로 갱신 0을 리턴하며 종료
-	if (!DetectCollision_BulletwithWall(bullet[bulletnumber].BULLET_POS_X - 2, bullet[bulletnumber].BULLET_POS_Y + 1)) { 
-		bullet[bulletnumber].BULLET_POS_X -= 2; bullet[bulletnumber].BULLET_POS_Y++;
+	if (!DetectCollision_BulletwithWall(bullet[bulletnumber].BULLET_POS_X - 1, bullet[bulletnumber].BULLET_POS_Y + 1)) { 
+		bullet[bulletnumber].BULLET_POS_X--; bullet[bulletnumber].BULLET_POS_Y++;
 	}
 	else { bullet[bulletnumber].BulletActivation = 0; bullet[bulletnumber].CollisionWall = 1; return 0; }
 	ShowBullet(bulletnumber); return 1;
@@ -113,8 +113,8 @@ int MoveBullet_SE(int bulletnumber) {
 
 	HideBullet(bulletnumber);
 	if (DetectCollision_BulletwithPlayer(bullet[bulletnumber].BULLET_POS_X, bullet[bulletnumber].BULLET_POS_Y)) { bullet[bulletnumber].BulletActivation = 0; bullet[bulletnumber].CollisionPlayer = 1; }//플레이어와 부딪혔으면 총알 비활성화, 플레이어와 부딪혔다는 인디케이터 1로 갱신 0을 리턴하며 종료
-	if (!DetectCollision_BulletwithWall(bullet[bulletnumber].BULLET_POS_X + 2, bullet[bulletnumber].BULLET_POS_Y + 1)) {
-		bullet[bulletnumber].BULLET_POS_X += 2; bullet[bulletnumber].BULLET_POS_Y++;
+	if (!DetectCollision_BulletwithWall(bullet[bulletnumber].BULLET_POS_X + 1, bullet[bulletnumber].BULLET_POS_Y + 1)) {
+		bullet[bulletnumber].BULLET_POS_X++; bullet[bulletnumber].BULLET_POS_Y++;
 	}
 	else { bullet[bulletnumber].BulletActivation = 0; bullet[bulletnumber].CollisionWall = 1; return 0; }
 	ShowBullet(bulletnumber); return 1;
@@ -126,7 +126,7 @@ int MoveBullet_E(int bulletnumber) {
 
 	HideBullet(bulletnumber);
 	if (DetectCollision_BulletwithPlayer(bullet[bulletnumber].BULLET_POS_X, bullet[bulletnumber].BULLET_POS_Y)) { bullet[bulletnumber].BulletActivation = 0; bullet[bulletnumber].CollisionPlayer = 1; }//플레이어와 부딪혔으면 총알 비활성화, 플레이어와 부딪혔다는 인디케이터 1로 갱신 0을 리턴하며 종료
-	if (!DetectCollision_BulletwithWall(bullet[bulletnumber].BULLET_POS_X + 2, bullet[bulletnumber].BULLET_POS_Y)) bullet[bulletnumber].BULLET_POS_X += 2;
+	if (!DetectCollision_BulletwithWall(bullet[bulletnumber].BULLET_POS_X + 1, bullet[bulletnumber].BULLET_POS_Y)) bullet[bulletnumber].BULLET_POS_X++;
 	else { bullet[bulletnumber].BulletActivation = 0; bullet[bulletnumber].CollisionWall = 1; return 0; }
 	ShowBullet(bulletnumber); return 1;
 }
@@ -135,8 +135,7 @@ int MoveBullet_E(int bulletnumber) {
 void BulletLaunchTime() {	//아직 불안정하므로 수정이 필요함!!
 	if (!PatternStart) { 
 		double CheckedTime = TimeCheckerEnd() - PausingTime;
-		if (CheckedTime > 3.0 && CheckedTime < 13.0) { SetRandomPatternNumber(TOTALPATTERNCOUNT); PatternStart = 1; BulletLaunchStartTime = CheckedTime; }
-		else if (CheckedTime > 13.0 && CheckedTime < 23.0) { SetRandomPatternNumber(TOTALPATTERNCOUNT); PatternStart = 1; BulletLaunchStartTime = CheckedTime; }
+		if (CheckedTime > BulletPatternEndTime - BulletPatternStartTime + 3.0) { SetRandomPatternNumber(TOTALPATTERNCOUNT); PatternStart = 1; BulletPatternStartTime = CheckedTime; }
 	}
 	else return;
 }
@@ -145,16 +144,15 @@ void BulletLaunchTime() {	//아직 불안정하므로 수정이 필요함!!
 int BulletPattern_Spread() {
 	int flag = 0; 
 	double CheckedTime = TimeCheckerEnd() - PausingTime;
-	if (CheckedTime < PATTERNTIME_SPREAD + BulletLaunchStartTime && CheckedTime > BulletLaunchStartTime) BULLETCOUNT = (++PatternCycle) * 3;
+	if (CheckedTime < PATTERNTIME_SPREAD + BulletPatternStartTime && CheckedTime > BulletPatternStartTime) BULLETCOUNT = (++PatternCycle) * 3;
 	for (int i = 0; i < 3 * PatternCycle; i++) {
 		switch (i % 3) {
 		case 0: flag += MoveBullet_SE(i); break;
 		case 1: flag += MoveBullet_S(i); break;
 		case 2: flag += MoveBullet_SW(i); break;
 		}
-		
 	}
-	if (!flag) return 1;
+	if (!flag) { BulletPatternEndTime = TimeCheckerEnd() - PausingTime; return 1; }
 	return 0;
 }
 

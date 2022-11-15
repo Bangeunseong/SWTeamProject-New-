@@ -216,7 +216,8 @@ Bullet bullet[1000];							//Bullet 구조체 배열
 #define TOTALPATTERNCOUNT 1
 #define PATTERNTIME_SPREAD 10.0//Spread 패턴 지속시간
 
-double BulletLaunchStartTime = 0;	//총알 발사 시작 시간
+double BulletPatternStartTime = 0;	//총알 발사 시작 시간
+double BulletPatternEndTime = 0;
 int PatternStart = 0;							//패턴 시작 유무
 int PatternNumber = 0;					//패턴 넘버
 int PatternCycle = 0;							//패턴 사이클
