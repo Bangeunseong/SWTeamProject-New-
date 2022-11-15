@@ -175,7 +175,7 @@ int DetectCollision_ItemwithWall(int x, int y) {
 //아이템 생성 함수
 void CreateItem() {
 	if (TimeCheckerEnd() > ItemCreationLoop *(StageTime[StageNumber - 1]) / 3.0 && ItemCreationLoop < 3) {
-		ITEM_POS_X = rand() % GAMEBOARD_ROW + GAMEBOARD_ORIGIN_X;	//초기 랜덤 X좌표
+		ITEM_POS_X = rand() % GAMEBOARD_ROW + GAMEBOARD_ORIGIN_X - 2;	//초기 랜덤 X좌표
 		ITEM_POS_Y = GAMEBOARD_ORIGIN_Y + 1;	//초기 Y좌표
 		ItemNumber = rand() % 5 + 1;							//아이템 넘버 랜덤 생성
 		ItemInputTime = TimeCheckerEnd();					//아이템 생성 시간 기록

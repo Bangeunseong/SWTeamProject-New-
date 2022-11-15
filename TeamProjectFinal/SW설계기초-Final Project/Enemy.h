@@ -71,6 +71,10 @@ void InvalidateEnemy() {
 			if (direction) shiftEnemyRight();
 			else shiftEnemyLeft();
 		}
+		else if (PatternNumber == 2) {
+			if (rand() % 2 == 0) { shiftEnemyLeft(); }
+			else { shiftEnemyRight(); }
+		}
 	}
 }
 #endif // !ENEMY_H

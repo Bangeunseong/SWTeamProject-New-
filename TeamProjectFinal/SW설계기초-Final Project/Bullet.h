@@ -40,11 +40,20 @@ void ClearBulletPosition() {
 	PatternCycle = 0;
 	PatternNumber = 0;
 	BULLETCOUNT = 0;
+	BulletSpeed = 1;
 }
 
 void BulletPostionRenewal(int bulletnumber) {
-	bullet[bulletnumber].BULLET_POS_X = ENEMY_POS_X + 2;
-	bullet[bulletnumber].BULLET_POS_Y = ENEMY_POS_Y + 3;
+	if (PatternNumber == 1) {
+		bullet[bulletnumber].BULLET_POS_X = ENEMY_POS_X + 2;
+		bullet[bulletnumber].BULLET_POS_Y = ENEMY_POS_Y + 3;
+	}
+	else if (PatternNumber == 2) {
+		if (bulletnumber % 3 == 0) { bullet[bulletnumber].BULLET_POS_X = ENEMY_POS_X + 1; }
+		else if (bulletnumber % 3 == 1) { bullet[bulletnumber].BULLET_POS_X = ENEMY_POS_X + 2; }
+		else { bullet[bulletnumber].BULLET_POS_X = ENEMY_POS_X + 3; }
+		bullet[bulletnumber].BULLET_POS_Y = ENEMY_POS_Y + 3;
+	}
 }
 
 int DetectCollision_BulletwithWall(int x, int y) {
@@ -84,7 +93,9 @@ int MoveBullet_W(int bulletnumber) {
 }
 //Move bullet to South West
 int MoveBullet_SW(int bulletnumber) {
-	if (!bullet[bulletnumber].BulletActivation && !bullet[bulletnumber].CollisionPlayer && !bullet[bulletnumber].CollisionWall) { BulletPostionRenewal(bulletnumber); bullet[bulletnumber].BulletActivation = 1; }
+	if (!bullet[bulletnumber].BulletActivation && !bullet[bulletnumber].CollisionPlayer && !bullet[bulletnumber].CollisionWall) { 
+		BulletPostionRenewal(bulletnumber); bullet[bulletnumber].BulletActivation = 1;
+	}
 	if (!bullet[bulletnumber].BulletActivation) return 0;
 
 	HideBullet(bulletnumber);
@@ -97,7 +108,9 @@ int MoveBullet_SW(int bulletnumber) {
 }
 //Move bullet to South
 int MoveBullet_S(int bulletnumber) {
-	if (!bullet[bulletnumber].BulletActivation && !bullet[bulletnumber].CollisionPlayer && !bullet[bulletnumber].CollisionWall) { BulletPostionRenewal(bulletnumber); bullet[bulletnumber].BulletActivation = 1; }
+	if (!bullet[bulletnumber].BulletActivation && !bullet[bulletnumber].CollisionPlayer && !bullet[bulletnumber].CollisionWall) { 
+		BulletPostionRenewal(bulletnumber); bullet[bulletnumber].BulletActivation = 1;
+	}
 	if (!bullet[bulletnumber].BulletActivation) return 0;
 
 	HideBullet(bulletnumber);
@@ -132,19 +145,25 @@ int MoveBullet_E(int bulletnumber) {
 }
 //----------------------------------------------------------------------------
 
-void BulletLaunchTime() {	//아직 불안정하므로 수정이 필요함!!
+//When bullet launches record time and set patternnumber, start pattern
+void BulletLaunchTime() {
 	if (!PatternStart) { 
 		double CheckedTime = TimeCheckerEnd() - PausingTime;
-		if (CheckedTime > BulletPatternEndTime - BulletPatternStartTime + 3.0) { SetRandomPatternNumber(TOTALPATTERNCOUNT); PatternStart = 1; BulletPatternStartTime = CheckedTime; }
+		if (CheckedTime > BulletPatternEndTime + PATTERNDURATION) { 
+			SetRandomPatternNumber(TOTALPATTERNCOUNT); 
+			if (PatternNumber == 2) BulletSpeed = 3;
+			PatternStart = 1; BulletPatternStartTime = CheckedTime;
+		}
 	}
 	else return;
 }
 
-//Bullet Pattern
+//Bullet Pattern Spread
 int BulletPattern_Spread() {
 	int flag = 0; 
 	double CheckedTime = TimeCheckerEnd() - PausingTime;
-	if (CheckedTime < PATTERNTIME_SPREAD + BulletPatternStartTime && CheckedTime > BulletPatternStartTime) BULLETCOUNT = (++PatternCycle) * 3;
+	if (CheckedTime < PATTERNTIME_SPREAD + BulletPatternStartTime && CheckedTime > BulletPatternStartTime) 
+		BULLETCOUNT = (++PatternCycle) * 3;
 	for (int i = 0; i < 3 * PatternCycle; i++) {
 		switch (i % 3) {
 		case 0: flag += MoveBullet_SE(i); break;
@@ -157,12 +176,30 @@ int BulletPattern_Spread() {
 }
 
 //
+int BulletPattern_Laser() {
+	int flag = 0;
+	double CheckedTime = TimeCheckerEnd() - PausingTime;
+	if (CheckedTime < PATTERNTIME_LASER + BulletPatternStartTime && CheckedTime > BulletPatternStartTime)
+		BULLETCOUNT = (++PatternCycle) * 3;
+	for (int i = 0; i < 3 * PatternCycle; i++) {
+		switch (i % 3) {
+		case 0: flag += MoveBullet_S(i); break;
+		case 1: flag += MoveBullet_S(i); break;
+		case 2: flag += MoveBullet_S(i); break;
+		}
+	}
+	if (!flag) { BulletPatternEndTime = TimeCheckerEnd() - PausingTime; return 1; }
+	return 0;
+}
+
+//총알의 위치 갱신 함수
 void InvalidateBullet() {
 	if (!CalculateBulletTimeBuffer()) {
 		BulletLaunchTime();
 		if (PatternStart) {
 			switch (PatternNumber) {
 			case 1: if (BulletPattern_Spread()) ClearBulletPosition(); break;
+			case 2: if (BulletPattern_Laser()) ClearBulletPosition(); break;
 			default: break;
 			}
 		}

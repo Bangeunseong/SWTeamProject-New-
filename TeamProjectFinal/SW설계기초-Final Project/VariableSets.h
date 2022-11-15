@@ -81,7 +81,7 @@ int StageTime[] = { 60,90,120 };
 #define PLAYERINVINSIBLEINDICATECOLOR 6
 
 //플레이어 인풋타임 버퍼시간
-double PLAYERTIMEBUFFER = 0.04;
+double PLAYERTIMEBUFFER = 0.035;
 
 //플레이어 인풋타임 시작시간
 double PlayerInputTime = 0;
@@ -213,8 +213,10 @@ typedef struct Bullet {						//Bullet 위치 저장 공간 구조체
 }Bullet;						
 Bullet bullet[1000];							//Bullet 구조체 배열
 
-#define TOTALPATTERNCOUNT 1
+#define TOTALPATTERNCOUNT 2
+#define PATTERNDURATION 1.5
 #define PATTERNTIME_SPREAD 10.0//Spread 패턴 지속시간
+#define PATTERNTIME_LASER 12.0//Laser 패턴 지속시간
 
 double BulletPatternStartTime = 0;	//총알 발사 시작 시간
 double BulletPatternEndTime = 0;
@@ -223,9 +225,6 @@ int PatternNumber = 0;					//패턴 넘버
 int PatternCycle = 0;							//패턴 사이클
 int BULLETCOUNT = 0;						//총알 개수
 double BulletSpeed = 1;					//Bullet 속도
-
-
-
 
 //Bullet 인풋 시작 시간
 double BulletInputTime = 0;
