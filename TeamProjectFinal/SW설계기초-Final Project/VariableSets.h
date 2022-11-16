@@ -213,21 +213,20 @@ typedef struct Bullet {						//Bullet 위치 저장 공간 구조체
 }Bullet;						
 Bullet bullet[1000];							//Bullet 구조체 배열
 
-#define TOTALPATTERNCOUNT 3
-#define PATTERNDURATION 1.5
+#define TOTALPATTERNCOUNT 3	//총 패턴 갯수
+#define PATTERNDURATION 1.5		//패턴 durationtime
 #define PATTERNTIME_SPREAD 10.0//Spread 패턴 지속시간
 #define PATTERNTIME_LASER 12.0//Laser 패턴 지속시간
 #define PATTERNTIME_CIRCLESPREAD 10.0
 
-double BulletPatternStartTime = 0;	//총알 발사 시작 시간
-double BulletPatternEndTime = 0;
+double BulletInputTime = 0;				//Bullet 인풋 시작 시간
+double BulletPatternStartTime = 0;	//패턴 시작시간
+double BulletPatternEndTime = 0;	//패턴 종료시간
 int PatternStart = 0;							//패턴 시작 유무
 int PatternNumber = 0;					//패턴 넘버
 int PatternCycle = 0;							//패턴 사이클
 int BULLETCOUNT = 0;						//총알 개수
 double BulletSpeed = 1;					//Bullet 속도
 
-//Bullet 인풋 시작 시간
-double BulletInputTime = 0;
 
 #endif // !VARIABLESETS_H
