@@ -18,7 +18,7 @@ void ClearEnemyPosition() {
 	direction = 0;
 }
 
-//적 출력 및 삭제 함수
+//적 삭제 함수
 void HideEnemy() {
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 5; j++) {
@@ -28,6 +28,8 @@ void HideEnemy() {
 	}
 	SetCurrentCursorPos(ENEMY_POS_X, ENEMY_POS_Y);
 }
+
+//적 출력 함수
 void ShowEnemy() {
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 5; j++) {
@@ -49,6 +51,37 @@ int DetectCollision_Enemy(int x, int y) {
 	return 0;
 }
 
+//Enemy Location change
+void setEnemyLeft() {
+	HideEnemy();
+	ENEMY_POS_X = GAMEBOARD_ORIGIN_X + 15;
+	ShowEnemy();
+}
+
+void setEnemyLeftMiddle() {
+	HideEnemy();
+	ENEMY_POS_X = GAMEBOARD_ORIGIN_X + 30;
+	ShowEnemy();
+}
+
+void setEnemyMiddle() {
+	HideEnemy();
+	ENEMY_POS_X = GAMEBOARD_ORIGIN_X + 45;
+	ShowEnemy();
+}
+
+void setEnemyRightMiddle() {
+	HideEnemy();
+	ENEMY_POS_X = GAMEBOARD_ORIGIN_X + 60;
+	ShowEnemy();
+}
+
+void setEnemyRight() {
+	HideEnemy();
+	ENEMY_POS_X = GAMEBOARD_ORIGIN_X + 75;
+	ShowEnemy();
+}
+
 //적 위치 변환 함수
 void shiftEnemyLeft() {
 	HideEnemy();
@@ -68,13 +101,17 @@ void InvalidateEnemy() {
 	ShowEnemy();
 	if (!CalculateEnemyTimeBuffer()) {
 		if (PatternNumber == 1) {
-			if (direction) shiftEnemyRight();
-			else shiftEnemyLeft();
+			if (TimeCheckerForInt() % 5 == 0) { setEnemyLeft(); }
+			else if (TimeCheckerForInt() % 5 == 1) { setEnemyRight(); }
+			else if (TimeCheckerForInt() % 5 == 2) { setEnemyLeftMiddle(); }
+			else if (TimeCheckerForInt() % 5 == 3) { setEnemyRightMiddle(); }
+			else { setEnemyMiddle(); }
 		}
 		else if (PatternNumber == 2) {
 			if (rand() % 2 == 0) { shiftEnemyLeft(); }
 			else { shiftEnemyRight(); }
 		}
+		//else if(PatternNumber == 3) 이거는 낼 모임에서 같이 토의할 생각
 	}
 }
 #endif // !ENEMY_H
