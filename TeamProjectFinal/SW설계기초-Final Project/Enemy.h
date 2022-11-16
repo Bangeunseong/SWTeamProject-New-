@@ -101,17 +101,21 @@ void InvalidateEnemy() {
 	ShowEnemy();
 	if (!CalculateEnemyTimeBuffer()) {
 		if (PatternNumber == 1) {
-			if (TimeCheckerForInt() % 5 == 0) { setEnemyLeft(); }
-			else if (TimeCheckerForInt() % 5 == 1) { setEnemyRight(); }
-			else if (TimeCheckerForInt() % 5 == 2) { setEnemyLeftMiddle(); }
-			else if (TimeCheckerForInt() % 5 == 3) { setEnemyRightMiddle(); }
-			else { setEnemyMiddle(); }
+			if (direction) shiftEnemyRight();
+			else shiftEnemyLeft();
 		}
 		else if (PatternNumber == 2) {
 			if (rand() % 2 == 0) { shiftEnemyLeft(); }
 			else { shiftEnemyRight(); }
 		}
 		//else if(PatternNumber == 3) 이거는 낼 모임에서 같이 토의할 생각
+		else if (PatternNumber == 4) {
+			if (TimeCheckerForInt() % 5 == 0) { setEnemyLeft(); }
+			else if (TimeCheckerForInt() % 5 == 1) { setEnemyRight(); }
+			else if (TimeCheckerForInt() % 5 == 2) { setEnemyLeftMiddle(); }
+			else if (TimeCheckerForInt() % 5 == 3) { setEnemyRightMiddle(); }
+			else { setEnemyMiddle(); }
+		}
 	}
 }
 #endif // !ENEMY_H
