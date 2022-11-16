@@ -170,32 +170,31 @@ int MoveBullet_E(int bulletnumber) {
 
 //When bullet launches record time and set patternnumber, start pattern
 void BulletLaunchTime() {
-	if (!PatternStart) { 
+	if (!PatternStart) {	//패턴이 시작되지 않았을 경우
 		double CheckedTime = TimeCheckerEnd() - PausingTime;
-		if (CheckedTime > BulletPatternEndTime + PATTERNDURATION) { 
-			SetRandomPatternNumber(TOTALPATTERNCOUNT); 
-			if (PatternNumber == 2) BulletSpeed = 3;
-			PatternStart = 1; BulletPatternStartTime = CheckedTime;
+		if (CheckedTime > BulletPatternEndTime + PATTERNDURATION) {	//체크한 시간이 패턴 종료시간 + durationtime보다 크면 작동
+			SetRandomPatternNumber(TOTALPATTERNCOUNT);					//패턴 넘버 결정(랜덤)
+			if (PatternNumber == 2) BulletSpeed = 3;									//패턴 넘버가 2번이면 총알 속도 조금 증가
+			PatternStart = 1; BulletPatternStartTime = CheckedTime;				//패턴 시작 인디케이터 1로 갱신, 패턴 시작시간 갱신
 		}
 	}
 	else return;
 }
 
 //Bullet Pattern Spread_Note : 좌우로 움직임(일정한 속도와 패턴으로 움직임)
-int BulletPattern_Spread() {
+int BulletPattern_3way() {
 	int flag = 0; 
 	double CheckedTime = TimeCheckerEnd() - PausingTime;
-	if (CheckedTime < PATTERNTIME_SPREAD + BulletPatternStartTime && CheckedTime > BulletPatternStartTime) 
-		BULLETCOUNT = (++PatternCycle) * 3;
+	if (CheckedTime < PATTERNTIME_SPREAD + BulletPatternStartTime && CheckedTime > BulletPatternStartTime) BULLETCOUNT = (++PatternCycle) * 3; //패턴 사이클이 증가함에 따라 총알의 갯수도 3의 배수로 증가(3개의 총알을 하나의 세트로 이용하기 때문)
 	for (int i = 0; i < 3 * PatternCycle; i++) {
-		if (!bullet[i].BulletActivation && !bullet[i].CollisionPlayer && !bullet[i].CollisionWall) { BulletPostionRenewal(i); bullet[i].BulletActivation = 1; ShowBullet(i); }
+		if (!bullet[i].BulletActivation && !bullet[i].CollisionPlayer && !bullet[i].CollisionWall) { BulletPostionRenewal(i); bullet[i].BulletActivation = 1; ShowBullet(i); }	//만약 총알이 사용되지 않은 것이라면 초기 위치를 패턴에 맞게 초기화를 시키고 총알 출력
 		switch (i % 3) {
-		case 0: flag += MoveBullet_SE(i); break;
-		case 1: flag += MoveBullet_S(i); break;
-		case 2: flag += MoveBullet_SW(i); break;
+		case 0: flag += MoveBullet_SE(i); break;	//총알을 남서쪽으로 이동
+		case 1: flag += MoveBullet_S(i); break;		//총알을 남쪽으로 이동
+		case 2: flag += MoveBullet_SW(i); break;	//총알을 남동쪽으로 이동
 		}
 	}
-	if (!flag) { BulletPatternEndTime = TimeCheckerEnd() - PausingTime; return 1; }
+	if (!flag) { BulletPatternEndTime = TimeCheckerEnd() - PausingTime; return 1; }	//만약 모든 총알들이 게임판에서 사라졌을 경우 --패턴 종료시간 갱신--, 1을 반환
 	return 0;
 }
 
@@ -243,10 +242,10 @@ int BulletPattern_CircleSpread() {
 //총알의 위치 갱신 함수
 void InvalidateBullet() {
 	if (!CalculateBulletTimeBuffer()) {
-		BulletLaunchTime();
+		BulletLaunchTime();	//패턴 시작시간 및 패턴 결정
 		if (PatternStart) {
-			switch (PatternNumber) {
-			case 1: if (BulletPattern_Spread()) ClearBulletPosition(); break;
+			switch (PatternNumber) {	//패턴 넘버에 따라 다른 함수 작동
+			case 1: if (BulletPattern_3way()) ClearBulletPosition(); break;
 			case 2: if (BulletPattern_Laser()) ClearBulletPosition(); break;
 			case 3: if (BulletPattern_CircleSpread()) ClearBulletPosition(); break;
 			default: break;
@@ -257,9 +256,9 @@ void InvalidateBullet() {
 	else {
 		//총알이 버퍼시간으로 인해 움직이지 않을 때도 검사하기 위해 작성하였다
 		for (int i = 0; i < BULLETCOUNT; i++) {
-			if (bullet[i].BulletActivation) {
+			if (bullet[i].BulletActivation) {	//총알이 작동 중일때만 검사
 				if (DetectCollision_BulletwithPlayer(bullet[i].BULLET_POS_X, bullet[i].BULLET_POS_Y)) { //플레이어와 부딪혔으면 총알 비활성화, 플레이어와 부딪혔다는 인디케이터 1로 갱신
-					HideBullet(i); bullet[i].BulletActivation = 0; bullet[i].CollisionPlayer = 1; 
+					HideBullet(i); bullet[i].BulletActivation = 0; bullet[i].CollisionPlayer = 1;	//플레이어와 충돌했다는 인디케이터 작동, 총알 비활성화, 총알 숨김
 				}
 			}
 		}
