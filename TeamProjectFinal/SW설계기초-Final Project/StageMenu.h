@@ -22,20 +22,14 @@ int StageOver() {
 	if (PlayerPos == MAPLENGTH * 2) {
 		HidePlayer(); HideEnemy();
 		ClearPlayerPosition(); ClearEnemyPosition(); ClearBulletPosition();
-		PlayerInputTime = 0; PlayerPos = 0; Invinsible = 0; 
+		PlayerInputTime = 0; PlayerPos = 0; Invinsible = 0; UsingSkill = 0;
 		EnemyInputTime = 0; 
-		ItemInputTime = 0; ItemCreationLoop = 1;
-		BulletInputTime = 0;
+		ItemInputTime = 0; ItemCreationLoop = 1; flashFLAG = 0; flashCount = 0;
+		BulletInputTime = 0; BulletSpeed = 1;
 		BulletPatternStartTime = BulletPatternEndTime = 0;
 		PausingTime = 0; CurrentTime = 1; StageNumber++;
 		return 1; 
 	}
-	return 0;
-}
-
-//게임 종료 조건
-int GameOver() {
-	if (CurrentLife <= 0) return 1;
 	return 0;
 }
 #endif // !STAGEMENU_H

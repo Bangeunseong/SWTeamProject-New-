@@ -1,8 +1,7 @@
 #pragma once
 #include <stdio.h>
-#include <Windows.h>'
+#include <Windows.h>
 #include "VariableSets.h"
-#include "Timer.h"
 #ifndef BACKGROUND_H
 #define BACKGROUND_H
 

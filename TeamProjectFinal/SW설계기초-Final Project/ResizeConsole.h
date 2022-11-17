@@ -4,12 +4,6 @@
 #ifndef RESIZECONSOLE_H
 #define RESIZECONSOLE_H
 
-//콘솔 창 ROW 길이
-#define CONSOLE_ROW 45
-
-//콘솔 창 COLUMN 길이
-#define CONSOLE_COLUMN 108
-
 //콘솔 창 크기 설정 함수
 void ResizeConsole() { system("mode con cols=108 lines=45 | title Astronauts"); }
 

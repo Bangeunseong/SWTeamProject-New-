@@ -26,7 +26,7 @@ void ShowBullet(int bulletnumber) {
 	if (!bullet[bulletnumber].BulletActivation) bullet[bulletnumber].BulletActivation = 1;
 	SetCurrentCursorPos(bullet[bulletnumber].BULLET_POS_X, bullet[bulletnumber].BULLET_POS_Y);
 	UniBoard[bullet[bulletnumber].BULLET_POS_Y - GAMEBOARD_ORIGIN_Y][bullet[bulletnumber].BULLET_POS_X - GAMEBOARD_ORIGIN_X] = BULLET;
-	printf("*");
+	printf("%c", BulletModelPerPattern[PatternNumber - 1]);
 }
 
 void ClearBulletPosition() {
@@ -40,7 +40,7 @@ void ClearBulletPosition() {
 	PatternCycle = 0;
 	PatternNumber = 0;
 	BULLETCOUNT = 0;
-	BulletSpeed = 1;
+	BulletSpeed = 2;
 }
 
 void BulletPostionRenewal(int bulletnumber) {
@@ -67,6 +67,7 @@ int DetectCollision_BulletwithWall(int x, int y) {
 }
 
 int DetectCollision_BulletwithPlayer(int x, int y) {
+	if (Invinsible) return 0;
 	for (int i = 0; i < 6; i++) {
 		if (y == PLAYER_POS_Y && x == PLAYER_POS_X + i) return 1;
 	}
@@ -174,7 +175,8 @@ void BulletLaunchTime() {
 		double CheckedTime = TimeCheckerEnd() - PausingTime;
 		if (CheckedTime > BulletPatternEndTime + PATTERNDURATION) {	//체크한 시간이 패턴 종료시간 + durationtime보다 크면 작동
 			SetRandomPatternNumber(TOTALPATTERNCOUNT);					//패턴 넘버 결정(랜덤)
-			if (PatternNumber == 2) BulletSpeed = 3;									//패턴 넘버가 2번이면 총알 속도 조금 증가
+			if (PatternNumber == 2) BulletSpeed = 6;									//패턴 넘버가 2번이면 총알 속도 조금 증가
+			else if (PatternNumber == 1) BulletSpeed = 1;
 			else if (PatternNumber == 4) BulletSpeed = 8;
 			PatternStart = 1; BulletPatternStartTime = CheckedTime;				//패턴 시작 인디케이터 1로 갱신, 패턴 시작시간 갱신
 		}

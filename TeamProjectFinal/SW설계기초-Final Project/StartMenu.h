@@ -1,11 +1,8 @@
 #pragma once
 #pragma warning(disable:4996)
 #include <conio.h>
-#include "VariableSets.h"
-#include "ResizeConsole.h"
 #include "CursorFunctions.h"
-#include "BackGround.h"
-#include "GameFile.h"
+#include "VariableSets.h"
 #ifndef STARTMENU_H
 #define STARTMENU_H
 

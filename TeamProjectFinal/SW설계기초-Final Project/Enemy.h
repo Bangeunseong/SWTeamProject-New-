@@ -2,6 +2,7 @@
 #pragma warning(disable:4996)
 #include "CursorFunctions.h"
 #include "VariableSets.h"
+#include "Timer.h"
 #ifndef ENEMY_H
 #define ENEMY_H
 

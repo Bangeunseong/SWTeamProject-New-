@@ -2,6 +2,7 @@
 #pragma warning(disable:4996)
 #include "CursorFunctions.h"
 #include "VariableSets.h"
+#include "Bullet.h"
 #include "Timer.h"
 #include "UI.h"
 
@@ -60,7 +61,7 @@ void flashRight() {
 //-------------------아이템별 작동함수-----------------------
 
 void itemSpeedUp() { CurSpeed += SPEEDINCREASERATE; }	//플레이어 캐릭터 속도 증가
-void itemBulletSpeedDown() {};													//탄막 속도 감소
+void itemBulletSpeedDown() { BulletSpeed /= 2.0; };					//탄막 속도 감소
 void itemInvinsibility() { Invinsible = 1; }										//무적 판정
 void itemFlash() {																		//대쉬 스킬
 	if (flashCount >= 2) return;
@@ -70,8 +71,17 @@ void itemFlash() {																		//대쉬 스킬
 	if (GetAsyncKeyState(UP) & 0x8000) flashUp();
 	if (GetAsyncKeyState(DOWN) & 0x8000) flashDown();
 	flashCount++; 
-};						
-void itemDeleteBullet() {};															//보드판에 존재하는 총알들 모두 삭제
+};
+void itemDeleteBullet() {	//보드판에 존재하는 총알들 모두 삭제
+	for (int i = 0; i < BULLETCOUNT; i++) {
+		HideBullet(i);
+		bullet[i].BULLET_POS_X = GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW / 2 - 3;
+		bullet[i].BULLET_POS_Y = GAMEBOARD_ORIGIN_Y + 5;
+		bullet[i].BulletActivation = bullet[i].CollisionPlayer = bullet[i].CollisionWall = 0;
+	}
+	PatternCycle = 0;
+	BULLETCOUNT = 0;
+};															
 
 //----------------------------------------------------------------
 //------------------아이템 인벤토리 관련 함수--------------------
@@ -117,8 +127,8 @@ void itemTrigger(int UsingSkill) {
 //아이템 스킬 해제 함수
 void DeactivateSkillItem() { 
 	switch (UsingSkill) {
-	case 1: CurSpeed -= SPEEDINCREASERATE; break;
-	case 2: break;
+	case 1: CurSpeed = SelectedSpeed; break;
+	case 2: BulletSpeed *= 2.0; break;
 	case 3: Invinsible = 0; break;
 	case 4: flashFLAG = 0; flashCount = 0; break;
 	case 5: break;
@@ -175,7 +185,7 @@ int DetectCollision_ItemwithWall(int x, int y) {
 //아이템 생성 함수
 void CreateItem() {
 	if (TimeCheckerEnd() > ItemCreationLoop *(StageTime[StageNumber - 1]) / 3.0 && ItemCreationLoop < 3) {
-		ITEM_POS_X = rand() % GAMEBOARD_ROW + GAMEBOARD_ORIGIN_X - 2;	//초기 랜덤 X좌표
+		ITEM_POS_X = rand() % (GAMEBOARD_ROW - 1) + GAMEBOARD_ORIGIN_X + 2;	//초기 랜덤 X좌표
 		ITEM_POS_Y = GAMEBOARD_ORIGIN_Y + 1;	//초기 Y좌표
 		ItemNumber = rand() % 5 + 1;							//아이템 넘버 랜덤 생성
 		ItemInputTime = TimeCheckerEnd();					//아이템 생성 시간 기록

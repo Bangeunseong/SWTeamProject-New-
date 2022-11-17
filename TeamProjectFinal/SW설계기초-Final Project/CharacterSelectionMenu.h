@@ -1,9 +1,8 @@
 #pragma once
 #include <Windows.h>
 #include <stdio.h>
-#include "VariableSets.h"
-#include "ResizeConsole.h"
 #include "CursorFunctions.h"
+#include "VariableSets.h"
 #ifndef CHARACTERSELECTIONMENU_H
 #define CHARACTERSELECTIONMENU_H
 

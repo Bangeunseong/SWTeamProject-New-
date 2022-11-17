@@ -3,6 +3,15 @@
 #ifndef VARIABLESETS_H
 #define VARIABLESETS_H
 //-------------------------------------------
+//-------------Console 창 상수-------------
+
+//콘솔 창 ROW 길이
+#define CONSOLE_ROW 45
+
+//콘솔 창 COLUMN 길이
+#define CONSOLE_COLUMN 108
+
+//-------------------------------------------
 //-------------BackGround 상수------------
 
 //게임영역 정의
@@ -62,6 +71,24 @@ int StageTime[] = { 60,90,120 };
 
 //다음 스테이지로 넘어갈 때 Duration time
 #define STAGEDURATIONTIME 2.0
+
+
+#define OPTIONSELECTIONBOX_ROW 18 //게임 모드 선택박스 가로 길이
+#define OPTIONSELECTIONBOX_COLUMN 3 // 게임 모드 선택박스 세로 길이
+int OptionSelectionBox_Origin_X = BACKGROUND_ORIGIN_X + 22; //게임 모드 선택 박스 초기 X좌표
+int OptionSelectionBox_Origin_Y = BACKGROUND_ORIGIN_Y + BACKGROUND_COLUMN / 2 + 6; //게임 모드 선택 박스 초기 Y좌표
+
+//Game Over시 출력 로고
+char GameOverLogo[][5][5] = {
+	{{0,1,1,1,1},{1,0,0,0,0},{1,0,1,1,1},{1,0,0,0,1},{0,1,1,1,1}},
+{{0,1,1,1,0},{1,0,0,0,1},{1,0,0,0,1},{0,1,1,1,1},{0,0,0,0,1}},
+{{1,1,1,1,1},{1,0,1,0,1},{1,0,1,0,1},{1,0,1,0,1},{1,0,1,0,1}},
+{{0,1,1,1,0},{1,0,0,0,1},{1,1,1,1,1},{1,0,0,0,0},{0,1,1,1,1}},
+{{0,1,1,1,0},{1,0,0,0,1},{1,0,0,0,1},{1,0,0,0,1},{0,1,1,1,0}},
+{{1,0,0,0,1},{1,0,0,0,1},{0,1,0,1,0},{0,1,0,1,0},{0,0,1,0,0}},
+{{0,1,1,1,0},{1,0,0,0,1},{1,1,1,1,1},{1,0,0,0,0},{0,1,1,1,1}},
+{{1,0,0,0,1},{1,0,0,1,0},{1,0,1,0,0},{1,1,0,0,0},{1,1,0,0,0}}
+};
 
 //-------------------------------------------------------------
 //-----------------------Player 상수--------------------------
@@ -168,8 +195,8 @@ double ItemInputTime = 0;
 double ItemCreationLoop = 1;
 
 //아이템 효과 모음집
-#define SPEEDINCREASERATE 0.5
-#define FLASHDISTANCE 3
+#define SPEEDINCREASERATE 1.0
+#define FLASHDISTANCE 6
 int flashCount = 0;
 
 //게임보드내 아이템 출력 여부
@@ -227,7 +254,9 @@ int PatternStart = 0;							//패턴 시작 유무
 int PatternNumber = 0;					//패턴 넘버
 int PatternCycle = 0;							//패턴 사이클
 int BULLETCOUNT = 0;						//총알 개수
-double BulletSpeed = 1;					//Bullet 속도
+double BulletSpeed = 2;					//Bullet 속도
+
+char BulletModelPerPattern[TOTALPATTERNCOUNT] = { 'o','v','*','v' };
 
 
 #endif // !VARIABLESETS_H
