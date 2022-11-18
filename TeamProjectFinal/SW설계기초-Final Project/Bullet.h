@@ -67,7 +67,6 @@ int DetectCollision_BulletwithWall(int x, int y) {
 }
 
 int DetectCollision_BulletwithPlayer(int x, int y) {
-	if (Invinsible) return 0;
 	for (int i = 0; i < 6; i++) {
 		if (y == PLAYER_POS_Y && x == PLAYER_POS_X + i) return 1;
 	}
