@@ -151,7 +151,7 @@ void ActivateSkillItem() {
 //아이템 스킬 지속시간 체크 함수
 void SkillTimeCheck() {
 	if (!UsingSkill) return;
-	if (TimeCheckerEnd() - SkillActivationTime - PausingTime > SkillTime) DeactivateSkillItem();
+	if (TimeCheckerEnd() - PausingTime - SkillActivationTime > SkillTime) DeactivateSkillItem();
 }
 
 
@@ -160,7 +160,7 @@ void SkillTimeCheck() {
 
 //아이템 움직임 딜레이 함수
 int CalculateItemTimeBuffer() {
-	if (TimeCheckerEnd() - ItemInputTime - PausingTime > ITEMTIMEBUFFER) { ItemInputTime += ITEMTIMEBUFFER; return 0; }
+	if (TimeCheckerEnd() - PausingTime - ItemInputTime > ITEMTIMEBUFFER) { ItemInputTime += ITEMTIMEBUFFER; return 0; }
 	else return 1;
 }
 
@@ -184,11 +184,11 @@ int DetectCollision_ItemwithWall(int x, int y) {
 
 //아이템 생성 함수
 void CreateItem() {
-	if (TimeCheckerEnd() > ItemCreationLoop *(StageTime[StageNumber - 1]) / 3.0 && ItemCreationLoop < 3) {
+	if ((TimeCheckerEnd() - PausingTime > ItemCreationLoop *(StageTime[StageNumber - 1]) / 3.0) && ItemCreationLoop < 3) {
 		ITEM_POS_X = rand() % (GAMEBOARD_ROW - 1) + GAMEBOARD_ORIGIN_X + 2;	//초기 랜덤 X좌표
 		ITEM_POS_Y = GAMEBOARD_ORIGIN_Y + 1;	//초기 Y좌표
 		ItemNumber = rand() % 5 + 1;							//아이템 넘버 랜덤 생성
-		ItemInputTime = TimeCheckerEnd();					//아이템 생성 시간 기록
+		ItemInputTime = TimeCheckerEnd() - PausingTime;					//아이템 생성 시간 기록
 		itemFLAG = 1;													//게임 보드 내 아이템 아이콘 존재 유무 1
 		ShowItem();														//아이템 출력
 		ItemCreationLoop++;										//현재까지 출력한 아이템 갯수

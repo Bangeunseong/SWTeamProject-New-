@@ -261,24 +261,26 @@ int BulletPattern_CircleSpread() {
 //총알의 위치 갱신 함수
 void InvalidateBullet() {
 	if (!CalculateBulletTimeBuffer()) {
-		BulletLaunchTime();	//패턴 시작시간 및 패턴 결정
-		if (PatternStart) {
-			switch (PatternNumber) {	//패턴 넘버에 따라 다른 함수 작동
-			case 1: if (BulletPattern_Spread()) ClearBulletPosition(); break;
-			case 2: if (BulletPattern_Laser()) ClearBulletPosition(); break;
-			case 3: if (BulletPattern_CircleSpread()) ClearBulletPosition(); break;
-			case 4: if (BulletPattern_3way()) ClearBulletPosition(); break;
-			default: break;
+		if (!GamePaused) {
+			BulletLaunchTime();	//패턴 시작시간 및 패턴 결정
+			if (PatternStart) {
+				switch (PatternNumber) {	//패턴 넘버에 따라 다른 함수 작동
+				case 1: if (BulletPattern_Spread()) ClearBulletPosition(); break;
+				case 2: if (BulletPattern_Laser()) ClearBulletPosition(); break;
+				case 3: if (BulletPattern_CircleSpread()) ClearBulletPosition(); break;
+				case 4: if (BulletPattern_3way()) ClearBulletPosition(); break;
+				default: break;
+				}
 			}
+			else return;
 		}
-		else return;
-	}
-	else {
-		//총알이 버퍼시간으로 인해 움직이지 않을 때도 검사하기 위해 작성하였다
-		for (int i = 0; i < BULLETCOUNT; i++) {
-			if (bullet[i].BulletActivation) {	//총알이 작동 중일때만 검사
-				if (DetectCollision_BulletwithPlayer(bullet[i].BULLET_POS_X, bullet[i].BULLET_POS_Y)) { //플레이어와 부딪혔으면 총알 비활성화, 플레이어와 부딪혔다는 인디케이터 1로 갱신
-					HideBullet(i); bullet[i].BulletActivation = 0; bullet[i].CollisionPlayer = 1;	//플레이어와 충돌했다는 인디케이터 작동, 총알 비활성화, 총알 숨김
+		else {
+			//총알이 버퍼시간으로 인해 움직이지 않을 때도 검사하기 위해 작성하였다
+			for (int i = 0; i < BULLETCOUNT; i++) {
+				if (bullet[i].BulletActivation) {	//총알이 작동 중일때만 검사
+					if (DetectCollision_BulletwithPlayer(bullet[i].BULLET_POS_X, bullet[i].BULLET_POS_Y)) { //플레이어와 부딪혔으면 총알 비활성화, 플레이어와 부딪혔다는 인디케이터 1로 갱신
+						HideBullet(i); bullet[i].BulletActivation = 0; bullet[i].CollisionPlayer = 1;	//플레이어와 충돌했다는 인디케이터 작동, 총알 비활성화, 총알 숨김
+					}
 				}
 			}
 		}

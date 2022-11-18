@@ -18,10 +18,11 @@ int CalculatePlayerTimeBuffer() {
 
 //게임 정지함수
 void GamePause() {
+	GamePaused = 1;
  	PausedTime = TimeCheckerEnd();
 	SetCurrentCursorPos(BACKGROUND_ORIGIN_X + BACKGROUND_ROW / 2 - 2, BACKGROUND_ORIGIN_Y + BACKGROUND_COLUMN / 2);
 	printf("Pause");
-	while (1) { if (GetAsyncKeyState(QUIT) & 0x0001) { PausingTime += TimeCheckerEnd() - PausedTime; break; } }
+	while (1) { if (GetAsyncKeyState(QUIT) & 0x0001) { PausingTime += TimeCheckerEnd() - PausedTime; GamePaused = 0; break; } }
 	SetCurrentCursorPos(BACKGROUND_ORIGIN_X + BACKGROUND_ROW / 2 - 2, BACKGROUND_ORIGIN_Y + BACKGROUND_COLUMN / 2);
 	for (int i = 0; i < 5; i++) printf(" ");
 }
@@ -95,7 +96,7 @@ void ReduceLifeGauge(int damage) {
 //데미지 처리함수
 void GetDamagedFromEnemy() {
 	if (UsingSkill == 3) return;
-	if (Invinsible == 1) { if (TimeCheckerEnd() - CollisionTime > InvinsibleTime) Invinsible = 0; }		//무적인 상태에서 지속시간이 지나면 해제하는 함수
+	if (Invinsible == 1) { if (TimeCheckerEnd() - CollisionTime - PausingTime > InvinsibleTime) Invinsible = 0; }		//무적인 상태에서 지속시간이 지나면 해제하는 함수
 	if (DetectCollision_PlayerwithBullet(PLAYER_POS_X, PLAYER_POS_Y) && Invinsible == 0) {
 		ReduceLifeGauge(BULLETDAMAGE);
 		InvalidateLifeGauge();												//라이프 게이지 갱신은 데미지를 받을 때만 수행

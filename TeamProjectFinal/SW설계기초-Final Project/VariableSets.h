@@ -167,6 +167,9 @@ LARGE_INTEGER start, end, diff;
 //초 단위로 저장
 double CurrentTime = 1;
 
+//게임을 pause하였는지에 대한 인디케이터
+int GamePaused = 0;
+
 //게임 Pause Time
 double PausedTime = 0;
 
