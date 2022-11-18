@@ -281,6 +281,8 @@ int BulletPattern_Spiral() {		//이것도 마찬가지로 Enemy Movement Pattern 필요
 	return 0;
 }
 
+//
+
 //총알의 위치 갱신 함수
 void InvalidateBullet() {
 	if (!CalculateBulletTimeBuffer()) {

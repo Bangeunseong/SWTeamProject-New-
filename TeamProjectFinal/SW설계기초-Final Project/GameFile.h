@@ -31,10 +31,10 @@ void InfiniteMode() {		//UI 수정필요
 	while (1) {
 		InvalidateStageNumber();
 		ShowCurrentNSubSkill();
-		ShowMap();
+		ShowTime();
 		ShowStageNumber();
 		TimeCheckerStart();
-		while (1) { InvalidateMap(); InvalidateItem();  InvalidateBullet(); InvalidateEnemy(); InvalidatePlayer(); if (GameOver()) return; }
+		while (1) { InvalidateTime(); InvalidateItem();  InvalidateBullet(); InvalidateEnemy(); InvalidatePlayer(); if (GameOver()) return; }
 	}
 }
 

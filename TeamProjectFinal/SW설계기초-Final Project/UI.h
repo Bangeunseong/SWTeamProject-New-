@@ -87,7 +87,25 @@ void InvalidateMap() {
 	SetCurrentCursorPos(GAMEBOARD_ORIGIN_X, GAMEBOARD_ORIGIN_Y);
 }
 //-----------------------------------------------------
+//---------------무한 모드 사용시 시간 표시 UI 함수--------------
 
+//시간 출력
+void ShowTime() {
+	COORD ptr = { BACKGROUND_ORIGIN_X + BACKGROUND_ROW, BACKGROUND_ORIGIN_Y };
+	int modifiedX = ptr.X - 20, modifiedY = ptr.Y + 1;
+	SetCurrentCursorPos(modifiedX, modifiedY);
+	printf("Time | %02d : %02d : %02d", Min, Sec, MiSec);
+	SetCurrentCursorPos(GAMEBOARD_ORIGIN_X, GAMEBOARD_ORIGIN_Y);
+}
+void InvalidateTime() {
+	ShowTime();
+	double CheckedTime = TimeCheckerEnd() - PausingTime;
+	MiSec = (int)(CheckedTime * 100) % 100;
+	Sec = (int)(CheckedTime) % 60;
+	Min = (int)(CheckedTime) / 60;
+}
+
+//-----------------------------------------------------------------
 //--------------스킬 UI 관련 함수------------------
 
 //전 보유스킬 및 보조스킬 숨기기

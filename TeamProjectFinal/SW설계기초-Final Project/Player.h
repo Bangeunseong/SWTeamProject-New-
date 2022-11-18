@@ -79,9 +79,9 @@ int DetectCollision_PlayerwithBullet(int x, int y) {
 
 //플레이어 기준 아이템과 부딪혔을 때 검사하는 함수
 int DetectCollision_PlayerwithItem(int x, int y) {
-	if (y == PLAYER_POS_Y && itemFLAG == 1) {
+	if (itemFLAG) {
 		for (int i = 0; i < 6; i++) {
-			if (x == PLAYER_POS_X + i) return 1;
+			if (x == PLAYER_POS_X + i && y == PLAYER_POS_Y) return 1;
 		}
 	}
 	return 0;
