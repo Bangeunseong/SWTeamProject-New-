@@ -54,7 +54,7 @@ void BulletPostionRenewal(int bulletnumber) {
 		else { bullet[bulletnumber].BULLET_POS_X = ENEMY_POS_X + 3; }
 		bullet[bulletnumber].BULLET_POS_Y = ENEMY_POS_Y + 3;
 	}
-	else if (PatternNumber == 3) {
+	else if (PatternNumber == 3 || PatternNumber == 5) {
 		bullet[bulletnumber].BULLET_POS_X = ENEMY_POS_X + 2;
 		bullet[bulletnumber].BULLET_POS_Y = ENEMY_POS_Y + 1;
 	}
@@ -174,7 +174,7 @@ void BulletLaunchTime() {
 		double CheckedTime = TimeCheckerEnd() - PausingTime;
 		if (CheckedTime > BulletPatternEndTime + PATTERNDURATION) {	//체크한 시간이 패턴 종료시간 + durationtime보다 크면 작동
 			SetRandomPatternNumber(TOTALPATTERNCOUNT);					//패턴 넘버 결정(랜덤)
-			if (PatternNumber == 2) BulletSpeed = 6;									//패턴 넘버가 2번이면 총알 속도 조금 증가
+			if (PatternNumber == 2 || PatternNumber == 5) BulletSpeed = 6;									//패턴 넘버가 2번이면 총알 속도 조금 증가
 			else if (PatternNumber == 1) BulletSpeed = 1;
 			else if (PatternNumber == 4) BulletSpeed = 8;
 			PatternStart = 1; BulletPatternStartTime = CheckedTime;				//패턴 시작 인디케이터 1로 갱신, 패턴 시작시간 갱신
@@ -235,7 +235,7 @@ int BulletPattern_Laser() {
 	return 0;
 }
 
-//Bullet Pattern Circle Spread_Note : 게임영역 전체를 움직임(전체를 움직일 때 속도를 충분히 낮출필요 있음, 다시 원점으로 돌아와야 함, 결국 움직임 패턴 구현 필요)
+//Bullet Pattern Circle Spread_Note : 게임영역 전체를 움직임(전체를 움직일 때 Enemy 속도를 충분히 낮출필요 있음, 다시 원점으로 돌아와야 함, 결국 움직임 패턴 구현 필요)
 int BulletPattern_CircleSpread() {
 	int flag = 0;
 	double CheckedTime = TimeCheckerEnd() - PausingTime;
@@ -258,10 +258,33 @@ int BulletPattern_CircleSpread() {
 	return 0;
 }
 
+//BulletPattern_Spiral
+int BulletPattern_Spiral() {		//이것도 마찬가지로 Enemy Movement Pattern 필요
+	int flag = 0;
+	double CheckedTime = TimeCheckerEnd() - PausingTime;
+	if (CheckedTime < PATTERNTIME_CIRCLESPREAD + BulletPatternStartTime && CheckedTime > BulletPatternStartTime)
+		BULLETCOUNT = ++PatternCycle;
+	for (int i = 0; i < PatternCycle; i++) {
+		if (!bullet[i].BulletActivation && !bullet[i].CollisionPlayer && !bullet[i].CollisionWall) { BulletPostionRenewal(i); bullet[i].BulletActivation = 1; ShowBullet(i); }
+		switch (i % 8) {
+		case 0: flag += MoveBullet_N(i); break;
+		case 1: flag += MoveBullet_NW(i); break;
+		case 2: flag += MoveBullet_NE(i); break;
+		case 3: flag += MoveBullet_E(i); break;
+		case 4: flag += MoveBullet_W(i); break;
+		case 5: flag += MoveBullet_SW(i); break;
+		case 6: flag += MoveBullet_SE(i); break;
+		case 7: flag += MoveBullet_S(i); break;
+		}
+	}
+	if (!flag) { BulletPatternEndTime = TimeCheckerEnd() - PausingTime; return 1; }
+	return 0;
+}
+
 //총알의 위치 갱신 함수
 void InvalidateBullet() {
 	if (!CalculateBulletTimeBuffer()) {
-		if (!GamePaused) {
+		if (!GamePaused) {		//Game이 Paused되지 않았을 때 bullet의 상태 및 위치 갱신
 			BulletLaunchTime();	//패턴 시작시간 및 패턴 결정
 			if (PatternStart) {
 				switch (PatternNumber) {	//패턴 넘버에 따라 다른 함수 작동
@@ -269,6 +292,7 @@ void InvalidateBullet() {
 				case 2: if (BulletPattern_Laser()) ClearBulletPosition(); break;
 				case 3: if (BulletPattern_CircleSpread()) ClearBulletPosition(); break;
 				case 4: if (BulletPattern_3way()) ClearBulletPosition(); break;
+				case 5: if (BulletPattern_Spiral()) ClearBulletPosition(); break;
 				default: break;
 				}
 			}

@@ -186,12 +186,12 @@ int DetectCollision_ItemwithWall(int x, int y) {
 void CreateItem() {
 	if ((TimeCheckerEnd() - PausingTime > ItemCreationLoop *(StageTime[StageNumber - 1]) / 3.0) && ItemCreationLoop < 3) {
 		ITEM_POS_X = rand() % (GAMEBOARD_ROW - 1) + GAMEBOARD_ORIGIN_X + 2;	//초기 랜덤 X좌표
-		ITEM_POS_Y = GAMEBOARD_ORIGIN_Y + 1;	//초기 Y좌표
-		ItemNumber = rand() % 5 + 1;							//아이템 넘버 랜덤 생성
+		ITEM_POS_Y = GAMEBOARD_ORIGIN_Y + 1;							//초기 Y좌표
+		ItemNumber = rand() % 5 + 1;													//아이템 넘버 랜덤 생성
 		ItemInputTime = TimeCheckerEnd() - PausingTime;					//아이템 생성 시간 기록
-		itemFLAG = 1;													//게임 보드 내 아이템 아이콘 존재 유무 1
-		ShowItem();														//아이템 출력
-		ItemCreationLoop++;										//현재까지 출력한 아이템 갯수
+		itemFLAG = 1;																			//게임 보드 내 아이템 아이콘 존재 유무 1
+		ShowItem();																				//아이템 출력
+		ItemCreationLoop++;																//현재까지 출력한 아이템 갯수
 	}
 }
 
