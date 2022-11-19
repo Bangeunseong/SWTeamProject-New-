@@ -22,7 +22,7 @@ void StoryMode() {
 		ShowMap();
 		ShowStageNumber();
 		TimeCheckerStart();
-		while (1) { InvalidateMap(); InvalidateItem();  InvalidateBullet(); InvalidateEnemy(); InvalidatePlayer(); if (GameOver()) return; if (StageOver()) break; }
+		while (1) { InvalidateMap(); InvalidateItem(); InvalidateBullet(); InvalidateEnemy(); InvalidatePlayer(); if (GameOver()) return; if (StageOver()) break; }
 	}
 }
 
@@ -38,10 +38,9 @@ void InfiniteMode() {		//UI 수정필요
 	}
 }
 
-//게임 실행 함수
+//게임 실행 함수 ----게임을 실행할 때 initialize 해야할 것들만 넣기
 void RunGame() {
 	ResizeConsole(); RemoveCursor(); InitUniBoard();
-	
 	while (1) {
 		srand((unsigned)time(NULL));
 		if (StartMenu()) {
@@ -52,9 +51,9 @@ void RunGame() {
 			case 0: StoryMode(); break;
 			case 1: InfiniteMode(); break;
 			}
+			if (GameOverMenu()) return;
 		}
-		if (GameOverMenu()) break;
+		else return;
 	}
-	return;
 }
 #endif // !GAMEFILE_H

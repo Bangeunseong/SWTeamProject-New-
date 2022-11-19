@@ -16,11 +16,12 @@ int GameOver() {
 		HidePlayer(); HideEnemy();
 		ClearPlayerPosition(); ClearEnemyPosition(); ClearBulletPosition();
 		PlayerInputTime = 0; PlayerPos = 0; Invinsible = 0; CurSkill = SubSkill = UsingSkill = 0;
-		EnemyInputTime = 0;
-		ItemInputTime = 0; ItemCreationLoop = 1; flashFLAG = 0; flashCount = 0;
-		BulletInputTime = 0; BulletSpeed = 1;
+		EnemyInputTime = EnemyMovementTiming = 0;
+		ItemInputTime = 0; ItemCreationLoop = 1; flashFLAG = 0; flashCount = 0; itemFLAG = 0;
+		BulletInputTime = 0;
 		BulletPatternStartTime = BulletPatternEndTime = 0;
 		PausedTime = PausingTime = 0; CurrentTime = 1; StageNumber = 1;
+		Min = Sec = MiSec = 0;
 		free(LifeGauge); 
 		return 1;
 	}

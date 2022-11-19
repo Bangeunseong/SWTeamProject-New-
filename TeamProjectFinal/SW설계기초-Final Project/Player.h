@@ -52,9 +52,8 @@ void HidePlayer() {
 
 //플레이어 기준 벽과 부딫혔을 때 사용하는 함수
 int DetectCollision_PlayerwithWall(int x, int y) {
-	if ((y <= GAMEBOARD_ORIGIN_Y) || (y >= GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN)) return 1;
 	for (int i = 0; i < 6; i++) {
-		if ((x + i < GAMEBOARD_ORIGIN_X + 2) || (x + i >= GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW)) return 1;
+		if (UniBoard[y - GAMEBOARD_ORIGIN_Y][x - GAMEBOARD_ORIGIN_X + i] == WALL) return 1;
 	}
 	return 0;
 }
@@ -100,13 +99,13 @@ void GetDamagedFromEnemy() {
 	if (DetectCollision_PlayerwithBullet(PLAYER_POS_X, PLAYER_POS_Y) && Invinsible == 0) {
 		ReduceLifeGauge(BULLETDAMAGE);
 		InvalidateLifeGauge();												//라이프 게이지 갱신은 데미지를 받을 때만 수행
-		Invinsible = 1; CollisionTime = TimeCheckerEnd();		//무적상태로 만들고 충돌한 시간 갱신
+		Invinsible = 1; CollisionTime = TimeCheckerEnd() - PausingTime;		//무적상태로 만들고 충돌한 시간 갱신
 		return;
 	}
 	if (DetectCollision_PlayerwithEnemy(PLAYER_POS_X, PLAYER_POS_Y) && Invinsible == 0) { 
 		ReduceLifeGauge(ENEMYDAMAGE);
 		InvalidateLifeGauge();												//라이프 게이지 갱신은 데미지를 받을 때만 수행
-		Invinsible = 1; CollisionTime = TimeCheckerEnd();		//무적상태로 만들고 충돌한 시간 갱신
+		Invinsible = 1; CollisionTime = TimeCheckerEnd() - PausingTime;		//무적상태로 만들고 충돌한 시간 갱신
 		return;
 	}
 }

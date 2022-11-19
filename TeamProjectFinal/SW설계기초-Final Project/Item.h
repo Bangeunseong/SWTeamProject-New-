@@ -144,7 +144,7 @@ void ActivateSkillItem() {
 	HidePreviousCurrentNSubSkill();									//UI 갱신을 위해 넣은 숨김함수
 	UsingSkill = CurSkill; CurSkill = SubSkill; SubSkill = 0;	//주 스킬과 보조 스킬 Swap
 	itemTrigger(UsingSkill);													//스킬 발동
-	SkillActivationTime = TimeCheckerEnd();						//스킬 발동 시간 기록
+	SkillActivationTime = TimeCheckerEnd() - PausingTime;						//스킬 발동 시간 기록
 	ShowCurrentNSubSkill();												//UI 갱신을 위해 넣은 출력함수
 }
 
@@ -178,7 +178,7 @@ void ShowItem() {
 
 //아이템 충돌 검사 함수
 int DetectCollision_ItemwithWall(int x, int y) {
-	if (y >= GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN) return 1;
+	if (UniBoard[y - GAMEBOARD_ORIGIN_Y][x - GAMEBOARD_ORIGIN_X] == WALL) return 1;
 	return 0;
 }
 

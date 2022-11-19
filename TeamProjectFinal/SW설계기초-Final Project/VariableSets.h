@@ -23,6 +23,7 @@
 #define GAMEBOARD_COLUMN 40
 #define GAMEBOARD_ORIGIN_X 8
 #define GAMEBOARD_ORIGIN_Y 4
+#define WALL 1
 
 //게임화면의 이산 모델
 int UniBoard[GAMEBOARD_COLUMN + 1][GAMEBOARD_ROW + 2];
@@ -108,7 +109,7 @@ char GameOverLogo[][5][5] = {
 #define PLAYERINVINSIBLEINDICATECOLOR 6
 
 //플레이어 인풋타임 버퍼시간
-double PLAYERTIMEBUFFER = 0.035;
+double PLAYERTIMEBUFFER = 0.04;
 
 //플레이어 인풋타임 시작시간
 double PlayerInputTime = 0;
@@ -143,15 +144,34 @@ double ENEMYTIMEBUFFER = 0.02;
 //적 NPC 인풋타임 시작시간
 double EnemyInputTime = 0;
 
+#define ENEMYMOVEMENTDURATION 0.3
+double EnemyMovementTiming = 0;
+
 //적 우주선 및 총알
 #define ENEMY 2
 #define ENEMYDAMAGE 2
 #define ENEMYBULLET 3
+double EnemySpeed = 1.0;
+
 
 //적 우주선 위치 및 이동방향
-int ENEMY_POS_X = GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW / 2 - 3;
-int ENEMY_POS_Y = GAMEBOARD_ORIGIN_Y + 1;
+//이동방향을 나타내는 상수
+#define DIRECTION_UP 1
+#define DIRECTION_DOWN 2
+#define DIRECTION_LEFT 3
+#define DIRECTION_RIGHT 4
+#define DIRECTION_LEFTUP 5
+#define DIRECTION_LEFTDOWN 7
+#define DIRECTION_RIGHTUP 6
+#define DIRECTION_RIGHTDOWN 8
+
+#define ENEMY_ORIGIN_POS_X GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW / 2 - 3
+#define ENEMY_ORIGIN_POS_Y GAMEBOARD_ORIGIN_Y + 1
+int ENEMY_POS_X = ENEMY_ORIGIN_POS_X;
+int ENEMY_POS_Y = ENEMY_ORIGIN_POS_Y;
 int direction = 0;
+int EnemyIsMoving = 0;
+
 
 //적 우주선 모델링
 char EnemyModel[3][5] = { {' ','^','V','^',' '},{'<','<','O','>','>'},{' ','^','V','^',' '} };
@@ -258,10 +278,11 @@ double BulletInputTime = 0;				//Bullet 인풋 시작 시간
 double BulletPatternStartTime = 0;	//패턴 시작시간
 double BulletPatternEndTime = 0;	//패턴 종료시간
 int PatternStart = 0;							//패턴 시작 유무
+int PatternTimeEnded = 1;				//패턴 지속시간 종료 유무
 int PatternNumber = 0;					//패턴 넘버
 int PatternCycle = 0;							//패턴 사이클
 int BULLETCOUNT = 0;						//총알 개수
-double BulletSpeed = 2;					//Bullet 속도
+double BulletSpeed = 1;					//Bullet 속도
 
 char BulletModelPerPattern[TOTALPATTERNCOUNT] = { 'o','v','*','v','o' };
 
