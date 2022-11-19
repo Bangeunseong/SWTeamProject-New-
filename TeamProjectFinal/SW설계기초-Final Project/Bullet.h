@@ -309,35 +309,35 @@ int BulletPattern_Gyre() {
 		if (!bullet[i].BulletActivation && !bullet[i].CollisionPlayer && !bullet[i].CollisionWall) { BulletPostionRenewal(i); bullet[i].BulletActivation = 1; ShowBullet(i); BULLETCOUNT++; }
 		switch (i % 8) {
 		case 0:
-			if (BULLETCOUNT < 25) flag += MoveBullet_SE(i);
+			if (BULLETCOUNT / 8  + BULLETCOUNT % 8 < 15) flag += MoveBullet_SE(i);
 			else flag += MoveBullet_S(i);
 			break;
 		case 1:
-			if (BULLETCOUNT < 25) flag += MoveBullet_S(i);
+			if (BULLETCOUNT / 8 + BULLETCOUNT % 8 < 15) flag += MoveBullet_S(i);
 			else flag += MoveBullet_SW(i);
 			break;
 		case 2:
-			if (BULLETCOUNT < 25) flag += MoveBullet_SW(i);
+			if (BULLETCOUNT / 8 + BULLETCOUNT % 8 < 15) flag += MoveBullet_SW(i);
 			else flag += MoveBullet_W(i);
 			break;
 		case 3:
-			if (BULLETCOUNT < 25) flag += MoveBullet_W(i);
+			if (BULLETCOUNT / 8 + BULLETCOUNT % 8 < 15) flag += MoveBullet_W(i);
 			else flag += MoveBullet_NW(i);
 			break;
 		case 4:
-			if (BULLETCOUNT < 25) flag += MoveBullet_NW(i);
+			if (BULLETCOUNT / 8 + BULLETCOUNT % 8 < 15) flag += MoveBullet_NW(i);
 			else flag += MoveBullet_N(i);
 			break;
 		case 5:
-			if (BULLETCOUNT < 25) flag += MoveBullet_N(i);
+			if (BULLETCOUNT / 8 + BULLETCOUNT % 8 < 15) flag += MoveBullet_N(i);
 			else flag += MoveBullet_NE(i);
 			break;
 		case 6:
-			if (BULLETCOUNT < 25) flag += MoveBullet_NE(i);
+			if (BULLETCOUNT / 8 + BULLETCOUNT % 8 < 15) flag += MoveBullet_NE(i);
 			else flag += MoveBullet_E(i);
 			break;
 		case 7:
-			if (BULLETCOUNT < 25) flag += MoveBullet_E(i);
+			if (BULLETCOUNT / 8 + BULLETCOUNT % 8 < 15) flag += MoveBullet_E(i);
 			else flag += MoveBullet_SE(i);
 			break;
 		}
