@@ -1,5 +1,5 @@
 #include "GameFile.h"
 int main() {
-	RunGame(); 
+	RunGame();
 	return 0;
 }

@@ -68,7 +68,7 @@ void ShowGameOver() {
 	SetCurrentCursorPos(OptionSelectionBox_Origin_X + (OPTIONSELECTIONBOX_ROW - strlen("Continue?")) / 2 + 1, OptionSelectionBox_Origin_Y + 1);
 	printf("Continue?");
 	CreateOptionSelectionBox(OptionSelectionBox_Origin_X + OPTIONSELECTIONBOX_ROW + 8, OptionSelectionBox_Origin_Y);
-	SetCurrentCursorPos(OptionSelectionBox_Origin_X + OPTIONSELECTIONBOX_ROW + 8 + (OPTIONSELECTIONBOX_ROW - strlen("Give Up")) / 2 + 1, OptionSelectionBox_Origin_Y + 1);
+	SetCurrentCursorPos(OptionSelectionBox_Origin_X + OPTIONSELECTIONBOX_ROW + 8 + (OPTIONSELECTIONBOX_ROW - strlen("GiveUp")) / 2, OptionSelectionBox_Origin_Y + 1);
 	printf("Give Up");
 }
 

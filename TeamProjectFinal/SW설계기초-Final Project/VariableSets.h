@@ -266,7 +266,7 @@ typedef struct Bullet {						//Bullet 위치 저장 공간 구조체
 }Bullet;						
 Bullet bullet[1000];							//Bullet 구조체 배열
 
-#define TOTALPATTERNCOUNT 5	//총 패턴 갯수
+#define TOTALPATTERNCOUNT 6	//총 패턴 갯수
 #define PATTERNDURATION 1.5		//패턴 durationtime
 #define PATTERNTIME_SPREAD 10.0//Spread 패턴 지속시간
 #define PATTERNTIME_LASER 12.0//Laser 패턴 지속시간
@@ -284,7 +284,7 @@ int PatternCycle = 0;							//패턴 사이클
 int BULLETCOUNT = 0;						//총알 개수
 double BulletSpeed = 1;					//Bullet 속도
 
-char BulletModelPerPattern[TOTALPATTERNCOUNT] = { 'o','v','*','v','o' };
+char BulletModelPerPattern[TOTALPATTERNCOUNT] = { 'o','v','o','v','o','o' };
 
 
 #endif // !VARIABLESETS_H
