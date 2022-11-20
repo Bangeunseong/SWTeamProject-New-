@@ -16,7 +16,7 @@ int GameOver() {
 		HidePlayer(); HideEnemy();
 		ClearPlayerPosition(); ClearEnemyPosition(); ClearBulletPosition();
 		PlayerInputTime = 0; PlayerPos = 0; Invinsible = 0; CurSkill = SubSkill = UsingSkill = 0;
-		EnemyInputTime = EnemyMovementTiming = 0;
+		EnemyInputTime = EnemyMovementTiming = 0; EnemySpeed = 1.0;
 		ItemInputTime = 0; ItemCreationLoop = 1; flashFLAG = 0; flashCount = 0; itemFLAG = 0;
 		BulletInputTime = 0;
 		BulletPatternStartTime = BulletPatternEndTime = 0;

@@ -272,7 +272,8 @@ Bullet bullet[1000];							//Bullet 구조체 배열
 #define PATTERNTIME_LASER 12.0//Laser 패턴 지속시간
 #define PATTERNTIME_3WAY 10.0//3way 패턴 지속시간
 #define PATTERNTIME_CIRCLESPREAD 10.0	//원형 Spread 패턴 지속시간
-#define PATTERNTIME_SPIRAL 15.0 //Spiral 패턴 지속시간
+#define PATTERNTIME_CHAOS 15.0 //Spiral 패턴 지속시간
+#define PATTERNTIME_GYRO 10.0 //Gyro 패턴 지속시간
 
 double BulletInputTime = 0;				//Bullet 인풋 시작 시간
 double BulletPatternStartTime = 0;	//패턴 시작시간
@@ -282,7 +283,7 @@ int PatternTimeEnded = 1;				//패턴 지속시간 종료 유무
 int PatternNumber = 0;					//패턴 넘버
 int PatternCycle = 0;							//패턴 사이클
 int BULLETCOUNT = 0;						//총알 개수
-double BulletSpeed = 1;					//Bullet 속도
+double BulletSpeed = 1.0;					//Bullet 속도
 
 char BulletModelPerPattern[TOTALPATTERNCOUNT] = { 'o','v','o','v','o','o' };
 

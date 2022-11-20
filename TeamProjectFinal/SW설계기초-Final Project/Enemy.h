@@ -147,16 +147,11 @@ void EnemyMotion_FlashToRandomPos() {
 
 //중심으로 이동하고 멈춘다
 void EnemyMotion_MoveToCenter() {
-	int flag = 0;
 	if (ENEMY_POS_X < ENEMY_ORIGIN_POS_X) shiftEnemyRight();
 	else if (ENEMY_POS_X > ENEMY_ORIGIN_POS_X) shiftEnemyLeft();
-	else flag++;
 
-	if (ENEMY_POS_Y < GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN / 2) shiftEnemyDown();
-	else if (ENEMY_POS_Y > GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN / 2) shiftEnemyUp();
-	else flag++;
-
-	if (flag > 1) { EnemyIsMoving = 0; }
+	if (ENEMY_POS_Y < GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN / 2 - 1) shiftEnemyDown();
+	else if (ENEMY_POS_Y > GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN / 2 - 1) shiftEnemyUp();
 }
 
 //벽을 튕기면서 이동
@@ -191,21 +186,17 @@ void InvalidateEnemy() {
 				EnemyMotion_MovingLeftRight();
 			}
 		}
-		else if (PatternNumber == 2) {
+		else if (PatternNumber == 2 || PatternNumber == 4) {
 			if (PatternTimeEnded) { if (EnemyMotion_MoveToOriginPos()) EnemyIsMoving = 0; return; }	//패턴 지속시간이 끝났을 경우 다시 제자리로 이동하는데 다 이동했으면 Enemy이동 인디케이터 0으로 갱신
 			else EnemyMotion_FlashToRandomPos();
 		}
-		else if(PatternNumber == 3 || PatternNumber == 5) {//움직임 구현필요
+		else if(PatternNumber == 3 || PatternNumber == 5) {
 			if (PatternTimeEnded) { EnemySpeed = 1.0; if (EnemyMotion_MoveToOriginPos()) EnemyIsMoving = 0; return; }	//패턴 지속시간이 끝났을 경우 다시 제자리로 이동하는데 다 이동했으면 Enemy이동 인디케이터 0으로 갱신
 			else {
 				EnemySpeed = 0.5;
-				if (!direction) direction = DIRECTION_LEFTDOWN;
+				if (!direction) direction = rand() % 2 + 7;
 				EnemyMotion_BouncingAroundWall();
 			}
-		}
-		else if (PatternNumber == 4) {
-			if (PatternTimeEnded) { if (EnemyMotion_MoveToOriginPos()) EnemyIsMoving = 0; return; }	//패턴 지속시간이 끝났을 경우 다시 제자리로 이동하는데 다 이동했으면 Enemy이동 인디케이터 0으로 갱신
-			else EnemyMotion_FlashToRandomPos();
 		}
 		else if (PatternNumber == 6) {
 			if (PatternTimeEnded) { if (EnemyMotion_MoveToOriginPos()) EnemyIsMoving = 0; return; }	//패턴 지속시간이 끝났을 경우 다시 제자리로 이동하는데 다 이동했으면 Enemy이동 인디케이터 0으로 갱신

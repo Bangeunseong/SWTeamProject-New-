@@ -41,7 +41,7 @@ void ClearBulletPosition() {
 	PatternNumber = 0;
 	PatternTimeEnded = 1;
 	BULLETCOUNT = 0;
-	BulletSpeed = 1;
+	BulletSpeed = 1.0;
 }
 
 void BulletPostionRenewal(int bulletnumber) {
@@ -180,10 +180,11 @@ void BulletLaunchTime() {
 	if (!PatternStart) {	//패턴이 시작되지 않았을 경우
 		double CheckedTime = TimeCheckerEnd() - PausingTime;
 		if (CheckedTime > BulletPatternEndTime + PATTERNDURATION) {		//체크한 시간이 패턴 종료시간 + durationtime보다 크면 작동
-			SetRandomPatternNumber(TOTALPATTERNCOUNT);						//패턴 넘버 결정(랜덤)
-			if (PatternNumber == 5) BulletSpeed = 6.0;										//패턴 넘버가 5번일때 bulletspeed
-			else if (PatternNumber == 1) BulletSpeed = 1.0;									//패턴 넘버 1번일때 bulletspeed
-			else if (PatternNumber == 4 || PatternNumber == 2) BulletSpeed = 8.0;	//패턴 넘버가 4번 또는 8번 일때 bulletspeed
+			SetRandomPatternNumber(TOTALPATTERNCOUNT);		//패턴 넘버 결정(랜덤)
+			if (PatternNumber == 1) BulletSpeed = 1.0;		//패턴 넘버 1번일때 bulletspeed
+			else if (PatternNumber == 3 || PatternNumber == 5) BulletSpeed = 1.5;
+			else if (PatternNumber == 2 || PatternNumber == 4) BulletSpeed = 8.0;		//패턴 넘버가 2번 또는 4번 일때 bulletspeed
+			else if (PatternNumber == 6) BulletSpeed = 3.0;
 			PatternStart = EnemyIsMoving = 1; PatternTimeEnded = 0; EnemyMovementTiming = BulletPatternStartTime = CheckedTime;	//패턴 시작 인디케이터 1로 갱신, 패턴 시작시간 갱신, Enemy가 움직이고 있다는 인디케이터 1로 갱신
 		}
 	}
@@ -273,71 +274,96 @@ int BulletPattern_3way() {
 	return 0;
 }
 
-//BulletPattern_Spiral
-int BulletPattern_Spiral() {		//이것도 마찬가지로 Enemy Movement Pattern 필요
+//BulletPattern_Chaos
+int BulletPattern_Chaos() {		//이것도 마찬가지로 Enemy Movement Pattern 필요
 	int flag = 0;
 	double CheckedTime = TimeCheckerEnd() - PausingTime;
-	if (CheckedTime < PATTERNTIME_SPIRAL + BulletPatternStartTime && CheckedTime > BulletPatternStartTime) { //패턴 지속시간일때 패턴사이클 및 bulletcount 증가
+	if (CheckedTime < PATTERNTIME_CHAOS + BulletPatternStartTime && CheckedTime > BulletPatternStartTime) { //패턴 지속시간일때 패턴사이클 및 bulletcount 증가
 		if ((int)(CheckedTime - BulletPatternStartTime) % 2 == 0)
-			BULLETCOUNT = ++PatternCycle;
-	}	
-	else PatternTimeEnded = 1;	//패턴 지속시간 끝날시 patterntimeended 1로 갱신
-	for (int i = 0; i < PatternCycle; i++) {
-		if (!bullet[i].BulletActivation && !bullet[i].CollisionPlayer && !bullet[i].CollisionWall) { BulletPostionRenewal(i); bullet[i].BulletActivation = 1; ShowBullet(i); }
+			++PatternCycle;
+	}
+	else PatternTimeEnded = 1;
+	for (int i = 0; i < PatternCycle * 8; i++) {
+		if (!bullet[i].BulletActivation && !bullet[i].CollisionPlayer && !bullet[i].CollisionWall) { BulletPostionRenewal(i); bullet[i].BulletActivation = 1; ShowBullet(i); BULLETCOUNT++; }
 		switch (i % 8) {
-		case 0: flag += MoveBullet_N(i); break;
-		case 1: flag += MoveBullet_NW(i); break;
-		case 2: flag += MoveBullet_NE(i); break;
-		case 3: flag += MoveBullet_E(i); break;
-		case 4: flag += MoveBullet_W(i); break;
-		case 5: flag += MoveBullet_SW(i); break;
-		case 6: flag += MoveBullet_SE(i); break;
-		case 7: flag += MoveBullet_S(i); break;
+		case 0: 
+			if((BULLETCOUNT / 8) % 2 == 0) flag += MoveBullet_N(i);
+			else flag += MoveBullet_NW(i);
+			break;
+		case 1: 
+			if ((BULLETCOUNT / 8) % 2 == 0) flag += MoveBullet_NW(i);
+			else flag += MoveBullet_W(i);
+			break;
+		case 2: 
+			if ((BULLETCOUNT / 8) % 2 == 0) flag += MoveBullet_W(i);
+			else flag += MoveBullet_SW(i);
+			break;
+		case 3: 
+			if ((BULLETCOUNT / 8) % 2 == 0) flag += MoveBullet_SW(i);
+			else flag += MoveBullet_S(i);
+			break;
+		case 4: 
+			if ((BULLETCOUNT / 8) % 2 == 0) flag += MoveBullet_S(i);
+			else flag += MoveBullet_SE(i);
+			break;
+		case 5: 
+			if ((BULLETCOUNT / 8) % 2 == 0) flag += MoveBullet_SE(i);
+			else flag += MoveBullet_E(i);
+			break; 
+		case 6: 
+			if ((BULLETCOUNT / 8) % 2 == 0) flag += MoveBullet_E(i);
+			else flag += MoveBullet_NE(i);
+			break;
+		case 7:
+			if ((BULLETCOUNT / 8) % 2 == 0) flag += MoveBullet_NE(i);
+			else flag += MoveBullet_N(i);
+			break;
 		}
 	}
 	if (!flag && !EnemyIsMoving) { BulletPatternEndTime = TimeCheckerEnd() - PausingTime; return 1; }
 	return 0;
 }
 
-//BulletPattern_Gyre -> 1칸씩 움직이는 회전 패턴 불교문양 같음
-int BulletPattern_Gyre() {		
+//BulletPattern_Gyro -> 1칸씩 움직이는 회전 패턴 불교문양 같음
+int BulletPattern_Gyro() {		
 	int flag = 0;
 	double CheckedTime = TimeCheckerEnd() - PausingTime;
-	if (CheckedTime < PATTERNTIME_CIRCLESPREAD + BulletPatternStartTime && CheckedTime > BulletPatternStartTime) { if (!EnemyIsMoving) ++PatternCycle; }
-	else { PatternTimeEnded = 1; EnemyIsMoving = 1; }
+	if (CheckedTime < PATTERNTIME_GYRO + BulletPatternStartTime && CheckedTime > BulletPatternStartTime) { if (ENEMY_POS_Y == GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN / 2 - 1) ++PatternCycle; }
+	else { PatternTimeEnded = 1; }
 	for (int i = 0; i < PatternCycle * 8; i++) {
 		if (!bullet[i].BulletActivation && !bullet[i].CollisionPlayer && !bullet[i].CollisionWall) { BulletPostionRenewal(i); bullet[i].BulletActivation = 1; ShowBullet(i); BULLETCOUNT++; }
 		switch (i % 8) {
 		case 0:
-			if (BULLETCOUNT / 8  + BULLETCOUNT % 8 < 15) flag += MoveBullet_SE(i);
+
+			if ((BULLETCOUNT / 8  + BULLETCOUNT % 8) % 6 < 3) flag += MoveBullet_SE(i);
 			else flag += MoveBullet_S(i);
 			break;
 		case 1:
-			if (BULLETCOUNT / 8 + BULLETCOUNT % 8 < 15) flag += MoveBullet_S(i);
+			if ((BULLETCOUNT / 8 + BULLETCOUNT % 8) % 6 < 3) flag += MoveBullet_S(i);
 			else flag += MoveBullet_SW(i);
 			break;
 		case 2:
-			if (BULLETCOUNT / 8 + BULLETCOUNT % 8 < 15) flag += MoveBullet_SW(i);
+			if ((BULLETCOUNT / 8 + BULLETCOUNT % 8) % 6 < 3) flag += MoveBullet_SW(i);
 			else flag += MoveBullet_W(i);
 			break;
 		case 3:
-			if (BULLETCOUNT / 8 + BULLETCOUNT % 8 < 15) flag += MoveBullet_W(i);
+			if ((BULLETCOUNT / 8 + BULLETCOUNT % 8) % 6 < 3) flag += MoveBullet_W(i);
 			else flag += MoveBullet_NW(i);
 			break;
 		case 4:
-			if (BULLETCOUNT / 8 + BULLETCOUNT % 8 < 15) flag += MoveBullet_NW(i);
+			if ((BULLETCOUNT / 8 + BULLETCOUNT % 8) % 6 < 3) flag += MoveBullet_NW(i);
 			else flag += MoveBullet_N(i);
 			break;
 		case 5:
-			if (BULLETCOUNT / 8 + BULLETCOUNT % 8 < 15) flag += MoveBullet_N(i);
+			if ((BULLETCOUNT / 8 + BULLETCOUNT % 8) % 6 < 3) flag += MoveBullet_N(i);
 			else flag += MoveBullet_NE(i);
 			break;
 		case 6:
-			if (BULLETCOUNT / 8 + BULLETCOUNT % 8 < 15) flag += MoveBullet_NE(i);
+			if ((BULLETCOUNT / 8 + BULLETCOUNT % 8) % 6 < 3) flag += MoveBullet_NE(i);
 			else flag += MoveBullet_E(i);
 			break;
 		case 7:
-			if (BULLETCOUNT / 8 + BULLETCOUNT % 8 < 15) flag += MoveBullet_E(i);
+			if ((BULLETCOUNT / 8 + BULLETCOUNT % 8) % 6 < 3) flag += MoveBullet_E(i);
 			else flag += MoveBullet_SE(i);
 			break;
 		}
@@ -360,8 +386,8 @@ void InvalidateBullet() {
 				case 2: if (BulletPattern_Laser()) ClearBulletPosition(); break;
 				case 3: if (BulletPattern_CircleSpread()) ClearBulletPosition(); break;
 				case 4: if (BulletPattern_3way()) ClearBulletPosition(); break;
-				case 5: if (BulletPattern_Spiral()) ClearBulletPosition(); break;
-				case 6: if (BulletPattern_Gyre()) ClearBulletPosition(); break;
+				case 5: if (BulletPattern_Chaos()) ClearBulletPosition(); break;
+				case 6: if (BulletPattern_Gyro()) ClearBulletPosition(); break;
 				default: break;
 				}
 			}
