@@ -186,7 +186,7 @@ void InvalidateEnemy() {
 				EnemyMotion_MovingLeftRight();
 			}
 		}
-		else if (PatternNumber == 2 || PatternNumber == 4) {
+		else if (PatternNumber == 2 || PatternNumber == 4 || PatternNumber == 9) {
 			if (PatternTimeEnded) { if (EnemyMotion_MoveToOriginPos()) EnemyIsMoving = 0; return; }	//패턴 지속시간이 끝났을 경우 다시 제자리로 이동하는데 다 이동했으면 Enemy이동 인디케이터 0으로 갱신
 			else EnemyMotion_FlashToRandomPos();
 		}
@@ -198,9 +198,23 @@ void InvalidateEnemy() {
 				EnemyMotion_BouncingAroundWall();
 			}
 		}
-		else if (PatternNumber == 6) {
+		else if (PatternNumber == 6 || PatternNumber == 10) {
 			if (PatternTimeEnded) { if (EnemyMotion_MoveToOriginPos()) EnemyIsMoving = 0; return; }	//패턴 지속시간이 끝났을 경우 다시 제자리로 이동하는데 다 이동했으면 Enemy이동 인디케이터 0으로 갱신
 			else EnemyMotion_MoveToCenter();
+		}
+		else if (PatternNumber == 7) {
+			if (PatternTimeEnded) { if (EnemyMotion_MoveToOriginPos()) EnemyIsMoving = 0; return; }	//패턴 지속시간이 끝났을 경우 다시 제자리로 이동하는데 다 이동했으면 Enemy이동 인디케이터 0으로 갱신
+			else EnemyMotion_FlashToRandomPos();
+		}
+		else if (PatternNumber == 8) {
+			if (PatternTimeEnded) { if (EnemyMotion_MoveToOriginPos()) EnemyIsMoving = 0; return; }	//패턴 지속시간이 끝났을 경우 다시 제자리로 이동하는데 다 이동했으면 Enemy이동 인디케이터 0으로 갱신
+			else if (ENEMY_POS_X < GAMEBOARD_ROW - 5) {
+				shiftEnemyRight();
+			}
+			else {
+				HideEnemy();
+				ENEMY_POS_X = GAMEBOARD_ORIGIN_X + 4;
+			}
 		}
 	}
 }

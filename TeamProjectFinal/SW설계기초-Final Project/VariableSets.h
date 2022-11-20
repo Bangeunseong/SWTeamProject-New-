@@ -263,10 +263,11 @@ typedef struct Bullet {						//Bullet 위치 저장 공간 구조체
 	int BulletActivation;
 	int CollisionPlayer;
 	int CollisionWall;
+	int cnt;
 }Bullet;						
 Bullet bullet[1000];							//Bullet 구조체 배열
 
-#define TOTALPATTERNCOUNT 6	//총 패턴 갯수
+#define TOTALPATTERNCOUNT 10	//총 패턴 갯수
 #define PATTERNDURATION 1.5		//패턴 durationtime
 #define PATTERNTIME_SPREAD 10.0//Spread 패턴 지속시간
 #define PATTERNTIME_LASER 12.0//Laser 패턴 지속시간
@@ -274,6 +275,10 @@ Bullet bullet[1000];							//Bullet 구조체 배열
 #define PATTERNTIME_CIRCLESPREAD 10.0	//원형 Spread 패턴 지속시간
 #define PATTERNTIME_CHAOS 15.0 //Spiral 패턴 지속시간
 #define PATTERNTIME_GYRO 10.0 //Gyro 패턴 지속시간
+#define PATTERNTIME_SHOTGUN 10.0 //Shotgun 패턴 지속시간
+#define PATTERNTIME_ROAD 10.0 //Road 패턴 지속시간
+#define PATTERNTIME_METEOR 10.0 //Meteor 패턴 지속시간
+#define PATTERNTIME_SPIRAL 10.0 //Spiral 패턴 지속시간
 
 double BulletInputTime = 0;				//Bullet 인풋 시작 시간
 double BulletPatternStartTime = 0;	//패턴 시작시간
@@ -285,7 +290,6 @@ int PatternCycle = 0;							//패턴 사이클
 int BULLETCOUNT = 0;						//총알 개수
 double BulletSpeed = 1.0;					//Bullet 속도
 
-char BulletModelPerPattern[TOTALPATTERNCOUNT] = { 'o','v','o','v','o','o' };
-
+char BulletModelPerPattern[TOTALPATTERNCOUNT] = { 'o','v','o','v','o','o','x','I','o','o' };
 
 #endif // !VARIABLESETS_H
