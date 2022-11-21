@@ -4,13 +4,14 @@
 #include "BackGround.h"
 #include "StartMenu.h"
 #include "CharacterSelectionMenu.h"
-#include "StageMenu.h"
-#include "GameOverMenu.h"
 #include "Player.h"
 #include "Enemy.h"
 #include "Bullet.h"
+#include "Item.h"
 #include "UI.h"
 #include "Timer.h"
+#include "StageMenu.h"
+#include "GameOverMenu.h"
 #ifndef GAMEFILE_H
 #define GAMEFILE_H
 
@@ -18,6 +19,7 @@
 void StoryMode() { 
 	while (StageNumber < 4) {
 		InvalidateStageNumber();
+		InitializePrisonInfo();
 		ShowCurrentNSubSkill();
 		ShowMap();
 		ShowStageNumber();
@@ -29,10 +31,9 @@ void StoryMode() {
 //무한 모드
 void InfiniteMode() {		//UI 수정필요
 	while (1) {
-		InvalidateStageNumber();
+		InitializePrisonInfo();
 		ShowCurrentNSubSkill();
 		ShowTime();
-		ShowStageNumber();
 		TimeCheckerStart();
 		while (1) { InvalidateTime(); InvalidateItem();  InvalidateBullet(); InvalidateEnemy(); InvalidatePlayer(); if (GameOver()) return; }
 	}
@@ -40,7 +41,7 @@ void InfiniteMode() {		//UI 수정필요
 
 //게임 실행 함수 ----게임을 실행할 때 initialize 해야할 것들만 넣기
 void RunGame() {
-	ResizeConsole(); RemoveCursor(); InitUniBoard();
+	ResizeConsole(); ResizeConsoleBuffer(); RemoveCursor(); InitUniBoard();
 	while (1) {
 		srand((unsigned)time(NULL));
 		if (StartMenu()) {

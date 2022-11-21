@@ -30,7 +30,7 @@ void GamePause() {
 //플레이어 위치 초기화 함수
 void ClearPlayerPosition() {
 	PLAYER_POS_X = GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW / 2 - 3;
-	PLAYER_POS_Y = GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN - 8;
+	PLAYER_POS_Y = GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN - 10;
 }
 
 //플레이어 출력 함수
@@ -53,7 +53,11 @@ void HidePlayer() {
 //플레이어 기준 벽과 부딫혔을 때 사용하는 함수
 int DetectCollision_PlayerwithWall(int x, int y) {
 	for (int i = 0; i < 6; i++) {
-		if (UniBoard[y - GAMEBOARD_ORIGIN_Y][x - GAMEBOARD_ORIGIN_X + i] == WALL) return 1;
+		if (EnemySkillPrisonActivation) {
+			if (y <= P.LU_Y || y >= P.RD_Y) return 1;
+			if ((x + i < P.LU_X + 2) || (x + i >= P.RD_X)) return 1;
+		}
+		else { if (UniBoard[y - GAMEBOARD_ORIGIN_Y][x - GAMEBOARD_ORIGIN_X + i] == WALL) return 1; }
 	}
 	return 0;
 }

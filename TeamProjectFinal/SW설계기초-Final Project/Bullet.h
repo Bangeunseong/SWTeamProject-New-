@@ -2,7 +2,6 @@
 #pragma warning(disable:4996)
 #include "CursorFunctions.h"
 #include "VariableSets.h"
-#include "Enemy.h"
 #include "Timer.h"
 #ifndef BULLET_H
 #define BULLET_H
@@ -14,7 +13,7 @@ int CalculateBulletTimeBuffer() {
 }
 
 //랜덤 패턴 넘버 지정
-int SetRandomPatternNumber(int max) { PatternNumber = rand() % max + 1; }
+void SetRandomPatternNumber(int max) { PatternNumber = rand() % max + 1; }
 
 void HideBullet(int bulletnumber) {
 	SetCurrentCursorPos(bullet[bulletnumber].BULLET_POS_X, bullet[bulletnumber].BULLET_POS_Y);
@@ -144,7 +143,7 @@ int MoveBullet_SW(int bulletnumber) {
 
 	HideBullet(bulletnumber);
 	if (DetectCollision_BulletwithPlayer(bullet[bulletnumber].BULLET_POS_X, bullet[bulletnumber].BULLET_POS_Y)) { bullet[bulletnumber].BulletActivation = 0; bullet[bulletnumber].CollisionPlayer = 1; return 0; }//플레이어와 부딪혔으면 총알 비활성화, 플레이어와 부딪혔다는 인디케이터 1로 갱신 0을 리턴하며 종료
-	if (!DetectCollision_BulletwithWall(bullet[bulletnumber].BULLET_POS_X - 2, bullet[bulletnumber].BULLET_POS_Y + 1)) { 
+	if (!DetectCollision_BulletwithWall(bullet[bulletnumber].BULLET_POS_X - 2, bullet[bulletnumber].BULLET_POS_Y + 1)) {
 		bullet[bulletnumber].BULLET_POS_X -= 2; bullet[bulletnumber].BULLET_POS_Y++;
 	}
 	else { bullet[bulletnumber].BulletActivation = 0; bullet[bulletnumber].CollisionWall = 1; return 0; }

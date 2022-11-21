@@ -172,6 +172,13 @@ int ENEMY_POS_Y = ENEMY_ORIGIN_POS_Y;
 int direction = 0;
 int EnemyIsMoving = 0;
 
+//적 NPC skillType1-[Prison] 관련변수 - 추가
+typedef struct Prison {
+	int Prison_W, Prison_H;
+	int RD_X, RD_Y, LU_X, LU_Y;
+}Prison;
+Prison P;
+int EnemySkillPrisonActivation = 0;
 
 //적 우주선 모델링
 char EnemyModel[3][5] = { {' ','^','V','^',' '},{'<','<','O','>','>'},{' ','^','V','^',' '} };
@@ -292,4 +299,4 @@ double BulletSpeed = 1.0;					//Bullet 속도
 
 char BulletModelPerPattern[TOTALPATTERNCOUNT] = { 'o','v','o','v','o','o','x','I','o','o' };
 
-#endif // !VARIABLESETS_H
+#endif //!VARIABLESETS_H

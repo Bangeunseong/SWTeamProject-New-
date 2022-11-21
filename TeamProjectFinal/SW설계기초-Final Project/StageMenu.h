@@ -24,6 +24,7 @@ int StageOver() {
 		ClearPlayerPosition(); ClearEnemyPosition(); ClearBulletPosition();
 		PlayerInputTime = 0; PlayerPos = 0; Invinsible = 0; UsingSkill = 0;
 		EnemyInputTime = EnemyMovementTiming = 0; EnemySpeed = 1.0;
+		DeactivateEnemySkill_Prison();
 		ItemInputTime = 0; ItemCreationLoop = 1; flashFLAG = 0; flashCount = 0; itemFLAG = 0;
 		BulletInputTime = 0;
 		BulletPatternStartTime = BulletPatternEndTime = 0;

@@ -2,6 +2,7 @@
 #pragma warning(disable:4996)
 #include "CursorFunctions.h"
 #include "VariableSets.h"
+#include "Player.h"
 #include "Bullet.h"
 #include "Timer.h"
 #include "UI.h"
@@ -35,25 +36,25 @@ int DetectCollision_FlashPlayerwithWall(int x, int y) {
 //대쉬 스킬 함수
 void flashUp() {
 	HideFlashPlayer();
-	if (!DetectCollision_PlayerwithWall(PLAYER_POS_X, PLAYER_POS_Y - FLASHDISTANCE)) PLAYER_POS_Y -= FLASHDISTANCE;
+	if (!DetectCollision_FlashPlayerwithWall(PLAYER_POS_X, PLAYER_POS_Y - FLASHDISTANCE)) PLAYER_POS_Y -= FLASHDISTANCE;
 	else PLAYER_POS_Y = GAMEBOARD_ORIGIN_Y + 1;
 	ShowFlashPlayer();
 }
 void flashDown() {
 	HideFlashPlayer();
-	if (!DetectCollision_PlayerwithWall(PLAYER_POS_X, PLAYER_POS_Y + FLASHDISTANCE)) PLAYER_POS_Y+= FLASHDISTANCE;
+	if (!DetectCollision_FlashPlayerwithWall(PLAYER_POS_X, PLAYER_POS_Y + FLASHDISTANCE)) PLAYER_POS_Y+= FLASHDISTANCE;
 	else PLAYER_POS_Y = GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN - 1;
 	ShowFlashPlayer();
 }
 void flashLeft() {
 	HideFlashPlayer();
-	if (!DetectCollision_PlayerwithWall(PLAYER_POS_X - FLASHDISTANCE * 2, PLAYER_POS_Y)) PLAYER_POS_X = PLAYER_POS_X -= FLASHDISTANCE * 2;
+	if (!DetectCollision_FlashPlayerwithWall(PLAYER_POS_X - FLASHDISTANCE * 2, PLAYER_POS_Y)) PLAYER_POS_X = PLAYER_POS_X -= FLASHDISTANCE * 2;
 	else PLAYER_POS_X = GAMEBOARD_ORIGIN_X + 2;
 	ShowFlashPlayer();
 }
 void flashRight() {
 	HideFlashPlayer();
-	if (!DetectCollision_PlayerwithWall(PLAYER_POS_X + FLASHDISTANCE * 2, PLAYER_POS_Y)) PLAYER_POS_X = PLAYER_POS_X += FLASHDISTANCE *2;
+	if (!DetectCollision_FlashPlayerwithWall(PLAYER_POS_X + FLASHDISTANCE * 2, PLAYER_POS_Y)) PLAYER_POS_X = PLAYER_POS_X += FLASHDISTANCE *2;
 	else PLAYER_POS_X = GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW - 6;
 	ShowFlashPlayer();
 }
