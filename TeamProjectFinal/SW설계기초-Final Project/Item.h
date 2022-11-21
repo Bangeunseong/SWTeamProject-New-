@@ -9,7 +9,7 @@
 #ifndef ITEM_H
 #define ITEM_H
 
-//ÇÃ·¹ÀÌ¾î Ãâ·Â ÇÔ¼ö
+//í”Œë ˆì´ì–´ ì¶œë ¥ í•¨ìˆ˜
 void ShowFlashPlayer() {
 	if (Invinsible) SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), PLAYERINVINSIBLEINDICATECOLOR);
 	else if (UsingSkill > 0) SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), PLAYERUSINGSKILLCOLOR);
@@ -18,13 +18,13 @@ void ShowFlashPlayer() {
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
 	SetCurrentCursorPos(PLAYER_POS_X, PLAYER_POS_Y);
 }
-//ÇÃ·¹ÀÌ¾î ¼û±è ÇÔ¼ö
+//í”Œë ˆì´ì–´ ìˆ¨ê¹€ í•¨ìˆ˜
 void HideFlashPlayer() {
 	for (int i = 0; i < 6; i++) { SetCurrentCursorPos(PLAYER_POS_X + i, PLAYER_POS_Y); printf(" "); }
 	SetCurrentCursorPos(PLAYER_POS_X, PLAYER_POS_Y);
 }
 
-//´ë½¬ ½ºÅ³ »ç¿ë ½Ã Ãæµ¹ °Ë»ç ÇÔ¼ö
+//ëŒ€ì‰¬ ìŠ¤í‚¬ ì‚¬ìš© ì‹œ ì¶©ëŒ ê²€ì‚¬ í•¨ìˆ˜
 int DetectCollision_FlashPlayerwithWall(int x, int y) {
 	for (int i = 0; i < 6; i++) {
 		if ((x + i < GAMEBOARD_ORIGIN_X + 2 || x + i >= GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW) || (y <= GAMEBOARD_ORIGIN_Y || y >= GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN)) return 1;
@@ -32,7 +32,7 @@ int DetectCollision_FlashPlayerwithWall(int x, int y) {
 	return 0;
 }
 
-//´ë½¬ ½ºÅ³ ÇÔ¼ö
+//ëŒ€ì‰¬ ìŠ¤í‚¬ í•¨ìˆ˜
 void flashUp() {
 	HideFlashPlayer();
 	if (!DetectCollision_PlayerwithWall(PLAYER_POS_X, PLAYER_POS_Y - FLASHDISTANCE)) PLAYER_POS_Y -= FLASHDISTANCE;
@@ -58,12 +58,12 @@ void flashRight() {
 	ShowFlashPlayer();
 }
 
-//-------------------¾ÆÀÌÅÛº° ÀÛµ¿ÇÔ¼ö-----------------------
+//-------------------ì•„ì´í…œë³„ ì‘ë™í•¨ìˆ˜-----------------------
 
-void itemSpeedUp() { CurSpeed += SPEEDINCREASERATE; }	//ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ ¼Óµµ Áõ°¡
-void itemBulletSpeedDown() { BulletSpeed /= 2.0; };					//Åº¸· ¼Óµµ °¨¼Ò
-void itemInvinsibility() { Invinsible = 1; }										//¹«Àû ÆÇÁ¤
-void itemFlash() {																		//´ë½¬ ½ºÅ³
+void itemSpeedUp() { CurSpeed += SPEEDINCREASERATE; }	//í”Œë ˆì´ì–´ ìºë¦­í„° ì†ë„ ì¦ê°€
+void itemBulletSpeedDown() { BulletSpeed /= 2.0; };					//íƒ„ë§‰ ì†ë„ ê°ì†Œ
+void itemInvinsibility() { Invinsible = 1; }										//ë¬´ì  íŒì •
+void itemFlash() {																		//ëŒ€ì‰¬ ìŠ¤í‚¬
 	if (flashCount >= 2) return;
 	if (!flashFLAG) flashFLAG = 1;
 	if (GetAsyncKeyState(LEFT) & 0x8000) flashLeft();
@@ -72,9 +72,10 @@ void itemFlash() {																		//´ë½¬ ½ºÅ³
 	if (GetAsyncKeyState(DOWN) & 0x8000) flashDown();
 	flashCount++; 
 };
-void itemDeleteBullet() {	//º¸µåÆÇ¿¡ Á¸ÀçÇÏ´Â ÃÑ¾Ëµé ¸ğµÎ »èÁ¦
+void itemDeleteBullet() {	//ë³´ë“œíŒì— ì¡´ì¬í•˜ëŠ” ì´ì•Œë“¤ ëª¨ë‘ ì‚­ì œ
 	for (int i = 0; i < BULLETCOUNT; i++) {
-		HideBullet(i);
+		bullet[i].cnt = 0;
+                HideBullet(i);
 		bullet[i].BULLET_POS_X = GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW / 2 - 3;
 		bullet[i].BULLET_POS_Y = GAMEBOARD_ORIGIN_Y + 5;
 		bullet[i].BulletActivation = bullet[i].CollisionPlayer = bullet[i].CollisionWall = 0;
@@ -84,9 +85,9 @@ void itemDeleteBullet() {	//º¸µåÆÇ¿¡ Á¸ÀçÇÏ´Â ÃÑ¾Ëµé ¸ğµÎ »èÁ¦
 };															
 
 //----------------------------------------------------------------
-//------------------¾ÆÀÌÅÛ ÀÎº¥Åä¸® °ü·Ã ÇÔ¼ö--------------------
+//------------------ì•„ì´í…œ ì¸ë²¤í† ë¦¬ ê´€ë ¨ í•¨ìˆ˜--------------------
 
-//¾ÆÀÌÅÛ ½ºÅ³ ÀÎº¥Åä¸® »óÅÂ È®ÀÎ
+//ì•„ì´í…œ ìŠ¤í‚¬ ì¸ë²¤í† ë¦¬ ìƒíƒœ í™•ì¸
 int inventoryCheck() {
 	if (SubSkill != 0) return 2;
 	else { 
@@ -95,7 +96,7 @@ int inventoryCheck() {
 	}
 }
 
-//¾ÆÀÌÅÛ ½ºÅ³ ±³Ã¼ ÇÔ¼ö
+//ì•„ì´í…œ ìŠ¤í‚¬ êµì²´ í•¨ìˆ˜
 void SwapItem() {
 	if (inventoryCheck() == 2) {
 		HidePreviousCurrentNSubSkill();
@@ -106,13 +107,13 @@ void SwapItem() {
 	}
 }
 
-//¾ÆÀÌÅÛ ½ÀµæÇÔ¼ö
+//ì•„ì´í…œ ìŠµë“í•¨ìˆ˜
 void getItem() { SubSkill = CurSkill; CurSkill = ItemNumber; }
 
 //---------------------------------------------------------------
-//------------------¾ÆÀÌÅÛ »ç¿ë °ü·Ã ÇÔ¼ö---------------------
+//------------------ì•„ì´í…œ ì‚¬ìš© ê´€ë ¨ í•¨ìˆ˜---------------------
 
-//¾ÆÀÌÅÛÀÇ Á¾·ù¿¡ µû¶ó ÀÛµ¿ÇÏ´Â ½ºÅ³
+//ì•„ì´í…œì˜ ì¢…ë¥˜ì— ë”°ë¼ ì‘ë™í•˜ëŠ” ìŠ¤í‚¬
 void itemTrigger(int UsingSkill) {
 	switch (UsingSkill) {
 	case 1: itemSpeedUp();  break;
@@ -124,7 +125,7 @@ void itemTrigger(int UsingSkill) {
 	}
 }
 
-//¾ÆÀÌÅÛ ½ºÅ³ ÇØÁ¦ ÇÔ¼ö
+//ì•„ì´í…œ ìŠ¤í‚¬ í•´ì œ í•¨ìˆ˜
 void DeactivateSkillItem() { 
 	switch (UsingSkill) {
 	case 1: CurSpeed = SelectedSpeed; break;
@@ -137,18 +138,18 @@ void DeactivateSkillItem() {
 	UsingSkill = 0;
 }
 
-//¾ÆÀÌÅÛ ½ºÅ³ ¹ßµ¿ ÇÔ¼ö
+//ì•„ì´í…œ ìŠ¤í‚¬ ë°œë™ í•¨ìˆ˜
 void ActivateSkillItem() {
 	if (UsingSkill != 0) { if (flashFLAG != 0) itemFlash(); return; }
 	if (!CurSkill) return;
-	HidePreviousCurrentNSubSkill();									//UI °»½ÅÀ» À§ÇØ ³ÖÀº ¼û±èÇÔ¼ö
-	UsingSkill = CurSkill; CurSkill = SubSkill; SubSkill = 0;	//ÁÖ ½ºÅ³°ú º¸Á¶ ½ºÅ³ Swap
-	itemTrigger(UsingSkill);													//½ºÅ³ ¹ßµ¿
-	SkillActivationTime = TimeCheckerEnd() - PausingTime;						//½ºÅ³ ¹ßµ¿ ½Ã°£ ±â·Ï
-	ShowCurrentNSubSkill();												//UI °»½ÅÀ» À§ÇØ ³ÖÀº Ãâ·ÂÇÔ¼ö
+	HidePreviousCurrentNSubSkill();									//UI ê°±ì‹ ì„ ìœ„í•´ ë„£ì€ ìˆ¨ê¹€í•¨ìˆ˜
+	UsingSkill = CurSkill; CurSkill = SubSkill; SubSkill = 0;	//ì£¼ ìŠ¤í‚¬ê³¼ ë³´ì¡° ìŠ¤í‚¬ Swap
+	itemTrigger(UsingSkill);													//ìŠ¤í‚¬ ë°œë™
+	SkillActivationTime = TimeCheckerEnd() - PausingTime;						//ìŠ¤í‚¬ ë°œë™ ì‹œê°„ ê¸°ë¡
+	ShowCurrentNSubSkill();												//UI ê°±ì‹ ì„ ìœ„í•´ ë„£ì€ ì¶œë ¥í•¨ìˆ˜
 }
 
-//¾ÆÀÌÅÛ ½ºÅ³ Áö¼Ó½Ã°£ Ã¼Å© ÇÔ¼ö
+//ì•„ì´í…œ ìŠ¤í‚¬ ì§€ì†ì‹œê°„ ì²´í¬ í•¨ìˆ˜
 void SkillTimeCheck() {
 	if (!UsingSkill) return;
 	if (TimeCheckerEnd() - PausingTime - SkillActivationTime > SkillTime) DeactivateSkillItem();
@@ -156,61 +157,61 @@ void SkillTimeCheck() {
 
 
 //----------------------------------------------------------------
-//-----------------¾ÆÀÌÅÛ ¹«ºê¸ÕÆ® °ü·Ã ÇÔ¼ö------------------
+//-----------------ì•„ì´í…œ ë¬´ë¸Œë¨¼íŠ¸ ê´€ë ¨ í•¨ìˆ˜------------------
 
-//¾ÆÀÌÅÛ ¿òÁ÷ÀÓ µô·¹ÀÌ ÇÔ¼ö
+//ì•„ì´í…œ ì›€ì§ì„ ë”œë ˆì´ í•¨ìˆ˜
 int CalculateItemTimeBuffer() {
 	if (TimeCheckerEnd() - PausingTime - ItemInputTime > ITEMTIMEBUFFER) { ItemInputTime += ITEMTIMEBUFFER; return 0; }
 	else return 1;
 }
 
-//¾ÆÀÌÅÛ »èÁ¦ ÇÔ¼ö
+//ì•„ì´í…œ ì‚­ì œ í•¨ìˆ˜
 void HideItem() {
 	SetCurrentCursorPos(ITEM_POS_X, ITEM_POS_Y);
 	printf(" ");
 }
 
-//¾ÆÀÌÅÛ Ãâ·Â ÇÔ¼ö
+//ì•„ì´í…œ ì¶œë ¥ í•¨ìˆ˜
 void ShowItem() {
 	SetCurrentCursorPos(ITEM_POS_X, ITEM_POS_Y);
 	printf("%c", itemList[ItemNumber - 1]);
 }
 
-//¾ÆÀÌÅÛ Ãæµ¹ °Ë»ç ÇÔ¼ö
+//ì•„ì´í…œ ì¶©ëŒ ê²€ì‚¬ í•¨ìˆ˜
 int DetectCollision_ItemwithWall(int x, int y) {
 	if (UniBoard[y - GAMEBOARD_ORIGIN_Y][x - GAMEBOARD_ORIGIN_X] == WALL) return 1;
 	return 0;
 }
 
-//¾ÆÀÌÅÛ »ı¼º ÇÔ¼ö
+//ì•„ì´í…œ ìƒì„± í•¨ìˆ˜
 void CreateItem() {
 	if ((TimeCheckerEnd() - PausingTime > ItemCreationLoop *(StageTime[StageNumber - 1]) / 3.0) && ItemCreationLoop < 3) {
-		ITEM_POS_X = rand() % (GAMEBOARD_ROW - 2) + GAMEBOARD_ORIGIN_X + 2;	//ÃÊ±â ·£´ı XÁÂÇ¥
-		ITEM_POS_Y = GAMEBOARD_ORIGIN_Y + 1;							//ÃÊ±â YÁÂÇ¥
-		ItemNumber = rand() % 5 + 1;													//¾ÆÀÌÅÛ ³Ñ¹ö ·£´ı »ı¼º
-		ItemInputTime = TimeCheckerEnd() - PausingTime;					//¾ÆÀÌÅÛ »ı¼º ½Ã°£ ±â·Ï
-		itemFLAG = 1;																			//°ÔÀÓ º¸µå ³» ¾ÆÀÌÅÛ ¾ÆÀÌÄÜ Á¸Àç À¯¹« 1
-		ShowItem();																				//¾ÆÀÌÅÛ Ãâ·Â
-		ItemCreationLoop++;																//ÇöÀç±îÁö Ãâ·ÂÇÑ ¾ÆÀÌÅÛ °¹¼ö
+		ITEM_POS_X = rand() % (GAMEBOARD_ROW - 2) + GAMEBOARD_ORIGIN_X + 2;	//ì´ˆê¸° ëœë¤ Xì¢Œí‘œ
+		ITEM_POS_Y = GAMEBOARD_ORIGIN_Y + 1;							//ì´ˆê¸° Yì¢Œí‘œ
+		ItemNumber = rand() % 5 + 1;													//ì•„ì´í…œ ë„˜ë²„ ëœë¤ ìƒì„±
+		ItemInputTime = TimeCheckerEnd() - PausingTime;					//ì•„ì´í…œ ìƒì„± ì‹œê°„ ê¸°ë¡
+		itemFLAG = 1;																			//ê²Œì„ ë³´ë“œ ë‚´ ì•„ì´í…œ ì•„ì´ì½˜ ì¡´ì¬ ìœ ë¬´ 1
+		ShowItem();																				//ì•„ì´í…œ ì¶œë ¥
+		ItemCreationLoop++;																//í˜„ì¬ê¹Œì§€ ì¶œë ¥í•œ ì•„ì´í…œ ê°¯ìˆ˜
 	}
 }
 
 void CreateItemInInfiniteMode() {
 	if (TimeCheckerEnd() - PausingTime > 15.0 * ItemCreationLoop) {
-		ITEM_POS_X = rand() % (GAMEBOARD_ROW - 2) + GAMEBOARD_ORIGIN_X + 2;	//ÃÊ±â ·£´ı XÁÂÇ¥
-		ITEM_POS_Y = GAMEBOARD_ORIGIN_Y + 1;							//ÃÊ±â YÁÂÇ¥
-		ItemNumber = rand() % 5 + 1;													//¾ÆÀÌÅÛ ³Ñ¹ö ·£´ı »ı¼º
-		ItemInputTime = TimeCheckerEnd() - PausingTime;					//¾ÆÀÌÅÛ »ı¼º ½Ã°£ ±â·Ï
-		itemFLAG = 1;																			//°ÔÀÓ º¸µå ³» ¾ÆÀÌÅÛ ¾ÆÀÌÄÜ Á¸Àç À¯¹« 1
-		ShowItem();																				//¾ÆÀÌÅÛ Ãâ·Â
-		ItemCreationLoop++;																//ÇöÀç±îÁö Ãâ·ÂÇÑ ¾ÆÀÌÅÛ °¹¼ö
+		ITEM_POS_X = rand() % (GAMEBOARD_ROW - 2) + GAMEBOARD_ORIGIN_X + 2;	//ì´ˆê¸° ëœë¤ Xì¢Œí‘œ
+		ITEM_POS_Y = GAMEBOARD_ORIGIN_Y + 1;							//ì´ˆê¸° Yì¢Œí‘œ
+		ItemNumber = rand() % 5 + 1;													//ì•„ì´í…œ ë„˜ë²„ ëœë¤ ìƒì„±
+		ItemInputTime = TimeCheckerEnd() - PausingTime;					//ì•„ì´í…œ ìƒì„± ì‹œê°„ ê¸°ë¡
+		itemFLAG = 1;																			//ê²Œì„ ë³´ë“œ ë‚´ ì•„ì´í…œ ì•„ì´ì½˜ ì¡´ì¬ ìœ ë¬´ 1
+		ShowItem();																				//ì•„ì´í…œ ì¶œë ¥
+		ItemCreationLoop++;																//í˜„ì¬ê¹Œì§€ ì¶œë ¥í•œ ì•„ì´í…œ ê°¯ìˆ˜
 	}
 }
 
-//¾ÆÀÌÅÛ Ç×¸ñ ÃÊ±âÈ­ ÇÔ¼ö
+//ì•„ì´í…œ í•­ëª© ì´ˆê¸°í™” í•¨ìˆ˜
 void ResetItem() { HideItem(); itemFLAG = 0; }
 
-//¾ÆÀÌÅÛ ÁÂÇ¥ 1¾¿ °¨¼Ò½ÃÅ°´Â ÇÔ¼ö
+//ì•„ì´í…œ ì¢Œí‘œ 1ì”© ê°ì†Œì‹œí‚¤ëŠ” í•¨ìˆ˜
 void shiftItemDown() {
 	HideItem();
 	if (ItemCollisionDetected) {
@@ -228,7 +229,7 @@ void shiftItemDown() {
 }
 
 //-------------------------------------------------------------
-//-----------------¾ÆÀÌÅÛ °»½Å ÇÔ¼ö(º»Ã¼)--------------------
+//-----------------ì•„ì´í…œ ê°±ì‹  í•¨ìˆ˜(ë³¸ì²´)--------------------
 void InvalidateItem() {
 	if (!itemFLAG) { if (!GameMode) CreateItem(); else CreateItemInInfiniteMode(); }
 	else { 
