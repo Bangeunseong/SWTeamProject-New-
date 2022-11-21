@@ -2,6 +2,7 @@
 #pragma warning(disable:4996)
 #include "CursorFunctions.h"
 #include "VariableSets.h"
+#include "Player.h"
 #include "Timer.h"
 #ifndef ENEMY_H
 #define ENEMY_H
@@ -169,19 +170,19 @@ void EnemyMotion_BouncingAroundWall() {
 }
 
 //--------------------------------------------------------------
-//--------------------EnemySkill 함수------------------------- //일단 보류하겠습니다
+//--------------------EnemySkill 함수------------------------- 
 
 void InitializePrisonInfo() {
-	P.Prison_H = 7; P.Prison_W = 18;
+	P.Prison_H = 7; P.Prison_W = 24;
 	P.LU_X = P.LU_Y = P.RD_X = P.RD_Y = 0;
 }
 
 //----------------EnemySkillPrison 출력 함수---------------
 
-// 감옥 정보 갱신
+//감옥 정보 갱신
 void InvalidatePrisonInfo() {
-	P.LU_X = PLAYER_POS_X - (P.Prison_W - 6) / 2 - 2;	// 6 과 1 은 player NPC의 가로 세로 길이 의미
-	P.LU_Y = PLAYER_POS_Y - (P.Prison_H - 1) / 2 - 1;	// 6 과 1 은 player NPC의 가로 세로 길이 의미
+	P.LU_X = PLAYER_POS_X - (P.Prison_W - 6) / 2 - 2;
+	P.LU_Y = PLAYER_POS_Y - (P.Prison_H - 1) / 2 - 1;
 	P.RD_X = P.LU_X + P.Prison_W + 2;
 	P.RD_Y = P.LU_Y + P.Prison_H + 1;
 }
@@ -191,20 +192,20 @@ void DrawEnemySkillPrison() {
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
 	for (int i = 0; i <= P.Prison_H; i++) {
 		SetCurrentCursorPos(P.LU_X, P.LU_Y + i);
-		if (i == 0) printf("┍");
-		else if (i == P.LU_X + P.Prison_H) printf("┕");
-		else printf("│");
+		if (i == 0) printf("*");
+		else if (i == P.Prison_H) printf("*");
+		else printf("*");
 		SetCurrentCursorPos(P.RD_X, P.LU_Y + i);
-		if (i == 0) printf("┑");
-		else if (i == P.LU_X + P.Prison_H) printf("┙");
-		else printf("│");
+		if (i == 0) printf("*");
+		else if (i == P.Prison_H) printf("*");
+		else printf("*");
 	}
-	
+
 	for (int i = 2; i < P.Prison_W; i += 2) {
 		SetCurrentCursorPos(P.LU_X + i, P.LU_Y);
-		printf("─");
-		SetCurrentCursorPos(P.RD_X + i, P.RD_Y);
-		printf("─");
+		printf("*");
+		SetCurrentCursorPos(P.LU_X + i, P.RD_Y);
+		printf("*");
 	}
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
 }
@@ -255,7 +256,7 @@ void InvalidateEnemy() {
 			}
 		}
 		else if (PatternNumber == 2 || PatternNumber == 4 || PatternNumber == 9) {
-			if (PatternNumber == 2) { if (!EnemySkillPrisonActivation) ClearPlayerPosition(); ActivateEnemySkill_Prison(); }
+			if (PatternNumber == 2) { if (!EnemySkillPrisonActivation) { HidePlayer(); ClearPlayerPosition(); InvalidatePrisonInfo(); } ActivateEnemySkill_Prison(); }
 			if (PatternTimeEnded) {
 				if (EnemyMotion_MoveToOriginPos()) {	//패턴 지속시간이 끝났을 경우 다시 제자리로 이동하는데 다 이동했으면 Enemy이동 인디케이터 0으로 갱신
 					EnemyIsMoving = 0;

@@ -130,7 +130,7 @@ void itemTrigger(int UsingSkill) {
 void DeactivateSkillItem() { 
 	switch (UsingSkill) {
 	case 1: CurSpeed = SelectedSpeed; break;
-	case 2: BulletSpeed /= 2.0; break;
+	case 2: BulletSpeed *= 2.0; break;
 	case 3: Invinsible = 0; break;
 	case 4: flashFLAG = 0; flashCount = 0; break;
 	case 5: break;
