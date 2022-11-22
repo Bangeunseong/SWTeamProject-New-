@@ -353,7 +353,7 @@ int BulletPattern_Spiral() {		//회전 패턴 삼각함수를 사용할 수 없으면 하나씩 찍�
 	if (CheckedTime < PATTERNTIME_SPIRAL + BulletPatternStartTime && CheckedTime > BulletPatternStartTime) { if (ENEMY_POS_Y == GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN / 2 - 1) ++PatternCycle; }
 	else PatternTimeEnded = 1;
 	for (int i = 0; i < PatternCycle * 8; i++) {
-		if (!bullet[i].BulletActivation && !bullet[i].CollisionPlayer && !bullet[i].CollisionWall) { BulletPostionRenewal(i); bullet[i].cnt = 0; bullet[i].BulletActivation = 1; ShowBullet(i); }
+		if (!bullet[i].BulletActivation && !bullet[i].CollisionPlayer && !bullet[i].CollisionWall) { BulletPostionRenewal(i); bullet[i].cnt = 0; bullet[i].BulletActivation = 1; ShowBullet(i); BULLETCOUNT++; }
 		switch (i % 8) {
 		case 0:
 			if (bullet[i].cnt == 0) { flag += MoveBullet_N(i); bullet[i].cnt++; }
@@ -468,7 +468,7 @@ int BulletPattern_Spiral() {		//회전 패턴 삼각함수를 사용할 수 없으면 하나씩 찍�
 		}
 		bullet[i].cnt++;
 	}
-	if (!flag) { BulletPatternEndTime = TimeCheckerEnd() - PausingTime; return 1; }
+	if (!flag && !EnemyIsMoving) { BulletPatternEndTime = TimeCheckerEnd() - PausingTime; return 1; }
 	return 0;
 }
 

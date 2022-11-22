@@ -19,7 +19,6 @@
 void StoryMode() { 
 	while (StageNumber < 4) {
 		InvalidateStageNumber();
-		InitializePrisonInfo();
 		ShowCurrentNSubSkill();
 		ShowMap();
 		ShowStageNumber();
@@ -31,7 +30,6 @@ void StoryMode() {
 //무한 모드
 void InfiniteMode() {		//UI 수정필요
 	while (1) {
-		InitializePrisonInfo();
 		ShowCurrentNSubSkill();
 		ShowTime();
 		TimeCheckerStart();
@@ -41,7 +39,7 @@ void InfiniteMode() {		//UI 수정필요
 
 //게임 실행 함수 ----게임을 실행할 때 initialize 해야할 것들만 넣기
 void RunGame() {
-	ResizeConsole(); ResizeConsoleBuffer(); RemoveCursor(); InitUniBoard();
+	ResizeConsole(); ResizeConsoleBuffer(); RemoveCursor(); InitUniBoard(); InitializePrisonInfo();
 	while (1) {
 		srand((unsigned)time(NULL));
 		if (StartMenu()) {

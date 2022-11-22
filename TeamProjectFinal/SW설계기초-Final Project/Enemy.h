@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #pragma warning(disable:4996)
 #include "CursorFunctions.h"
 #include "VariableSets.h"
@@ -7,15 +7,15 @@
 #ifndef ENEMY_H
 #define ENEMY_H
 //---------------------------------------------------------
-//---------------ÃÊ±âÈ­ ¹× ½Ã°£°è»ê ÇÔ¼ö----------------
+//---------------ì´ˆê¸°í™” ë° ì‹œê°„ê³„ì‚° í•¨ìˆ˜----------------
 
-//Àû NPC ¹öÆÛ ½Ã°£ °è»ê ÇÔ¼ö
+//ì  NPC ë²„í¼ ì‹œê°„ ê³„ì‚° í•¨ìˆ˜
 int CalculateEnemyTimeBuffer() {
 	if (TimeCheckerEnd() - EnemyInputTime - PausingTime > ENEMYTIMEBUFFER / EnemySpeed) { EnemyInputTime += ENEMYTIMEBUFFER / EnemySpeed; return 0; }
 	else return 1;
 }
 
-//Àû À§Ä¡ ÃÊ±âÈ­ ÇÔ¼ö
+//ì  ìœ„ì¹˜ ì´ˆê¸°í™” í•¨ìˆ˜
 void ClearEnemyPosition() {
 	ENEMY_POS_X = ENEMY_ORIGIN_POS_X;
 	ENEMY_POS_Y = ENEMY_ORIGIN_POS_Y;
@@ -23,9 +23,9 @@ void ClearEnemyPosition() {
 }
 
 //----------------------------------------------------------
-//-----------------Àû ÀÌ¹ÌÁö Ãâ·ÂÇÔ¼ö--------------------
+//-----------------ì  ì´ë¯¸ì§€ ì¶œë ¥í•¨ìˆ˜--------------------
 
-//Àû »èÁ¦ ÇÔ¼ö
+//ì  ì‚­ì œ í•¨ìˆ˜
 void HideEnemy() {
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 5; j++) {
@@ -36,7 +36,7 @@ void HideEnemy() {
 	SetCurrentCursorPos(ENEMY_POS_X, ENEMY_POS_Y);
 }
 
-//Àû Ãâ·Â ÇÔ¼ö
+//ì  ì¶œë ¥ í•¨ìˆ˜
 void ShowEnemy() {
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 5; j++) {
@@ -48,9 +48,9 @@ void ShowEnemy() {
 }
 
 //----------------------------------------------------------
-//-------------------Ãæµ¹°Ë»ç ÇÔ¼ö------------------------
+//-------------------ì¶©ëŒê²€ì‚¬ í•¨ìˆ˜------------------------
 
-//ÀûÀÌ º®¿¡ Ãæµ¹ÇÏ¿´´ÂÁö À¯¹« È®ÀÎ ÇÔ¼ö
+//ì ì´ ë²½ì— ì¶©ëŒí•˜ì˜€ëŠ”ì§€ ìœ ë¬´ í™•ì¸ í•¨ìˆ˜
 int DetectCollision_Enemy(int x, int y) {
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 5; j++) {
@@ -63,7 +63,7 @@ int DetectCollision_Enemy(int x, int y) {
 }
 
 //-------------------------------------------------------------
-//-----------------EnemyMotion °ü·ÃÇÔ¼ö-------------------
+//-----------------EnemyMotion ê´€ë ¨í•¨ìˆ˜-------------------
 
 void shiftEnemyLeft() {
 	HideEnemy();
@@ -115,8 +115,8 @@ void shiftEnemyRightDown() {
 }
 
 //---------------------------------------------------------------
-//------------------EnemyMovement ÇÔ¼ö---------------------
-//¿ø·¡ ÁÂÇ¥·Î µ¹¾Æ°£´Ù
+//------------------EnemyMovement í•¨ìˆ˜---------------------
+//ì›ë˜ ì¢Œí‘œë¡œ ëŒì•„ê°„ë‹¤
 int EnemyMotion_MoveToOriginPos() {
 	int flag = 0;
 	if (ENEMY_POS_X < ENEMY_ORIGIN_POS_X) shiftEnemyRight();
@@ -127,16 +127,16 @@ int EnemyMotion_MoveToOriginPos() {
 	else if (ENEMY_POS_Y > ENEMY_ORIGIN_POS_Y) shiftEnemyUp();
 	else flag++;
 
-	if (flag > 1) { EnemyIsMoving = 0; direction = 0; return 1; } return 0;		//Ã³À½ ÀÚ¸®·Î µÇµ¹¾Æ ¿ÔÀ¸¸é 1 ¹İÈ¯, ±× ¿Ü 0 ¹İÈ¯
+	if (flag > 1) { EnemyIsMoving = 0; direction = 0; return 1; } return 0;		//ì²˜ìŒ ìë¦¬ë¡œ ë˜ëŒì•„ ì™”ìœ¼ë©´ 1 ë°˜í™˜, ê·¸ ì™¸ 0 ë°˜í™˜
 }
 
-//ÁÂ¿ì·Î Æò¹üÇÏ°Ô ¿òÁ÷ÀÎ´Ù
+//ì¢Œìš°ë¡œ í‰ë²”í•˜ê²Œ ì›€ì§ì¸ë‹¤
 void EnemyMotion_MovingLeftRight() {
 	if (direction == DIRECTION_RIGHT) shiftEnemyRight();
 	else if(direction == DIRECTION_LEFT) shiftEnemyLeft();
 }
 
-//·£´ı Æ÷Áö¼ÇÀ¸·Î Á¡¸êÇÏ¸ç ¿òÁ÷ÀÎ´Ù
+//ëœë¤ í¬ì§€ì…˜ìœ¼ë¡œ ì ë©¸í•˜ë©° ì›€ì§ì¸ë‹¤
 void EnemyMotion_FlashToRandomPos() {
 	if (TimeCheckerEnd() - PausingTime - EnemyMovementTiming > ENEMYMOVEMENTDURATION) { 
 		HideEnemy();
@@ -146,7 +146,7 @@ void EnemyMotion_FlashToRandomPos() {
 	}
 }
 
-//Áß½ÉÀ¸·Î ÀÌµ¿ÇÏ°í ¸ØÃá´Ù
+//ì¤‘ì‹¬ìœ¼ë¡œ ì´ë™í•˜ê³  ë©ˆì¶˜ë‹¤
 void EnemyMotion_MoveToCenter() {
 	if (ENEMY_POS_X < ENEMY_ORIGIN_POS_X) shiftEnemyRight();
 	else if (ENEMY_POS_X > ENEMY_ORIGIN_POS_X) shiftEnemyLeft();
@@ -155,7 +155,7 @@ void EnemyMotion_MoveToCenter() {
 	else if (ENEMY_POS_Y > GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN / 2 - 1) shiftEnemyUp();
 }
 
-//º®À» Æ¨±â¸é¼­ ÀÌµ¿
+//ë²½ì„ íŠ•ê¸°ë©´ì„œ ì´ë™
 void EnemyMotion_BouncingAroundWall() {
 	switch (direction) {
 	case 1: shiftEnemyUp(); break;
@@ -170,67 +170,62 @@ void EnemyMotion_BouncingAroundWall() {
 }
 
 //--------------------------------------------------------------
-//--------------------EnemySkill ÇÔ¼ö------------------------- 
+//--------------------EnemySkill í•¨ìˆ˜------------------------- 
 
 void InitializePrisonInfo() {
 	P.Prison_H = 7; P.Prison_W = 24;
 	P.LU_X = P.LU_Y = P.RD_X = P.RD_Y = 0;
 }
 
-//----------------EnemySkillPrison Ãâ·Â ÇÔ¼ö---------------
+//----------------EnemySkillPrison ì¶œë ¥ í•¨ìˆ˜---------------
 
-//°¨¿Á Á¤º¸ °»½Å
+//ê°ì˜¥ ì •ë³´ ê°±ì‹ 
 void InvalidatePrisonInfo() {
 	P.LU_X = PLAYER_POS_X - (P.Prison_W - 6) / 2 - 2;
 	P.LU_Y = PLAYER_POS_Y - (P.Prison_H - 1) / 2 - 1;
 	P.RD_X = P.LU_X + P.Prison_W + 2;
-	P.RD_Y = P.LU_Y + P.Prison_H + 1;
+	P.RD_Y = P.LU_Y + P.Prison_H;
 }
 
-//°¨¿Á Ãâ·Â ÇÔ¼ö
+//ê°ì˜¥ ì¶œë ¥ í•¨ìˆ˜
 void DrawEnemySkillPrison() {
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
 	for (int i = 0; i <= P.Prison_H; i++) {
 		SetCurrentCursorPos(P.LU_X, P.LU_Y + i);
-		if (i == 0) printf("¦®");
-		else if (i == P.Prison_H) printf("¦¦");
-		else printf("¦­");
+		if (i == 0) printf("â”");
+		else if (i == P.Prison_H) printf("â”—");
+		else printf("â”ƒ");
 		SetCurrentCursorPos(P.RD_X, P.LU_Y + i);
-		if (i == 0) printf("¦Â");
-		else if (i == P.Prison_H) printf("¦Ä");
-		else printf("¦¢");
+		if (i == 0) printf("â”“");
+		else if (i == P.Prison_H) printf("â”›");
+		else printf("â”ƒ");
 	}
 
-	for (int i = 2; i < P.Prison_W; i += 2) {
+	for (int i = 2; i <= P.Prison_W; i += 2) {
 		SetCurrentCursorPos(P.LU_X + i, P.LU_Y);
-		printf("¦¡");
+		printf("â”");
 		SetCurrentCursorPos(P.LU_X + i, P.RD_Y);
-		printf("¦¡");
+		printf("â”");
 	}
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
 }
 
-//°¨¿Á »èÁ¦ ÇÔ¼ö
+//ê°ì˜¥ ì‚­ì œ í•¨ìˆ˜
 void EraseEnemySkillPrison() {
-	for (int x = P.LU_X; x <= P.RD_X; x++) {
-		SetCurrentCursorPos(x, P.LU_Y);
-		if (x == P.LU_X) printf("  ");
-		else if (x == P.RD_X) printf("  ");
-		else printf("  ");
-		SetCurrentCursorPos(x, P.RD_Y);
-		if (x == P.LU_X) printf("  ");
-		else if (x == P.RD_X) printf("  ");
-		else printf("  ");
-	}
-	for (int y = P.LU_Y + 1; y < P.RD_Y; y++) {
-		SetCurrentCursorPos(P.LU_X, y);
+	for (int i = 0; i <= P.Prison_H; i++) {
+		SetCurrentCursorPos(P.LU_X, P.LU_Y + i);
 		printf("  ");
-		SetCurrentCursorPos(P.RD_X, y);
+		SetCurrentCursorPos(P.RD_X, P.LU_Y + i);
+		printf("  ");
+	}
+
+	for (int i = 2; i <= P.Prison_W; i += 2) {
+		SetCurrentCursorPos(P.LU_X + i, P.LU_Y);
+		printf("  ");
+		SetCurrentCursorPos(P.LU_X + i, P.RD_Y);
 		printf("  ");
 	}
 }
 
-//------------½ºÅ³ ¹ßµ¿ ÇÔ¼ö---------------
+//------------ìŠ¤í‚¬ ë°œë™ í•¨ìˆ˜---------------
 
 void ActivateEnemySkill_Prison() {
 	DrawEnemySkillPrison();
@@ -242,31 +237,28 @@ void DeactivateEnemySkill_Prison() {
 }
 
 //--------------------------------------------------------------
-//-------------------Invalidation ÇÔ¼ö-------------------------
+//-------------------Invalidation í•¨ìˆ˜-------------------------
 
-//Àû °»½Å ÇÔ¼ö
+//ì  ê°±ì‹  í•¨ìˆ˜
 void InvalidateEnemy() {
 	ShowEnemy();
 	if (!CalculateEnemyTimeBuffer()) {
 		if (PatternNumber == 1) { 
-			if (PatternTimeEnded) { if (EnemyMotion_MoveToOriginPos()) return; }	//ÆĞÅÏ Áö¼Ó½Ã°£ÀÌ ³¡³µÀ» °æ¿ì ´Ù½Ã Á¦ÀÚ¸®·Î ÀÌµ¿ÇÏ´Âµ¥ ´Ù ÀÌµ¿ÇßÀ¸¸é EnemyÀÌµ¿ ÀÎµğÄÉÀÌÅÍ 0À¸·Î °»½Å
+			if (PatternTimeEnded) { if (EnemyMotion_MoveToOriginPos()) return; }	//íŒ¨í„´ ì§€ì†ì‹œê°„ì´ ëë‚¬ì„ ê²½ìš° ë‹¤ì‹œ ì œìë¦¬ë¡œ ì´ë™í•˜ëŠ”ë° ë‹¤ ì´ë™í–ˆìœ¼ë©´ Enemyì´ë™ ì¸ë””ì¼€ì´í„° 0ìœ¼ë¡œ ê°±ì‹ 
 			else {
-				if (!direction) direction = DIRECTION_LEFT;	//¹æÇâÀÌ Á¤ÇØÁ®ÀÖÁö ¾ÊÀ» ¶§ ¹æÇâ ¼³Á¤
+				if (!direction) direction = DIRECTION_LEFT;	//ë°©í–¥ì´ ì •í•´ì ¸ìˆì§€ ì•Šì„ ë•Œ ë°©í–¥ ì„¤ì •
 				EnemyMotion_MovingLeftRight();
 			}
 		}
 		else if (PatternNumber == 2 || PatternNumber == 4 || PatternNumber == 9) {
 			if (PatternTimeEnded) {
-				if (EnemyMotion_MoveToOriginPos()) {	//ÆĞÅÏ Áö¼Ó½Ã°£ÀÌ ³¡³µÀ» °æ¿ì ´Ù½Ã Á¦ÀÚ¸®·Î ÀÌµ¿ÇÏ´Âµ¥ ´Ù ÀÌµ¿ÇßÀ¸¸é EnemyÀÌµ¿ ÀÎµğÄÉÀÌÅÍ 0À¸·Î °»½Å
-					EnemyIsMoving = 0;
-					if (PatternNumber == 2) DeactivateEnemySkill_Prison();	//ÆĞÅÏ ³Ñ¹ö°¡ 2¹øÀÌ¸é °¨¿Áµµ Á¦°Å
-					return;
-				}
+				if (PatternNumber == 2) DeactivateEnemySkill_Prison(); //íŒ¨í„´ ë„˜ë²„ê°€ 2ë²ˆì´ë©´ ê°ì˜¥ ì œê±°
+				if (EnemyMotion_MoveToOriginPos()) { EnemyIsMoving = 0; return; }//íŒ¨í„´ ì§€ì†ì‹œê°„ì´ ëë‚¬ì„ ê²½ìš° ë‹¤ì‹œ ì œìë¦¬ë¡œ ì´ë™í•˜ëŠ”ë° ë‹¤ ì´ë™í–ˆìœ¼ë©´ Enemyì´ë™ ì¸ë””ì¼€ì´í„° 0ìœ¼ë¡œ ê°±ì‹ 
 			}
 			else { if (PatternNumber == 2) { if (!EnemySkillPrisonActivation) { HidePlayer(); ClearPlayerPosition(); InvalidatePrisonInfo(); } ActivateEnemySkill_Prison(); } EnemyMotion_FlashToRandomPos(); }
 		}
 		else if (PatternNumber == 3 || PatternNumber == 5) {
-			if (PatternTimeEnded) { EnemySpeed = 1.0; if (EnemyMotion_MoveToOriginPos()) EnemyIsMoving = 0; return; }	//ÆĞÅÏ Áö¼Ó½Ã°£ÀÌ ³¡³µÀ» °æ¿ì ´Ù½Ã Á¦ÀÚ¸®·Î ÀÌµ¿ÇÏ´Âµ¥ ´Ù ÀÌµ¿ÇßÀ¸¸é EnemyÀÌµ¿ ÀÎµğÄÉÀÌÅÍ 0À¸·Î °»½Å
+			if (PatternTimeEnded) { EnemySpeed = 1.0; if (EnemyMotion_MoveToOriginPos()) EnemyIsMoving = 0; return; }	//íŒ¨í„´ ì§€ì†ì‹œê°„ì´ ëë‚¬ì„ ê²½ìš° ë‹¤ì‹œ ì œìë¦¬ë¡œ ì´ë™í•˜ëŠ”ë° ë‹¤ ì´ë™í–ˆìœ¼ë©´ Enemyì´ë™ ì¸ë””ì¼€ì´í„° 0ìœ¼ë¡œ ê°±ì‹ 
 			else {
 				EnemySpeed = 0.5;
 				if (!direction) direction = rand() % 2 + 7;
@@ -274,15 +266,15 @@ void InvalidateEnemy() {
 			}
 		}
 		else if (PatternNumber == 6 || PatternNumber == 10) {
-			if (PatternTimeEnded) { if (EnemyMotion_MoveToOriginPos()) EnemyIsMoving = 0; return; }	//ÆĞÅÏ Áö¼Ó½Ã°£ÀÌ ³¡³µÀ» °æ¿ì ´Ù½Ã Á¦ÀÚ¸®·Î ÀÌµ¿ÇÏ´Âµ¥ ´Ù ÀÌµ¿ÇßÀ¸¸é EnemyÀÌµ¿ ÀÎµğÄÉÀÌÅÍ 0À¸·Î °»½Å
+			if (PatternTimeEnded) { if (EnemyMotion_MoveToOriginPos()) EnemyIsMoving = 0; return; }	//íŒ¨í„´ ì§€ì†ì‹œê°„ì´ ëë‚¬ì„ ê²½ìš° ë‹¤ì‹œ ì œìë¦¬ë¡œ ì´ë™í•˜ëŠ”ë° ë‹¤ ì´ë™í–ˆìœ¼ë©´ Enemyì´ë™ ì¸ë””ì¼€ì´í„° 0ìœ¼ë¡œ ê°±ì‹ 
 			else EnemyMotion_MoveToCenter();
 		}
 		else if (PatternNumber == 7) {
-			if (PatternTimeEnded) { if (EnemyMotion_MoveToOriginPos()) EnemyIsMoving = 0; return; }	//ÆĞÅÏ Áö¼Ó½Ã°£ÀÌ ³¡³µÀ» °æ¿ì ´Ù½Ã Á¦ÀÚ¸®·Î ÀÌµ¿ÇÏ´Âµ¥ ´Ù ÀÌµ¿ÇßÀ¸¸é EnemyÀÌµ¿ ÀÎµğÄÉÀÌÅÍ 0À¸·Î °»½Å
+			if (PatternTimeEnded) { if (EnemyMotion_MoveToOriginPos()) EnemyIsMoving = 0; return; }	//íŒ¨í„´ ì§€ì†ì‹œê°„ì´ ëë‚¬ì„ ê²½ìš° ë‹¤ì‹œ ì œìë¦¬ë¡œ ì´ë™í•˜ëŠ”ë° ë‹¤ ì´ë™í–ˆìœ¼ë©´ Enemyì´ë™ ì¸ë””ì¼€ì´í„° 0ìœ¼ë¡œ ê°±ì‹ 
 			else EnemyMotion_FlashToRandomPos();
 		}
 		else if (PatternNumber == 8) {
-			if (PatternTimeEnded) { if (EnemyMotion_MoveToOriginPos()) EnemyIsMoving = 0; return; }	//ÆĞÅÏ Áö¼Ó½Ã°£ÀÌ ³¡³µÀ» °æ¿ì ´Ù½Ã Á¦ÀÚ¸®·Î ÀÌµ¿ÇÏ´Âµ¥ ´Ù ÀÌµ¿ÇßÀ¸¸é EnemyÀÌµ¿ ÀÎµğÄÉÀÌÅÍ 0À¸·Î °»½Å
+			if (PatternTimeEnded) { if (EnemyMotion_MoveToOriginPos()) EnemyIsMoving = 0; return; }	//íŒ¨í„´ ì§€ì†ì‹œê°„ì´ ëë‚¬ì„ ê²½ìš° ë‹¤ì‹œ ì œìë¦¬ë¡œ ì´ë™í•˜ëŠ”ë° ë‹¤ ì´ë™í–ˆìœ¼ë©´ Enemyì´ë™ ì¸ë””ì¼€ì´í„° 0ìœ¼ë¡œ ê°±ì‹ 
 			else if (ENEMY_POS_X < GAMEBOARD_ROW - 5) shiftEnemyRight();
 			else {
 				HideEnemy();
