@@ -136,6 +136,9 @@
     <ClInclude Include="Item.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="ResizeConsole.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="resource1.h" />
+    <ClInclude Include="SoundPlay.h" />
     <ClInclude Include="StageMenu.h" />
     <ClInclude Include="StartMenu.h" />
     <ClInclude Include="Timer.h" />
