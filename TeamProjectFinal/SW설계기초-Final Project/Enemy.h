@@ -193,19 +193,19 @@ void DrawEnemySkillPrison() {
 	for (int i = 0; i <= P.Prison_H; i++) {
 		SetCurrentCursorPos(P.LU_X, P.LU_Y + i);
 		if (i == 0) printf("┏");
-		else if (i == P.Prison_H) printf("└");
+		else if (i == P.Prison_H) printf("┗");
 		else printf("┃");
 		SetCurrentCursorPos(P.RD_X, P.LU_Y + i);
-		if (i == 0) printf("┑");
-		else if (i == P.Prison_H) printf("┙");
+		if (i == 0) printf("┓");
+		else if (i == P.Prison_H) printf("┛");
 		else printf("┃");
 	}
 
 	for (int i = 2; i < P.Prison_W; i += 2) {
 		SetCurrentCursorPos(P.LU_X + i, P.LU_Y);
-		printf("─");
+		printf("━");
 		SetCurrentCursorPos(P.LU_X + i, P.RD_Y);
-		printf("─");
+		printf("━");
 	}
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
 }
