@@ -7,6 +7,7 @@
 #include "Item.h"
 #include "Timer.h"
 #include "UI.h"
+#include "SoundPlay.h"
 #ifndef PLAYER_H
 #define PLAYER_H
 

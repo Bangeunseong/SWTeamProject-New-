@@ -12,6 +12,7 @@
 #include "Timer.h"
 #include "StageMenu.h"
 #include "GameOverMenu.h"
+#include "SoundPlay.h"
 #ifndef GAMEFILE_H
 #define GAMEFILE_H
 
