@@ -19,15 +19,15 @@ MCI_PLAY_PARMS playDamageSound;
 
 int dwID;
 void PlayBgm() {
-	openBgm.lpstrElementName = (LPCWSTR)BGM;
-	openBgm.lpstrDeviceType = (LPCWSTR)"mpegvideo";    //mp3 형식, wav 형식이면 "waveaudio" 작성
+	openBgm.lpstrElementName = BGM;
+	openBgm.lpstrDeviceType = "mpegvideo";    //mp3 형식, wav 형식이면 "waveaudio" 작성
 	mciSendCommand(0, MCI_OPEN, MCI_OPEN_ELEMENT | MCI_OPEN_TYPE, (DWORD)(LPVOID)&openBgm);
 	dwID = openBgm.wDeviceID;
 	mciSendCommand(dwID, MCI_PLAY, MCI_DGV_PLAY_REPEAT, (DWORD)(LPVOID)&playBgm);    //음악 반복 재생
 }
 void PlayDamageSound() {
-	openDamageSound.lpstrElementName = (LPCWSTR)DAMAGE;    //파일 오픈
-	openDamageSound.lpstrDeviceType = (LPCWSTR)"mpegvideo";    //mp3 형식
+	openDamageSound.lpstrElementName = DAMAGE;    //파일 오픈
+	openDamageSound.lpstrDeviceType = "mpegvideo";    //mp3 형식
 	mciSendCommand(0, MCI_OPEN, MCI_OPEN_ELEMENT | MCI_OPEN_TYPE, (DWORD)(LPVOID)&openDamageSound);
 	dwID = openDamageSound.wDeviceID;
 	mciSendCommand(dwID, MCI_PLAY, MCI_NOTIFY, (DWORD)(LPVOID)&openDamageSound);    //음악을 한 번 재생

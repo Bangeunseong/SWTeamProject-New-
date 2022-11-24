@@ -1,2 +1,7 @@
 ﻿  main.c
+c:\users\bange\onedrive\바탕 화면\documents\github\새 폴더\teamprojectfinal\sw설계기초-final project\item.h(19): warning C4477: 'printf' : 서식 문자열 '%c'에 'int' 형식의 인수가 필요하지만 variadic 인수 1의 형식이 'char **'입니다.
+c:\users\bange\onedrive\바탕 화면\documents\github\새 폴더\teamprojectfinal\sw설계기초-final project\soundplay.h(22): warning C4133: '=': 'char [84]'과(와) 'LPCWSTR' 사이의 형식이 호환되지 않습니다.
+c:\users\bange\onedrive\바탕 화면\documents\github\새 폴더\teamprojectfinal\sw설계기초-final project\soundplay.h(23): warning C4133: '=': 'char [10]'과(와) 'LPCWSTR' 사이의 형식이 호환되지 않습니다.
+c:\users\bange\onedrive\바탕 화면\documents\github\새 폴더\teamprojectfinal\sw설계기초-final project\soundplay.h(29): warning C4133: '=': 'char [104]'과(와) 'LPCWSTR' 사이의 형식이 호환되지 않습니다.
+c:\users\bange\onedrive\바탕 화면\documents\github\새 폴더\teamprojectfinal\sw설계기초-final project\soundplay.h(30): warning C4133: '=': 'char [10]'과(와) 'LPCWSTR' 사이의 형식이 호환되지 않습니다.
   SW설계기초-Final Project.vcxproj -> C:\Users\bange\OneDrive\바탕 화면\Documents\GitHub\새 폴더\TeamProjectFinal\Debug\SW설계기초-Final Project.exe

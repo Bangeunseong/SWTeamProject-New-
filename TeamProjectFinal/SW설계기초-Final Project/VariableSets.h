@@ -118,9 +118,12 @@ double PlayerInputTime = 0;
 int PLAYER_POS_X = GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW / 2 - 3;
 int PLAYER_POS_Y = GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN - 8;
 
+//플레이어 우주선 레벨
+int PlayerLevel = 1;
+
 //플레이어 우주선
-char PlayerModel[6];
-char PlayerUniModel[6] = { PLAYER,PLAYER,PLAYER,PLAYER,PLAYER,PLAYER };
+int PlayerModelIndex;
+char *PlayerModel[3][3] = { {"HH","<HH>","<AHHA>"},{"AA","<AA>","<=AA=>"},{"TT","<TT>","<-TT->"} };
 
 //플레이어 무적상태 및 무적상태 지속시간, 총알 및 적 우주선과 충돌한 시간
 #define InvinsibleTime 1

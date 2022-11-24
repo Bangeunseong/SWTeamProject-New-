@@ -2,6 +2,7 @@
 #pragma warning(disable:4996)
 #include <conio.h>
 #include <WinUser.h>
+#include <string.h>
 #include "CursorFunctions.h"
 #include "VariableSets.h"
 #include "Item.h"
@@ -30,7 +31,7 @@ void GamePause() {
 
 //플레이어 위치 초기화 함수
 void ClearPlayerPosition() {
-	PLAYER_POS_X = GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW / 2 - 3;
+	PLAYER_POS_X = GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW / 2 - PlayerLevel;
 	PLAYER_POS_Y = GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN - 10;
 }
 
@@ -39,13 +40,13 @@ void ShowPlayer() {
 	if (Invinsible) SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), PLAYERINVINSIBLEINDICATECOLOR);
 	else if (UsingSkill > 0) SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), PLAYERUSINGSKILLCOLOR);
 	else SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), PLAYERCOLOR);
-	for (int i = 0; i < 6; i++) { SetCurrentCursorPos(PLAYER_POS_X + i, PLAYER_POS_Y); printf("%c", PlayerModel[i]); }
+	for (int i = 0; i < PlayerLevel * 2; i++) { SetCurrentCursorPos(PLAYER_POS_X + i, PLAYER_POS_Y); printf("%c", PlayerModel[PlayerModelIndex][PlayerLevel - 1][i]); }
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
 	SetCurrentCursorPos(PLAYER_POS_X, PLAYER_POS_Y);
 }
 //플레이어 숨김 함수
 void HidePlayer() {
-	for (int i = 0; i < 6; i++) { SetCurrentCursorPos(PLAYER_POS_X + i, PLAYER_POS_Y); printf(" "); }
+	for (int i = 0; i < PlayerLevel * 2; i++) { SetCurrentCursorPos(PLAYER_POS_X + i, PLAYER_POS_Y); printf(" "); }
 	SetCurrentCursorPos(PLAYER_POS_X, PLAYER_POS_Y);
 }
 
@@ -53,7 +54,7 @@ void HidePlayer() {
 
 //플레이어 기준 벽과 부딫혔을 때 사용하는 함수
 int DetectCollision_PlayerwithWall(int x, int y) {
-	for (int i = 0; i < 6; i++) {
+	for (int i = 0; i < PlayerLevel * 2; i++) {
 		if (EnemySkillPrisonActivation) {
 			if (y <= P.LU_Y || y >= P.RD_Y) return 1;
 			if ((x + i < P.LU_X + 2) || (x + i >= P.RD_X)) return 1;
@@ -64,7 +65,7 @@ int DetectCollision_PlayerwithWall(int x, int y) {
 }
 //플레이어 기준 적과 부딫혔을 때 사용하는 함수
 int DetectCollision_PlayerwithEnemy(int x, int y) {
-	for (int i = 0; i < 6; i++) {
+	for (int i = 0; i < PlayerLevel * 2; i++) {
 		for (int j = 0; j < 3; j++) {
 			for (int k = 0; k < 5; k++) {
 				if (ENEMY_POS_Y + j == PLAYER_POS_Y && ENEMY_POS_X + k == PLAYER_POS_X + i) return 1;
@@ -75,7 +76,7 @@ int DetectCollision_PlayerwithEnemy(int x, int y) {
 }
 
 int DetectCollision_PlayerwithBullet(int x, int y) {
-	for (int i = 0; i < 6; i++) {
+	for (int i = 0; i < PlayerLevel * 2; i++) {
 		if (UniBoard[y - GAMEBOARD_ORIGIN_Y][x - GAMEBOARD_ORIGIN_X + i] == BULLET) return 1;
 	}
 	return 0;
@@ -84,7 +85,7 @@ int DetectCollision_PlayerwithBullet(int x, int y) {
 //플레이어 기준 아이템과 부딪혔을 때 검사하는 함수
 int DetectCollision_PlayerwithItem(int x, int y) {
 	if (itemFLAG) {
-		for (int i = 0; i < 6; i++) {
+		for (int i = 0; i < PlayerLevel * 2; i++) {
 			if (x == PLAYER_POS_X + i && y == PLAYER_POS_Y) return 1;
 		}
 	}
