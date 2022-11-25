@@ -151,11 +151,10 @@ typedef struct PlayerBullet {
 
 //플레이어 총알 구조체 배열
 #define BULLETCOUNTLIMIT 100
-PlayerBullet PB[100];
+PlayerBullet PB[BULLETCOUNTLIMIT];
 
-#define PLAYERBULLETMODEL '^'
-#define P_BULLETLAUNCHTIMEBUFFER 0.1		//플레이어 총알 발사 시간 버퍼
-#define P_BULLETTIMEBUFFER 0.05	//플레이어 총알 갱신 버퍼
+#define PLAYERBULLETMODEL '!'
+#define P_BULLETTIMEBUFFER 0.02	//플레이어 총알 갱신 버퍼
 #define P_BulletSpeed 1.0					//플레이어 총알 속도
 
 //원형 배열처럼 이용

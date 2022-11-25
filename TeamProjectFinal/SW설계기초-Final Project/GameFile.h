@@ -24,7 +24,7 @@ void StoryMode() {
 		ShowMap();
 		ShowStageNumber();
 		TimeCheckerStart();
-		while (1) { InvalidateMap(); InvalidateBullet(); InvalidateP_Bullet(); InvalidateItem(); InvalidateEnemy(); InvalidatePlayer(); if (GameOver()) return; if (StageOver()) break; }
+		while (1) { InvalidateMap(); InvalidateP_Bullet(); InvalidateBullet(); InvalidateItem(); InvalidateEnemy(); InvalidatePlayer(); if (GameOver()) return; if (StageOver()) break; }
 	}
 }
 
@@ -34,7 +34,7 @@ void InfiniteMode() {		//UI 수정필요
 		ShowCurrentNSubSkill();
 		ShowTime();
 		TimeCheckerStart();
-		while (1) { InvalidateTime(); InvalidateBullet(); InvalidateItem(); InvalidateEnemy(); InvalidatePlayer(); if (GameOver()) return; }
+		while (1) { InvalidateTime();  InvalidateP_Bullet(); InvalidateBullet(); InvalidateItem(); InvalidateEnemy(); InvalidatePlayer(); if (GameOver()) return; }
 	}
 }
 
