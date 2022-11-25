@@ -32,8 +32,8 @@ void ClearBulletPosition() {
 	for (int i = 0; i < BULLETCOUNT; i++) {
 		HideBullet(i);
 		bullet[i].cnt = 0;
-		bullet[i].BULLET_POS_X = GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW / 2 - 3;
-		bullet[i].BULLET_POS_Y = GAMEBOARD_ORIGIN_Y + 5;
+		bullet[i].BULLET_POS_X = ENEMY_ORIGIN_POS_X;
+		bullet[i].BULLET_POS_Y = ENEMY_ORIGIN_POS_Y;
 		bullet[i].BulletActivation = bullet[i].CollisionPlayer = bullet[i].CollisionWall = 0;
 	}
 	PatternStart = 0;
@@ -46,22 +46,18 @@ void ClearBulletPosition() {
 
 void BulletPostionRenewal(int bulletnumber) {
 	if (PatternNumber == 1) {
-		bullet[bulletnumber].BULLET_POS_X = ENEMY_POS_X + 2;
-		bullet[bulletnumber].BULLET_POS_Y = ENEMY_POS_Y + 3;
+		bullet[bulletnumber].BULLET_POS_X = ENEMY_POS_X + ENEMYSIZE_W / 2;
+		bullet[bulletnumber].BULLET_POS_Y = ENEMY_POS_Y + ENEMYSIZE_H - 1;
 	}
 	else if (PatternNumber == 2 || PatternNumber == 4 || PatternNumber == 7) {
-		if (bulletnumber % 3 == 0) { bullet[bulletnumber].BULLET_POS_X = ENEMY_POS_X + 1; }
-		else if (bulletnumber % 3 == 1) { bullet[bulletnumber].BULLET_POS_X = ENEMY_POS_X + 2; }
-		else { bullet[bulletnumber].BULLET_POS_X = ENEMY_POS_X + 3; }
-		bullet[bulletnumber].BULLET_POS_Y = ENEMY_POS_Y + 3;
+		if (bulletnumber % 3 == 0) { bullet[bulletnumber].BULLET_POS_X = ENEMY_POS_X + ENEMYSIZE_W / 2 - 1; }
+		else if (bulletnumber % 3 == 1) { bullet[bulletnumber].BULLET_POS_X = ENEMY_POS_X + ENEMYSIZE_W / 2; }
+		else { bullet[bulletnumber].BULLET_POS_X = ENEMY_POS_X + ENEMYSIZE_W / 2 + 1; }
+		bullet[bulletnumber].BULLET_POS_Y = ENEMY_POS_Y + ENEMYSIZE_H - 1;
 	}
-	else if (PatternNumber == 3 || PatternNumber == 5 || PatternNumber == 10) {
-		bullet[bulletnumber].BULLET_POS_X = ENEMY_POS_X + 2;
-		bullet[bulletnumber].BULLET_POS_Y = ENEMY_POS_Y + 1;
-	}
-	else if (PatternNumber == 6) {
-		bullet[bulletnumber].BULLET_POS_X = ENEMY_POS_X + 2;
-		bullet[bulletnumber].BULLET_POS_Y = ENEMY_POS_Y + 1;
+	else if (PatternNumber == 3 || PatternNumber == 5 || PatternNumber == 6 || PatternNumber == 10) {
+		bullet[bulletnumber].BULLET_POS_X = ENEMY_POS_X + ENEMYSIZE_W / 2;
+		bullet[bulletnumber].BULLET_POS_Y = ENEMY_POS_Y + ENEMYSIZE_H / 2;
 	}
 	else if (PatternNumber == 8) {
 		bullet[bulletnumber].BULLET_POS_X = GAMEBOARD_ORIGIN_X + 1 + (bulletnumber % (GAMEBOARD_ROW - 1));
@@ -350,7 +346,10 @@ int BulletPattern_Chaos() {		//이것도 마찬가지로 Enemy Movement Pattern 필요
 int BulletPattern_Spiral() {		//회전 패턴 삼각함수를 사용할 수 없으면 하나씩 찍는 것 말곤 방법이 없는 것 같습니다. 하나씩 다 찍었습니다.
 	int flag = 0;
 	double CheckedTime = TimeCheckerEnd() - PausingTime;
-	if (CheckedTime < PATTERNTIME_SPIRAL + BulletPatternStartTime && CheckedTime > BulletPatternStartTime) { if (ENEMY_POS_Y == GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN / 2 - 1) ++PatternCycle; }
+	if (CheckedTime < PATTERNTIME_SPIRAL + BulletPatternStartTime && CheckedTime > BulletPatternStartTime) { 
+		if (ENEMY_POS_Y == GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN / 2 - (ENEMYSIZE_H / 2)) 
+			++PatternCycle;
+	}
 	else PatternTimeEnded = 1;
 	for (int i = 0; i < PatternCycle * 8; i++) {
 		if (!bullet[i].BulletActivation && !bullet[i].CollisionPlayer && !bullet[i].CollisionWall) { BulletPostionRenewal(i); bullet[i].cnt = 0; bullet[i].BulletActivation = 1; ShowBullet(i); BULLETCOUNT++; }
@@ -477,8 +476,11 @@ int BulletPattern_Spiral() {		//회전 패턴 삼각함수를 사용할 수 없으면 하나씩 찍�
 int BulletPattern_Gyro() {
 	int flag = 0;
 	double CheckedTime = TimeCheckerEnd() - PausingTime;
-	if (CheckedTime < PATTERNTIME_GYRO + BulletPatternStartTime && CheckedTime > BulletPatternStartTime) { if (ENEMY_POS_Y == GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN / 2 - 1) ++PatternCycle; }
-	else { PatternTimeEnded = 1; }
+	if (CheckedTime < PATTERNTIME_GYRO + BulletPatternStartTime && CheckedTime > BulletPatternStartTime) { 
+		if (ENEMY_POS_Y == GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN / 2 - (ENEMYSIZE_H / 2)) 
+			++PatternCycle;
+	}
+	else PatternTimeEnded = 1;
 	for (int i = 0; i < PatternCycle * 8; i++) {
 		if (!bullet[i].BulletActivation && !bullet[i].CollisionPlayer && !bullet[i].CollisionWall) { BulletPostionRenewal(i); bullet[i].BulletActivation = 1; ShowBullet(i); BULLETCOUNT++; }
 		switch (i % 8) {

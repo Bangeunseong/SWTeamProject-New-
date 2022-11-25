@@ -27,8 +27,8 @@ void ClearEnemyPosition() {
 
 //적 삭제 함수
 void HideEnemy() {
-	for (int i = 0; i < 3; i++) {
-		for (int j = 0; j < 5; j++) {
+	for (int i = 0; i < ENEMYSIZE_H; i++) {
+		for (int j = 0; j < ENEMYSIZE_W; j++) {
 			SetCurrentCursorPos(ENEMY_POS_X + j, ENEMY_POS_Y + i);
 			if (EnemyModel[i][j] != ' ') printf(" ");
 		}
@@ -38,8 +38,8 @@ void HideEnemy() {
 
 //적 출력 함수
 void ShowEnemy() {
-	for (int i = 0; i < 3; i++) {
-		for (int j = 0; j < 5; j++) {
+	for (int i = 0; i < ENEMYSIZE_H; i++) {
+		for (int j = 0; j < ENEMYSIZE_W; j++) {
 			SetCurrentCursorPos(ENEMY_POS_X + j, ENEMY_POS_Y + i);
 			if (EnemyModel[i][j] != ' ') printf("%c", EnemyModel[i][j]);
 		}
@@ -52,12 +52,9 @@ void ShowEnemy() {
 
 //적이 벽에 충돌하였는지 유무 확인 함수
 int DetectCollision_Enemy(int x, int y) {
-	for (int i = 0; i < 3; i++) {
-		for (int j = 0; j < 5; j++) {
-			if (EnemyUniModel[i][j] == ENEMY) {
-				if (UniBoard[y - GAMEBOARD_ORIGIN_Y + i][x - GAMEBOARD_ORIGIN_X + j] == WALL) return 1;
-			}
-		}
+	for (int i = 0; i < ENEMYSIZE_H; i++) {
+		for (int j = 0; j < ENEMYSIZE_W; j++)
+			if (UniBoard[y - GAMEBOARD_ORIGIN_Y + i][x - GAMEBOARD_ORIGIN_X + j] == WALL) return 1;
 	}
 	return 0;
 }
@@ -140,7 +137,7 @@ void EnemyMotion_MovingLeftRight() {
 void EnemyMotion_FlashToRandomPos() {
 	if (TimeCheckerEnd() - PausingTime - EnemyMovementTiming > ENEMYMOVEMENTDURATION) { 
 		HideEnemy();
-		ENEMY_POS_X = rand() % (GAMEBOARD_ROW - 6) + GAMEBOARD_ORIGIN_X + 2;
+		ENEMY_POS_X = rand() % (GAMEBOARD_ROW - ENEMYSIZE_W - 2) + GAMEBOARD_ORIGIN_X + 2;
 		ShowEnemy();
 		EnemyMovementTiming += ENEMYMOVEMENTDURATION;
 	}
@@ -148,11 +145,13 @@ void EnemyMotion_FlashToRandomPos() {
 
 //중심으로 이동하고 멈춘다
 void EnemyMotion_MoveToCenter() {
+	if (ENEMY_POS_X == ENEMY_ORIGIN_POS_X && ENEMY_POS_Y == GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN / 2 - (ENEMYSIZE_H / 2)) return;
+
 	if (ENEMY_POS_X < ENEMY_ORIGIN_POS_X) shiftEnemyRight();
 	else if (ENEMY_POS_X > ENEMY_ORIGIN_POS_X) shiftEnemyLeft();
 
-	if (ENEMY_POS_Y < GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN / 2 - 1) shiftEnemyDown();
-	else if (ENEMY_POS_Y > GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN / 2 - 1) shiftEnemyUp();
+	if (ENEMY_POS_Y < GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN / 2 - (ENEMYSIZE_H / 2)) shiftEnemyDown();
+	else if (ENEMY_POS_Y > GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN / 2 - (ENEMYSIZE_H / 2)) shiftEnemyUp();
 }
 
 //벽을 튕기면서 이동
@@ -275,7 +274,7 @@ void InvalidateEnemy() {
 		}
 		else if (PatternNumber == 8) {
 			if (PatternTimeEnded) { if (EnemyMotion_MoveToOriginPos()) EnemyIsMoving = 0; return; }	//패턴 지속시간이 끝났을 경우 다시 제자리로 이동하는데 다 이동했으면 Enemy이동 인디케이터 0으로 갱신
-			else if (ENEMY_POS_X < GAMEBOARD_ROW - 5) shiftEnemyRight();
+			else if (ENEMY_POS_X < GAMEBOARD_ROW - ENEMYSIZE_W) shiftEnemyRight();
 			else {
 				HideEnemy();
 				ENEMY_POS_X = GAMEBOARD_ORIGIN_X + 4;

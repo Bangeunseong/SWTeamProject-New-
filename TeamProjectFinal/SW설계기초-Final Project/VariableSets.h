@@ -99,8 +99,10 @@ char GameOverLogo[][5][5] = {
 #define RIGHT VK_RIGHT
 #define UP VK_UP
 #define DOWN VK_DOWN
-#define SPACE 0x20
+#define BULLETLAUNCH VK_SPACE
+#define SKILLACTIVE VK_CONTROL
 #define QUIT VK_ESCAPE
+#define SWAP VK_SHIFT
 
 //플레이어 고유 번호 및 색깔, 무적일 때 색깔
 #define PLAYER 4
@@ -115,7 +117,7 @@ double PLAYERTIMEBUFFER = 0.04;
 double PlayerInputTime = 0;
 
 //플레이어 시작 위치
-int PLAYER_POS_X = GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW / 2 - 3;
+int PLAYER_POS_X = GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW / 2;
 int PLAYER_POS_Y = GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN - 8;
 
 //플레이어 우주선 레벨
@@ -123,7 +125,7 @@ int PlayerLevel = 1;
 
 //플레이어 우주선
 int PlayerModelIndex;
-char *PlayerModel[3][3] = { {"HH","<HH>","<AHHA>"},{"AA","<AA>","<=AA=>"},{"TT","<TT>","<-TT->"} };
+const char *PlayerModel[3][3] = { {"HH","<HH>","<AHHA>"},{"AA","<AA>","<=AA=>"},{"TT","<TT>","<-TT->"} };
 
 //플레이어 무적상태 및 무적상태 지속시간, 총알 및 적 우주선과 충돌한 시간
 #define InvinsibleTime 1
@@ -138,23 +140,45 @@ int PlayerPos = 0;
 //플레이어의 속도
 double SelectedSpeed, CurSpeed;
 
+//플레이어 총알 관리 구조체
+typedef struct PlayerBullet {
+	int P_BULLET_POS_X, P_BULLET_POS_Y;	//플레이어 총알 위치
+	int BulletActivation;									//플레이어 총알 작동 인디케이더
+	int CollisionEnemy;									//플레이어 총알이 enemy하고 충돌할 때 인디케이더
+	int CollisionWall;										//플레이어 총알이 wall하고 충돌할때 인디케이더
+	int inProgress;
+}PlayerBullet;
+
+//플레이어 총알 구조체 배열
+#define BULLETCOUNTLIMIT 100
+PlayerBullet PB[100];
+
+#define PLAYERBULLETMODEL '^'
+#define P_BULLETLAUNCHTIMEBUFFER 0.1		//플레이어 총알 발사 시간 버퍼
+#define P_BULLETTIMEBUFFER 0.05	//플레이어 총알 갱신 버퍼
+#define P_BulletSpeed 1.0					//플레이어 총알 속도
+
+//원형 배열처럼 이용
+int P_BULLETCOUNTSTART = 0;					//플레이어 총알 카운트 시작 index
+int P_BULLETCOUNTEND = -1;						//플레이어 총알 카운트 종료 index
+double P_BulletInputTime = 0.0;
+
 //---------------------------------------------------------------
 //----------------------Enemy 상수----------------------------
 
-//적 NPC 인풋타임 버퍼 시간
-double ENEMYTIMEBUFFER = 0.02;
 
-//적 NPC 인풋타임 시작시간
-double EnemyInputTime = 0;
+double ENEMYTIMEBUFFER = 0.02;					//Enemy Invalidation Buffer Time : Invalidate after 0.02 sec
 
-#define ENEMYMOVEMENTDURATION 0.3
-double EnemyMovementTiming = 0;
+double EnemyInputTime = 0;							//Enemy Invalidation Time
 
-//적 우주선 및 총알
-#define ENEMY 2
-#define ENEMYDAMAGE 2
-#define ENEMYBULLET 3
-double EnemySpeed = 1.0;
+#define ENEMYMOVEMENTDURATION 0.3		//When Enemy needs to move stop 0.3 sec and move
+double EnemyMovementTiming = 0;				//Enemy Movement start time
+
+#define ENEMYSIZE_H 5		//Enemy Height
+#define ENEMYSIZE_W 11		//Enemy Width
+#define ENEMY 2					//Enemy original number
+#define ENEMYDAMAGE 2	//If player collision with enemy get 2 damage
+double EnemySpeed = 1.0;	//Enemy Speed
 
 
 //적 우주선 위치 및 이동방향
@@ -168,24 +192,27 @@ double EnemySpeed = 1.0;
 #define DIRECTION_RIGHTUP 6
 #define DIRECTION_RIGHTDOWN 8
 
-#define ENEMY_ORIGIN_POS_X GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW / 2 - 3
+#define ENEMY_ORIGIN_POS_X GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW / 2 - ENEMYSIZE_W / 2
 #define ENEMY_ORIGIN_POS_Y GAMEBOARD_ORIGIN_Y + 1
 int ENEMY_POS_X = ENEMY_ORIGIN_POS_X;
 int ENEMY_POS_Y = ENEMY_ORIGIN_POS_Y;
 int direction = 0;
 int EnemyIsMoving = 0;
 
-typedef struct Prison {
+typedef struct Prison {	//Enemy Skill Prison template
 	int Prison_W, Prison_H;
 	int RD_X, RD_Y, LU_X, LU_Y;
 }Prison;
-Prison P;
-int EnemySkillPrisonActivation = 0;
+Prison P;	//Prison template P
+int EnemySkillPrisonActivation = 0;	//SkillPrison Activation indicator
 
 //적 우주선 모델링
-char EnemyModel[3][5] = { {' ','^','V','^',' '},{'<','<','O','>','>'},{' ','^','V','^',' '} };
-char EnemyUniModel[3][5] = { {0,ENEMY,ENEMY,ENEMY,0},{ENEMY,ENEMY,ENEMY,ENEMY,ENEMY},{0,ENEMY,ENEMY,ENEMY,0} };
-
+char EnemyModel[ENEMYSIZE_H][ENEMYSIZE_W] = 
+{ {'V','^','=','^','^','=','^','^','=','^','V'},
+{' ','V','^','-','^','|','^','-','^','V',' '},
+{' ',' ','V','-','V','|','V','-','V',' ',' '},
+{' ','-','-','V','^','|','^','V','-','-',' '},
+{' ',' ',' ',' ',' ','V',' ',' ',' ',' ',' '} };
 //-------------------------------------------------------------------
 //-------------------------Timer 상수------------------------------
 

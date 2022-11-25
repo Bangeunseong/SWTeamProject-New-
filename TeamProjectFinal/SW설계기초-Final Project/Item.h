@@ -16,7 +16,7 @@ void ShowFlashPlayer() {
 	if (Invinsible) SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), PLAYERINVINSIBLEINDICATECOLOR);
 	else if (UsingSkill > 0) SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), PLAYERUSINGSKILLCOLOR);
 	else SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), PLAYERCOLOR);
-	for (int i = 0; i < PlayerLevel * 2; i++) { SetCurrentCursorPos(PLAYER_POS_X + i, PLAYER_POS_Y); printf("%c", PlayerModel[i]); }
+	for (int i = 0; i < PlayerLevel * 2; i++) { SetCurrentCursorPos(PLAYER_POS_X + i, PLAYER_POS_Y); printf("%c", PlayerModel[PlayerModelIndex][PlayerLevel - 1][i]); }
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
 	SetCurrentCursorPos(PLAYER_POS_X, PLAYER_POS_Y);
 }
@@ -78,9 +78,9 @@ void itemFlash() {																		//Flash to direction
 void itemDeleteBullet() {															//Delete all bullet on gameboard
 	for (int i = 0; i < BULLETCOUNT; i++) {
 		bullet[i].cnt = 0;
-                HideBullet(i);
-		bullet[i].BULLET_POS_X = GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW / 2 - 3;
-		bullet[i].BULLET_POS_Y = GAMEBOARD_ORIGIN_Y + 5;
+        HideBullet(i);
+		bullet[i].BULLET_POS_X = ENEMY_ORIGIN_POS_X;
+		bullet[i].BULLET_POS_Y = ENEMY_ORIGIN_POS_Y;
 		bullet[i].BulletActivation = bullet[i].CollisionPlayer = bullet[i].CollisionWall = 0;
 	}
 	PatternCycle = 0;

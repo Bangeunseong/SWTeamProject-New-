@@ -21,7 +21,7 @@ void ShowStageNumber() {
 int StageOver() {
 	if (PlayerPos == MAPLENGTH * 2) {
 		HidePlayer(); HideEnemy();
-		ClearPlayerPosition(); ClearEnemyPosition(); ClearBulletPosition();
+		ClearPlayerPosition(); ClearEnemyPosition(); ClearBulletPosition(); ClearAll_PBulletPosition();
 		PlayerInputTime = 0; PlayerPos = 0; Invinsible = 0; UsingSkill = 0;
 		EnemyInputTime = EnemyMovementTiming = 0; EnemySpeed = 1.0;
 		DeactivateEnemySkill_Prison();

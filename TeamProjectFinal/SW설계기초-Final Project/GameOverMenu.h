@@ -17,7 +17,7 @@ DWORD mode;
 int GameOver() {
 	if (CurrentLife <= 0) { 
 		HidePlayer(); HideEnemy();
-		ClearPlayerPosition(); ClearEnemyPosition(); ClearBulletPosition();
+		ClearPlayerPosition(); ClearEnemyPosition(); ClearBulletPosition(); ClearAll_PBulletPosition();
 		PlayerInputTime = 0; PlayerPos = 0; Invinsible = 0; CurSkill = SubSkill = UsingSkill = 0; PlayerLevel = 1;
 		EnemyInputTime = EnemyMovementTiming = 0; EnemySpeed = 1.0;
 		DeactivateEnemySkill_Prison();
