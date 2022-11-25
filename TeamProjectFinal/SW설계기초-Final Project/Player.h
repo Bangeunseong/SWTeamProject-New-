@@ -104,14 +104,26 @@ void GetDamagedFromEnemy() {
 	if (UsingSkill == 3) return;
 	if (Invinsible == 1) { if (TimeCheckerEnd() - CollisionTime - PausingTime > InvinsibleTime) Invinsible = 0; }		//무적인 상태에서 지속시간이 지나면 해제하는 함수
 	if (DetectCollision_PlayerwithBullet(PLAYER_POS_X, PLAYER_POS_Y) && Invinsible == 0) {
-		ReduceLifeGauge(BULLETDAMAGE);
-		InvalidateLifeGauge();												//라이프 게이지 갱신은 데미지를 받을 때만 수행
+		if (PlayerLevel < 2) {		//플레이어 레벨 2 이하인 경우 데미지 1을 받음
+			ReduceLifeGauge(BULLETDAMAGE);
+			InvalidateLifeGauge();												//라이프 게이지 갱신은 데미지를 받을 때만 수행
+		}
+		else PlayerLevel--;
 		Invinsible = 1; CollisionTime = TimeCheckerEnd() - PausingTime;		//무적상태로 만들고 충돌한 시간 갱신
 		return;
 	}
 	if (DetectCollision_PlayerwithEnemy(PLAYER_POS_X, PLAYER_POS_Y) && Invinsible == 0) { 
-		ReduceLifeGauge(ENEMYDAMAGE);
-		InvalidateLifeGauge();												//라이프 게이지 갱신은 데미지를 받을 때만 수행
+		if (PlayerLevel < 4)	//플레이어 레벨 3인 경우 2단계 강등
+			PlayerLevel -= 2;	
+		else if (PlayerLevel < 3) {	//플레이어 레벨 2인 경우 1단계 강등 및 데미지 1 받음
+			ReduceLifeGauge(BULLETDAMAGE);
+			InvalidateLifeGauge();												//라이프 게이지 갱신은 데미지를 받을 때만 수행
+			PlayerLevel--;
+		}
+		else {	//플레이어 레벨 1인 경우 데미지 2 받음
+			ReduceLifeGauge(ENEMYDAMAGE);
+			InvalidateLifeGauge();												//라이프 게이지 갱신은 데미지를 받을 때만 수행
+		}
 		Invinsible = 1; CollisionTime = TimeCheckerEnd() - PausingTime;		//무적상태로 만들고 충돌한 시간 갱신
 		return;
 	}
