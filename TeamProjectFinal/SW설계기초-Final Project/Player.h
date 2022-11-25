@@ -14,7 +14,8 @@
 
 //플레이어 인풋타임 버퍼 시간 계산 함수
 int CalculatePlayerTimeBuffer() {
-	if (TimeCheckerEnd() - PlayerInputTime - PausingTime > PLAYERTIMEBUFFER / CurSpeed) { PlayerInputTime += PLAYERTIMEBUFFER / CurSpeed; return 0; }
+	double CheckedTime = TimeCheckerEnd() - PausingTime;
+	if (CheckedTime - PlayerInputTime > PLAYERTIMEBUFFER / CurSpeed) { PlayerInputTime = CheckedTime; return 0; }
 	else return 1;
 }
 
@@ -113,9 +114,9 @@ void GetDamagedFromEnemy() {
 		return;
 	}
 	if (DetectCollision_PlayerwithEnemy(PLAYER_POS_X, PLAYER_POS_Y) && Invinsible == 0) { 
-		if (PlayerLevel < 4)	//플레이어 레벨 3인 경우 2단계 강등
+		if (PlayerLevel == 3)	//플레이어 레벨 3인 경우 2단계 강등
 			PlayerLevel -= 2;	
-		else if (PlayerLevel < 3) {	//플레이어 레벨 2인 경우 1단계 강등 및 데미지 1 받음
+		else if (PlayerLevel == 2) {	//플레이어 레벨 2인 경우 1단계 강등 및 데미지 1 받음
 			ReduceLifeGauge(BULLETDAMAGE);
 			InvalidateLifeGauge();												//라이프 게이지 갱신은 데미지를 받을 때만 수행
 			PlayerLevel--;
