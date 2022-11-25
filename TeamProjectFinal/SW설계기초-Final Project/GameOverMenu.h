@@ -16,7 +16,7 @@ DWORD mode;
 //게임 종료 조건 (모든 항목 초기화)
 int GameOver() {
 	if (CurrentLife <= 0) { 
-		HidePlayer(); HideEnemy();
+		HidePlayer(); HideEnemy(); HideItem();
 		ClearPlayerPosition(); ClearEnemyPosition(); ClearBulletPosition(); ClearAll_PBulletPosition();
 		PlayerInputTime = 0; PlayerPos = 0; Invinsible = 0; CurSkill = SubSkill = UsingSkill = 0; PlayerLevel = 1;
 		EnemyInputTime = EnemyMovementTiming = 0; EnemySpeed = 1.0;
@@ -24,7 +24,7 @@ int GameOver() {
 		itemFLAG = 0; ItemInputTime = 0; ItemCreationLoop = 1; flashFLAG = 0; flashCount = 0; 
 		BulletInputTime = 0;
 		BulletPatternStartTime = BulletPatternEndTime = 0;
-		PausedTime = PausingTime = 0; CurrentTime = 1; StageNumber = 1;
+		PausedTime = PausingTime = 0; StageNumber = 1;
 		Min = Sec = MiSec = 0;
 		free(LifeGauge); 
 		return 1;

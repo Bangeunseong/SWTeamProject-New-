@@ -19,8 +19,8 @@ void ShowStageNumber() {
 
 //스테이지 종료 조건
 int StageOver() {
-	if (PlayerPos == MAPLENGTH * 2) {
-		HidePlayer(); HideEnemy();
+	if (StageEnemyHealth <= 0) {
+		HidePlayer(); HideEnemy(); HideItem();
 		ClearPlayerPosition(); ClearEnemyPosition(); ClearBulletPosition(); ClearAll_PBulletPosition();
 		PlayerInputTime = 0; PlayerPos = 0; Invinsible = 0; UsingSkill = 0;
 		EnemyInputTime = EnemyMovementTiming = 0; EnemySpeed = 1.0;
@@ -28,7 +28,7 @@ int StageOver() {
 		ItemInputTime = 0; ItemCreationLoop = 1; flashFLAG = 0; flashCount = 0; itemFLAG = 0;
 		BulletInputTime = 0;
 		BulletPatternStartTime = BulletPatternEndTime = 0;
-		PausedTime = PausingTime = 0; CurrentTime = 1; StageNumber++;
+		PausedTime = PausingTime = 0; StageNumber++;
 		return 1; 
 	}
 	return 0;

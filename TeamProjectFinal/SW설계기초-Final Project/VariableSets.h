@@ -67,9 +67,6 @@ int GameMode = 0;
 //스테이지 번호
 int StageNumber = 1;
 
-//스테이지별 플레이 시간
-int StageTime[] = { 60,90,120 };
-
 //다음 스테이지로 넘어갈 때 Duration time
 #define STAGEDURATIONTIME 2.0
 
@@ -153,8 +150,9 @@ typedef struct PlayerBullet {
 #define BULLETCOUNTLIMIT 100
 PlayerBullet PB[BULLETCOUNTLIMIT];
 
+#define P_BULLETDAMAGE 1
 #define PLAYERBULLETMODEL '!'
-#define P_BULLETTIMEBUFFER 0.02	//플레이어 총알 갱신 버퍼
+#define P_BULLETTIMEBUFFER 0.03	//플레이어 총알 갱신 버퍼
 #define P_BulletSpeed 1.0					//플레이어 총알 속도
 
 //원형 배열처럼 이용
@@ -173,7 +171,8 @@ double EnemyInputTime = 0;							//Enemy Invalidation Time
 #define ENEMYMOVEMENTDURATION 0.3		//When Enemy needs to move stop 0.3 sec and move
 double EnemyMovementTiming = 0;				//Enemy Movement start time
 
-int Enemy_Health[3] = { 80, 120, 160 };		//Enemy Health
+int Enemy_Health[3] = { 280, 360, 440 };		//Enemy Health
+int StageEnemyHealth;
 #define ENEMYSIZE_H 5		//Enemy Height
 #define ENEMYSIZE_W 11		//Enemy Width
 #define ENEMY 2					//Enemy original number
@@ -220,9 +219,6 @@ char EnemyModel[ENEMYSIZE_H][ENEMYSIZE_W] =
 LARGE_INTEGER ticksPerSec;
 LARGE_INTEGER start, end, diff;
 
-//초 단위로 저장
-double CurrentTime = 1;
-
 //게임을 pause하였는지에 대한 인디케이터
 int GamePaused = 0;
 
@@ -243,7 +239,7 @@ int Strlen(const char *src) {
 }
 
 //맵의 길이
-#define MAPLENGTH 15
+#define BASEENEMYHEALTHFORUI 40
 
 //무한 모드 사용 시 출력할 시간
 int Min = 0, Sec = 0, MiSec = 0;
@@ -304,7 +300,7 @@ typedef struct Bullet {						//Bullet 위치 저장 공간 구조체
 Bullet bullet[1000];							//Bullet 구조체 배열
 
 #define TOTALPATTERNCOUNT 10	//총 패턴 갯수
-#define PATTERNDURATION 1.5		//패턴 durationtime
+#define PATTERNDURATION 0.5		//패턴 durationtime
 #define PATTERNTIME_SPREAD 10.0//Spread 패턴 지속시간
 #define PATTERNTIME_LASER 12.0//Laser 패턴 지속시간
 #define PATTERNTIME_3WAY 10.0//3way 패턴 지속시간

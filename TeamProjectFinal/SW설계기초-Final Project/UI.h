@@ -13,11 +13,12 @@ int modifiedX_Text = BACKGROUND_ORIGIN_X + BACKGROUND_ROW / 2 - 28;
 int modifiedY_Text = BACKGROUND_ORIGIN_Y;
 
 //스테이지 번호 출력
-void InvalidateStageNumber() {
+void InvalidatePlayerLevel() {
 	COORD ptr = { BACKGROUND_ORIGIN_X, BACKGROUND_ORIGIN_Y };
 	int modifiedX = ptr.X + 2, modifiedY = ptr.Y + 1;
 	SetCurrentCursorPos(modifiedX, modifiedY);
-	printf("Stage : %d", StageNumber);
+	if(PlayerLevel < 3) printf("Level : %d", PlayerLevel);
+	else { SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 6); printf("Level : %d", PlayerLevel); }
 }
 
 //---------------라이프 게이지 관련 함수----------------
@@ -48,57 +49,54 @@ void InvalidateLifeGauge() {
 }
 //----------------------------------------------------------
 
-//-----------------맵 관련 함수----------------------
-//맵 내 캐릭터 위치 커서 숨기는 함수
-void HidePlayerPosCursor(int x, int y) {
-	SetCurrentCursorPos(x, y);
-	printf("  ");
-}
+//-----------------Enemy Health Bar UI 관련 함수----------------------
 
-//맵 내 캐릭터 위치 커서 나타내는 함수
-void ShowPlayerPosCursor(int x, int y) {
-	SetCurrentCursorPos(x, y);
-	printf("↑");
-}
-
-//맵 그리기
-void ShowMap() {
+void ShowEnemyHealthBar() {
 	COORD ptr = { BACKGROUND_ORIGIN_X + BACKGROUND_ROW, BACKGROUND_ORIGIN_Y };
-	int modifiedX = ptr.X - 32, modifiedY = ptr.Y + 1;
-	for (int i = 0; i <= MAPLENGTH; i++) {
-		SetCurrentCursorPos(modifiedX + 2 * i, modifiedY);
-		if (i == 0) printf("├");
-		else if (i == MAPLENGTH) printf("┤");
-		else if (i % 5 == 0) printf("┼");
-		else printf("┬");
-	}
-	SetCurrentCursorPos(GAMEBOARD_ORIGIN_X, GAMEBOARD_ORIGIN_Y);
+	int modifiedX = ptr.X - 45, modifiedY = ptr.Y + 1;
+	SetCurrentCursorPos(modifiedX, modifiedY); printf("HP [");
+	for (int i = 0; i < BASEENEMYHEALTHFORUI; i++) printf("|");
+	printf("]");
 }
 
-//맵 내 캐릭터 위치 갱신
-void InvalidateMap() {
+//Enemy Health Bar 갱신
+void InvalidateEnemyHealthBar() {
 	COORD ptr = { BACKGROUND_ORIGIN_X + BACKGROUND_ROW, BACKGROUND_ORIGIN_Y };
-	int modifiedX = ptr.X - 32, modifiedY = ptr.Y + 1;
-	ShowPlayerPosCursor(modifiedX + (int)(CurrentTime) - 1, modifiedY + 1);
-	if (TimeCheckerEnd() - PausingTime > CurrentTime * (StageTime[StageNumber - 1] / (MAPLENGTH * 2))) {
-		HidePlayerPosCursor(modifiedX + (int)(CurrentTime) - 1, modifiedY + 1);
-		CurrentTime++; PlayerPos++;
+	int modifiedX = ptr.X - 41, modifiedY = ptr.Y + 1;
+	for (int i = StageEnemyHealth / (Enemy_Health[StageNumber - 1] / BASEENEMYHEALTHFORUI); i < BASEENEMYHEALTHFORUI; i++) {
+		SetCurrentCursorPos(modifiedX + i, modifiedY);
+		printf(" ");
 	}
 	SetCurrentCursorPos(GAMEBOARD_ORIGIN_X, GAMEBOARD_ORIGIN_Y);
 }
 //-----------------------------------------------------
-//---------------무한 모드 사용시 시간 표시 UI 함수--------------
+//---------------시간 표시 및 스테이지 번호 UI 함수--------------
 
-//시간 출력
-void ShowTime() {
+void ShowStoryModeTime() {
 	COORD ptr = { BACKGROUND_ORIGIN_X + BACKGROUND_ROW, BACKGROUND_ORIGIN_Y };
-	int modifiedX = ptr.X - 20, modifiedY = ptr.Y + 1;
+	int modifiedX = ptr.X - 24, modifiedY = ptr.Y + 2;
+	SetCurrentCursorPos(modifiedX, modifiedY);
+	printf("Stage %d | %02d : %02d : %02d", StageNumber, Min, Sec, MiSec);
+	SetCurrentCursorPos(GAMEBOARD_ORIGIN_X, GAMEBOARD_ORIGIN_Y);
+}
+
+void InvalidateStoryModeTime() {
+	ShowStoryModeTime();
+	double CheckedTime = TimeCheckerEnd() - PausingTime;
+	MiSec = (int)(CheckedTime * 100) % 100;
+	Sec = (int)(CheckedTime) % 60;
+	Min = (int)(CheckedTime) / 60;
+}
+
+void ShowInfiniteModeTime() {
+	COORD ptr = { BACKGROUND_ORIGIN_X + BACKGROUND_ROW, BACKGROUND_ORIGIN_Y };
+	int modifiedX = ptr.X - 20, modifiedY = ptr.Y + 2;
 	SetCurrentCursorPos(modifiedX, modifiedY);
 	printf("Time | %02d : %02d : %02d", Min, Sec, MiSec);
 	SetCurrentCursorPos(GAMEBOARD_ORIGIN_X, GAMEBOARD_ORIGIN_Y);
 }
-void InvalidateTime() {
-	ShowTime();
+void InvalidateInfiniteModeTime() {
+	ShowInfiniteModeTime();
 	double CheckedTime = TimeCheckerEnd() - PausingTime;
 	MiSec = (int)(CheckedTime * 100) % 100;
 	Sec = (int)(CheckedTime) % 60;

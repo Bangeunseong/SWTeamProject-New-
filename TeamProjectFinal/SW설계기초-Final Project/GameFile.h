@@ -19,22 +19,24 @@
 //스토리 모드
 void StoryMode() { 
 	while (StageNumber < 4) {
-		InvalidateStageNumber();
+		InitStageEnemyHealth();
 		ShowCurrentNSubSkill();
-		ShowMap();
+		ShowEnemyHealthBar();
+		ShowStoryModeTime();
 		ShowStageNumber();
 		TimeCheckerStart();
-		while (1) { InvalidateMap(); InvalidateP_Bullet(); InvalidateBullet(); InvalidateItem(); InvalidateEnemy(); InvalidatePlayer(); if (GameOver()) return; if (StageOver()) break; }
+		while (1) { InvalidatePlayerLevel(); InvalidateStoryModeTime(); InvalidateEnemyHealthBar(); InvalidateItem(); InvalidateBullet(); InvalidateP_Bullet(); InvalidateEnemy(); InvalidatePlayer(); if (GameOver()) return; if (StageOver()) break; }
 	}
 }
 
 //무한 모드
 void InfiniteMode() {		//UI 수정필요
 	while (1) {
+		InitInfiniteModeEnemyHealth();
 		ShowCurrentNSubSkill();
-		ShowTime();
+		ShowInfiniteModeTime();
 		TimeCheckerStart();
-		while (1) { InvalidateTime();  InvalidateP_Bullet(); InvalidateBullet(); InvalidateItem(); InvalidateEnemy(); InvalidatePlayer(); if (GameOver()) return; }
+		while (1) { InvalidateInfiniteModeTime(); InvalidateItem(); InvalidateP_Bullet(); InvalidateBullet(); InvalidateEnemy(); InvalidatePlayer(); if (GameOver()) return; }
 	}
 }
 

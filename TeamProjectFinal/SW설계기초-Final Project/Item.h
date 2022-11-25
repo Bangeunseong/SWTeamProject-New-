@@ -188,7 +188,7 @@ int DetectCollision_ItemwithWall(int x, int y) {
 
 //Creating item in certain time
 void CreateItem() {
-	if ((TimeCheckerEnd() - PausingTime > ItemCreationLoop *(StageTime[StageNumber - 1]) / 3.0) && ItemCreationLoop < 3) {		//every one third of stagetime create item
+	if (TimeCheckerEnd() - PausingTime > ItemCreationLoop * 15.0) {		//every one third of stagetime create item
 		ITEM_POS_X = rand() % (GAMEBOARD_ROW - 2) + GAMEBOARD_ORIGIN_X + 2;		//
 		ITEM_POS_Y = GAMEBOARD_ORIGIN_Y + 1;							
 		ItemNumber = rand() % 5 + 1;													

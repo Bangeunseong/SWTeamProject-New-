@@ -230,7 +230,9 @@ int MoveP_Bullet_N(int P_bulletnumber) {
 	if (!PB[P_bulletnumber].BulletActivation) return 0;
 
 	HideP_Bullet(P_bulletnumber);
-	if(DetectCollision_P_BulletwithEnemy(PB[P_bulletnumber].P_BULLET_POS_X, PB[P_bulletnumber].P_BULLET_POS_Y)){ PB[P_bulletnumber].BulletActivation = 0; PB[P_bulletnumber].CollisionEnemy = 1; return 0; }
+	if (DetectCollision_P_BulletwithEnemy(PB[P_bulletnumber].P_BULLET_POS_X, PB[P_bulletnumber].P_BULLET_POS_Y)) { 
+		PB[P_bulletnumber].BulletActivation = 0; PB[P_bulletnumber].CollisionEnemy = 1; StageEnemyHealth -= P_BULLETDAMAGE; return 0;		//Enemy가 받는 데미지도 처리
+	}
 	if (!DetectCollision_P_BulletwithWall(PB[P_bulletnumber].P_BULLET_POS_X, PB[P_bulletnumber].P_BULLET_POS_Y - 1)) PB[P_bulletnumber].P_BULLET_POS_Y--;
 	else { PB[P_bulletnumber].BulletActivation = 0; PB[P_bulletnumber].CollisionWall = 1; return 0; }
 	ShowP_Bullet(P_bulletnumber); return 1;
@@ -254,9 +256,10 @@ void InvalidateP_Bullet() {
 	else {
 		for (int i = P_BULLETCOUNTSTART; i <= P_BULLETCOUNTEND; i++) {
 			if (DetectCollision_P_BulletwithEnemy(PB[i % BULLETCOUNTLIMIT].P_BULLET_POS_X, PB[i % BULLETCOUNTLIMIT].P_BULLET_POS_Y)) {
-				HideP_Bullet(i % BULLETCOUNTLIMIT);
+				HideP_Bullet(i % BULLETCOUNTLIMIT);	
+				if(PB[i % BULLETCOUNTLIMIT].BulletActivation) StageEnemyHealth -= P_BULLETDAMAGE; //Enemy가 받는 데미지도 처리
 				if (i == P_BULLETCOUNTSTART) { ClearSingle_PBulletPosition(i % BULLETCOUNTLIMIT); P_BULLETCOUNTSTART++; }
-				else PB[i % BULLETCOUNTLIMIT].BulletActivation = 0; PB[i % BULLETCOUNTLIMIT].CollisionEnemy = 1; 
+				else { PB[i % BULLETCOUNTLIMIT].BulletActivation = 0; PB[i % BULLETCOUNTLIMIT].CollisionEnemy = 1; }
 			}
 		}
 	}

@@ -22,6 +22,9 @@ void ClearEnemyPosition() {
 	direction = EnemyIsMoving = 0;
 }
 
+void InitStageEnemyHealth() { StageEnemyHealth = Enemy_Health[StageNumber - 1]; }
+void InitInfiniteModeEnemyHealth() { StageEnemyHealth = 600; }
+
 //----------------------------------------------------------
 //-----------------적 이미지 출력함수--------------------
 
