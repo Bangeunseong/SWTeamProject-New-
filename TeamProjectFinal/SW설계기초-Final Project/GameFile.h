@@ -8,6 +8,7 @@
 #include "Enemy.h"
 #include "Bullet.h"
 #include "Item.h"
+#include "ExpItem.h"
 #include "UI.h"
 #include "Timer.h"
 #include "StageMenu.h"
@@ -25,7 +26,7 @@ void StoryMode() {
 		ShowStoryModeTime();
 		ShowStageNumber();
 		TimeCheckerStart();
-		while (1) { InvalidatePlayerLevel(); InvalidateStoryModeTime(); InvalidateEnemyHealthBar(); InvalidateItem(); InvalidateBullet(); InvalidateP_Bullet(); InvalidateEnemy(); InvalidatePlayer(); if (GameOver()) return; if (StageOver()) break; }
+		while (1) { InvalidatePlayerLevel(); InvalidateStoryModeTime(); InvalidateEnemyHealthBar(); InvalidateItem(); InvalidateExp(); InvalidateBullet(); InvalidateP_Bullet(); InvalidateEnemy(); InvalidatePlayer(); if (GameOver()) return; if (StageOver()) break; }
 	}
 }
 
@@ -34,9 +35,10 @@ void InfiniteMode() {		//UI 수정필요
 	while (1) {
 		InitInfiniteModeEnemyHealth();
 		ShowCurrentNSubSkill();
+		ShowEnemyHealthBar();
 		ShowInfiniteModeTime();
 		TimeCheckerStart();
-		while (1) { InvalidateInfiniteModeTime(); InvalidateItem(); InvalidateP_Bullet(); InvalidateBullet(); InvalidateEnemy(); InvalidatePlayer(); if (GameOver()) return; }
+		while (1) { InvalidateInfiniteModeTime(); InvalidateItem(); InvalidateExp(); InvalidateBullet(); InvalidateP_Bullet(); InvalidateEnemy(); InvalidatePlayer(); if (GameOver()) return; }
 	}
 }
 

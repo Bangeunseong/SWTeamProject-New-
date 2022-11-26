@@ -26,7 +26,10 @@ void ShowExp() {
 
 //DetectCollision with palyer
 int DetectCollision_ExpwithPlayer() {
-	for (int i = 0; i < 6; i++) {
+	int Modellen;
+	if (PlayerLevel < 4) Modellen = PlayerLevel * 2;
+	else Modellen = 6;
+	for (int i = 0; i < Modellen; i++) {
 		for (int j = 0; j < 2; j++) {
 			if (EXP_POS_Y == PLAYER_POS_Y && EXP_POS_X + j == PLAYER_POS_X + i)  return 1;
 		}
@@ -42,16 +45,12 @@ void CreateExp() {
 		EXP_POS_Y = rand() % (GAMEBOARD_COLUMN - 1) + GAMEBOARD_ORIGIN_Y + 1;
 		ExpInputTime = TimeCheckerEnd() - PausingTime;
 		expFLAG = 1;
-		ShowExp();
 		ExpCreationLoop++;
 	}
 }
 
 // level up
-
-void LevelUp() {
-	if (EXP == levelFLAG[PlayerLevel - 1]) { PlayerLevel++; }
-}
+void LevelUp() { if (EXP == levelFLAG[PlayerLevel - 1]) PlayerLevel++; }
 
 // get exp
 void GetExp() {
@@ -64,16 +63,19 @@ void GetExp() {
 //--------------------------------------------------------
 //-----------------Invalidating Item---------------------
 void InvalidateExp() {
-
 	if (!CalculateExpTimeBuffer()) {
 		CreateExp();
-		if (expFLAG == 1 && DetectCollision_ExpwithPlayer()) {
-			HideExp();
-			GetExp();
-			expFLAG = 0;
-		}
-		else if (expFLAG == 1) {	//경험치가 총알이나 보스한테 지워지는 것을 방지하기 위한 출력
-			ShowExp();			// 2비트로 출력하다보니 애매하게 걸친 경우 옆으로 한칸 밀리는 현상이 있지만 괜찮아 보임
+		if (expFLAG == 1){ 
+			ShowExp();
+			if (DetectCollision_ExpwithPlayer()) { HideExp(); GetExp(); expFLAG = 0; }
+		} 
+	}
+	else {
+		if (expFLAG) {
+			if (DetectCollision_ExpwithPlayer()) {
+				HideExp(); GetExp(); expFLAG = 0;
+			}
+			else ShowExp();
 		}
 	}
 }

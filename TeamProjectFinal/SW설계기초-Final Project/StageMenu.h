@@ -20,15 +20,18 @@ void ShowStageNumber() {
 //스테이지 종료 조건
 int StageOver() {
 	if (StageEnemyHealth <= 0) {
-		HidePlayer(); HideEnemy(); HideItem();
+		TotalSec += (int)(TimeCheckerEnd() - PausingTime) % 60;
+		HidePlayer(); HideEnemy(); HideItem(); HideExp();
 		ClearPlayerPosition(); ClearEnemyPosition(); ClearBulletPosition(); ClearAll_PBulletPosition();
 		PlayerInputTime = 0; PlayerPos = 0; Invinsible = 0; UsingSkill = 0; P_BulletLaunchTime = 0;
 		EnemyInputTime = EnemyMovementTiming = 0; EnemySpeed = 1.0;
 		DeactivateEnemySkill_Prison();
 		ItemInputTime = 0; ItemCreationLoop = 1; flashFLAG = 0; flashCount = 0; itemFLAG = 0;
+		ExpInputTime = 0; ExpCreationLoop = 1; expFLAG = 0;
 		BulletInputTime = 0;
 		BulletPatternStartTime = BulletPatternEndTime = 0;
 		PausedTime = PausingTime = 0; StageNumber++;
+		Min = Sec = MiSec = 0;
 		return 1; 
 	}
 	return 0;

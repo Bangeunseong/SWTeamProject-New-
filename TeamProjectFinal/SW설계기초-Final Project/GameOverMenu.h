@@ -16,12 +16,14 @@ DWORD mode;
 //게임 종료 조건 (모든 항목 초기화)
 int GameOver() {
 	if (CurrentLife <= 0) { 
-		HidePlayer(); HideEnemy(); HideItem();
+		TotalSec += (int)(TimeCheckerEnd() - PausingTime) % 60;
+		HidePlayer(); HideEnemy(); HideItem(); HideExp();
 		ClearPlayerPosition(); ClearEnemyPosition(); ClearBulletPosition(); ClearAll_PBulletPosition();
 		PlayerInputTime = 0; PlayerPos = 0; Invinsible = 0; CurSkill = SubSkill = UsingSkill = 0; PlayerLevel = 1; P_BulletLaunchTime = 0;
 		EnemyInputTime = EnemyMovementTiming = 0; EnemySpeed = 1.0;
 		DeactivateEnemySkill_Prison();
 		itemFLAG = 0; ItemInputTime = 0; ItemCreationLoop = 1; flashFLAG = 0; flashCount = 0; 
+		ExpInputTime = 0; ExpCreationLoop = 1; expFLAG = 0;
 		BulletInputTime = 0;
 		BulletPatternStartTime = BulletPatternEndTime = 0;
 		PausedTime = PausingTime = 0; StageNumber = 1;

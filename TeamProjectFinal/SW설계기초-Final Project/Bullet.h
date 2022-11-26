@@ -111,7 +111,10 @@ int DetectCollision_BulletwithWall(int x, int y) {
 
 int DetectCollision_BulletwithPlayer(int x, int y) {
 	if (y == PLAYER_POS_Y) {
-		for (int i = 0; i < PlayerLevel * 2; i++) {
+		int Modellen;
+		if (PlayerLevel < 4) Modellen = PlayerLevel * 2;
+		else Modellen = 6;
+		for (int i = 0; i < Modellen; i++) {
 			if (y == PLAYER_POS_Y && x == PLAYER_POS_X + i) return 1;
 		}
 	}
