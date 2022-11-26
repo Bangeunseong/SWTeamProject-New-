@@ -136,13 +136,24 @@ void EnemyMotion_MovingLeftRight() {
 	else if(direction == DIRECTION_LEFT) shiftEnemyLeft();
 }
 
-//랜덤 포지션으로 점멸하며 움직인다
-void EnemyMotion_FlashToRandomPos() {
-	if (TimeCheckerEnd() - PausingTime - EnemyMovementTiming > ENEMYMOVEMENTDURATION) { 
+//랜덤 포지션으로 점멸하며 움직인다--X좌표에만 해당
+void EnemyMotion_FlashToRandomPosX() {
+	if (TimeCheckerEnd() - PausingTime - EnemyMovementTiming > ENEMYMOVEMENTDURATION_ver1) { 
 		HideEnemy();
 		ENEMY_POS_X = rand() % (GAMEBOARD_ROW - ENEMYSIZE_W - 2) + GAMEBOARD_ORIGIN_X + 2;
 		ShowEnemy();
-		EnemyMovementTiming += ENEMYMOVEMENTDURATION;
+		EnemyMovementTiming += ENEMYMOVEMENTDURATION_ver1;
+	}
+}
+
+//랜덤 포지션으로 점멸하며 움직ㅇ니다 --X, Y좌표 모두 해당
+void EnemyMotion_FlashToRandomPosXY() {
+	if (TimeCheckerEnd() - PausingTime - EnemyMovementTiming > ENEMYMOVEMENTDURATION_ver2) {
+		HideEnemy();
+		ENEMY_POS_X = rand() % (GAMEBOARD_ROW - ENEMYSIZE_W - 2) + GAMEBOARD_ORIGIN_X + 2;
+		ENEMY_POS_Y = rand() % (GAMEBOARD_COLUMN - ENEMYSIZE_H - 1) + GAMEBOARD_ORIGIN_Y + 1;
+		ShowEnemy();
+		EnemyMovementTiming += ENEMYMOVEMENTDURATION_ver2;
 	}
 }
 
@@ -234,8 +245,10 @@ void ActivateEnemySkill_Prison() {
 	EnemySkillPrisonActivation = 1;
 }
 void DeactivateEnemySkill_Prison() {
-	EraseEnemySkillPrison();
-	EnemySkillPrisonActivation = 0;
+	if (EnemySkillPrisonActivation) {
+		EraseEnemySkillPrison();
+		EnemySkillPrisonActivation = 0;
+	}
 }
 
 //--------------------------------------------------------------
@@ -252,14 +265,20 @@ void InvalidateEnemy() {
 				EnemyMotion_MovingLeftRight();
 			}
 		}
-		else if (PatternNumber == 2 || PatternNumber == 4 || PatternNumber == 9) {
+		else if (PatternNumber == 2 || PatternNumber == 3 || PatternNumber == 9) {
 			if (PatternTimeEnded) {
 				if (PatternNumber == 2) DeactivateEnemySkill_Prison(); //패턴 넘버가 2번이면 감옥 제거
 				if (EnemyMotion_MoveToOriginPos()) { EnemyIsMoving = 0; return; }//패턴 지속시간이 끝났을 경우 다시 제자리로 이동하는데 다 이동했으면 Enemy이동 인디케이터 0으로 갱신
 			}
-			else { if (PatternNumber == 2) { if (!EnemySkillPrisonActivation) { HidePlayer(); ClearPlayerPosition(); InvalidatePrisonInfo(); } ActivateEnemySkill_Prison(); } EnemyMotion_FlashToRandomPos(); }
+			else { 
+				if (PatternNumber == 2) { 
+					if (!EnemySkillPrisonActivation) { HidePlayer(); ClearPlayerPosition(); InvalidatePrisonInfo(); } 
+					ActivateEnemySkill_Prison();
+				} 
+				EnemyMotion_FlashToRandomPosX();
+			}
 		}
-		else if (PatternNumber == 3 || PatternNumber == 5) {
+		else if (PatternNumber == 7 || PatternNumber == 8) {
 			if (PatternTimeEnded) { EnemySpeed = 1.0; if (EnemyMotion_MoveToOriginPos()) EnemyIsMoving = 0; return; }	//패턴 지속시간이 끝났을 경우 다시 제자리로 이동하는데 다 이동했으면 Enemy이동 인디케이터 0으로 갱신
 			else {
 				EnemySpeed = 0.5;
@@ -267,15 +286,19 @@ void InvalidateEnemy() {
 				EnemyMotion_BouncingAroundWall();
 			}
 		}
-		else if (PatternNumber == 6 || PatternNumber == 10) {
+		else if(PatternNumber == 4) {	//Enemy Motion 수정 필요
 			if (PatternTimeEnded) { if (EnemyMotion_MoveToOriginPos()) EnemyIsMoving = 0; return; }	//패턴 지속시간이 끝났을 경우 다시 제자리로 이동하는데 다 이동했으면 Enemy이동 인디케이터 0으로 갱신
 			else EnemyMotion_MoveToCenter();
 		}
-		else if (PatternNumber == 7) {
+		else if (PatternNumber == 5) {
 			if (PatternTimeEnded) { if (EnemyMotion_MoveToOriginPos()) EnemyIsMoving = 0; return; }	//패턴 지속시간이 끝났을 경우 다시 제자리로 이동하는데 다 이동했으면 Enemy이동 인디케이터 0으로 갱신
-			else EnemyMotion_FlashToRandomPos();
+			else EnemyMotion_FlashToRandomPosXY();
 		}
-		else if (PatternNumber == 8) {
+		else if (PatternNumber == 6) {
+			if (PatternTimeEnded) { if (EnemyMotion_MoveToOriginPos()) EnemyIsMoving = 0; return; }	//패턴 지속시간이 끝났을 경우 다시 제자리로 이동하는데 다 이동했으면 Enemy이동 인디케이터 0으로 갱신
+			else EnemyMotion_FlashToRandomPosX();
+		}
+		else if (PatternNumber == 10) {
 			if (PatternTimeEnded) { if (EnemyMotion_MoveToOriginPos()) EnemyIsMoving = 0; return; }	//패턴 지속시간이 끝났을 경우 다시 제자리로 이동하는데 다 이동했으면 Enemy이동 인디케이터 0으로 갱신
 			else if (ENEMY_POS_X < GAMEBOARD_ROW - ENEMYSIZE_W) shiftEnemyRight();
 			else {

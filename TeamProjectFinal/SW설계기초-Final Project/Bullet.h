@@ -13,7 +13,41 @@ int CalculateBulletTimeBuffer() {
 }
 
 //랜덤 패턴 넘버 지정
-void SetRandomPatternNumber(int max) { PatternNumber = rand() % max + 1; }
+void SetRandomPatternNumber() { // parameter max can be erased
+	int i = rand() % STAGEPATTERNCOUNT;
+	switch (StageNumber) {
+	case 1: 
+		if (PatternStageVisit[i] == 1) { // stage 1 : pattern 1, 2, 3, 4, 5, 6
+			SetRandomPatternNumber(); return;
+		}
+		PatternNumber = PatternStage1[i];
+		PatternStageVisit[i] = 1; break;
+	case 2:
+		if (PatternStageVisit[i] == 1) { // stage 2 : pattern 2, 3, 4, 5, 6, 7
+			SetRandomPatternNumber(); return;
+		}
+		PatternNumber = PatternStage2[i];
+		PatternStageVisit[i] = 1; break;
+	case 3:
+		if (PatternStageVisit[i] == 1) { // stage 3 : pattern 5, 6, 7, 8, 9, 10
+			SetRandomPatternNumber(); return;
+		}
+		PatternNumber = PatternStage3[i];
+		PatternStageVisit[i] = 1; break;
+	default: break;
+	}
+}
+
+//패턴 6개 전부 사용했는지 확인
+void DetectPatternVisitCheck() {
+	for (int i = 0; i < STAGEPATTERNCOUNT; i++) {
+		if (PatternStageVisit[i] == 0)
+			return;
+	}
+	for (int i = 0; i < STAGEPATTERNCOUNT; i++) {
+		PatternStageVisit[i] = 0;
+	}
+}
 
 void HideBullet(int bulletnumber) {
 	SetCurrentCursorPos(bullet[bulletnumber].BULLET_POS_X, bullet[bulletnumber].BULLET_POS_Y);
@@ -49,17 +83,17 @@ void BulletPostionRenewal(int bulletnumber) {
 		bullet[bulletnumber].BULLET_POS_X = ENEMY_POS_X + ENEMYSIZE_W / 2;
 		bullet[bulletnumber].BULLET_POS_Y = ENEMY_POS_Y + ENEMYSIZE_H - 1;
 	}
-	else if (PatternNumber == 2 || PatternNumber == 4 || PatternNumber == 7) {
+	else if (PatternNumber == 2 || PatternNumber == 3 || PatternNumber == 6) {
 		if (bulletnumber % 3 == 0) { bullet[bulletnumber].BULLET_POS_X = ENEMY_POS_X + ENEMYSIZE_W / 2 - 1; }
 		else if (bulletnumber % 3 == 1) { bullet[bulletnumber].BULLET_POS_X = ENEMY_POS_X + ENEMYSIZE_W / 2; }
 		else { bullet[bulletnumber].BULLET_POS_X = ENEMY_POS_X + ENEMYSIZE_W / 2 + 1; }
 		bullet[bulletnumber].BULLET_POS_Y = ENEMY_POS_Y + ENEMYSIZE_H - 1;
 	}
-	else if (PatternNumber == 3 || PatternNumber == 5 || PatternNumber == 6 || PatternNumber == 10) {
+	else if (PatternNumber == 7 || PatternNumber == 8 || PatternNumber == 4 || PatternNumber == 5) {
 		bullet[bulletnumber].BULLET_POS_X = ENEMY_POS_X + ENEMYSIZE_W / 2;
 		bullet[bulletnumber].BULLET_POS_Y = ENEMY_POS_Y + ENEMYSIZE_H / 2;
 	}
-	else if (PatternNumber == 8) {
+	else if (PatternNumber == 10) {
 		bullet[bulletnumber].BULLET_POS_X = GAMEBOARD_ORIGIN_X + 1 + (bulletnumber % (GAMEBOARD_ROW - 1));
 		bullet[bulletnumber].BULLET_POS_Y = ENEMY_POS_Y + 1 + ((bulletnumber % 20));
 	}
@@ -194,14 +228,14 @@ int MoveBullet_Spiral(int bulletnumber, int x, int y) {
 //When bullet launches record time and set patternnumber, start pattern
 void BulletLaunchTime() {
 	if (!PatternStart) {	//패턴이 시작되지 않았을 경우
+		DetectPatternVisitCheck();
 		double CheckedTime = TimeCheckerEnd() - PausingTime;
 		if (CheckedTime > BulletPatternEndTime + PATTERNDURATION) {		//체크한 시간이 패턴 종료시간 + durationtime보다 크면 작동
-			SetRandomPatternNumber(TOTALPATTERNCOUNT);		//패턴 넘버 결정(랜덤)
-			if (PatternNumber == 1 || PatternNumber == 10) BulletSpeed = 1.0;		//패턴 넘버 1번일때 bulletspeed
-			else if (PatternNumber == 3 || PatternNumber == 5) BulletSpeed = 1.5;		//패턴 넘버 3, 5, 10일때 1.5 bulletspeed
-			else if (PatternNumber == 2 || PatternNumber == 4) BulletSpeed = 8.0;		//패턴 넘버가 2, 4일때 8.0 bulletspeed
-			else if (PatternNumber == 6) BulletSpeed = 3.0;		//패턴 넘버가 6일때 3.0 bulletspeed
-			else if (PatternNumber == 7 || PatternNumber == 8) BulletSpeed = 5.0;		//패턴 넘버가 7, 8일때 5.0 bulletspeed
+			SetRandomPatternNumber();		//패턴 넘버 결정(랜덤)
+			if (PatternNumber == 1 || PatternNumber == 4) BulletSpeed = 1.0;		//패턴 넘버 1번일때 bulletspeed
+			else if (PatternNumber == 2 || PatternNumber == 3) BulletSpeed = 8.0;		//패턴 넘버가 2, 4일때 8.0 bulletspeed
+			else if (PatternNumber == 5 || PatternNumber == 7 || PatternNumber == 8) BulletSpeed = 3.0;		//패턴 넘버가 6일때 3.0 bulletspeed
+			else if (PatternNumber == 6 || PatternNumber == 10) BulletSpeed = 5.0;		//패턴 넘버가 7, 8일때 5.0 bulletspeed
 			else if (PatternNumber == 9) BulletSpeed = 4.0;		//패턴 넘버가 9일때 4.0 bulletspeed
 			PatternStart = EnemyIsMoving = 1; PatternTimeEnded = 0; EnemyMovementTiming = BulletPatternStartTime = CheckedTime;	//패턴 시작 인디케이터 1로 갱신, 패턴 시작시간 갱신, Enemy가 움직이고 있다는 인디케이터 1로 갱신
 		}
@@ -476,10 +510,7 @@ int BulletPattern_Spiral() {		//회전 패턴 삼각함수를 사용할 수 없으면 하나씩 찍�
 int BulletPattern_Gyro() {
 	int flag = 0;
 	double CheckedTime = TimeCheckerEnd() - PausingTime;
-	if (CheckedTime < PATTERNTIME_GYRO + BulletPatternStartTime && CheckedTime > BulletPatternStartTime) { 
-		if (ENEMY_POS_Y == GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN / 2 - (ENEMYSIZE_H / 2)) 
-			++PatternCycle;
-	}
+	if (CheckedTime < PATTERNTIME_GYRO + BulletPatternStartTime && CheckedTime > BulletPatternStartTime) ++PatternCycle;
 	else PatternTimeEnded = 1;
 	for (int i = 0; i < PatternCycle * 8; i++) {
 		if (!bullet[i].BulletActivation && !bullet[i].CollisionPlayer && !bullet[i].CollisionWall) { BulletPostionRenewal(i); bullet[i].BulletActivation = 1; ShowBullet(i); BULLETCOUNT++; }
@@ -605,14 +636,14 @@ void InvalidateBullet() {
 				switch (PatternNumber) {	//패턴 넘버에 따라 다른 함수 작동
 				case 1: if (BulletPattern_Spread()) ClearBulletPosition(); break;
 				case 2: if (BulletPattern_Laser()) ClearBulletPosition(); break;
-				case 3: if (BulletPattern_CircleSpread()) ClearBulletPosition(); break;
-				case 4: if (BulletPattern_3way()) ClearBulletPosition(); break;
-				case 5: if (BulletPattern_Chaos()) ClearBulletPosition(); break;
-				case 6: if (BulletPattern_Gyro()) ClearBulletPosition(); break;
-				case 7: if (BulletPattern_Shotgun()) ClearBulletPosition(); break;
-				case 8: if (BulletPattern_Road()) ClearBulletPosition(); break;
+				case 3: if (BulletPattern_3way()) ClearBulletPosition(); break;
+				case 4: if (BulletPattern_Spiral()) ClearBulletPosition(); break;
+				case 5: if (BulletPattern_Gyro()) ClearBulletPosition(); break;
+				case 6: if (BulletPattern_Shotgun()) ClearBulletPosition(); break;
+				case 7: if (BulletPattern_CircleSpread()) ClearBulletPosition(); break;
+				case 8: if (BulletPattern_Chaos()) ClearBulletPosition(); break;
 				case 9: if (BulletPattern_Meteor()) ClearBulletPosition(); break;
-				case 10: if (BulletPattern_Spiral()) ClearBulletPosition(); break;
+				case 10: if (BulletPattern_Road()) ClearBulletPosition(); break;
 				default: break;
 				}
 			}

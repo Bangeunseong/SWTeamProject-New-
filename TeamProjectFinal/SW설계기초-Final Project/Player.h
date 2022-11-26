@@ -105,7 +105,7 @@ void GetDamagedFromEnemy() {
 	if (UsingSkill == 3) return;
 	if (Invinsible == 1) { if (TimeCheckerEnd() - CollisionTime - PausingTime > InvinsibleTime) Invinsible = 0; }		//무적인 상태에서 지속시간이 지나면 해제하는 함수
 	if (DetectCollision_PlayerwithBullet(PLAYER_POS_X, PLAYER_POS_Y) && Invinsible == 0) {
-		if (PlayerLevel < 2) {		//플레이어 레벨 2 이하인 경우 데미지 1을 받음
+		if (PlayerLevel < 2) {		//플레이어 레벨 2보다 작은 경우 데미지 1을 받음
 			ReduceLifeGauge(BULLETDAMAGE);
 			InvalidateLifeGauge();												//라이프 게이지 갱신은 데미지를 받을 때만 수행
 		}
@@ -239,8 +239,12 @@ int MoveP_Bullet_N(int P_bulletnumber) {
 }
 
 void P_BulletLaunch() {
-	if (PlayerLevel <= 2) P_BULLETCOUNTEND += 2;
-	else P_BULLETCOUNTEND += 4;
+	double CheckedTime = TimeCheckerEnd() - PausingTime;
+	if (CheckedTime - P_BulletLaunchTime > P_BULLETLAUNCHTIMEBUFFER) {
+		P_BulletLaunchTime = CheckedTime;
+		if (PlayerLevel <= 2) P_BULLETCOUNTEND += 2;
+		else P_BULLETCOUNTEND += 4;
+	}
 }
 
 void InvalidateP_Bullet() {
@@ -277,7 +281,7 @@ void InvalidatePlayer() {
 			if (GetAsyncKeyState(RIGHT) & 0x8000) shiftRight();
 			if (GetAsyncKeyState(UP) & 0x8000) shiftUp();
 			if (GetAsyncKeyState(DOWN) & 0x8000) shiftDown();
-			if (GetAsyncKeyState(BULLETLAUNCH) & 0x0001) P_BulletLaunch();
+			if (GetAsyncKeyState(BULLETLAUNCH) & 0x8000) P_BulletLaunch();
 			if (GetAsyncKeyState(SKILLACTIVE) & 0x0001) ActivateSkillItem();
 			if (GetAsyncKeyState(SWAP) & 0x0001) SwapItem();
 			if (GetAsyncKeyState(QUIT) & 0x0001) GamePause();

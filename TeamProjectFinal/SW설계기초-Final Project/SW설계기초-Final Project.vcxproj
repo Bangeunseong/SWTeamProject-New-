@@ -131,6 +131,7 @@
     <ClInclude Include="CharacterSelectionMenu.h" />
     <ClInclude Include="CursorFunctions.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="ExpItem.h" />
     <ClInclude Include="GameFile.h" />
     <ClInclude Include="GameOverMenu.h" />
     <ClInclude Include="Item.h" />

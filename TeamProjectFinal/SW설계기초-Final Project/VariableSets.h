@@ -117,8 +117,9 @@ double PlayerInputTime = 0;
 int PLAYER_POS_X = GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW / 2;
 int PLAYER_POS_Y = GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN - 8;
 
-//플레이어 우주선 레벨
-int PlayerLevel = 1;
+#define PLAYERMAXLEVEL 10
+int PlayerLevel = 1;	//플레이어 우주선 레벨
+int EXP = 0;				// 획득한 경험치
 
 //플레이어 우주선
 int PlayerModelIndex;
@@ -152,6 +153,7 @@ PlayerBullet PB[BULLETCOUNTLIMIT];
 
 #define P_BULLETDAMAGE 1
 #define PLAYERBULLETMODEL '!'
+#define P_BULLETLAUNCHTIMEBUFFER 0.2
 #define P_BULLETTIMEBUFFER 0.03	//플레이어 총알 갱신 버퍼
 #define P_BulletSpeed 1.0					//플레이어 총알 속도
 
@@ -159,6 +161,7 @@ PlayerBullet PB[BULLETCOUNTLIMIT];
 int P_BULLETCOUNTSTART = 0;					//플레이어 총알 카운트 시작 index
 int P_BULLETCOUNTEND = -1;						//플레이어 총알 카운트 종료 index
 double P_BulletInputTime = 0.0;
+double P_BulletLaunchTime = 0.0;					//Bullet 발사 시간
 
 //---------------------------------------------------------------
 //----------------------Enemy 상수----------------------------
@@ -168,7 +171,8 @@ double ENEMYTIMEBUFFER = 0.02;					//Enemy Invalidation Buffer Time : Invalidate
 
 double EnemyInputTime = 0;							//Enemy Invalidation Time
 
-#define ENEMYMOVEMENTDURATION 0.3		//When Enemy needs to move stop 0.3 sec and move
+#define ENEMYMOVEMENTDURATION_ver2 1.5
+#define ENEMYMOVEMENTDURATION_ver1 0.3		//When Enemy needs to move stop 0.3 sec and move
 double EnemyMovementTiming = 0;				//Enemy Movement start time
 
 int Enemy_Health[3] = { 280, 360, 440 };		//Enemy Health
@@ -278,12 +282,13 @@ int CurSkill = 0, SubSkill = 0, UsingSkill = 0;
 int SkillTime = 3; double SkillActivationTime = 0;
 
 //플레이어의 스킬 셋 string
-char Skillstr[] = { "MainSkill " }; char SubSkillstr[] = { "SubSkill  " };
-char SkillSets[][101] = { "-NONE-", "-SPEEDUP-","-SLOW-", "-INVINSIBLE-","-DASH-","-ERASEBULLET-" };
+char Skillstr[] = { "ITEM1" }; char SubSkillstr[] = { "ITEM2" };
+char SkillSets[][101] = { "-NONE-", "-SPEED-","-SLOW-", "-INVIN-","-DASH-","-ERASE-" };
 
 //아이템 출력 아이콘 리스트
 char itemList[] = { 'S', 'L', 'I', 'D', 'E' };
 
+//-------------------------------------------------------------
 //----------------------BULLET 상수--------------------------
 
 #define BULLET 3								//Bullet 고유번호
@@ -299,18 +304,25 @@ typedef struct Bullet {						//Bullet 위치 저장 공간 구조체
 }Bullet;						
 Bullet bullet[1000];							//Bullet 구조체 배열
 
+#define STAGEPATTERNCOUNT 6
+int PatternStage1[] = { 1, 2, 3, 4, 5, 6 };
+int PatternStage2[] = { 2, 3, 4, 5, 6, 7 };
+int PatternStage3[] = { 5, 6, 7, 8, 9, 10 };
+int PatternStageVisit[] = { 0, 0, 0, 0, 0, 0 };
+
 #define TOTALPATTERNCOUNT 10	//총 패턴 갯수
 #define PATTERNDURATION 0.5		//패턴 durationtime
-#define PATTERNTIME_SPREAD 10.0//Spread 패턴 지속시간
+#define PATTERNTIME_SPREAD 12.0//Spread 패턴 지속시간
 #define PATTERNTIME_LASER 12.0//Laser 패턴 지속시간
-#define PATTERNTIME_3WAY 10.0//3way 패턴 지속시간
-#define PATTERNTIME_CIRCLESPREAD 10.0	//원형 Spread 패턴 지속시간
-#define PATTERNTIME_CHAOS 15.0 //Spiral 패턴 지속시간
-#define PATTERNTIME_GYRO 10.0 //Gyro 패턴 지속시간
+#define PATTERNTIME_3WAY 12.0//3way 패턴 지속시간
+#define PATTERNTIME_SPIRAL 6.0 //Spiral 패턴 지속시간
+#define PATTERNTIME_GYRO 6.0 //Gyro 패턴 지속시간
 #define PATTERNTIME_SHOTGUN 10.0 //Shotgun 패턴 지속시간
-#define PATTERNTIME_ROAD 10.0 //Road 패턴 지속시간
+#define PATTERNTIME_CIRCLESPREAD 10.0	//원형 Spread 패턴 지속시간
+#define PATTERNTIME_CHAOS 10.0 //Spiral 패턴 지속시간
 #define PATTERNTIME_METEOR 10.0 //Meteor 패턴 지속시간
-#define PATTERNTIME_SPIRAL 10.0 //Spiral 패턴 지속시간
+#define PATTERNTIME_ROAD 8.0 //Road 패턴 지속시간
+
 
 double BulletInputTime = 0;				//Bullet 인풋 시작 시간
 double BulletPatternStartTime = 0;	//패턴 시작시간
@@ -322,6 +334,19 @@ int PatternCycle = 0;							//패턴 사이클
 int BULLETCOUNT = 0;						//총알 개수
 double BulletSpeed = 1.0;					//Bullet 속도
 
-char BulletModelPerPattern[TOTALPATTERNCOUNT] = { 'o','v','o','v','o','o','x','I','o','o' };
+char BulletModelPerPattern[TOTALPATTERNCOUNT] = { 'o','v','v','o','o','x','o','o','o','|' };
+//---------------------------------------------------------
+//----------------------Exp 상수--------------------------
+
+//아이템 움직임 버퍼 시간
+#define EXPTIMEBUFFER 0.2
+double ExpInputTime = 0;
+int ExpCreateTime = 5;			//아이템 생성 시간 간격, 확인을 위해 5초 단위로 생성시켰습니다. 
+double ExpCreationLoop = 1;		//아이템 생성 루프
+
+int expFLAG = 0; // 게임 내 아이템 출력 여부
+int levelFLAG[10] = { 2, 4, 6, 8, 10, 12, 14, 16, 18, 20 }; // 레벨업에 필요한 경험치 양
+
+int EXP_POS_X, EXP_POS_Y;
 
 #endif //!VARIABLESETS_H
