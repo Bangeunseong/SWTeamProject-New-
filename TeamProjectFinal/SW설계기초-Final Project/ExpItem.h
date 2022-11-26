@@ -21,7 +21,9 @@ void HideExp() {
 //Show exp on board
 void ShowExp() {
 	SetCurrentCursorPos(EXP_POS_X, EXP_POS_Y);
-	printf("¡Ù");
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 10);
+	printf("¡Ú");
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
 }
 
 //DetectCollision with palyer

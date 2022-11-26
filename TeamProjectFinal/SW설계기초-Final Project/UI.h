@@ -21,7 +21,7 @@ void InvalidatePlayerLevel() {
 	SetCurrentCursorPos(modifiedX, modifiedY);
 	if(PlayerLevel < PLAYERMAXLEVEL) printf("P_Level %d", PlayerLevel);
 	else { 
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 6); 
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 14); 
 		printf("MaxLevel!"); 
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
 	}
@@ -34,7 +34,7 @@ void InitializeLifeGauge() {
 	CurrentLife = SelectedLife;
 	COORD ptr = { BACKGROUND_ORIGIN_X, BACKGROUND_ORIGIN_Y };
 	int modifiedX = ptr.X + 2, modifiedY = ptr.Y + 2;
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);
 	for (int i = 0; i < SelectedLife; i++) { SetCurrentCursorPos(modifiedX + i * 2, modifiedY); if (LifeGauge[i] == 1) printf("¢¾"); }
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
 	SetCurrentCursorPos(ptr.X, ptr.Y);
@@ -44,7 +44,7 @@ void InitializeLifeGauge() {
 void InvalidateLifeGauge() {
 	COORD ptr = { BACKGROUND_ORIGIN_X, BACKGROUND_ORIGIN_Y };
 	int modifiedX = ptr.X + 2, modifiedY = ptr.Y + 2;
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);
 	for (int i = 0; i < SelectedLife; i++) { 
 		SetCurrentCursorPos(modifiedX + i * 2, modifiedY); 
 		if (LifeGauge[i] == 1) printf("¢¾"); 

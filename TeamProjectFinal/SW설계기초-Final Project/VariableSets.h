@@ -103,9 +103,9 @@ char GameOverLogo[][5][5] = {
 
 //플레이어 고유 번호 및 색깔, 무적일 때 색깔
 #define PLAYER 4
-#define PLAYERCOLOR 3
+#define PLAYERCOLOR 11
 #define PLAYERUSINGSKILLCOLOR 13
-#define PLAYERINVINSIBLEINDICATECOLOR 6
+#define PLAYERINVINSIBLEINDICATECOLOR 14
 
 //플레이어 인풋타임 버퍼시간
 double PLAYERTIMEBUFFER = 0.04;

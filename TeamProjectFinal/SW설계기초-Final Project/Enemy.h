@@ -41,6 +41,7 @@ void HideEnemy() {
 
 //적 출력 함수
 void ShowEnemy() {
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);
 	for (int i = 0; i < ENEMYSIZE_H; i++) {
 		for (int j = 0; j < ENEMYSIZE_W; j++) {
 			SetCurrentCursorPos(ENEMY_POS_X + j, ENEMY_POS_Y + i);
@@ -48,6 +49,7 @@ void ShowEnemy() {
 		}
 	}
 	SetCurrentCursorPos(ENEMY_POS_X, ENEMY_POS_Y);
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
 }
 
 //----------------------------------------------------------
@@ -146,7 +148,7 @@ void EnemyMotion_FlashToRandomPosX() {
 	}
 }
 
-//랜덤 포지션으로 점멸하며 움직ㅇ니다 --X, Y좌표 모두 해당
+//랜덤 포지션으로 점멸하며 움직인다 --X, Y좌표 모두 해당
 void EnemyMotion_FlashToRandomPosXY() {
 	if (TimeCheckerEnd() - PausingTime - EnemyMovementTiming > ENEMYMOVEMENTDURATION_ver2) {
 		HideEnemy();
