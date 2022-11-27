@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <Windows.h>
 #include <stdio.h>
 #include "CursorFunctions.h"
@@ -11,47 +11,47 @@ DWORD dwNOER;
 DWORD CIN;
 DWORD mode;
 
-//Ä³¸¯ÅÍ ¼±ÅÃ ¹Ú½º ¸¸µå´Â ÇÔ¼ö
+//ìºë¦­í„° ì„ íƒ ë°•ìŠ¤ ë§Œë“œëŠ” í•¨ìˆ˜
 void CreateSelectionBox(int x, int y) {
 	COORD ptr = { x,y };
 	for (int i = 0; i <= CHARACTERBOX_COLUMN; i++) {
 		SetCurrentCursorPos(ptr.X, ptr.Y + i);
-		if (i == 0) printf("¦®");
-		else if (i == CHARACTERBOX_COLUMN) printf("¦±");
-		else printf("¦­");
+		if (i == 0) printf("â”");
+		else if (i == CHARACTERBOX_COLUMN) printf("â”—");
+		else printf("â”ƒ");
 		SetCurrentCursorPos(ptr.X + CHARACTERBOX_ROW, ptr.Y + i);
-		if (i == 0) printf("¦¯");
-		else if (i == CHARACTERBOX_COLUMN) printf("¦°");
-		else printf("¦­");
+		if (i == 0) printf("â”“");
+		else if (i == CHARACTERBOX_COLUMN) printf("â”›");
+		else printf("â”ƒ");
 	}
 	SetCurrentCursorPos(ptr.X, ptr.Y);
 	for (int i = 2; i < CHARACTERBOX_ROW; i += 2) {
 		SetCurrentCursorPos(ptr.X + i, ptr.Y);
-		printf("¦¬");
+		printf("â”");
 		SetCurrentCursorPos(ptr.X + i, ptr.Y + CHARACTERBOX_COLUMN);
-		printf("¦¬");
+		printf("â”");
 	}
 }
 
-//¸¶¿ì½º Å¬¸¯ ÀÌº¥Æ® ¹Ş´Â ÇÔ¼ö
+//ë§ˆìš°ìŠ¤ í´ë¦­ ì´ë²¤íŠ¸ ë°›ëŠ” í•¨ìˆ˜
 void CharacterBoxClick(int *xx, int *yy) {
 	while (1)
 	{
-		ReadConsoleInput(GetStdHandle(STD_INPUT_HANDLE), &rec, 1, &dwNOER); // ÄÜ¼ÖÃ¢ ÀÔ·ÂÀ» ¹Ş¾ÆµéÀÓ.
-		if (rec.EventType == MOUSE_EVENT) {// ¸¶¿ì½º ÀÌº¥Æ®ÀÏ °æ¿ì
-			if (rec.Event.MouseEvent.dwButtonState & FROM_LEFT_1ST_BUTTON_PRESSED) { // ÁÂÃø ¹öÆ°ÀÌ Å¬¸¯µÇ¾úÀ» °æ¿ì
-				int mouse_x = rec.Event.MouseEvent.dwMousePosition.X; // X°ª ¹Ş¾Æ¿È
-				int mouse_y = rec.Event.MouseEvent.dwMousePosition.Y; // Y°ª ¹Ş¾Æ¿È
+		ReadConsoleInput(GetStdHandle(STD_INPUT_HANDLE), &rec, 1, &dwNOER); // ì½˜ì†”ì°½ ì…ë ¥ì„ ë°›ì•„ë“¤ì„.
+		if (rec.EventType == MOUSE_EVENT) {// ë§ˆìš°ìŠ¤ ì´ë²¤íŠ¸ì¼ ê²½ìš°
+			if (rec.Event.MouseEvent.dwButtonState & FROM_LEFT_1ST_BUTTON_PRESSED) { // ì¢Œì¸¡ ë²„íŠ¼ì´ í´ë¦­ë˜ì—ˆì„ ê²½ìš°
+				int mouse_x = rec.Event.MouseEvent.dwMousePosition.X; // Xê°’ ë°›ì•„ì˜´
+				int mouse_y = rec.Event.MouseEvent.dwMousePosition.Y; // Yê°’ ë°›ì•„ì˜´
 
-				*xx = mouse_x; //x°ªÀ» ³Ñ±è
-				*yy = mouse_y; //y°ªÀ» ³Ñ±è
+				*xx = mouse_x; //xê°’ì„ ë„˜ê¹€
+				*yy = mouse_y; //yê°’ì„ ë„˜ê¹€
 				break;
 			}
 		}
 	}
 }
 
-//Ä³¸¯ÅÍ ¼±ÅÃ ¹Ú½º Ãâ·Â ÇÔ¼ö
+//ìºë¦­í„° ì„ íƒ ë°•ìŠ¤ ì¶œë ¥ í•¨ìˆ˜
 void ShowCharacterBox() {
 	//Print Text
 	SetCurrentCursorPos(CHARACTERBOX_ORIGIN_X + CHARACTERBOX_ROW * 2 - CHARACTERBOX_ROW / 2 - 17, CHARACTERBOX_ORIGIN_Y - 5);
@@ -79,20 +79,20 @@ void ShowCharacterBox() {
 	printf("Health : 3   Speed : 3");
 }
 
-//Ä³¸¯ÅÍ ¹Ú½º ¼û±â´Â ÇÔ¼ö
+//ìºë¦­í„° ë°•ìŠ¤ ìˆ¨ê¸°ëŠ” í•¨ìˆ˜
 void HideCharacterBox() {
 	COORD ptr = { 0,0 };
 	DWORD dw;
 	FillConsoleOutputCharacter(GetStdHandle(STD_OUTPUT_HANDLE), ' ', CONSOLE_ROW * CONSOLE_COLUMN, ptr, &dw);
 }
 
-//Ä³¸¯ÅÍ ¼±ÅÃ È­¸é Ãâ·Â ÇÔ¼ö
+//ìºë¦­í„° ì„ íƒ í™”ë©´ ì¶œë ¥ í•¨ìˆ˜
 void ShowCharacterSelectionMenu() {
 
-	//Ä³¸¯ÅÍ ¼±ÅÃ Ã¢ ¶ç¿ì±â
+	//ìºë¦­í„° ì„ íƒ ì°½ ë„ìš°ê¸°
 	ShowCharacterBox();
 
-	//¸¶¿ì½º Å¬¸¯À» ÅëÇØ ¹ŞÀº Ãâ·Â °ªÀ» °¡Áö°í ¸í·É ¼öÇà
+	//ë§ˆìš°ìŠ¤ í´ë¦­ì„ í†µí•´ ë°›ì€ ì¶œë ¥ ê°’ì„ ê°€ì§€ê³  ëª…ë ¹ ìˆ˜í–‰
 	SetConsoleMode(GetStdHandle(STD_OUTPUT_HANDLE), ENABLE_PROCESSED_INPUT | ENABLE_MOUSE_INPUT);
 	int xx, yy;
 	while (1) {
@@ -110,7 +110,7 @@ void ShowCharacterSelectionMenu() {
 		}
 	}
 	
-	//Ä³¸¯ÅÍ ¼±ÅÃ Ã¢ Áö¿ì±â
+	//ìºë¦­í„° ì„ íƒ ì°½ ì§€ìš°ê¸°
 	HideCharacterBox();
 }
 

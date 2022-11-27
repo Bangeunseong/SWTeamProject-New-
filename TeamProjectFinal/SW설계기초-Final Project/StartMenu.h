@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #pragma warning(disable:4996)
 #include <conio.h>
 #include "CursorFunctions.h"
@@ -12,29 +12,29 @@ DWORD CIN;
 DWORD mode;
 
 
-//°ÔÀÓ ¸ğµå ¼±ÅÃ ¹Ú½º 
+//ê²Œì„ ëª¨ë“œ ì„ íƒ ë°•ìŠ¤ 
 void CreateModeSelectionBox(int x, int y) {
 	COORD ptr = { x,y };
 	for (int i = 0; i < MODESELECTIONBOX_COLUMN; i++) {
 		SetCurrentCursorPos(ptr.X, ptr.Y + i);
-		if (i == 0) printf("¦®");
-		else if (i == MODESELECTIONBOX_COLUMN - 1) printf("¦±");
-		else printf("¦­");
+		if (i == 0) printf("â”");
+		else if (i == MODESELECTIONBOX_COLUMN - 1) printf("â”—");
+		else printf("â”ƒ");
 		SetCurrentCursorPos(ptr.X + MODESELECTIONBOX_ROW, ptr.Y + i);
-		if (i == 0) printf("¦¯");
-		else if (i == MODESELECTIONBOX_COLUMN - 1) printf("¦°");
-		else printf("¦­");
+		if (i == 0) printf("â”“");
+		else if (i == MODESELECTIONBOX_COLUMN - 1) printf("â”›");
+		else printf("â”ƒ");
 	}
 	SetCurrentCursorPos(ptr.X, ptr.Y);
 	for (int i = 2; i < MODESELECTIONBOX_ROW; i += 2) {
 		SetCurrentCursorPos(ptr.X + i, ptr.Y);
-		printf("¦¬");
+		printf("â”");
 		SetCurrentCursorPos(ptr.X + i, ptr.Y + MODESELECTIONBOX_COLUMN - 1);
-		printf("¦¬");
+		printf("â”");
 	}
 }
 
-//ÀÎÆ®·Î È­¸é Ãâ·Â
+//ì¸íŠ¸ë¡œ í™”ë©´ ì¶œë ¥
 void ShowIntro() {
 	COORD center = { BACKGROUND_ORIGIN_X + BACKGROUND_ROW / 2, BACKGROUND_ORIGIN_Y + BACKGROUND_COLUMN / 2 };
 	int modifiedX = center.X - 52, modifiedY = center.Y - 5;
@@ -42,7 +42,7 @@ void ShowIntro() {
 		for (int j = 0; j < 5; j++) {
 			for (int k = 0; k < 5; k++) {
 				SetCurrentCursorPos(modifiedX + i * 12 + 2 * k, modifiedY + j);
-				if (IntroModel[i][j][k] == 1) printf("¡á");
+				if (IntroModel[i][j][k] == 1) printf("â– ");
 			}
 		}
 	}
@@ -57,39 +57,39 @@ void ShowIntro() {
 	printf("Quit");
 }
 
-//ÀÎÆ®·Î È­¸é »èÁ¦
+//ì¸íŠ¸ë¡œ í™”ë©´ ì‚­ì œ
 void HideIntro() {
 	COORD ptr = { 0,0 };
 	DWORD dw;
 	FillConsoleOutputCharacter(GetStdHandle(STD_OUTPUT_HANDLE), ' ', CONSOLE_COLUMN * CONSOLE_ROW, ptr, &dw);
 }
 
-//¸¶¿ì½º Å¬¸¯ ÀÌº¥Æ® ¹Ş´Â ÇÔ¼ö
+//ë§ˆìš°ìŠ¤ í´ë¦­ ì´ë²¤íŠ¸ ë°›ëŠ” í•¨ìˆ˜
 void GameModeBoxClick(int *xx, int *yy) {
 	while (1)
 	{
-		ReadConsoleInput(GetStdHandle(STD_INPUT_HANDLE), &rec, 1, &dwNOER); // ÄÜ¼ÖÃ¢ ÀÔ·ÂÀ» ¹Ş¾ÆµéÀÓ.
-		if (rec.EventType == MOUSE_EVENT) {// ¸¶¿ì½º ÀÌº¥Æ®ÀÏ °æ¿ì
-			if (rec.Event.MouseEvent.dwButtonState & FROM_LEFT_1ST_BUTTON_PRESSED) { // ÁÂÃø ¹öÆ°ÀÌ Å¬¸¯µÇ¾úÀ» °æ¿ì
-				int mouse_x = rec.Event.MouseEvent.dwMousePosition.X; // X°ª ¹Ş¾Æ¿È
-				int mouse_y = rec.Event.MouseEvent.dwMousePosition.Y; // Y°ª ¹Ş¾Æ¿È
+		ReadConsoleInput(GetStdHandle(STD_INPUT_HANDLE), &rec, 1, &dwNOER); // ì½˜ì†”ì°½ ì…ë ¥ì„ ë°›ì•„ë“¤ì„.
+		if (rec.EventType == MOUSE_EVENT) {// ë§ˆìš°ìŠ¤ ì´ë²¤íŠ¸ì¼ ê²½ìš°
+			if (rec.Event.MouseEvent.dwButtonState & FROM_LEFT_1ST_BUTTON_PRESSED) { // ì¢Œì¸¡ ë²„íŠ¼ì´ í´ë¦­ë˜ì—ˆì„ ê²½ìš°
+				int mouse_x = rec.Event.MouseEvent.dwMousePosition.X; // Xê°’ ë°›ì•„ì˜´
+				int mouse_y = rec.Event.MouseEvent.dwMousePosition.Y; // Yê°’ ë°›ì•„ì˜´
 
-				*xx = mouse_x; //x°ªÀ» ³Ñ±è
-				*yy = mouse_y; //y°ªÀ» ³Ñ±è
+				*xx = mouse_x; //xê°’ì„ ë„˜ê¹€
+				*yy = mouse_y; //yê°’ì„ ë„˜ê¹€
 				break;
 			}
 		}
 	}
 }
 
-//°ÔÀÓ ½ÃÀÛ ¸Ş´º
+//ê²Œì„ ì‹œì‘ ë©”ë‰´
 int StartMenu() {
-	//system ÇÔ¼ö¸¦ ¾´ ÀÌÈÄ¿£ INPUT ÇÚµé ´Ù½Ã ÀçÈ°¼ºÈ­
+	//system í•¨ìˆ˜ë¥¼ ì“´ ì´í›„ì—” INPUT í•¸ë“¤ ë‹¤ì‹œ ì¬í™œì„±í™”
 	HANDLE CIN = GetStdHandle(STD_INPUT_HANDLE);
 	GetConsoleMode(CIN, &mode);
 	SetConsoleMode(CIN, mode | ENABLE_MOUSE_INPUT);
 
-	//ÀÎÆ®·Î È­¸é Ãâ·Â
+	//ì¸íŠ¸ë¡œ í™”ë©´ ì¶œë ¥
 	ShowIntro();
 	SetConsoleMode(GetStdHandle(STD_OUTPUT_HANDLE), ENABLE_PROCESSED_INPUT | ENABLE_MOUSE_INPUT);
 	int xx, yy; int flag = 0;

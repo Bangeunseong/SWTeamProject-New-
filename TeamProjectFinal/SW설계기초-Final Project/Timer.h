@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #pragma warning(disable:4996)
 #include <time.h>
 #include <Windows.h>
@@ -7,20 +7,20 @@
 #ifndef TIMER_H
 #define TIMER_H
 
-//ÃøÁ¤ ½ÃÀÛ
+//ì¸¡ì • ì‹œì‘
 void TimeCheckerStart() {
 	QueryPerformanceFrequency(&ticksPerSec);
 	QueryPerformanceCounter(&start);
 }
 
-//ÃøÁ¤ ³¡ (°ªÀ» double·Î ¹İÈ¯)
+//ì¸¡ì • ë (ê°’ì„ doubleë¡œ ë°˜í™˜)
 double TimeCheckerEnd() {
 	QueryPerformanceCounter(&end);
 	diff.QuadPart = end.QuadPart - start.QuadPart;
 	return ((double)diff.QuadPart / (double)ticksPerSec.QuadPart);
 }
 
-// °ÔÀÓÀ» ½ÃÀÛÇÏ°íºÎÅÍ ÇöÀç ½Ã°£ÀÌ ¸î ÃÊ ÀÎÁö int·Î ¾Ë ¼ö ÀÖ½À´Ï´Ù.
+// ê²Œì„ì„ ì‹œì‘í•˜ê³ ë¶€í„° í˜„ì¬ ì‹œê°„ì´ ëª‡ ì´ˆ ì¸ì§€ intë¡œ ì•Œ ìˆ˜ ìˆìŠµë‹ˆë‹¤.
 int TimeCheckerForInt() {
 	return ((int)(TimeCheckerEnd()));
 }

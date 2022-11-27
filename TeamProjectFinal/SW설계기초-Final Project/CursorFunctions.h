@@ -1,16 +1,16 @@
-#pragma once
+ï»¿#pragma once
 #include <stdio.h>
 #include <Windows.h>
 #ifndef CURSORFUNCTIONS_H
 #define CURSORFUNCTIONS_H
 
-//Ä¿¼­ À§Ä¡ ¼³Á¤
+//ì»¤ì„œ ìœ„ì¹˜ ì„¤ì •
 void SetCurrentCursorPos(int x, int y) {
 	COORD ptr = { x,y };
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), ptr);
 }
 
-//Ä¿¼­ À§Ä¡ ¹İÈ¯
+//ì»¤ì„œ ìœ„ì¹˜ ë°˜í™˜
 COORD GetCurrentCursorPos() {
 	COORD curPoint;
 	CONSOLE_SCREEN_BUFFER_INFO curInfo;
@@ -19,7 +19,7 @@ COORD GetCurrentCursorPos() {
 	return curPoint;
 }
 
-//½Ã°¢ÀûÀ¸·Î Ç¥ÇöµÇ´Â Ä¿¼­ Áö¿ì±â
+//ì‹œê°ì ìœ¼ë¡œ í‘œí˜„ë˜ëŠ” ì»¤ì„œ ì§€ìš°ê¸°
 void RemoveCursor() {
 	CONSOLE_CURSOR_INFO cursorInfo;
 	GetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursorInfo);

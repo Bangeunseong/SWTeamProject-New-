@@ -1,4 +1,4 @@
-#pragma once
+Ôªø#pragma once
 #include "CursorFunctions.h"
 #include "VariableSets.h"
 #include "Timer.h"
@@ -22,7 +22,7 @@ void HideExp() {
 void ShowExp() {
 	SetCurrentCursorPos(EXP_POS_X, EXP_POS_Y);
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 10);
-	printf("°⁄");
+	printf("‚òÖ");
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
 }
 
@@ -43,7 +43,7 @@ int DetectCollision_ExpwithPlayer() {
 void CreateExp() {
 	if ((TimeCheckerEnd() - PausingTime > ExpCreationLoop * ExpCreateTime)) {		// 10 * n second create exp
 		if (expFLAG == 1) { HideExp(); expFLAG = 0; }
-		EXP_POS_X = rand() % (GAMEBOARD_ROW - 2) + GAMEBOARD_ORIGIN_X + 2;
+		EXP_POS_X = rand() % (GAMEBOARD_ROW - 10) + GAMEBOARD_ORIGIN_X + 6;
 		EXP_POS_Y = rand() % (GAMEBOARD_COLUMN - 1) + GAMEBOARD_ORIGIN_Y + 1;
 		ExpInputTime = TimeCheckerEnd() - PausingTime;
 		expFLAG = 1;
@@ -57,7 +57,7 @@ void LevelUp() { if (EXP == levelFLAG[PlayerLevel - 1]) PlayerLevel++; }
 // get exp
 void GetExp() {
 	EXP++; LevelUp();
-	SetCurrentCursorPos(0, 0); printf("%d %d", EXP, PlayerLevel);  // »Æ¿ŒøÎ √‚∑¬
+	SetCurrentCursorPos(0, 0); printf("%d %d", EXP, PlayerLevel);  // ÌôïÏù∏Ïö© Ï∂úÎ†•
 }
 
 

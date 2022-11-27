@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #pragma warning(disable:4996)
 #include "CursorFunctions.h"
 #include "VariableSets.h"
@@ -12,7 +12,7 @@ int CalculateBulletTimeBuffer() {
 	else return 1;
 }
 
-//·£´ı ÆĞÅÏ ³Ñ¹ö ÁöÁ¤
+//ëœë¤ íŒ¨í„´ ë„˜ë²„ ì§€ì •
 void SetRandomPatternNumber() { // parameter max can be erased
 	int i = rand() % STAGEPATTERNCOUNT;
 	switch (StageNumber) {
@@ -38,7 +38,7 @@ void SetRandomPatternNumber() { // parameter max can be erased
 	}
 }
 
-//ÆĞÅÏ 6°³ ÀüºÎ »ç¿ëÇß´ÂÁö È®ÀÎ
+//íŒ¨í„´ 6ê°œ ì „ë¶€ ì‚¬ìš©í–ˆëŠ”ì§€ í™•ì¸
 void DetectPatternVisitCheck() {
 	for (int i = 0; i < STAGEPATTERNCOUNT; i++) {
 		if (PatternStageVisit[i] == 0)
@@ -127,7 +127,7 @@ int MoveBullet_N(int bulletnumber) {
 	if (!bullet[bulletnumber].BulletActivation) return 0;
 
 	HideBullet(bulletnumber);
-	if (DetectCollision_BulletwithPlayer(bullet[bulletnumber].BULLET_POS_X, bullet[bulletnumber].BULLET_POS_Y)) { bullet[bulletnumber].BulletActivation = 0; bullet[bulletnumber].CollisionPlayer = 1; return 0; }//ÇÃ·¹ÀÌ¾î¿Í ºÎµúÇûÀ¸¸é ÃÑ¾Ë ºñÈ°¼ºÈ­, ÇÃ·¹ÀÌ¾î¿Í ºÎµúÇû´Ù´Â ÀÎµğÄÉÀÌÅÍ 1·Î °»½Å 0À» ¸®ÅÏÇÏ¸ç Á¾·á
+	if (DetectCollision_BulletwithPlayer(bullet[bulletnumber].BULLET_POS_X, bullet[bulletnumber].BULLET_POS_Y)) { bullet[bulletnumber].BulletActivation = 0; bullet[bulletnumber].CollisionPlayer = 1; return 0; }//í”Œë ˆì´ì–´ì™€ ë¶€ë”ªí˜”ìœ¼ë©´ ì´ì•Œ ë¹„í™œì„±í™”, í”Œë ˆì´ì–´ì™€ ë¶€ë”ªí˜”ë‹¤ëŠ” ì¸ë””ì¼€ì´í„° 1ë¡œ ê°±ì‹  0ì„ ë¦¬í„´í•˜ë©° ì¢…ë£Œ
 	if (!DetectCollision_BulletwithWall(bullet[bulletnumber].BULLET_POS_X, bullet[bulletnumber].BULLET_POS_Y - 1)) bullet[bulletnumber].BULLET_POS_Y--;
 	else { bullet[bulletnumber].BulletActivation = 0; bullet[bulletnumber].CollisionWall = 1; return 0; }
 	ShowBullet(bulletnumber); return 1;
@@ -137,7 +137,7 @@ int MoveBullet_NW(int bulletnumber) {
 	if (!bullet[bulletnumber].BulletActivation) return 0;
 
 	HideBullet(bulletnumber);
-	if (DetectCollision_BulletwithPlayer(bullet[bulletnumber].BULLET_POS_X, bullet[bulletnumber].BULLET_POS_Y)) { bullet[bulletnumber].BulletActivation = 0; bullet[bulletnumber].CollisionPlayer = 1; return 0; }//ÇÃ·¹ÀÌ¾î¿Í ºÎµúÇûÀ¸¸é ÃÑ¾Ë ºñÈ°¼ºÈ­, ÇÃ·¹ÀÌ¾î¿Í ºÎµúÇû´Ù´Â ÀÎµğÄÉÀÌÅÍ 1·Î °»½Å 0À» ¸®ÅÏÇÏ¸ç Á¾·á
+	if (DetectCollision_BulletwithPlayer(bullet[bulletnumber].BULLET_POS_X, bullet[bulletnumber].BULLET_POS_Y)) { bullet[bulletnumber].BulletActivation = 0; bullet[bulletnumber].CollisionPlayer = 1; return 0; }//í”Œë ˆì´ì–´ì™€ ë¶€ë”ªí˜”ìœ¼ë©´ ì´ì•Œ ë¹„í™œì„±í™”, í”Œë ˆì´ì–´ì™€ ë¶€ë”ªí˜”ë‹¤ëŠ” ì¸ë””ì¼€ì´í„° 1ë¡œ ê°±ì‹  0ì„ ë¦¬í„´í•˜ë©° ì¢…ë£Œ
 	if (!DetectCollision_BulletwithWall(bullet[bulletnumber].BULLET_POS_X - 2, bullet[bulletnumber].BULLET_POS_Y - 1)) { bullet[bulletnumber].BULLET_POS_X -= 2; bullet[bulletnumber].BULLET_POS_Y--; }
 	else { bullet[bulletnumber].BulletActivation = 0; bullet[bulletnumber].CollisionWall = 1; return 0; }
 	ShowBullet(bulletnumber); return 1;
@@ -147,25 +147,25 @@ int MoveBullet_NE(int bulletnumber) {
 	if (!bullet[bulletnumber].BulletActivation) return 0;
 
 	HideBullet(bulletnumber);
-	if (DetectCollision_BulletwithPlayer(bullet[bulletnumber].BULLET_POS_X, bullet[bulletnumber].BULLET_POS_Y)) { bullet[bulletnumber].BulletActivation = 0; bullet[bulletnumber].CollisionPlayer = 1; return 0; }//ÇÃ·¹ÀÌ¾î¿Í ºÎµúÇûÀ¸¸é ÃÑ¾Ë ºñÈ°¼ºÈ­, ÇÃ·¹ÀÌ¾î¿Í ºÎµúÇû´Ù´Â ÀÎµğÄÉÀÌÅÍ 1·Î °»½Å 0À» ¸®ÅÏÇÏ¸ç Á¾·á
+	if (DetectCollision_BulletwithPlayer(bullet[bulletnumber].BULLET_POS_X, bullet[bulletnumber].BULLET_POS_Y)) { bullet[bulletnumber].BulletActivation = 0; bullet[bulletnumber].CollisionPlayer = 1; return 0; }//í”Œë ˆì´ì–´ì™€ ë¶€ë”ªí˜”ìœ¼ë©´ ì´ì•Œ ë¹„í™œì„±í™”, í”Œë ˆì´ì–´ì™€ ë¶€ë”ªí˜”ë‹¤ëŠ” ì¸ë””ì¼€ì´í„° 1ë¡œ ê°±ì‹  0ì„ ë¦¬í„´í•˜ë©° ì¢…ë£Œ
 	if (!DetectCollision_BulletwithWall(bullet[bulletnumber].BULLET_POS_X + 2, bullet[bulletnumber].BULLET_POS_Y - 1)) { bullet[bulletnumber].BULLET_POS_X += 2; bullet[bulletnumber].BULLET_POS_Y--; }
 	else { bullet[bulletnumber].BulletActivation = 0; bullet[bulletnumber].CollisionWall = 1; return 0; }
 	ShowBullet(bulletnumber); return 1;
 }
 //Move bullet to West
 int MoveBullet_W(int bulletnumber) {
-	//--------------------ÃÑ¾Ë ÀÛµ¿ ¿©ºÎ °Ë»çÇÔ¼ö----------------------
-	if (!bullet[bulletnumber].BulletActivation) return 0;	//ÃÑ¾ËÀÌ ÀÛµ¿ÇÏ°í ÀÖÁö ¾Ê´Ù¸é ±×³É 0À» ¹İÈ¯
+	//--------------------ì´ì•Œ ì‘ë™ ì—¬ë¶€ ê²€ì‚¬í•¨ìˆ˜----------------------
+	if (!bullet[bulletnumber].BulletActivation) return 0;	//ì´ì•Œì´ ì‘ë™í•˜ê³  ìˆì§€ ì•Šë‹¤ë©´ ê·¸ëƒ¥ 0ì„ ë°˜í™˜
 	//--------------------------------------------------------------------
 
-	HideBullet(bulletnumber);		//ÃÑ¾ËÀ» ¼û±ä´Ù
-	//--------------------Ãæµ¹ °ü·Ã ÇÔ¼ö-------------------------
-	if (DetectCollision_BulletwithPlayer(bullet[bulletnumber].BULLET_POS_X, bullet[bulletnumber].BULLET_POS_Y)) {		//ÇÃ·¹ÀÌ¾î¿Í ºÎµúÇûÀ¸¸é ÃÑ¾Ë ºñÈ°¼ºÈ­, ÇÃ·¹ÀÌ¾î¿Í ºÎµúÇû´Ù´Â ÀÎµğÄÉÀÌÅÍ 1·Î °»½Å 0À» ¸®ÅÏÇÏ¸ç Á¾·á
+	HideBullet(bulletnumber);		//ì´ì•Œì„ ìˆ¨ê¸´ë‹¤
+	//--------------------ì¶©ëŒ ê´€ë ¨ í•¨ìˆ˜-------------------------
+	if (DetectCollision_BulletwithPlayer(bullet[bulletnumber].BULLET_POS_X, bullet[bulletnumber].BULLET_POS_Y)) {		//í”Œë ˆì´ì–´ì™€ ë¶€ë”ªí˜”ìœ¼ë©´ ì´ì•Œ ë¹„í™œì„±í™”, í”Œë ˆì´ì–´ì™€ ë¶€ë”ªí˜”ë‹¤ëŠ” ì¸ë””ì¼€ì´í„° 1ë¡œ ê°±ì‹  0ì„ ë¦¬í„´í•˜ë©° ì¢…ë£Œ
 		bullet[bulletnumber].BulletActivation = 0; bullet[bulletnumber].CollisionPlayer = 1; return 0;
 	}
-	if (!DetectCollision_BulletwithWall(bullet[bulletnumber].BULLET_POS_X - 2, bullet[bulletnumber].BULLET_POS_Y)) //º®¿¡ ºÎµúÈ÷Áö ¾Ê¾ÒÀ¸¸é XÁÂÇ¥ - 2
+	if (!DetectCollision_BulletwithWall(bullet[bulletnumber].BULLET_POS_X - 2, bullet[bulletnumber].BULLET_POS_Y)) //ë²½ì— ë¶€ë”ªíˆì§€ ì•Šì•˜ìœ¼ë©´ Xì¢Œí‘œ - 2
 		bullet[bulletnumber].BULLET_POS_X -= 2;
-	else { bullet[bulletnumber].BulletActivation = 0; bullet[bulletnumber].CollisionWall = 1; return 0; }	//ºÎµúÇû´Ù¸é ÃÑ¾Ë ºñÈ°¼ºÈ­, º®¿¡ ºÎµúÇû´Ù´Â ÀÎµğÄÉÀÌÅÍ 1·Î °»½Å 0À» ¸®ÅÏÇÏ¸ç Á¾·á
+	else { bullet[bulletnumber].BulletActivation = 0; bullet[bulletnumber].CollisionWall = 1; return 0; }	//ë¶€ë”ªí˜”ë‹¤ë©´ ì´ì•Œ ë¹„í™œì„±í™”, ë²½ì— ë¶€ë”ªí˜”ë‹¤ëŠ” ì¸ë””ì¼€ì´í„° 1ë¡œ ê°±ì‹  0ì„ ë¦¬í„´í•˜ë©° ì¢…ë£Œ
 	//--------------------------------------------------------------
 
 	ShowBullet(bulletnumber); return 1;
@@ -175,7 +175,7 @@ int MoveBullet_SW(int bulletnumber) {
 	if (!bullet[bulletnumber].BulletActivation) return 0;
 
 	HideBullet(bulletnumber);
-	if (DetectCollision_BulletwithPlayer(bullet[bulletnumber].BULLET_POS_X, bullet[bulletnumber].BULLET_POS_Y)) { bullet[bulletnumber].BulletActivation = 0; bullet[bulletnumber].CollisionPlayer = 1; return 0; }//ÇÃ·¹ÀÌ¾î¿Í ºÎµúÇûÀ¸¸é ÃÑ¾Ë ºñÈ°¼ºÈ­, ÇÃ·¹ÀÌ¾î¿Í ºÎµúÇû´Ù´Â ÀÎµğÄÉÀÌÅÍ 1·Î °»½Å 0À» ¸®ÅÏÇÏ¸ç Á¾·á
+	if (DetectCollision_BulletwithPlayer(bullet[bulletnumber].BULLET_POS_X, bullet[bulletnumber].BULLET_POS_Y)) { bullet[bulletnumber].BulletActivation = 0; bullet[bulletnumber].CollisionPlayer = 1; return 0; }//í”Œë ˆì´ì–´ì™€ ë¶€ë”ªí˜”ìœ¼ë©´ ì´ì•Œ ë¹„í™œì„±í™”, í”Œë ˆì´ì–´ì™€ ë¶€ë”ªí˜”ë‹¤ëŠ” ì¸ë””ì¼€ì´í„° 1ë¡œ ê°±ì‹  0ì„ ë¦¬í„´í•˜ë©° ì¢…ë£Œ
 	if (!DetectCollision_BulletwithWall(bullet[bulletnumber].BULLET_POS_X - 2, bullet[bulletnumber].BULLET_POS_Y + 1)) {
 		bullet[bulletnumber].BULLET_POS_X -= 2; bullet[bulletnumber].BULLET_POS_Y++;
 	}
@@ -187,7 +187,7 @@ int MoveBullet_S(int bulletnumber) {
 	if (!bullet[bulletnumber].BulletActivation) return 0;
 
 	HideBullet(bulletnumber);
-	if (DetectCollision_BulletwithPlayer(bullet[bulletnumber].BULLET_POS_X, bullet[bulletnumber].BULLET_POS_Y)) { bullet[bulletnumber].BulletActivation = 0; bullet[bulletnumber].CollisionPlayer = 1; return 0; }//ÇÃ·¹ÀÌ¾î¿Í ºÎµúÇûÀ¸¸é ÃÑ¾Ë ºñÈ°¼ºÈ­, ÇÃ·¹ÀÌ¾î¿Í ºÎµúÇû´Ù´Â ÀÎµğÄÉÀÌÅÍ 1·Î °»½Å 0À» ¸®ÅÏÇÏ¸ç Á¾·á
+	if (DetectCollision_BulletwithPlayer(bullet[bulletnumber].BULLET_POS_X, bullet[bulletnumber].BULLET_POS_Y)) { bullet[bulletnumber].BulletActivation = 0; bullet[bulletnumber].CollisionPlayer = 1; return 0; }//í”Œë ˆì´ì–´ì™€ ë¶€ë”ªí˜”ìœ¼ë©´ ì´ì•Œ ë¹„í™œì„±í™”, í”Œë ˆì´ì–´ì™€ ë¶€ë”ªí˜”ë‹¤ëŠ” ì¸ë””ì¼€ì´í„° 1ë¡œ ê°±ì‹  0ì„ ë¦¬í„´í•˜ë©° ì¢…ë£Œ
 	if (!DetectCollision_BulletwithWall(bullet[bulletnumber].BULLET_POS_X, bullet[bulletnumber].BULLET_POS_Y + 1)) bullet[bulletnumber].BULLET_POS_Y++;
 	else { bullet[bulletnumber].BulletActivation = 0; bullet[bulletnumber].CollisionWall = 1; return 0; }
 	ShowBullet(bulletnumber); return 1;
@@ -197,7 +197,7 @@ int MoveBullet_SE(int bulletnumber) {
 	if (!bullet[bulletnumber].BulletActivation) return 0;
 
 	HideBullet(bulletnumber);
-	if (DetectCollision_BulletwithPlayer(bullet[bulletnumber].BULLET_POS_X, bullet[bulletnumber].BULLET_POS_Y)) { bullet[bulletnumber].BulletActivation = 0; bullet[bulletnumber].CollisionPlayer = 1; return 0; }//ÇÃ·¹ÀÌ¾î¿Í ºÎµúÇûÀ¸¸é ÃÑ¾Ë ºñÈ°¼ºÈ­, ÇÃ·¹ÀÌ¾î¿Í ºÎµúÇû´Ù´Â ÀÎµğÄÉÀÌÅÍ 1·Î °»½Å 0À» ¸®ÅÏÇÏ¸ç Á¾·á
+	if (DetectCollision_BulletwithPlayer(bullet[bulletnumber].BULLET_POS_X, bullet[bulletnumber].BULLET_POS_Y)) { bullet[bulletnumber].BulletActivation = 0; bullet[bulletnumber].CollisionPlayer = 1; return 0; }//í”Œë ˆì´ì–´ì™€ ë¶€ë”ªí˜”ìœ¼ë©´ ì´ì•Œ ë¹„í™œì„±í™”, í”Œë ˆì´ì–´ì™€ ë¶€ë”ªí˜”ë‹¤ëŠ” ì¸ë””ì¼€ì´í„° 1ë¡œ ê°±ì‹  0ì„ ë¦¬í„´í•˜ë©° ì¢…ë£Œ
 	if (!DetectCollision_BulletwithWall(bullet[bulletnumber].BULLET_POS_X + 2, bullet[bulletnumber].BULLET_POS_Y + 1)) {
 		bullet[bulletnumber].BULLET_POS_X += 2; bullet[bulletnumber].BULLET_POS_Y++;
 	}
@@ -209,7 +209,7 @@ int MoveBullet_E(int bulletnumber) {
 	if (!bullet[bulletnumber].BulletActivation) return 0;
 
 	HideBullet(bulletnumber);
-	if (DetectCollision_BulletwithPlayer(bullet[bulletnumber].BULLET_POS_X, bullet[bulletnumber].BULLET_POS_Y)) { bullet[bulletnumber].BulletActivation = 0; bullet[bulletnumber].CollisionPlayer = 1; return 0; }//ÇÃ·¹ÀÌ¾î¿Í ºÎµúÇûÀ¸¸é ÃÑ¾Ë ºñÈ°¼ºÈ­, ÇÃ·¹ÀÌ¾î¿Í ºÎµúÇû´Ù´Â ÀÎµğÄÉÀÌÅÍ 1·Î °»½Å 0À» ¸®ÅÏÇÏ¸ç Á¾·á
+	if (DetectCollision_BulletwithPlayer(bullet[bulletnumber].BULLET_POS_X, bullet[bulletnumber].BULLET_POS_Y)) { bullet[bulletnumber].BulletActivation = 0; bullet[bulletnumber].CollisionPlayer = 1; return 0; }//í”Œë ˆì´ì–´ì™€ ë¶€ë”ªí˜”ìœ¼ë©´ ì´ì•Œ ë¹„í™œì„±í™”, í”Œë ˆì´ì–´ì™€ ë¶€ë”ªí˜”ë‹¤ëŠ” ì¸ë””ì¼€ì´í„° 1ë¡œ ê°±ì‹  0ì„ ë¦¬í„´í•˜ë©° ì¢…ë£Œ
 	if (!DetectCollision_BulletwithWall(bullet[bulletnumber].BULLET_POS_X + 2, bullet[bulletnumber].BULLET_POS_Y)) bullet[bulletnumber].BULLET_POS_X += 2;
 	else { bullet[bulletnumber].BulletActivation = 0; bullet[bulletnumber].CollisionWall = 1; return 0; }
 	ShowBullet(bulletnumber); return 1;
@@ -220,7 +220,7 @@ int MoveBullet_Spiral(int bulletnumber, int x, int y) {
 	if (!bullet[bulletnumber].BulletActivation) return 0;
 
 	HideBullet(bulletnumber);
-	if (DetectCollision_BulletwithPlayer(bullet[bulletnumber].BULLET_POS_X, bullet[bulletnumber].BULLET_POS_Y)) { bullet[bulletnumber].BulletActivation = 0; bullet[bulletnumber].CollisionPlayer = 1; }//ÇÃ·¹ÀÌ¾î¿Í ºÎµúÇûÀ¸¸é ÃÑ¾Ë ºñÈ°¼ºÈ­, ÇÃ·¹ÀÌ¾î¿Í ºÎµúÇû´Ù´Â ÀÎµğÄÉÀÌÅÍ 1·Î °»½Å 0À» ¸®ÅÏÇÏ¸ç Á¾·á
+	if (DetectCollision_BulletwithPlayer(bullet[bulletnumber].BULLET_POS_X, bullet[bulletnumber].BULLET_POS_Y)) { bullet[bulletnumber].BulletActivation = 0; bullet[bulletnumber].CollisionPlayer = 1; }//í”Œë ˆì´ì–´ì™€ ë¶€ë”ªí˜”ìœ¼ë©´ ì´ì•Œ ë¹„í™œì„±í™”, í”Œë ˆì´ì–´ì™€ ë¶€ë”ªí˜”ë‹¤ëŠ” ì¸ë””ì¼€ì´í„° 1ë¡œ ê°±ì‹  0ì„ ë¦¬í„´í•˜ë©° ì¢…ë£Œ
 	if (!DetectCollision_BulletwithWall(bullet[bulletnumber].BULLET_POS_X + x, bullet[bulletnumber].BULLET_POS_Y - y)) { bullet[bulletnumber].BULLET_POS_X += x; bullet[bulletnumber].BULLET_POS_Y -= y; }
 	else { bullet[bulletnumber].BulletActivation = 0; bullet[bulletnumber].CollisionWall = 1; return 0; }
 	ShowBullet(bulletnumber); return 1;
@@ -230,17 +230,17 @@ int MoveBullet_Spiral(int bulletnumber, int x, int y) {
 //---------------------Bullet LaunchTime Set Function----------------------
 //When bullet launches record time and set patternnumber, start pattern
 void BulletLaunchTime() {
-	if (!PatternStart) {	//ÆĞÅÏÀÌ ½ÃÀÛµÇÁö ¾Ê¾ÒÀ» °æ¿ì
+	if (!PatternStart) {	//íŒ¨í„´ì´ ì‹œì‘ë˜ì§€ ì•Šì•˜ì„ ê²½ìš°
 		DetectPatternVisitCheck();
 		double CheckedTime = TimeCheckerEnd() - PausingTime;
-		if (CheckedTime > BulletPatternEndTime + PATTERNDURATION) {		//Ã¼Å©ÇÑ ½Ã°£ÀÌ ÆĞÅÏ Á¾·á½Ã°£ + durationtimeº¸´Ù Å©¸é ÀÛµ¿
-			SetRandomPatternNumber();		//ÆĞÅÏ ³Ñ¹ö °áÁ¤(·£´ı)
-			if (PatternNumber == 1 || PatternNumber == 4) BulletSpeed = 1.0;		//ÆĞÅÏ ³Ñ¹ö 1¹øÀÏ¶§ bulletspeed
-			else if (PatternNumber == 2 || PatternNumber == 3) BulletSpeed = 8.0;		//ÆĞÅÏ ³Ñ¹ö°¡ 2, 4ÀÏ¶§ 8.0 bulletspeed
-			else if (PatternNumber == 5 || PatternNumber == 7 || PatternNumber == 8) BulletSpeed = 3.0;		//ÆĞÅÏ ³Ñ¹ö°¡ 6ÀÏ¶§ 3.0 bulletspeed
-			else if (PatternNumber == 6 || PatternNumber == 10) BulletSpeed = 5.0;		//ÆĞÅÏ ³Ñ¹ö°¡ 7, 8ÀÏ¶§ 5.0 bulletspeed
-			else if (PatternNumber == 9) BulletSpeed = 4.0;		//ÆĞÅÏ ³Ñ¹ö°¡ 9ÀÏ¶§ 4.0 bulletspeed
-			PatternStart = EnemyIsMoving = 1; PatternTimeEnded = 0; EnemyMovementTiming = BulletPatternStartTime = CheckedTime;	//ÆĞÅÏ ½ÃÀÛ ÀÎµğÄÉÀÌÅÍ 1·Î °»½Å, ÆĞÅÏ ½ÃÀÛ½Ã°£ °»½Å, Enemy°¡ ¿òÁ÷ÀÌ°í ÀÖ´Ù´Â ÀÎµğÄÉÀÌÅÍ 1·Î °»½Å
+		if (CheckedTime > BulletPatternEndTime + PATTERNDURATION) {		//ì²´í¬í•œ ì‹œê°„ì´ íŒ¨í„´ ì¢…ë£Œì‹œê°„ + durationtimeë³´ë‹¤ í¬ë©´ ì‘ë™
+			SetRandomPatternNumber();		//íŒ¨í„´ ë„˜ë²„ ê²°ì •(ëœë¤)
+			if (PatternNumber == 1 || PatternNumber == 4) BulletSpeed = 1.0;		//íŒ¨í„´ ë„˜ë²„ 1ë²ˆì¼ë•Œ bulletspeed
+			else if (PatternNumber == 2 || PatternNumber == 3) BulletSpeed = 8.0;		//íŒ¨í„´ ë„˜ë²„ê°€ 2, 4ì¼ë•Œ 8.0 bulletspeed
+			else if (PatternNumber == 5 || PatternNumber == 7 || PatternNumber == 8) BulletSpeed = 3.0;		//íŒ¨í„´ ë„˜ë²„ê°€ 6ì¼ë•Œ 3.0 bulletspeed
+			else if (PatternNumber == 6 || PatternNumber == 10) BulletSpeed = 5.0;		//íŒ¨í„´ ë„˜ë²„ê°€ 7, 8ì¼ë•Œ 5.0 bulletspeed
+			else if (PatternNumber == 9) BulletSpeed = 4.0;		//íŒ¨í„´ ë„˜ë²„ê°€ 9ì¼ë•Œ 4.0 bulletspeed
+			PatternStart = EnemyIsMoving = 1; PatternTimeEnded = 0; EnemyMovementTiming = BulletPatternStartTime = CheckedTime;	//íŒ¨í„´ ì‹œì‘ ì¸ë””ì¼€ì´í„° 1ë¡œ ê°±ì‹ , íŒ¨í„´ ì‹œì‘ì‹œê°„ ê°±ì‹ , Enemyê°€ ì›€ì§ì´ê³  ìˆë‹¤ëŠ” ì¸ë””ì¼€ì´í„° 1ë¡œ ê°±ì‹ 
 		}
 	}
 	else return;
@@ -249,30 +249,30 @@ void BulletLaunchTime() {
 //------------------------------------------------------------------------
 //---------------------Bullet Pattern Functions--------------------------
 
-//Bullet Pattern Spread_Note : ÁÂ¿ì·Î ¿òÁ÷ÀÓ(ÀÏÁ¤ÇÑ ¼Óµµ¿Í ÆĞÅÏÀ¸·Î ¿òÁ÷ÀÓ)
+//Bullet Pattern Spread_Note : ì¢Œìš°ë¡œ ì›€ì§ì„(ì¼ì •í•œ ì†ë„ì™€ íŒ¨í„´ìœ¼ë¡œ ì›€ì§ì„)
 int BulletPattern_Spread() {
 	int flag = 0;
 	double CheckedTime = TimeCheckerEnd() - PausingTime;
-	if (CheckedTime < PATTERNTIME_SPREAD + BulletPatternStartTime && CheckedTime > BulletPatternStartTime) BULLETCOUNT = (++PatternCycle) * 3; //ÆĞÅÏ Áö¼Ó½Ã°£ÀÏ¶§ ÆĞÅÏ»çÀÌÅ¬ ¹× bulletcount Áõ°¡
-	else PatternTimeEnded = 1;	//ÆĞÅÏ Áö¼Ó½Ã°£ ³¡³¯½Ã patterntimeended 1·Î °»½Å
+	if (CheckedTime < PATTERNTIME_SPREAD + BulletPatternStartTime && CheckedTime > BulletPatternStartTime) BULLETCOUNT = (++PatternCycle) * 3; //íŒ¨í„´ ì§€ì†ì‹œê°„ì¼ë•Œ íŒ¨í„´ì‚¬ì´í´ ë° bulletcount ì¦ê°€
+	else PatternTimeEnded = 1;	//íŒ¨í„´ ì§€ì†ì‹œê°„ ëë‚ ì‹œ patterntimeended 1ë¡œ ê°±ì‹ 
 	for (int i = 0; i < 3 * PatternCycle; i++) {
-		if (!bullet[i].BulletActivation && !bullet[i].CollisionPlayer && !bullet[i].CollisionWall) { BulletPostionRenewal(i); bullet[i].BulletActivation = 1; ShowBullet(i); }	//¸¸¾à ÃÑ¾ËÀÌ »ç¿ëµÇÁö ¾ÊÀº °ÍÀÌ¶ó¸é ÃÊ±â À§Ä¡¸¦ ÆĞÅÏ¿¡ ¸Â°Ô ÃÊ±âÈ­¸¦ ½ÃÅ°°í ÃÑ¾Ë Ãâ·Â
+		if (!bullet[i].BulletActivation && !bullet[i].CollisionPlayer && !bullet[i].CollisionWall) { BulletPostionRenewal(i); bullet[i].BulletActivation = 1; ShowBullet(i); }	//ë§Œì•½ ì´ì•Œì´ ì‚¬ìš©ë˜ì§€ ì•Šì€ ê²ƒì´ë¼ë©´ ì´ˆê¸° ìœ„ì¹˜ë¥¼ íŒ¨í„´ì— ë§ê²Œ ì´ˆê¸°í™”ë¥¼ ì‹œí‚¤ê³  ì´ì•Œ ì¶œë ¥
 		switch (i % 3) {
-		case 0: flag += MoveBullet_SE(i); break;	//ÃÑ¾ËÀ» ³²¼­ÂÊÀ¸·Î ÀÌµ¿
-		case 1: flag += MoveBullet_S(i); break;		//ÃÑ¾ËÀ» ³²ÂÊÀ¸·Î ÀÌµ¿
-		case 2: flag += MoveBullet_SW(i); break;	//ÃÑ¾ËÀ» ³²µ¿ÂÊÀ¸·Î ÀÌµ¿
+		case 0: flag += MoveBullet_SE(i); break;	//ì´ì•Œì„ ë‚¨ì„œìª½ìœ¼ë¡œ ì´ë™
+		case 1: flag += MoveBullet_S(i); break;		//ì´ì•Œì„ ë‚¨ìª½ìœ¼ë¡œ ì´ë™
+		case 2: flag += MoveBullet_SW(i); break;	//ì´ì•Œì„ ë‚¨ë™ìª½ìœ¼ë¡œ ì´ë™
 		}
 	}
-	if (!flag && !EnemyIsMoving) { BulletPatternEndTime = TimeCheckerEnd() - PausingTime; return 1; }	//¸¸¾à ¸ğµç ÃÑ¾ËµéÀÌ °ÔÀÓÆÇ¿¡¼­ »ç¶óÁ³À» °æ¿ì --ÆĞÅÏ Á¾·á½Ã°£ °»½Å--, 1À» ¹İÈ¯
+	if (!flag && !EnemyIsMoving) { BulletPatternEndTime = TimeCheckerEnd() - PausingTime; return 1; }	//ë§Œì•½ ëª¨ë“  ì´ì•Œë“¤ì´ ê²Œì„íŒì—ì„œ ì‚¬ë¼ì¡Œì„ ê²½ìš° --íŒ¨í„´ ì¢…ë£Œì‹œê°„ ê°±ì‹ --, 1ì„ ë°˜í™˜
 	return 0;
 }
 
-//Bullet Pattern Laser_Note : ÁÂ¿ì·Î ¿òÁ÷ÀÓ(¿òÁ÷ÀÓ ÆĞÅÏ ±¸Çö ÇÊ¿ä)
+//Bullet Pattern Laser_Note : ì¢Œìš°ë¡œ ì›€ì§ì„(ì›€ì§ì„ íŒ¨í„´ êµ¬í˜„ í•„ìš”)
 int BulletPattern_Laser() {
 	int flag = 0;
 	double CheckedTime = TimeCheckerEnd() - PausingTime;
-	if ((CheckedTime < PATTERNTIME_LASER + BulletPatternStartTime && CheckedTime > BulletPatternStartTime)) BULLETCOUNT = (++PatternCycle) * 3;//ÆĞÅÏ Áö¼Ó½Ã°£ÀÏ¶§ ÆĞÅÏ»çÀÌÅ¬ ¹× bulletcount Áõ°¡
-	else PatternTimeEnded = 1;	//ÆĞÅÏ Áö¼Ó½Ã°£ ³¡³¯½Ã patterntimeended 1·Î °»½Å
+	if ((CheckedTime < PATTERNTIME_LASER + BulletPatternStartTime && CheckedTime > BulletPatternStartTime)) BULLETCOUNT = (++PatternCycle) * 3;//íŒ¨í„´ ì§€ì†ì‹œê°„ì¼ë•Œ íŒ¨í„´ì‚¬ì´í´ ë° bulletcount ì¦ê°€
+	else PatternTimeEnded = 1;	//íŒ¨í„´ ì§€ì†ì‹œê°„ ëë‚ ì‹œ patterntimeended 1ë¡œ ê°±ì‹ 
 	for (int i = 0; i < 3 * PatternCycle; i++) {
 		if (!bullet[i].BulletActivation && !bullet[i].CollisionPlayer && !bullet[i].CollisionWall) { BulletPostionRenewal(i); bullet[i].BulletActivation = 1; ShowBullet(i); }
 		switch (i % 3) {
@@ -285,15 +285,15 @@ int BulletPattern_Laser() {
 	return 0;
 }
 
-//Bullet Pattern Circle Spread_Note : °ÔÀÓ¿µ¿ª ÀüÃ¼¸¦ ¿òÁ÷ÀÓ(ÀüÃ¼¸¦ ¿òÁ÷ÀÏ ¶§ Enemy ¼Óµµ¸¦ ÃæºĞÈ÷ ³·ÃâÇÊ¿ä ÀÖÀ½, ´Ù½Ã ¿øÁ¡À¸·Î µ¹¾Æ¿Í¾ß ÇÔ, °á±¹ ¿òÁ÷ÀÓ ÆĞÅÏ ±¸Çö ÇÊ¿ä)
+//Bullet Pattern Circle Spread_Note : ê²Œì„ì˜ì—­ ì „ì²´ë¥¼ ì›€ì§ì„(ì „ì²´ë¥¼ ì›€ì§ì¼ ë•Œ Enemy ì†ë„ë¥¼ ì¶©ë¶„íˆ ë‚®ì¶œí•„ìš” ìˆìŒ, ë‹¤ì‹œ ì›ì ìœ¼ë¡œ ëŒì•„ì™€ì•¼ í•¨, ê²°êµ­ ì›€ì§ì„ íŒ¨í„´ êµ¬í˜„ í•„ìš”)
 int BulletPattern_CircleSpread() {
 	int flag = 0;
 	double CheckedTime = TimeCheckerEnd() - PausingTime;
-	if ((CheckedTime < PATTERNTIME_CIRCLESPREAD + BulletPatternStartTime && CheckedTime > BulletPatternStartTime)) { //ÆĞÅÏ Áö¼Ó½Ã°£ÀÏ¶§ ÆĞÅÏ»çÀÌÅ¬ ¹× bulletcount Áõ°¡
+	if ((CheckedTime < PATTERNTIME_CIRCLESPREAD + BulletPatternStartTime && CheckedTime > BulletPatternStartTime)) { //íŒ¨í„´ ì§€ì†ì‹œê°„ì¼ë•Œ íŒ¨í„´ì‚¬ì´í´ ë° bulletcount ì¦ê°€
 		if ((int)(CheckedTime - BulletPatternStartTime) % 2 == 0)
 			BULLETCOUNT = (++PatternCycle) * 8;
 	}
-	else PatternTimeEnded = 1;	//ÆĞÅÏ Áö¼Ó½Ã°£ ³¡³¯½Ã patterntimeended 1·Î °»½Å
+	else PatternTimeEnded = 1;	//íŒ¨í„´ ì§€ì†ì‹œê°„ ëë‚ ì‹œ patterntimeended 1ë¡œ ê°±ì‹ 
 	for (int i = 0; i < 8 * PatternCycle; i++) {
 		if (!bullet[i].BulletActivation && !bullet[i].CollisionPlayer && !bullet[i].CollisionWall) { BulletPostionRenewal(i); bullet[i].BulletActivation = 1; ShowBullet(i); }
 		switch (i % 8) {
@@ -315,25 +315,25 @@ int BulletPattern_CircleSpread() {
 int BulletPattern_3way() {
 	int flag = 0;
 	double CheckedTime = TimeCheckerEnd() - PausingTime;
-	if (CheckedTime < PATTERNTIME_3WAY + BulletPatternStartTime && CheckedTime > BulletPatternStartTime) BULLETCOUNT = (++PatternCycle) * 3; //ÆĞÅÏ Áö¼Ó½Ã°£ÀÏ¶§ ÆĞÅÏ»çÀÌÅ¬ ¹× bulletcount Áõ°¡
-	else PatternTimeEnded = 1;	//ÆĞÅÏ Áö¼Ó½Ã°£ ³¡³¯½Ã patterntimeended 1·Î °»½Å
+	if (CheckedTime < PATTERNTIME_3WAY + BulletPatternStartTime && CheckedTime > BulletPatternStartTime) BULLETCOUNT = (++PatternCycle) * 3; //íŒ¨í„´ ì§€ì†ì‹œê°„ì¼ë•Œ íŒ¨í„´ì‚¬ì´í´ ë° bulletcount ì¦ê°€
+	else PatternTimeEnded = 1;	//íŒ¨í„´ ì§€ì†ì‹œê°„ ëë‚ ì‹œ patterntimeended 1ë¡œ ê°±ì‹ 
 	for (int i = 0; i < 3 * PatternCycle; i++) {
-		if (!bullet[i].BulletActivation && !bullet[i].CollisionPlayer && !bullet[i].CollisionWall) { BulletPostionRenewal(i); bullet[i].BulletActivation = 1; ShowBullet(i); }	//¸¸¾à ÃÑ¾ËÀÌ »ç¿ëµÇÁö ¾ÊÀº °ÍÀÌ¶ó¸é ÃÊ±â À§Ä¡¸¦ ÆĞÅÏ¿¡ ¸Â°Ô ÃÊ±âÈ­¸¦ ½ÃÅ°°í ÃÑ¾Ë Ãâ·Â
+		if (!bullet[i].BulletActivation && !bullet[i].CollisionPlayer && !bullet[i].CollisionWall) { BulletPostionRenewal(i); bullet[i].BulletActivation = 1; ShowBullet(i); }	//ë§Œì•½ ì´ì•Œì´ ì‚¬ìš©ë˜ì§€ ì•Šì€ ê²ƒì´ë¼ë©´ ì´ˆê¸° ìœ„ì¹˜ë¥¼ íŒ¨í„´ì— ë§ê²Œ ì´ˆê¸°í™”ë¥¼ ì‹œí‚¤ê³  ì´ì•Œ ì¶œë ¥
 		switch (i % 3) {
-		case 0: flag += MoveBullet_SE(i); break;	//ÃÑ¾ËÀ» ³²¼­ÂÊÀ¸·Î ÀÌµ¿
-		case 1: flag += MoveBullet_S(i); break;		//ÃÑ¾ËÀ» ³²ÂÊÀ¸·Î ÀÌµ¿
-		case 2: flag += MoveBullet_SW(i); break;	//ÃÑ¾ËÀ» ³²µ¿ÂÊÀ¸·Î ÀÌµ¿
+		case 0: flag += MoveBullet_SE(i); break;	//ì´ì•Œì„ ë‚¨ì„œìª½ìœ¼ë¡œ ì´ë™
+		case 1: flag += MoveBullet_S(i); break;		//ì´ì•Œì„ ë‚¨ìª½ìœ¼ë¡œ ì´ë™
+		case 2: flag += MoveBullet_SW(i); break;	//ì´ì•Œì„ ë‚¨ë™ìª½ìœ¼ë¡œ ì´ë™
 		}
 	}
-	if (!flag && !EnemyIsMoving) { BulletPatternEndTime = TimeCheckerEnd() - PausingTime; return 1; }	//¸¸¾à ¸ğµç ÃÑ¾ËµéÀÌ °ÔÀÓÆÇ¿¡¼­ »ç¶óÁ³À» °æ¿ì, ±×¸®°í Enemy°¡ Á¦ÀÚ¸®·Î µ¹¾Æ¿ÔÀ» ¶§ --ÆĞÅÏ Á¾·á½Ã°£ °»½Å--, 1À» ¹İÈ¯
+	if (!flag && !EnemyIsMoving) { BulletPatternEndTime = TimeCheckerEnd() - PausingTime; return 1; }	//ë§Œì•½ ëª¨ë“  ì´ì•Œë“¤ì´ ê²Œì„íŒì—ì„œ ì‚¬ë¼ì¡Œì„ ê²½ìš°, ê·¸ë¦¬ê³  Enemyê°€ ì œìë¦¬ë¡œ ëŒì•„ì™”ì„ ë•Œ --íŒ¨í„´ ì¢…ë£Œì‹œê°„ ê°±ì‹ --, 1ì„ ë°˜í™˜
 	return 0;
 }
 
 //BulletPattern_Chaos
-int BulletPattern_Chaos() {		//ÀÌ°Íµµ ¸¶Âù°¡Áö·Î Enemy Movement Pattern ÇÊ¿ä
+int BulletPattern_Chaos() {		//ì´ê²ƒë„ ë§ˆì°¬ê°€ì§€ë¡œ Enemy Movement Pattern í•„ìš”
 	int flag = 0;
 	double CheckedTime = TimeCheckerEnd() - PausingTime;
-	if (CheckedTime < PATTERNTIME_CHAOS + BulletPatternStartTime && CheckedTime > BulletPatternStartTime) { //ÆĞÅÏ Áö¼Ó½Ã°£ÀÏ¶§ ÆĞÅÏ»çÀÌÅ¬ ¹× bulletcount Áõ°¡
+	if (CheckedTime < PATTERNTIME_CHAOS + BulletPatternStartTime && CheckedTime > BulletPatternStartTime) { //íŒ¨í„´ ì§€ì†ì‹œê°„ì¼ë•Œ íŒ¨í„´ì‚¬ì´í´ ë° bulletcount ì¦ê°€
 		if ((int)(CheckedTime - BulletPatternStartTime) % 2 == 0)
 			++PatternCycle;
 	}
@@ -380,7 +380,7 @@ int BulletPattern_Chaos() {		//ÀÌ°Íµµ ¸¶Âù°¡Áö·Î Enemy Movement Pattern ÇÊ¿ä
 }
 
 //BulletPattern_Spiral
-int BulletPattern_Spiral() {		//È¸Àü ÆĞÅÏ »ï°¢ÇÔ¼ö¸¦ »ç¿ëÇÒ ¼ö ¾øÀ¸¸é ÇÏ³ª¾¿ Âï´Â °Í ¸»°ï ¹æ¹ıÀÌ ¾ø´Â °Í °°½À´Ï´Ù. ÇÏ³ª¾¿ ´Ù Âï¾ú½À´Ï´Ù.
+int BulletPattern_Spiral() {		//íšŒì „ íŒ¨í„´ ì‚¼ê°í•¨ìˆ˜ë¥¼ ì‚¬ìš©í•  ìˆ˜ ì—†ìœ¼ë©´ í•˜ë‚˜ì”© ì°ëŠ” ê²ƒ ë§ê³¤ ë°©ë²•ì´ ì—†ëŠ” ê²ƒ ê°™ìŠµë‹ˆë‹¤. í•˜ë‚˜ì”© ë‹¤ ì°ì—ˆìŠµë‹ˆë‹¤.
 	int flag = 0;
 	double CheckedTime = TimeCheckerEnd() - PausingTime;
 	if (CheckedTime < PATTERNTIME_SPIRAL + BulletPatternStartTime && CheckedTime > BulletPatternStartTime) { 
@@ -509,7 +509,7 @@ int BulletPattern_Spiral() {		//È¸Àü ÆĞÅÏ »ï°¢ÇÔ¼ö¸¦ »ç¿ëÇÒ ¼ö ¾øÀ¸¸é ÇÏ³ª¾¿ Âï´
 }
 
 
-//BulletPattern_Gyro -> 1Ä­¾¿ ¿òÁ÷ÀÌ´Â È¸Àü ÆĞÅÏ ºÒ±³¹®¾ç °°À½
+//BulletPattern_Gyro -> 1ì¹¸ì”© ì›€ì§ì´ëŠ” íšŒì „ íŒ¨í„´ ë¶ˆêµë¬¸ì–‘ ê°™ìŒ
 int BulletPattern_Gyro() {
 	int flag = 0;
 	double CheckedTime = TimeCheckerEnd() - PausingTime;
@@ -556,7 +556,7 @@ int BulletPattern_Gyro() {
 	return 0;
 }
 
-//BulletPattern_Shotgun -> ´ÙÀÌ¾Æ¸óµå ¸ğ¾çÀ¸·Î ÆĞÅÏ Çü¼º
+//BulletPattern_Shotgun -> ë‹¤ì´ì•„ëª¬ë“œ ëª¨ì–‘ìœ¼ë¡œ íŒ¨í„´ í˜•ì„±
 int BulletPattern_Shotgun() {
 	int flag = 0;
 	double CheckedTime = TimeCheckerEnd() - PausingTime;
@@ -630,13 +630,13 @@ int BulletPattern_Meteor() {
 //----------------------------------------------------------------
 //-------------------Bullet Invalidate Func.----------------------
 
-//ÃÑ¾ËÀÇ À§Ä¡ °»½Å ÇÔ¼ö
+//ì´ì•Œì˜ ìœ„ì¹˜ ê°±ì‹  í•¨ìˆ˜
 void InvalidateBullet() {
 	if (!CalculateBulletTimeBuffer()) {
-		if (!GamePaused) {		//GameÀÌ PausedµÇÁö ¾Ê¾ÒÀ» ¶§ bulletÀÇ »óÅÂ ¹× À§Ä¡ °»½Å
-			BulletLaunchTime();	//ÆĞÅÏ ½ÃÀÛ½Ã°£ ¹× ÆĞÅÏ °áÁ¤
+		if (!GamePaused) {		//Gameì´ Pausedë˜ì§€ ì•Šì•˜ì„ ë•Œ bulletì˜ ìƒíƒœ ë° ìœ„ì¹˜ ê°±ì‹ 
+			BulletLaunchTime();	//íŒ¨í„´ ì‹œì‘ì‹œê°„ ë° íŒ¨í„´ ê²°ì •
 			if (PatternStart) {
-				switch (PatternNumber) {	//ÆĞÅÏ ³Ñ¹ö¿¡ µû¶ó ´Ù¸¥ ÇÔ¼ö ÀÛµ¿
+				switch (PatternNumber) {	//íŒ¨í„´ ë„˜ë²„ì— ë”°ë¼ ë‹¤ë¥¸ í•¨ìˆ˜ ì‘ë™
 				case 1: if (BulletPattern_Spread()) ClearBulletPosition(); break;
 				case 2: if (BulletPattern_Laser()) ClearBulletPosition(); break;
 				case 3: if (BulletPattern_3way()) ClearBulletPosition(); break;
@@ -654,11 +654,11 @@ void InvalidateBullet() {
 		}
 	}
 	else {
-		//ÃÑ¾ËÀÌ ¹öÆÛ½Ã°£À¸·Î ÀÎÇØ ¿òÁ÷ÀÌÁö ¾ÊÀ» ¶§µµ °Ë»çÇÏ±â À§ÇØ ÀÛ¼ºÇÏ¿´´Ù
+		//ì´ì•Œì´ ë²„í¼ì‹œê°„ìœ¼ë¡œ ì¸í•´ ì›€ì§ì´ì§€ ì•Šì„ ë•Œë„ ê²€ì‚¬í•˜ê¸° ìœ„í•´ ì‘ì„±í•˜ì˜€ë‹¤
 		for (int i = 0; i < BULLETCOUNT; i++) {
 			if (bullet[i].BulletActivation) {
-				if (DetectCollision_BulletwithPlayer(bullet[i].BULLET_POS_X, bullet[i].BULLET_POS_Y)) { //ÇÃ·¹ÀÌ¾î¿Í ºÎµúÇûÀ¸¸é ÃÑ¾Ë ºñÈ°¼ºÈ­, ÇÃ·¹ÀÌ¾î¿Í ºÎµúÇû´Ù´Â ÀÎµğÄÉÀÌÅÍ 1·Î °»½Å
-					HideBullet(i); bullet[i].BulletActivation = 0; bullet[i].CollisionPlayer = 1;	//ÇÃ·¹ÀÌ¾î¿Í Ãæµ¹Çß´Ù´Â ÀÎµğÄÉÀÌÅÍ ÀÛµ¿, ÃÑ¾Ë ºñÈ°¼ºÈ­, ÃÑ¾Ë ¼û±è
+				if (DetectCollision_BulletwithPlayer(bullet[i].BULLET_POS_X, bullet[i].BULLET_POS_Y)) { //í”Œë ˆì´ì–´ì™€ ë¶€ë”ªí˜”ìœ¼ë©´ ì´ì•Œ ë¹„í™œì„±í™”, í”Œë ˆì´ì–´ì™€ ë¶€ë”ªí˜”ë‹¤ëŠ” ì¸ë””ì¼€ì´í„° 1ë¡œ ê°±ì‹ 
+					HideBullet(i); bullet[i].BulletActivation = 0; bullet[i].CollisionPlayer = 1;	//í”Œë ˆì´ì–´ì™€ ì¶©ëŒí–ˆë‹¤ëŠ” ì¸ë””ì¼€ì´í„° ì‘ë™, ì´ì•Œ ë¹„í™œì„±í™”, ì´ì•Œ ìˆ¨ê¹€
 				}
 			}
 		}

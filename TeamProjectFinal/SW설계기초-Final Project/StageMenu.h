@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "VariableSets.h"
 #include "Player.h"
 #include "Enemy.h"
@@ -7,7 +7,7 @@
 #ifndef STAGEMENU_H
 #define STAGEMENU_H
 
-//½ºÅ×ÀÌÁöº° Ãâ·ÂµÇ´Â È­¸é
+//ìŠ¤í…Œì´ì§€ë³„ ì¶œë ¥ë˜ëŠ” í™”ë©´
 void ShowStageNumber() {
 	SetCurrentCursorPos(BACKGROUND_ORIGIN_X + BACKGROUND_ROW / 2 - 4, BACKGROUND_ORIGIN_Y + BACKGROUND_COLUMN / 2);
 	printf("Stage %d", StageNumber);
@@ -17,7 +17,7 @@ void ShowStageNumber() {
 	for (int i = 0; i < 7; i++) printf(" ");
 }
 
-//½ºÅ×ÀÌÁö Á¾·á Á¶°Ç
+//ìŠ¤í…Œì´ì§€ ì¢…ë£Œ ì¡°ê±´
 int StageOver() {
 	if (StageEnemyHealth <= 0) {
 		TotalSec += (int)(TimeCheckerEnd() - PausingTime) % 60;

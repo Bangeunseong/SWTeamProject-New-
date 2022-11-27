@@ -1,20 +1,20 @@
-#pragma once
+ï»¿#pragma once
 #include <Windows.h>
 #ifndef VARIABLESETS_H
 #define VARIABLESETS_H
 //-------------------------------------------
-//-------------Console Ã¢ »ó¼ö-------------
+//-------------Console ì°½ ìƒìˆ˜-------------
 
-//ÄÜ¼Ö Ã¢ ROW ±æÀÌ
+//ì½˜ì†” ì°½ ROW ê¸¸ì´
 #define CONSOLE_ROW 45
 
-//ÄÜ¼Ö Ã¢ COLUMN ±æÀÌ
+//ì½˜ì†” ì°½ COLUMN ê¸¸ì´
 #define CONSOLE_COLUMN 108
 
 //-------------------------------------------
-//-------------BackGround »ó¼ö------------
+//-------------BackGround ìƒìˆ˜------------
 
-//°ÔÀÓ¿µ¿ª Á¤ÀÇ
+//ê²Œì„ì˜ì—­ ì •ì˜
 #define BACKGROUND_ROW 90
 #define BACKGROUND_COLUMN 43
 #define BACKGROUND_ORIGIN_X 8
@@ -25,10 +25,10 @@
 #define GAMEBOARD_ORIGIN_Y 4
 #define WALL 1
 
-//°ÔÀÓÈ­¸éÀÇ ÀÌ»ê ¸ğµ¨
+//ê²Œì„í™”ë©´ì˜ ì´ì‚° ëª¨ë¸
 int UniBoard[GAMEBOARD_COLUMN + 1][GAMEBOARD_ROW + 2];
 
-//°ÔÀÓ ÀÎÆ®·Î Á¦¸ñ
+//ê²Œì„ ì¸íŠ¸ë¡œ ì œëª©
 char IntroModel[][5][5] = {
 	{{0,0,1,0,0},{0,1,0,1,0},{0,1,1,1,0},{1,0,0,0,1},{1,0,0,0,1}},
 	{{0,1,1,1,1},{1,0,0,0,0},{0,1,1,1,0},{0,0,0,0,1},{1,1,1,1,0}},
@@ -42,41 +42,41 @@ char IntroModel[][5][5] = {
 };
 
 //--------------------------------------------
-//--------------StartMenu »ó¼ö-------------
+//--------------StartMenu ìƒìˆ˜-------------
 
-#define MODESELECTIONBOX_ROW 18 //°ÔÀÓ ¸ğµå ¼±ÅÃ¹Ú½º °¡·Î ±æÀÌ
-#define MODESELECTIONBOX_COLUMN 3 // °ÔÀÓ ¸ğµå ¼±ÅÃ¹Ú½º ¼¼·Î ±æÀÌ
-int ModeSelectionBox_Origin_X = BACKGROUND_ORIGIN_X + 14; //°ÔÀÓ ¸ğµå ¼±ÅÃ ¹Ú½º ÃÊ±â XÁÂÇ¥
-int ModeSelectionBox_Origin_Y = BACKGROUND_ORIGIN_Y + BACKGROUND_COLUMN / 2 + 6; //°ÔÀÓ ¸ğµå ¼±ÅÃ ¹Ú½º ÃÊ±â YÁÂÇ¥
+#define MODESELECTIONBOX_ROW 18 //ê²Œì„ ëª¨ë“œ ì„ íƒë°•ìŠ¤ ê°€ë¡œ ê¸¸ì´
+#define MODESELECTIONBOX_COLUMN 3 // ê²Œì„ ëª¨ë“œ ì„ íƒë°•ìŠ¤ ì„¸ë¡œ ê¸¸ì´
+int ModeSelectionBox_Origin_X = BACKGROUND_ORIGIN_X + 14; //ê²Œì„ ëª¨ë“œ ì„ íƒ ë°•ìŠ¤ ì´ˆê¸° Xì¢Œí‘œ
+int ModeSelectionBox_Origin_Y = BACKGROUND_ORIGIN_Y + BACKGROUND_COLUMN / 2 + 6; //ê²Œì„ ëª¨ë“œ ì„ íƒ ë°•ìŠ¤ ì´ˆê¸° Yì¢Œí‘œ
 
-//°ÔÀÓ ¸ğµå
+//ê²Œì„ ëª¨ë“œ
 int GameMode = 0;
 
 //-----------------------------------------------------------
-//-------------CharacterSelectionMenu »ó¼ö--------------
+//-------------CharacterSelectionMenu ìƒìˆ˜--------------
 
-//Ä³¸¯ÅÍ ¹Ú½º Dimension
+//ìºë¦­í„° ë°•ìŠ¤ Dimension
 #define CHARACTERBOX_ROW 28
 #define CHARACTERBOX_COLUMN 20
 #define CHARACTERBOX_ORIGIN_X 6
 #define CHARACTERBOX_ORIGIN_Y 12
 
 //-------------------------------------------
-//------------StageMenu »ó¼ö-------------
+//------------StageMenu ìƒìˆ˜-------------
 
-//½ºÅ×ÀÌÁö ¹øÈ£
+//ìŠ¤í…Œì´ì§€ ë²ˆí˜¸
 int StageNumber = 1;
 
-//´ÙÀ½ ½ºÅ×ÀÌÁö·Î ³Ñ¾î°¥ ¶§ Duration time
+//ë‹¤ìŒ ìŠ¤í…Œì´ì§€ë¡œ ë„˜ì–´ê°ˆ ë•Œ Duration time
 #define STAGEDURATIONTIME 2.0
 
 
-#define OPTIONSELECTIONBOX_ROW 18 //°ÔÀÓ ¸ğµå ¼±ÅÃ¹Ú½º °¡·Î ±æÀÌ
-#define OPTIONSELECTIONBOX_COLUMN 3 // °ÔÀÓ ¸ğµå ¼±ÅÃ¹Ú½º ¼¼·Î ±æÀÌ
-int OptionSelectionBox_Origin_X = BACKGROUND_ORIGIN_X + 22; //°ÔÀÓ ¸ğµå ¼±ÅÃ ¹Ú½º ÃÊ±â XÁÂÇ¥
-int OptionSelectionBox_Origin_Y = BACKGROUND_ORIGIN_Y + BACKGROUND_COLUMN / 2 + 6; //°ÔÀÓ ¸ğµå ¼±ÅÃ ¹Ú½º ÃÊ±â YÁÂÇ¥
+#define OPTIONSELECTIONBOX_ROW 18 //ê²Œì„ ëª¨ë“œ ì„ íƒë°•ìŠ¤ ê°€ë¡œ ê¸¸ì´
+#define OPTIONSELECTIONBOX_COLUMN 3 // ê²Œì„ ëª¨ë“œ ì„ íƒë°•ìŠ¤ ì„¸ë¡œ ê¸¸ì´
+int OptionSelectionBox_Origin_X = BACKGROUND_ORIGIN_X + 22; //ê²Œì„ ëª¨ë“œ ì„ íƒ ë°•ìŠ¤ ì´ˆê¸° Xì¢Œí‘œ
+int OptionSelectionBox_Origin_Y = BACKGROUND_ORIGIN_Y + BACKGROUND_COLUMN / 2 + 6; //ê²Œì„ ëª¨ë“œ ì„ íƒ ë°•ìŠ¤ ì´ˆê¸° Yì¢Œí‘œ
 
-//Game Over½Ã Ãâ·Â ·Î°í
+//Game Overì‹œ ì¶œë ¥ ë¡œê³ 
 char GameOverLogo[][5][5] = {
 	{{0,1,1,1,1},{1,0,0,0,0},{1,0,1,1,1},{1,0,0,0,1},{0,1,1,1,1}},
 {{0,1,1,1,0},{1,0,0,0,1},{1,0,0,0,1},{0,1,1,1,1},{0,0,0,0,1}},
@@ -89,9 +89,9 @@ char GameOverLogo[][5][5] = {
 };
 
 //-------------------------------------------------------------
-//-----------------------Player »ó¼ö--------------------------
+//-----------------------Player ìƒìˆ˜--------------------------
 
-//»ç¿ëÀÚ ÀÔ·Â Å° ¾Æ½ºÅ° ÄÚµå
+//ì‚¬ìš©ì ì…ë ¥ í‚¤ ì•„ìŠ¤í‚¤ ì½”ë“œ
 #define LEFT VK_LEFT
 #define RIGHT VK_RIGHT
 #define UP VK_UP
@@ -101,70 +101,70 @@ char GameOverLogo[][5][5] = {
 #define QUIT VK_ESCAPE
 #define SWAP VK_SHIFT
 
-//ÇÃ·¹ÀÌ¾î °íÀ¯ ¹øÈ£ ¹× »ö±ò, ¹«ÀûÀÏ ¶§ »ö±ò
+//í”Œë ˆì´ì–´ ê³ ìœ  ë²ˆí˜¸ ë° ìƒ‰ê¹”, ë¬´ì ì¼ ë•Œ ìƒ‰ê¹”
 #define PLAYER 4
 #define PLAYERCOLOR 11
 #define PLAYERUSINGSKILLCOLOR 13
 #define PLAYERINVINSIBLEINDICATECOLOR 14
 
-//ÇÃ·¹ÀÌ¾î ÀÎÇ²Å¸ÀÓ ¹öÆÛ½Ã°£
+//í”Œë ˆì´ì–´ ì¸í’‹íƒ€ì„ ë²„í¼ì‹œê°„
 double PLAYERTIMEBUFFER = 0.04;
 
-//ÇÃ·¹ÀÌ¾î ÀÎÇ²Å¸ÀÓ ½ÃÀÛ½Ã°£
+//í”Œë ˆì´ì–´ ì¸í’‹íƒ€ì„ ì‹œì‘ì‹œê°„
 double PlayerInputTime = 0;
 
-//ÇÃ·¹ÀÌ¾î ½ÃÀÛ À§Ä¡
+//í”Œë ˆì´ì–´ ì‹œì‘ ìœ„ì¹˜
 int PLAYER_POS_X = GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW / 2;
 int PLAYER_POS_Y = GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN - 8;
 
 #define PLAYERMAXLEVEL 10
-int PlayerLevel = 1;	//ÇÃ·¹ÀÌ¾î ¿ìÁÖ¼± ·¹º§
-int EXP = 0;				// È¹µæÇÑ °æÇèÄ¡
+int PlayerLevel = 1;	//í”Œë ˆì´ì–´ ìš°ì£¼ì„  ë ˆë²¨
+int EXP = 0;				// íšë“í•œ ê²½í—˜ì¹˜
 
-//ÇÃ·¹ÀÌ¾î ¿ìÁÖ¼±
+//í”Œë ˆì´ì–´ ìš°ì£¼ì„ 
 int PlayerModelIndex;
 const char *PlayerModel[3][3] = { {"HH","<HH>","<AHHA>"},{"AA","<AA>","<=AA=>"},{"TT","<TT>","<-TT->"} };
 
-//ÇÃ·¹ÀÌ¾î ¹«Àû»óÅÂ ¹× ¹«Àû»óÅÂ Áö¼Ó½Ã°£, ÃÑ¾Ë ¹× Àû ¿ìÁÖ¼±°ú Ãæµ¹ÇÑ ½Ã°£
+//í”Œë ˆì´ì–´ ë¬´ì ìƒíƒœ ë° ë¬´ì ìƒíƒœ ì§€ì†ì‹œê°„, ì´ì•Œ ë° ì  ìš°ì£¼ì„ ê³¼ ì¶©ëŒí•œ ì‹œê°„
 #define InvinsibleTime 1
 int Invinsible = 0; double CollisionTime = 0;
 
-//ÇÃ·¹ÀÌ¾îÀÇ ¶óÀÌÇÁ°ÔÀÌÁö
+//í”Œë ˆì´ì–´ì˜ ë¼ì´í”„ê²Œì´ì§€
 int SelectedLife = 5; int CurrentLife; int *LifeGauge;
 
-//ÇÃ·¹ÀÌ¾îÀÇ À§Ä¡
+//í”Œë ˆì´ì–´ì˜ ìœ„ì¹˜
 int PlayerPos = 0;
 
-//ÇÃ·¹ÀÌ¾îÀÇ ¼Óµµ
+//í”Œë ˆì´ì–´ì˜ ì†ë„
 double SelectedSpeed, CurSpeed;
 
-//ÇÃ·¹ÀÌ¾î ÃÑ¾Ë °ü¸® ±¸Á¶Ã¼
+//í”Œë ˆì´ì–´ ì´ì•Œ ê´€ë¦¬ êµ¬ì¡°ì²´
 typedef struct PlayerBullet {
-	int P_BULLET_POS_X, P_BULLET_POS_Y;	//ÇÃ·¹ÀÌ¾î ÃÑ¾Ë À§Ä¡
-	int BulletActivation;									//ÇÃ·¹ÀÌ¾î ÃÑ¾Ë ÀÛµ¿ ÀÎµğÄÉÀÌ´õ
-	int CollisionEnemy;									//ÇÃ·¹ÀÌ¾î ÃÑ¾ËÀÌ enemyÇÏ°í Ãæµ¹ÇÒ ¶§ ÀÎµğÄÉÀÌ´õ
-	int CollisionWall;										//ÇÃ·¹ÀÌ¾î ÃÑ¾ËÀÌ wallÇÏ°í Ãæµ¹ÇÒ¶§ ÀÎµğÄÉÀÌ´õ
+	int P_BULLET_POS_X, P_BULLET_POS_Y;	//í”Œë ˆì´ì–´ ì´ì•Œ ìœ„ì¹˜
+	int BulletActivation;									//í”Œë ˆì´ì–´ ì´ì•Œ ì‘ë™ ì¸ë””ì¼€ì´ë”
+	int CollisionEnemy;									//í”Œë ˆì´ì–´ ì´ì•Œì´ enemyí•˜ê³  ì¶©ëŒí•  ë•Œ ì¸ë””ì¼€ì´ë”
+	int CollisionWall;										//í”Œë ˆì´ì–´ ì´ì•Œì´ wallí•˜ê³  ì¶©ëŒí• ë•Œ ì¸ë””ì¼€ì´ë”
 	int inProgress;
 }PlayerBullet;
 
-//ÇÃ·¹ÀÌ¾î ÃÑ¾Ë ±¸Á¶Ã¼ ¹è¿­
+//í”Œë ˆì´ì–´ ì´ì•Œ êµ¬ì¡°ì²´ ë°°ì—´
 #define BULLETCOUNTLIMIT 100
 PlayerBullet PB[BULLETCOUNTLIMIT];
 
 int P_BULLETDAMAGE = 1;
 #define PLAYERBULLETMODEL '!'
 #define P_BULLETLAUNCHTIMEBUFFER 0.2
-#define P_BULLETTIMEBUFFER 0.03	//ÇÃ·¹ÀÌ¾î ÃÑ¾Ë °»½Å ¹öÆÛ
-#define P_BulletSpeed 1.0					//ÇÃ·¹ÀÌ¾î ÃÑ¾Ë ¼Óµµ
+#define P_BULLETTIMEBUFFER 0.03	//í”Œë ˆì´ì–´ ì´ì•Œ ê°±ì‹  ë²„í¼
+#define P_BulletSpeed 1.0					//í”Œë ˆì´ì–´ ì´ì•Œ ì†ë„
 
-//¿øÇü ¹è¿­Ã³·³ ÀÌ¿ë
-int P_BULLETCOUNTSTART = 0;					//ÇÃ·¹ÀÌ¾î ÃÑ¾Ë Ä«¿îÆ® ½ÃÀÛ index
-int P_BULLETCOUNTEND = -1;						//ÇÃ·¹ÀÌ¾î ÃÑ¾Ë Ä«¿îÆ® Á¾·á index
+//ì›í˜• ë°°ì—´ì²˜ëŸ¼ ì´ìš©
+int P_BULLETCOUNTSTART = 0;					//í”Œë ˆì´ì–´ ì´ì•Œ ì¹´ìš´íŠ¸ ì‹œì‘ index
+int P_BULLETCOUNTEND = -1;						//í”Œë ˆì´ì–´ ì´ì•Œ ì¹´ìš´íŠ¸ ì¢…ë£Œ index
 double P_BulletInputTime = 0.0;
-double P_BulletLaunchTime = 0.0;					//Bullet ¹ß»ç ½Ã°£
+double P_BulletLaunchTime = 0.0;					//Bullet ë°œì‚¬ ì‹œê°„
 
 //---------------------------------------------------------------
-//----------------------Enemy »ó¼ö----------------------------
+//----------------------Enemy ìƒìˆ˜----------------------------
 
 
 double ENEMYTIMEBUFFER = 0.02;					//Enemy Invalidation Buffer Time : Invalidate after 0.02 sec
@@ -184,8 +184,8 @@ int StageEnemyHealth;
 double EnemySpeed = 1.0;	//Enemy Speed
 
 
-//Àû ¿ìÁÖ¼± À§Ä¡ ¹× ÀÌµ¿¹æÇâ
-//ÀÌµ¿¹æÇâÀ» ³ªÅ¸³»´Â »ó¼ö
+//ì  ìš°ì£¼ì„  ìœ„ì¹˜ ë° ì´ë™ë°©í–¥
+//ì´ë™ë°©í–¥ì„ ë‚˜íƒ€ë‚´ëŠ” ìƒìˆ˜
 #define DIRECTION_UP 1
 #define DIRECTION_DOWN 2
 #define DIRECTION_LEFT 3
@@ -209,7 +209,7 @@ typedef struct Prison {	//Enemy Skill Prison template
 Prison P;	//Prison template P
 int EnemySkillPrisonActivation = 0;	//SkillPrison Activation indicator
 
-//Àû ¿ìÁÖ¼± ¸ğµ¨¸µ
+//ì  ìš°ì£¼ì„  ëª¨ë¸ë§
 char EnemyModel[ENEMYSIZE_H][ENEMYSIZE_W] = 
 { {'V','^','=','^','^','=','^','^','=','^','V'},
 {' ','V','^','-','^','|','^','-','^','V',' '},
@@ -217,95 +217,95 @@ char EnemyModel[ENEMYSIZE_H][ENEMYSIZE_W] =
 {' ','-','-','V','^','|','^','V','-','-',' '},
 {' ',' ',' ',' ',' ','V',' ',' ',' ',' ',' '} };
 //-------------------------------------------------------------------
-//-------------------------Timer »ó¼ö------------------------------
+//-------------------------Timer ìƒìˆ˜------------------------------
 
-//Timer ÇÔ¼ö ÀÌ¿ë½Ã ÇÊ¿äÇÑ »ó¼ö
+//Timer í•¨ìˆ˜ ì´ìš©ì‹œ í•„ìš”í•œ ìƒìˆ˜
 LARGE_INTEGER ticksPerSec;
 LARGE_INTEGER start, end, diff;
 
-//°ÔÀÓÀ» pauseÇÏ¿´´ÂÁö¿¡ ´ëÇÑ ÀÎµğÄÉÀÌÅÍ
+//ê²Œì„ì„ pauseí•˜ì˜€ëŠ”ì§€ì— ëŒ€í•œ ì¸ë””ì¼€ì´í„°
 int GamePaused = 0;
 
-//°ÔÀÓ Pause Time
+//ê²Œì„ Pause Time
 double PausedTime = 0;
 
-//°ÔÀÓ Á¤Áö½Ã°£
+//ê²Œì„ ì •ì§€ì‹œê°„
 double PausingTime = 0;
 
-//°ÔÀÓ ÀüÃ¼ ÁøÇà½Ã°£
+//ê²Œì„ ì „ì²´ ì§„í–‰ì‹œê°„
 int TotalSec = 0;
 
 //-------------------------------------------------------------------
-//------------------------UI »ó¼ö-----------------------------------
+//------------------------UI ìƒìˆ˜-----------------------------------
 
-//Modified ÇÔ¼ö
+//Modified í•¨ìˆ˜
 int Strlen(const char *src) {
 	int cnt = 0;
 	for (const char *p = src; *p != '-'; p++) cnt++;
 	return cnt + 1;
 }
 
-//¸ÊÀÇ ±æÀÌ
+//ë§µì˜ ê¸¸ì´
 #define BASEENEMYHEALTHFORUI 40
 
-//¹«ÇÑ ¸ğµå »ç¿ë ½Ã Ãâ·ÂÇÒ ½Ã°£
+//ë¬´í•œ ëª¨ë“œ ì‚¬ìš© ì‹œ ì¶œë ¥í•  ì‹œê°„
 int Min = 0, Sec = 0, MiSec = 0;
 
 //--------------------------------------------------------------------
-//-----------------------ITEM »ó¼ö----------------------------------
+//-----------------------ITEM ìƒìˆ˜----------------------------------
 
-//¾ÆÀÌÅÛ ¿òÁ÷ÀÓ ¹öÆÛ ½Ã°£
+//ì•„ì´í…œ ì›€ì§ì„ ë²„í¼ ì‹œê°„
 #define ITEMTIMEBUFFER 0.2
 double ItemInputTime = 0;
 double ItemCreationLoop = 1;
 
-//¾ÆÀÌÅÛ È¿°ú ¸ğÀ½Áı
+//ì•„ì´í…œ íš¨ê³¼ ëª¨ìŒì§‘
 #define SPEEDINCREASERATE 1.0
 #define FLASHDISTANCE 6
 int flashCount = 0;
 
-//°ÔÀÓº¸µå³» ¾ÆÀÌÅÛ Ãâ·Â ¿©ºÎ
+//ê²Œì„ë³´ë“œë‚´ ì•„ì´í…œ ì¶œë ¥ ì—¬ë¶€
 int itemFLAG = 0;
 
-// Á¡¸ê È®ÀÎ ¿ë º¯¼ö
+// ì ë©¸ í™•ì¸ ìš© ë³€ìˆ˜
 int flashFLAG = 0;
 
-//¾ÆÀÌÅÛ X, Y ÁÂÇ¥
+//ì•„ì´í…œ X, Y ì¢Œí‘œ
 int ITEM_POS_X, ITEM_POS_Y;
 
-//¾ÆÀÌÅÛ°ú ÇÃ·¹ÀÌ¾î Ãæµ¹ °¨Áö º¯¼ö
+//ì•„ì´í…œê³¼ í”Œë ˆì´ì–´ ì¶©ëŒ ê°ì§€ ë³€ìˆ˜
 int ItemCollisionDetected = 0;
 
 int ItemNumber = 0;
 
-//ÇÃ·¹ÀÌ¾îÀÇ ÁÖ ½ºÅ³, º¸Á¶ ½ºÅ³, »ç¿ë ÁßÀÎ ½ºÅ³
+//í”Œë ˆì´ì–´ì˜ ì£¼ ìŠ¤í‚¬, ë³´ì¡° ìŠ¤í‚¬, ì‚¬ìš© ì¤‘ì¸ ìŠ¤í‚¬
 int CurSkill = 0, SubSkill = 0, UsingSkill = 0;
 
-//½ºÅ³ Áö¼Ó½Ã°£, ½ºÅ³ ¹ßµ¿ ½ÃÀÛ½Ã°£
+//ìŠ¤í‚¬ ì§€ì†ì‹œê°„, ìŠ¤í‚¬ ë°œë™ ì‹œì‘ì‹œê°„
 int SkillTime = 3; double SkillActivationTime = 0;
 
-//ÇÃ·¹ÀÌ¾îÀÇ ½ºÅ³ ¼Â string
+//í”Œë ˆì´ì–´ì˜ ìŠ¤í‚¬ ì…‹ string
 char Skillstr[] = { "ITEM1" }; char SubSkillstr[] = { "ITEM2" };
 char SkillSets[][101] = { "-NONE-", "-SPEED-","-SLOW-", "-INVIN-","-DASH-","-ERASE-" };
 
-//¾ÆÀÌÅÛ Ãâ·Â ¾ÆÀÌÄÜ ¸®½ºÆ®
+//ì•„ì´í…œ ì¶œë ¥ ì•„ì´ì½˜ ë¦¬ìŠ¤íŠ¸
 char itemList[] = { 'S', 'L', 'I', 'D', 'E' };
 
 //-------------------------------------------------------------
-//----------------------BULLET »ó¼ö--------------------------
+//----------------------BULLET ìƒìˆ˜--------------------------
 
-#define BULLET 3								//Bullet °íÀ¯¹øÈ£
+#define BULLET 3								//Bullet ê³ ìœ ë²ˆí˜¸
 #define BULLETDAMAGE 1				//Bullet Damage
-#define BULLETTIMEBUFFER 0.3		//Bullet °»½Å ¹öÆÛ ½Ã°£
+#define BULLETTIMEBUFFER 0.3		//Bullet ê°±ì‹  ë²„í¼ ì‹œê°„
 
-typedef struct Bullet {						//Bullet À§Ä¡ ÀúÀå °ø°£ ±¸Á¶Ã¼
+typedef struct Bullet {						//Bullet ìœ„ì¹˜ ì €ì¥ ê³µê°„ êµ¬ì¡°ì²´
 	int BULLET_POS_X, BULLET_POS_Y;
 	int BulletActivation;
 	int CollisionPlayer;
 	int CollisionWall;
 	int cnt;
 }Bullet;						
-Bullet bullet[1000];							//Bullet ±¸Á¶Ã¼ ¹è¿­
+Bullet bullet[1000];							//Bullet êµ¬ì¡°ì²´ ë°°ì—´
 
 #define STAGEPATTERNCOUNT 6
 int PatternStage1[] = { 1, 2, 3, 4, 5, 6 };
@@ -313,42 +313,42 @@ int PatternStage2[] = { 2, 3, 4, 5, 6, 7 };
 int PatternStage3[] = { 5, 6, 7, 8, 9, 10 };
 int PatternStageVisit[] = { 0, 0, 0, 0, 0, 0 };
 
-#define TOTALPATTERNCOUNT 10	//ÃÑ ÆĞÅÏ °¹¼ö
-#define PATTERNDURATION 0.5		//ÆĞÅÏ durationtime
-#define PATTERNTIME_SPREAD 12.0//Spread ÆĞÅÏ Áö¼Ó½Ã°£
-#define PATTERNTIME_LASER 12.0//Laser ÆĞÅÏ Áö¼Ó½Ã°£
-#define PATTERNTIME_3WAY 12.0//3way ÆĞÅÏ Áö¼Ó½Ã°£
-#define PATTERNTIME_SPIRAL 6.0 //Spiral ÆĞÅÏ Áö¼Ó½Ã°£
-#define PATTERNTIME_GYRO 6.0 //Gyro ÆĞÅÏ Áö¼Ó½Ã°£
-#define PATTERNTIME_SHOTGUN 10.0 //Shotgun ÆĞÅÏ Áö¼Ó½Ã°£
-#define PATTERNTIME_CIRCLESPREAD 10.0	//¿øÇü Spread ÆĞÅÏ Áö¼Ó½Ã°£
-#define PATTERNTIME_CHAOS 10.0 //Spiral ÆĞÅÏ Áö¼Ó½Ã°£
-#define PATTERNTIME_METEOR 10.0 //Meteor ÆĞÅÏ Áö¼Ó½Ã°£
-#define PATTERNTIME_ROAD 8.0 //Road ÆĞÅÏ Áö¼Ó½Ã°£
+#define TOTALPATTERNCOUNT 10	//ì´ íŒ¨í„´ ê°¯ìˆ˜
+#define PATTERNDURATION 0.5		//íŒ¨í„´ durationtime
+#define PATTERNTIME_SPREAD 12.0//Spread íŒ¨í„´ ì§€ì†ì‹œê°„
+#define PATTERNTIME_LASER 12.0//Laser íŒ¨í„´ ì§€ì†ì‹œê°„
+#define PATTERNTIME_3WAY 12.0//3way íŒ¨í„´ ì§€ì†ì‹œê°„
+#define PATTERNTIME_SPIRAL 6.0 //Spiral íŒ¨í„´ ì§€ì†ì‹œê°„
+#define PATTERNTIME_GYRO 6.0 //Gyro íŒ¨í„´ ì§€ì†ì‹œê°„
+#define PATTERNTIME_SHOTGUN 10.0 //Shotgun íŒ¨í„´ ì§€ì†ì‹œê°„
+#define PATTERNTIME_CIRCLESPREAD 10.0	//ì›í˜• Spread íŒ¨í„´ ì§€ì†ì‹œê°„
+#define PATTERNTIME_CHAOS 10.0 //Spiral íŒ¨í„´ ì§€ì†ì‹œê°„
+#define PATTERNTIME_METEOR 10.0 //Meteor íŒ¨í„´ ì§€ì†ì‹œê°„
+#define PATTERNTIME_ROAD 8.0 //Road íŒ¨í„´ ì§€ì†ì‹œê°„
 
 
-double BulletInputTime = 0;				//Bullet ÀÎÇ² ½ÃÀÛ ½Ã°£
-double BulletPatternStartTime = 0;	//ÆĞÅÏ ½ÃÀÛ½Ã°£
-double BulletPatternEndTime = 0;	//ÆĞÅÏ Á¾·á½Ã°£
-int PatternStart = 0;							//ÆĞÅÏ ½ÃÀÛ À¯¹«
-int PatternTimeEnded = 1;				//ÆĞÅÏ Áö¼Ó½Ã°£ Á¾·á À¯¹«
-int PatternNumber = 0;					//ÆĞÅÏ ³Ñ¹ö
-int PatternCycle = 0;							//ÆĞÅÏ »çÀÌÅ¬
-int BULLETCOUNT = 0;						//ÃÑ¾Ë °³¼ö
-double BulletSpeed = 1.0;					//Bullet ¼Óµµ
+double BulletInputTime = 0;				//Bullet ì¸í’‹ ì‹œì‘ ì‹œê°„
+double BulletPatternStartTime = 0;	//íŒ¨í„´ ì‹œì‘ì‹œê°„
+double BulletPatternEndTime = 0;	//íŒ¨í„´ ì¢…ë£Œì‹œê°„
+int PatternStart = 0;							//íŒ¨í„´ ì‹œì‘ ìœ ë¬´
+int PatternTimeEnded = 1;				//íŒ¨í„´ ì§€ì†ì‹œê°„ ì¢…ë£Œ ìœ ë¬´
+int PatternNumber = 0;					//íŒ¨í„´ ë„˜ë²„
+int PatternCycle = 0;							//íŒ¨í„´ ì‚¬ì´í´
+int BULLETCOUNT = 0;						//ì´ì•Œ ê°œìˆ˜
+double BulletSpeed = 1.0;					//Bullet ì†ë„
 
 char BulletModelPerPattern[TOTALPATTERNCOUNT] = { 'o','v','v','o','o','x','o','o','o','|' };
 //---------------------------------------------------------
-//----------------------Exp »ó¼ö--------------------------
+//----------------------Exp ìƒìˆ˜--------------------------
 
-//¾ÆÀÌÅÛ ¿òÁ÷ÀÓ ¹öÆÛ ½Ã°£
+//ì•„ì´í…œ ì›€ì§ì„ ë²„í¼ ì‹œê°„
 #define EXPTIMEBUFFER 0.2
 double ExpInputTime = 0;
-int ExpCreateTime = 10;			//¾ÆÀÌÅÛ »ı¼º ½Ã°£ °£°İ, È®ÀÎÀ» À§ÇØ 5ÃÊ ´ÜÀ§·Î »ı¼º½ÃÄ×½À´Ï´Ù. 
-double ExpCreationLoop = 1;		//¾ÆÀÌÅÛ »ı¼º ·çÇÁ
+int ExpCreateTime = 10;			//ì•„ì´í…œ ìƒì„± ì‹œê°„ ê°„ê²©, í™•ì¸ì„ ìœ„í•´ 5ì´ˆ ë‹¨ìœ„ë¡œ ìƒì„±ì‹œì¼°ìŠµë‹ˆë‹¤. 
+double ExpCreationLoop = 1;		//ì•„ì´í…œ ìƒì„± ë£¨í”„
 
-int expFLAG = 0; // °ÔÀÓ ³» ¾ÆÀÌÅÛ Ãâ·Â ¿©ºÎ
-int levelFLAG[] = { 2, 4, 6, 8, 10, 12, 14, 16, 18 }; // ·¹º§¾÷¿¡ ÇÊ¿äÇÑ °æÇèÄ¡ ¾ç
+int expFLAG = 0; // ê²Œì„ ë‚´ ì•„ì´í…œ ì¶œë ¥ ì—¬ë¶€
+int levelFLAG[] = { 2, 4, 6, 8, 10, 12, 14, 16, 18 }; // ë ˆë²¨ì—…ì— í•„ìš”í•œ ê²½í—˜ì¹˜ ì–‘
 
 int EXP_POS_X, EXP_POS_Y;
 

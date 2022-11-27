@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #pragma warning(disable:4996)
 #include <stdio.h>
 #include <string.h>
@@ -8,13 +8,13 @@
 #ifndef UI_H
 #define UI_H
 
-//ÃÊ±â X, YÁÂÇ¥
+//ì´ˆê¸° X, Yì¢Œí‘œ
 int modifiedX_Text = BACKGROUND_ORIGIN_X + BACKGROUND_ROW / 2 - 28;
 int modifiedY_Text = BACKGROUND_ORIGIN_Y;
 
 
 
-//½ºÅ×ÀÌÁö ¹øÈ£ Ãâ·Â
+//ìŠ¤í…Œì´ì§€ ë²ˆí˜¸ ì¶œë ¥
 void InvalidatePlayerLevel() {
 	COORD ptr = { BACKGROUND_ORIGIN_X, BACKGROUND_ORIGIN_Y };
 	int modifiedX = ptr.X + 2, modifiedY = ptr.Y + 1;
@@ -27,35 +27,35 @@ void InvalidatePlayerLevel() {
 	}
 }
 
-//---------------¶óÀÌÇÁ °ÔÀÌÁö °ü·Ã ÇÔ¼ö----------------
-//¶óÀÌÇÁ °ÔÀÌÁö µ¿ÀûÇÒ´ç
+//---------------ë¼ì´í”„ ê²Œì´ì§€ ê´€ë ¨ í•¨ìˆ˜----------------
+//ë¼ì´í”„ ê²Œì´ì§€ ë™ì í• ë‹¹
 void InitializeLifeGauge() { 
 	LifeGauge = (int *)malloc(sizeof(int)*SelectedLife); for (int i = 0; i < SelectedLife; i++) LifeGauge[i] = 1;
 	CurrentLife = SelectedLife;
 	COORD ptr = { BACKGROUND_ORIGIN_X, BACKGROUND_ORIGIN_Y };
 	int modifiedX = ptr.X + 2, modifiedY = ptr.Y + 2;
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);
-	for (int i = 0; i < SelectedLife; i++) { SetCurrentCursorPos(modifiedX + i * 2, modifiedY); if (LifeGauge[i] == 1) printf("¢¾"); }
+	for (int i = 0; i < SelectedLife; i++) { SetCurrentCursorPos(modifiedX + i * 2, modifiedY); if (LifeGauge[i] == 1) printf("â™¥"); }
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
 	SetCurrentCursorPos(ptr.X, ptr.Y);
 }
 
-//¶óÀÌÇÁ °ÔÀÌÁö UI °»½Å
+//ë¼ì´í”„ ê²Œì´ì§€ UI ê°±ì‹ 
 void InvalidateLifeGauge() {
 	COORD ptr = { BACKGROUND_ORIGIN_X, BACKGROUND_ORIGIN_Y };
 	int modifiedX = ptr.X + 2, modifiedY = ptr.Y + 2;
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);
 	for (int i = 0; i < SelectedLife; i++) { 
 		SetCurrentCursorPos(modifiedX + i * 2, modifiedY); 
-		if (LifeGauge[i] == 1) printf("¢¾"); 
-		else { SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7); printf("¢¾"); }
+		if (LifeGauge[i] == 1) printf("â™¥"); 
+		else { SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7); printf("â™¥"); }
 	}
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
 	SetCurrentCursorPos(ptr.X, ptr.Y);
 }
 //----------------------------------------------------------
 
-//-----------------Enemy Health Bar UI °ü·Ã ÇÔ¼ö----------------------
+//-----------------Enemy Health Bar UI ê´€ë ¨ í•¨ìˆ˜----------------------
 
 void ShowEnemyHealthBar() {
 	COORD ptr = { BACKGROUND_ORIGIN_X + BACKGROUND_ROW, BACKGROUND_ORIGIN_Y };
@@ -65,7 +65,7 @@ void ShowEnemyHealthBar() {
 	printf("]");
 }
 
-//Enemy Health Bar °»½Å
+//Enemy Health Bar ê°±ì‹ 
 void InvalidateEnemyHealthBar() {
 	COORD ptr = { BACKGROUND_ORIGIN_X + BACKGROUND_ROW, BACKGROUND_ORIGIN_Y };
 	int modifiedX = ptr.X - 41, modifiedY = ptr.Y + 2;
@@ -76,11 +76,11 @@ void InvalidateEnemyHealthBar() {
 	SetCurrentCursorPos(GAMEBOARD_ORIGIN_X, GAMEBOARD_ORIGIN_Y);
 }
 //-----------------------------------------------------
-//---------------½Ã°£ Ç¥½Ã ¹× ½ºÅ×ÀÌÁö ¹øÈ£ UI ÇÔ¼ö--------------
+//---------------ì‹œê°„ í‘œì‹œ ë° ìŠ¤í…Œì´ì§€ ë²ˆí˜¸ UI í•¨ìˆ˜--------------
 
 void ShowStoryModeTime() {
 	COORD ptr = { BACKGROUND_ORIGIN_X + BACKGROUND_ROW, BACKGROUND_ORIGIN_Y };
-	int modifiedX = ptr.X - 24, modifiedY = ptr.Y + 1;
+	int modifiedX = ptr.X - 22, modifiedY = ptr.Y + 1;
 	SetCurrentCursorPos(modifiedX, modifiedY);
 	printf("Stage %d | %02d : %02d : %02d", StageNumber, Min, Sec, MiSec);
 	SetCurrentCursorPos(GAMEBOARD_ORIGIN_X, GAMEBOARD_ORIGIN_Y);
@@ -110,9 +110,9 @@ void InvalidateInfiniteModeTime() {
 }
 
 //-----------------------------------------------------------------
-//--------------½ºÅ³ UI °ü·Ã ÇÔ¼ö------------------
+//--------------ìŠ¤í‚¬ UI ê´€ë ¨ í•¨ìˆ˜------------------
 
-//Àü º¸À¯½ºÅ³ ¹× º¸Á¶½ºÅ³ ¼û±â±â
+//ì „ ë³´ìœ ìŠ¤í‚¬ ë° ë³´ì¡°ìŠ¤í‚¬ ìˆ¨ê¸°ê¸°
 void HidePreviousCurrentNSubSkill() {
 	int Skillstrlen = Strlen(Skillstr), SubSkillstrlen = Strlen(SubSkillstr);
 	int Currentlen = Strlen(SkillSets[CurSkill]), Sublen = Strlen(SkillSets[SubSkill]);
@@ -125,7 +125,7 @@ void HidePreviousCurrentNSubSkill() {
 	}
 }
 
-//ÇöÀç º¸À¯½ºÅ³ ¹× º¸Á¶½ºÅ³  Ãâ·Â
+//í˜„ì¬ ë³´ìœ ìŠ¤í‚¬ ë° ë³´ì¡°ìŠ¤í‚¬  ì¶œë ¥
 void ShowCurrentNSubSkill() {
 	SetCurrentCursorPos(modifiedX_Text, modifiedY_Text + 1);
 	printf("%s%s", Skillstr, SkillSets[CurSkill]);

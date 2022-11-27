@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <Windows.h>
 #include <mmsystem.h>
 #pragma comment(lib, "winmm.lib")
@@ -13,25 +13,25 @@ MCI_PLAY_PARMS playBgm;
 MCI_OPEN_PARMS openDamageSound;
 MCI_PLAY_PARMS playDamageSound;
 
-#define BGM "C:\\Users\\bange\\OneDrive\\¹ÙÅÁ È­¸é\\Documents\\GitHub\\»õ Æú´õ\\TeamProjectFinal\\BGM.mp3"	//BGM ÆÄÀÏ È®Àå¸í
-#define DAMAGE "C:\\»ç¿ëÀÚ\\bange\\OneDrive\\¹ÙÅÁ È­¸é\\Documents\\GitHub\\»õ Æú´õ\\TeamProjectFinal\\GameResource\\Explosion.mp3"		//DAMAGE È¿°úÀ½ È®Àå¸í
-//#define CLEAR ""		//°ÔÀÓ Å¬¸®¾î ½Ã µé¾î°¡´Â Clear È¿°úÀ½ È®Àå¸í
+#define BGM "C:\\Users\\bange\\OneDrive\\ë°”íƒ• í™”ë©´\\Documents\\GitHub\\ìƒˆ í´ë”\\TeamProjectFinal\\BGM.mp3"	//BGM íŒŒì¼ í™•ì¥ëª…
+#define DAMAGE "C:\\ì‚¬ìš©ì\\bange\\OneDrive\\ë°”íƒ• í™”ë©´\\Documents\\GitHub\\ìƒˆ í´ë”\\TeamProjectFinal\\Explosion.mp3"		//DAMAGE íš¨ê³¼ìŒ í™•ì¥ëª…
+//#define CLEAR ""		//ê²Œì„ í´ë¦¬ì–´ ì‹œ ë“¤ì–´ê°€ëŠ” Clear íš¨ê³¼ìŒ í™•ì¥ëª…
 
 int dwID;
 void PlayBgm() {
 	openBgm.lpstrElementName = BGM;
-	openBgm.lpstrDeviceType = "mpegvideo";    //mp3 Çü½Ä, wav Çü½ÄÀÌ¸é "waveaudio" ÀÛ¼º
+	openBgm.lpstrDeviceType = "mpegvideo";    //mp3 í˜•ì‹, wav í˜•ì‹ì´ë©´ "waveaudio" ì‘ì„±
 	mciSendCommand(0, MCI_OPEN, MCI_OPEN_ELEMENT | MCI_OPEN_TYPE, (DWORD)(LPVOID)&openBgm);
 	dwID = openBgm.wDeviceID;
-	mciSendCommand(dwID, MCI_PLAY, MCI_DGV_PLAY_REPEAT, (DWORD)(LPVOID)&playBgm);    //À½¾Ç ¹İº¹ Àç»ı
+	mciSendCommand(dwID, MCI_PLAY, MCI_DGV_PLAY_REPEAT, (DWORD)(LPVOID)&playBgm);    //ìŒì•… ë°˜ë³µ ì¬ìƒ
 }
 void PlayDamageSound() {
-	openDamageSound.lpstrElementName = DAMAGE;    //ÆÄÀÏ ¿ÀÇÂ
-	openDamageSound.lpstrDeviceType = "mpegvideo";    //mp3 Çü½Ä
+	openDamageSound.lpstrElementName = DAMAGE;    //íŒŒì¼ ì˜¤í”ˆ
+	openDamageSound.lpstrDeviceType = "mpegvideo";    //mp3 í˜•ì‹
 	mciSendCommand(0, MCI_OPEN, MCI_OPEN_ELEMENT | MCI_OPEN_TYPE, (DWORD)(LPVOID)&openDamageSound);
 	dwID = openDamageSound.wDeviceID;
-	mciSendCommand(dwID, MCI_PLAY, MCI_NOTIFY, (DWORD)(LPVOID)&openDamageSound);    //À½¾ÇÀ» ÇÑ ¹ø Àç»ı
+	mciSendCommand(dwID, MCI_PLAY, MCI_NOTIFY, (DWORD)(LPVOID)&openDamageSound);    //ìŒì•…ì„ í•œ ë²ˆ ì¬ìƒ
 	if (TimeCheckerEnd() - PausingTime - CollisionTime > 0.8)
-		mciSendCommand(dwID, MCI_SEEK, MCI_SEEK_TO_START, (DWORD)(LPVOID)NULL);    //À½¿ø Àç»ı À§Ä¡¸¦ Ã³À½À¸·Î ÃÊ±âÈ­
+		mciSendCommand(dwID, MCI_SEEK, MCI_SEEK_TO_START, (DWORD)(LPVOID)NULL);    //ìŒì› ì¬ìƒ ìœ„ì¹˜ë¥¼ ì²˜ìŒìœ¼ë¡œ ì´ˆê¸°í™”
 }
 #endif // !SOUNDPLAY_H

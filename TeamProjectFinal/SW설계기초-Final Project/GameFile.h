@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "CursorFunctions.h"
 #include "ResizeConsole.h"
 #include "BackGround.h"
@@ -17,7 +17,7 @@
 #ifndef GAMEFILE_H
 #define GAMEFILE_H
 
-//½ºÅä¸® ¸ðµå
+//ìŠ¤í† ë¦¬ ëª¨ë“œ
 void StoryMode() { 
 	while (StageNumber < 4) {
 		InitStageEnemyHealth();
@@ -30,8 +30,8 @@ void StoryMode() {
 	}
 }
 
-//¹«ÇÑ ¸ðµå
-void InfiniteMode() {		//UI ¼öÁ¤ÇÊ¿ä
+//ë¬´í•œ ëª¨ë“œ
+void InfiniteMode() {		//UI ìˆ˜ì •í•„ìš”
 	while (1) {
 		InitInfiniteModeEnemyHealth();
 		ShowCurrentNSubSkill();
@@ -42,7 +42,7 @@ void InfiniteMode() {		//UI ¼öÁ¤ÇÊ¿ä
 	}
 }
 
-//°ÔÀÓ ½ÇÇà ÇÔ¼ö ----°ÔÀÓÀ» ½ÇÇàÇÒ ¶§ initialize ÇØ¾ßÇÒ °Íµé¸¸ ³Ö±â
+//ê²Œìž„ ì‹¤í–‰ í•¨ìˆ˜ ----ê²Œìž„ì„ ì‹¤í–‰í•  ë•Œ initialize í•´ì•¼í•  ê²ƒë“¤ë§Œ ë„£ê¸°
 void RunGame() {
 	ResizeConsole(); ResizeConsoleBuffer(); RemoveCursor(); InitUniBoard(); InitializePrisonInfo();
 	while (1) {

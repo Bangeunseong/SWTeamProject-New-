@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <conio.h>
 #include "CursorFunctions.h"
 #include "VariableSets.h"
@@ -7,13 +7,13 @@
 #include "Bullet.h"
 #ifndef GAMEOVERMENU_H
 #define GAMEOVERMENU_H
-//------------------------°ÔÀÓ¿À¹ö Á¶°Ç °ü·Ã ÇÔ¼ö ¹× UIÇÔ¼ö----------------------------
+//------------------------ê²Œì„ì˜¤ë²„ ì¡°ê±´ ê´€ë ¨ í•¨ìˆ˜ ë° UIí•¨ìˆ˜----------------------------
 INPUT_RECORD rec;
 DWORD dwNOER;
 DWORD CIN;
 DWORD mode;
 
-//°ÔÀÓ Á¾·á Á¶°Ç (¸ğµç Ç×¸ñ ÃÊ±âÈ­)
+//ê²Œì„ ì¢…ë£Œ ì¡°ê±´ (ëª¨ë“  í•­ëª© ì´ˆê¸°í™”)
 int GameOver() {
 	if (CurrentLife <= 0) { 
 		TotalSec += (int)(TimeCheckerEnd() - PausingTime) % 60;
@@ -34,29 +34,29 @@ int GameOver() {
 	return 0;
 }
 
-//¿É¼Ç ¼±ÅÃ ¹Ú½º Ãâ·Â
+//ì˜µì…˜ ì„ íƒ ë°•ìŠ¤ ì¶œë ¥
 void CreateOptionSelectionBox(int x, int y) {
 	COORD ptr = { x,y };
 	for (int i = 0; i < OPTIONSELECTIONBOX_COLUMN; i++) {
 		SetCurrentCursorPos(ptr.X, ptr.Y + i);
-		if (i == 0) printf("¦®");
-		else if (i == OPTIONSELECTIONBOX_COLUMN - 1) printf("¦±");
-		else printf("¦­");
+		if (i == 0) printf("â”");
+		else if (i == OPTIONSELECTIONBOX_COLUMN - 1) printf("â”—");
+		else printf("â”ƒ");
 		SetCurrentCursorPos(ptr.X + OPTIONSELECTIONBOX_ROW, ptr.Y + i);
-		if (i == 0) printf("¦¯");
-		else if (i == OPTIONSELECTIONBOX_COLUMN - 1) printf("¦°");
-		else printf("¦­");
+		if (i == 0) printf("â”“");
+		else if (i == OPTIONSELECTIONBOX_COLUMN - 1) printf("â”›");
+		else printf("â”ƒ");
 	}
 	SetCurrentCursorPos(ptr.X, ptr.Y);
 	for (int i = 2; i < OPTIONSELECTIONBOX_ROW; i += 2) {
 		SetCurrentCursorPos(ptr.X + i, ptr.Y);
-		printf("¦¬");
+		printf("â”");
 		SetCurrentCursorPos(ptr.X + i, ptr.Y + OPTIONSELECTIONBOX_COLUMN - 1);
-		printf("¦¬");
+		printf("â”");
 	}
 }
 
-//°ÔÀÓ¿À¹ö ·Î°í Ãâ·Â
+//ê²Œì„ì˜¤ë²„ ë¡œê³  ì¶œë ¥
 void ShowGameOver() {
 	COORD center = { BACKGROUND_ORIGIN_X + BACKGROUND_ROW / 2, BACKGROUND_ORIGIN_Y + BACKGROUND_COLUMN / 2 };
 	int modifiedX = center.X - 46, modifiedY = center.Y - 5;
@@ -64,7 +64,7 @@ void ShowGameOver() {
 		for (int j = 0; j < 5; j++) {
 			for (int k = 0; k < 5; k++) {
 				SetCurrentCursorPos(modifiedX + 2 * k, modifiedY + j);
-				if (GameOverLogo[i][j][k] == 1) printf("¡á");
+				if (GameOverLogo[i][j][k] == 1) printf("â– ");
 			}
 		}
 		modifiedX += 12;
@@ -78,41 +78,41 @@ void ShowGameOver() {
 	printf("Give Up");
 }
 
-//°ÔÀÓ¿À¹ö ·Î°í ¼û±è
+//ê²Œì„ì˜¤ë²„ ë¡œê³  ìˆ¨ê¹€
 void HideGameOver() {
 	COORD ptr = { 0,0 };
 	DWORD dw;
 	FillConsoleOutputCharacter(GetStdHandle(STD_OUTPUT_HANDLE), ' ', CONSOLE_COLUMN * CONSOLE_ROW, ptr, &dw);
 }
 
-//¸¶¿ì½ºÅ¬¸¯ À§Ä¡ ¹İÈ¯ ÇÔ¼ö
+//ë§ˆìš°ìŠ¤í´ë¦­ ìœ„ì¹˜ ë°˜í™˜ í•¨ìˆ˜
 void GameOptionBoxClick(int *xx, int *yy) {
 	while (1)
 	{
-		ReadConsoleInput(GetStdHandle(STD_INPUT_HANDLE), &rec, 1, &dwNOER); // ÄÜ¼ÖÃ¢ ÀÔ·ÂÀ» ¹Ş¾ÆµéÀÓ.
-		if (rec.EventType == MOUSE_EVENT) {// ¸¶¿ì½º ÀÌº¥Æ®ÀÏ °æ¿ì
-			if (rec.Event.MouseEvent.dwButtonState & FROM_LEFT_1ST_BUTTON_PRESSED) { // ÁÂÃø ¹öÆ°ÀÌ Å¬¸¯µÇ¾úÀ» °æ¿ì
-				int mouse_x = rec.Event.MouseEvent.dwMousePosition.X; // X°ª ¹Ş¾Æ¿È
-				int mouse_y = rec.Event.MouseEvent.dwMousePosition.Y; // Y°ª ¹Ş¾Æ¿È
+		ReadConsoleInput(GetStdHandle(STD_INPUT_HANDLE), &rec, 1, &dwNOER); // ì½˜ì†”ì°½ ì…ë ¥ì„ ë°›ì•„ë“¤ì„.
+		if (rec.EventType == MOUSE_EVENT) {// ë§ˆìš°ìŠ¤ ì´ë²¤íŠ¸ì¼ ê²½ìš°
+			if (rec.Event.MouseEvent.dwButtonState & FROM_LEFT_1ST_BUTTON_PRESSED) { // ì¢Œì¸¡ ë²„íŠ¼ì´ í´ë¦­ë˜ì—ˆì„ ê²½ìš°
+				int mouse_x = rec.Event.MouseEvent.dwMousePosition.X; // Xê°’ ë°›ì•„ì˜´
+				int mouse_y = rec.Event.MouseEvent.dwMousePosition.Y; // Yê°’ ë°›ì•„ì˜´
 
-				*xx = mouse_x; //x°ªÀ» ³Ñ±è
-				*yy = mouse_y; //y°ªÀ» ³Ñ±è
+				*xx = mouse_x; //xê°’ì„ ë„˜ê¹€
+				*yy = mouse_y; //yê°’ì„ ë„˜ê¹€
 				break;
 			}
 		}
 	}
 }
 
-//°ÔÀÓÀ» ¿ÏÀüÈ÷ Á¾·áÇÒ Áö ¾Æ´Ï¸é ´Ù½Ã ÇÒ Áö ¼±ÅÃÇÏ´Â Ã¢ Ãâ·Â
+//ê²Œì„ì„ ì™„ì „íˆ ì¢…ë£Œí•  ì§€ ì•„ë‹ˆë©´ ë‹¤ì‹œ í•  ì§€ ì„ íƒí•˜ëŠ” ì°½ ì¶œë ¥
 int GameOverMenu() {
-	HideGameOver();	//°ÔÀÓÆÇ ÀüÃ¼ »èÁ¦
+	HideGameOver();	//ê²Œì„íŒ ì „ì²´ ì‚­ì œ
 
-	//system ÇÔ¼ö¸¦ ¾´ ÀÌÈÄ¿£ INPUT ÇÚµé ´Ù½Ã ÀçÈ°¼ºÈ­
+	//system í•¨ìˆ˜ë¥¼ ì“´ ì´í›„ì—” INPUT í•¸ë“¤ ë‹¤ì‹œ ì¬í™œì„±í™”
 	HANDLE CIN = GetStdHandle(STD_INPUT_HANDLE);
 	GetConsoleMode(CIN, &mode);
 	SetConsoleMode(CIN, mode | ENABLE_MOUSE_INPUT);
 
-	//ÀÎÆ®·Î È­¸é Ãâ·Â
+	//ì¸íŠ¸ë¡œ í™”ë©´ ì¶œë ¥
 	ShowGameOver();
 	SetConsoleMode(GetStdHandle(STD_OUTPUT_HANDLE), ENABLE_PROCESSED_INPUT | ENABLE_MOUSE_INPUT);
 	int xx, yy; int flag = 0;

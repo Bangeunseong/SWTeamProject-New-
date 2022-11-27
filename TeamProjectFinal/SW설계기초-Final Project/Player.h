@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #pragma warning(disable:4996)
 #include <conio.h>
 #include <WinUser.h>
@@ -12,14 +12,14 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-//ÇÃ·¹ÀÌ¾î ÀÎÇ²Å¸ÀÓ ¹öÆÛ ½Ã°£ °è»ê ÇÔ¼ö
+//í”Œë ˆì´ì–´ ì¸í’‹íƒ€ì„ ë²„í¼ ì‹œê°„ ê³„ì‚° í•¨ìˆ˜
 int CalculatePlayerTimeBuffer() {
 	double CheckedTime = TimeCheckerEnd() - PausingTime;
 	if (CheckedTime - PlayerInputTime > PLAYERTIMEBUFFER / CurSpeed) { PlayerInputTime = CheckedTime; return 0; }
 	else return 1;
 }
 
-//°ÔÀÓ Á¤ÁöÇÔ¼ö
+//ê²Œì„ ì •ì§€í•¨ìˆ˜
 void GamePause() {
 	GamePaused = 1;
  	PausedTime = TimeCheckerEnd();
@@ -30,7 +30,7 @@ void GamePause() {
 	for (int i = 0; i < 5; i++) printf(" ");
 }
 
-//ÇÃ·¹ÀÌ¾î À§Ä¡ ÃÊ±âÈ­ ÇÔ¼ö
+//í”Œë ˆì´ì–´ ìœ„ì¹˜ ì´ˆê¸°í™” í•¨ìˆ˜
 void ClearPlayerPosition() {
 	int Modellen;
 	if (PlayerLevel < 4) Modellen = PlayerLevel * 2;
@@ -39,7 +39,7 @@ void ClearPlayerPosition() {
 	PLAYER_POS_Y = GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN - 10;
 }
 
-//ÇÃ·¹ÀÌ¾î Ãâ·Â ÇÔ¼ö
+//í”Œë ˆì´ì–´ ì¶œë ¥ í•¨ìˆ˜
 void ShowPlayer() {
 	if (Invinsible) SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), PLAYERINVINSIBLEINDICATECOLOR);
 	else if (UsingSkill > 0) SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), PLAYERUSINGSKILLCOLOR);
@@ -52,7 +52,7 @@ void ShowPlayer() {
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
 	SetCurrentCursorPos(PLAYER_POS_X, PLAYER_POS_Y);
 }
-//ÇÃ·¹ÀÌ¾î ¼û±è ÇÔ¼ö
+//í”Œë ˆì´ì–´ ìˆ¨ê¹€ í•¨ìˆ˜
 void HidePlayer() {
 	int Modellen;
 	if (PlayerLevel < 4) Modellen = PlayerLevel * 2;
@@ -61,9 +61,9 @@ void HidePlayer() {
 	SetCurrentCursorPos(PLAYER_POS_X, PLAYER_POS_Y);
 }
 
-//---------------------µ¥¹ÌÁö ¹× ¶óÀÌÇÁ °ÔÀÌÁö °ü·Ã Ã³¸® ÇÔ¼ö--------------------------
+//---------------------ë°ë¯¸ì§€ ë° ë¼ì´í”„ ê²Œì´ì§€ ê´€ë ¨ ì²˜ë¦¬ í•¨ìˆ˜--------------------------
 
-//ÇÃ·¹ÀÌ¾î ±âÁØ º®°ú ºÎ‹HÇûÀ» ¶§ »ç¿ëÇÏ´Â ÇÔ¼ö
+//í”Œë ˆì´ì–´ ê¸°ì¤€ ë²½ê³¼ ë¶€ë”«í˜”ì„ ë•Œ ì‚¬ìš©í•˜ëŠ” í•¨ìˆ˜
 int DetectCollision_PlayerwithWall(int x, int y) {
 	int Modellen;
 	if (PlayerLevel < 4) Modellen = PlayerLevel * 2;
@@ -77,7 +77,7 @@ int DetectCollision_PlayerwithWall(int x, int y) {
 	}
 	return 0;
 }
-//ÇÃ·¹ÀÌ¾î ±âÁØ Àû°ú ºÎ‹HÇûÀ» ¶§ »ç¿ëÇÏ´Â ÇÔ¼ö
+//í”Œë ˆì´ì–´ ê¸°ì¤€ ì ê³¼ ë¶€ë”«í˜”ì„ ë•Œ ì‚¬ìš©í•˜ëŠ” í•¨ìˆ˜
 int DetectCollision_PlayerwithEnemy(int x, int y) {
 	int Modellen;
 	if (PlayerLevel < 4) Modellen = PlayerLevel * 2;
@@ -103,7 +103,7 @@ int DetectCollision_PlayerwithBullet(int x, int y) {
 	return 0;
 }
 
-//ÇÃ·¹ÀÌ¾î ±âÁØ ¾ÆÀÌÅÛ°ú ºÎµúÇûÀ» ¶§ °Ë»çÇÏ´Â ÇÔ¼ö
+//í”Œë ˆì´ì–´ ê¸°ì¤€ ì•„ì´í…œê³¼ ë¶€ë”ªí˜”ì„ ë•Œ ê²€ì‚¬í•˜ëŠ” í•¨ìˆ˜
 int DetectCollision_PlayerwithItem(int x, int y) {
 	int Modellen;
 	if (PlayerLevel < 4) Modellen = PlayerLevel * 2;
@@ -116,42 +116,42 @@ int DetectCollision_PlayerwithItem(int x, int y) {
 	return 0;
 }
 
-//¶óÀÌÇÁ °ÔÀÌÁö °¨¼Ò
+//ë¼ì´í”„ ê²Œì´ì§€ ê°ì†Œ
 void ReduceLifeGauge(int damage) {
 	CurrentLife -= damage;
 	for (int i = 0; i < SelectedLife; i++) { if (i >= CurrentLife) LifeGauge[i] = 0; }
 }
 
-//µ¥¹ÌÁö Ã³¸®ÇÔ¼ö
+//ë°ë¯¸ì§€ ì²˜ë¦¬í•¨ìˆ˜
 void GetDamagedFromEnemy() {
 	if (UsingSkill == 3) return;
-	if (Invinsible == 1) { if (TimeCheckerEnd() - CollisionTime - PausingTime > InvinsibleTime) Invinsible = 0; }		//¹«ÀûÀÎ »óÅÂ¿¡¼­ Áö¼Ó½Ã°£ÀÌ Áö³ª¸é ÇØÁ¦ÇÏ´Â ÇÔ¼ö
+	if (Invinsible == 1) { if (TimeCheckerEnd() - CollisionTime - PausingTime > InvinsibleTime) Invinsible = 0; }		//ë¬´ì ì¸ ìƒíƒœì—ì„œ ì§€ì†ì‹œê°„ì´ ì§€ë‚˜ë©´ í•´ì œí•˜ëŠ” í•¨ìˆ˜
 	if (DetectCollision_PlayerwithBullet(PLAYER_POS_X, PLAYER_POS_Y) && Invinsible == 0) {
-		if (PlayerLevel < 2) {		//ÇÃ·¹ÀÌ¾î ·¹º§ 2º¸´Ù ÀÛÀº °æ¿ì µ¥¹ÌÁö 1À» ¹ŞÀ½
+		if (PlayerLevel < 2) {		//í”Œë ˆì´ì–´ ë ˆë²¨ 2ë³´ë‹¤ ì‘ì€ ê²½ìš° ë°ë¯¸ì§€ 1ì„ ë°›ìŒ
 			ReduceLifeGauge(BULLETDAMAGE);
-			InvalidateLifeGauge();												//¶óÀÌÇÁ °ÔÀÌÁö °»½ÅÀº µ¥¹ÌÁö¸¦ ¹ŞÀ» ¶§¸¸ ¼öÇà
+			InvalidateLifeGauge();												//ë¼ì´í”„ ê²Œì´ì§€ ê°±ì‹ ì€ ë°ë¯¸ì§€ë¥¼ ë°›ì„ ë•Œë§Œ ìˆ˜í–‰
 		}
 		else { 
 			EXP -= 2;
 			if (PlayerLevel < 4) { HidePlayer(); PlayerLevel--; ShowPlayer(); }
 			else PlayerLevel--;
 		}
-		Invinsible = 1; CollisionTime = TimeCheckerEnd() - PausingTime;		//¹«Àû»óÅÂ·Î ¸¸µé°í Ãæµ¹ÇÑ ½Ã°£ °»½Å
+		Invinsible = 1; CollisionTime = TimeCheckerEnd() - PausingTime;		//ë¬´ì ìƒíƒœë¡œ ë§Œë“¤ê³  ì¶©ëŒí•œ ì‹œê°„ ê°±ì‹ 
 		return;
 	}
 	if (DetectCollision_PlayerwithEnemy(PLAYER_POS_X, PLAYER_POS_Y) && Invinsible == 0) {
-		if (PlayerLevel > 2) { EXP -= 4; HidePlayer(); PlayerLevel -= 2; ShowPlayer(); }		//ÇÃ·¹ÀÌ¾î ·¹º§ 3ÀÎ °æ¿ì 2´Ü°è °­µî
-		else if (PlayerLevel > 1) {		//ÇÃ·¹ÀÌ¾î ·¹º§ 2ÀÎ °æ¿ì 1´Ü°è °­µî ¹× µ¥¹ÌÁö 1 ¹ŞÀ½
+		if (PlayerLevel > 2) { EXP -= 4; HidePlayer(); PlayerLevel -= 2; ShowPlayer(); }		//í”Œë ˆì´ì–´ ë ˆë²¨ 3ì¸ ê²½ìš° 2ë‹¨ê³„ ê°•ë“±
+		else if (PlayerLevel > 1) {		//í”Œë ˆì´ì–´ ë ˆë²¨ 2ì¸ ê²½ìš° 1ë‹¨ê³„ ê°•ë“± ë° ë°ë¯¸ì§€ 1 ë°›ìŒ
 			ReduceLifeGauge(BULLETDAMAGE);
-			InvalidateLifeGauge();												//¶óÀÌÇÁ °ÔÀÌÁö °»½ÅÀº µ¥¹ÌÁö¸¦ ¹ŞÀ» ¶§¸¸ ¼öÇà
+			InvalidateLifeGauge();												//ë¼ì´í”„ ê²Œì´ì§€ ê°±ì‹ ì€ ë°ë¯¸ì§€ë¥¼ ë°›ì„ ë•Œë§Œ ìˆ˜í–‰
 			EXP -= 4;
 			HidePlayer(); PlayerLevel--; ShowPlayer();
 		}
-		else {	//ÇÃ·¹ÀÌ¾î ·¹º§ 1ÀÎ °æ¿ì µ¥¹ÌÁö 2 ¹ŞÀ½
+		else {	//í”Œë ˆì´ì–´ ë ˆë²¨ 1ì¸ ê²½ìš° ë°ë¯¸ì§€ 2 ë°›ìŒ
 			ReduceLifeGauge(ENEMYDAMAGE);
-			InvalidateLifeGauge();												//¶óÀÌÇÁ °ÔÀÌÁö °»½ÅÀº µ¥¹ÌÁö¸¦ ¹ŞÀ» ¶§¸¸ ¼öÇà
+			InvalidateLifeGauge();												//ë¼ì´í”„ ê²Œì´ì§€ ê°±ì‹ ì€ ë°ë¯¸ì§€ë¥¼ ë°›ì„ ë•Œë§Œ ìˆ˜í–‰
 		}
-		Invinsible = 1; CollisionTime = TimeCheckerEnd() - PausingTime;		//¹«Àû»óÅÂ·Î ¸¸µé°í Ãæµ¹ÇÑ ½Ã°£ °»½Å
+		Invinsible = 1; CollisionTime = TimeCheckerEnd() - PausingTime;		//ë¬´ì ìƒíƒœë¡œ ë§Œë“¤ê³  ì¶©ëŒí•œ ì‹œê°„ ê°±ì‹ 
 		return;
 	}
 }
@@ -159,8 +159,8 @@ void GetDamagedFromEnemy() {
 
 //-----------------------------------------------------------------------------------------------
 
-//--------------------------»ç¿ëÀÚ ÀÔ·Â Å°¿¡ µû¸¥ À§Ä¡ º¯È¯ ¹× ½ºÅ³ »ç¿ë ÇÔ¼ö------------------------------
-//»ç¿ëÀÚ ÀÔ·Â Å°¿¡ µû¶ó À§Ä¡ º¯È¯ ÇÔ¼ö
+//--------------------------ì‚¬ìš©ì ì…ë ¥ í‚¤ì— ë”°ë¥¸ ìœ„ì¹˜ ë³€í™˜ ë° ìŠ¤í‚¬ ì‚¬ìš© í•¨ìˆ˜------------------------------
+//ì‚¬ìš©ì ì…ë ¥ í‚¤ì— ë”°ë¼ ìœ„ì¹˜ ë³€í™˜ í•¨ìˆ˜
 
 void shiftUp() {
 	HidePlayer();
@@ -185,7 +185,7 @@ void shiftRight() {
 
 //------------------------------------------------------------------------------------------------------------------
 
-//-------------------------------------ÇÃ·¹ÀÌ¾î ÃÑ¾Ë °ü·Ã ÇÔ¼ö------------------------------------------
+//-------------------------------------í”Œë ˆì´ì–´ ì´ì•Œ ê´€ë ¨ í•¨ìˆ˜------------------------------------------
 
 int CalculateP_BulletTimeBuffer() {
 	double CheckedTime = TimeCheckerEnd() - PausingTime;
@@ -231,9 +231,9 @@ void P_BulletPositionRenewal(int P_bulletnumber) {
 		else { PB[P_bulletnumber].P_BULLET_POS_X = PLAYER_POS_X + Modellen - 1; PB[P_bulletnumber].P_BULLET_POS_Y = PLAYER_POS_Y; }
 	}
 	else {
-		if (P_bulletnumber % 2 == 0) { PB[P_bulletnumber].P_BULLET_POS_X = PLAYER_POS_X; PB[P_bulletnumber].P_BULLET_POS_Y = PLAYER_POS_Y; }
-		else if(P_bulletnumber % 2 == 1){ PB[P_bulletnumber].P_BULLET_POS_X = PLAYER_POS_X + Modellen / 2 - 1; PB[P_bulletnumber].P_BULLET_POS_Y = PLAYER_POS_Y; }
-		else if (P_bulletnumber % 2 == 2) { PB[P_bulletnumber].P_BULLET_POS_X = PLAYER_POS_X + Modellen / 2; PB[P_bulletnumber].P_BULLET_POS_Y = PLAYER_POS_Y; }
+		if (P_bulletnumber % 4 == 0) { PB[P_bulletnumber].P_BULLET_POS_X = PLAYER_POS_X; PB[P_bulletnumber].P_BULLET_POS_Y = PLAYER_POS_Y; }
+		else if(P_bulletnumber % 4 == 1){ PB[P_bulletnumber].P_BULLET_POS_X = PLAYER_POS_X + Modellen / 2 - 1; PB[P_bulletnumber].P_BULLET_POS_Y = PLAYER_POS_Y; }
+		else if (P_bulletnumber % 4 == 2) { PB[P_bulletnumber].P_BULLET_POS_X = PLAYER_POS_X + Modellen / 2; PB[P_bulletnumber].P_BULLET_POS_Y = PLAYER_POS_Y; }
 		else { PB[P_bulletnumber].P_BULLET_POS_X = PLAYER_POS_X + Modellen - 1; PB[P_bulletnumber].P_BULLET_POS_Y = PLAYER_POS_Y; }
 	}
 }
@@ -260,7 +260,7 @@ int MoveP_Bullet_N(int P_bulletnumber) {
 
 	HideP_Bullet(P_bulletnumber);
 	if (DetectCollision_P_BulletwithEnemy(PB[P_bulletnumber].P_BULLET_POS_X, PB[P_bulletnumber].P_BULLET_POS_Y)) { 
-		PB[P_bulletnumber].BulletActivation = 0; PB[P_bulletnumber].CollisionEnemy = 1; StageEnemyHealth -= P_BULLETDAMAGE; return 0;		//Enemy°¡ ¹Ş´Â µ¥¹ÌÁöµµ Ã³¸®
+		PB[P_bulletnumber].BulletActivation = 0; PB[P_bulletnumber].CollisionEnemy = 1; StageEnemyHealth -= P_BULLETDAMAGE; return 0;		//Enemyê°€ ë°›ëŠ” ë°ë¯¸ì§€ë„ ì²˜ë¦¬
 	}
 	if (!DetectCollision_P_BulletwithWall(PB[P_bulletnumber].P_BULLET_POS_X, PB[P_bulletnumber].P_BULLET_POS_Y - 1)) PB[P_bulletnumber].P_BULLET_POS_Y--;
 	else { PB[P_bulletnumber].BulletActivation = 0; PB[P_bulletnumber].CollisionWall = 1; return 0; }
@@ -290,7 +290,7 @@ void InvalidateP_Bullet() {
 		for (int i = P_BULLETCOUNTSTART; i <= P_BULLETCOUNTEND; i++) {
 			if (DetectCollision_P_BulletwithEnemy(PB[i % BULLETCOUNTLIMIT].P_BULLET_POS_X, PB[i % BULLETCOUNTLIMIT].P_BULLET_POS_Y)) {
 				HideP_Bullet(i % BULLETCOUNTLIMIT);	
-				if(PB[i % BULLETCOUNTLIMIT].BulletActivation) StageEnemyHealth -= P_BULLETDAMAGE; //Enemy°¡ ¹Ş´Â µ¥¹ÌÁöµµ Ã³¸®
+				if(PB[i % BULLETCOUNTLIMIT].BulletActivation) StageEnemyHealth -= P_BULLETDAMAGE; //Enemyê°€ ë°›ëŠ” ë°ë¯¸ì§€ë„ ì²˜ë¦¬
 				if (i == P_BULLETCOUNTSTART) { ClearSingle_PBulletPosition(i % BULLETCOUNTLIMIT); P_BULLETCOUNTSTART++; }
 				else { PB[i % BULLETCOUNTLIMIT].BulletActivation = 0; PB[i % BULLETCOUNTLIMIT].CollisionEnemy = 1; }
 			}
@@ -300,7 +300,7 @@ void InvalidateP_Bullet() {
 
 //----------------------------------------------------------------------------------------------------------
 
-//-------------------------------------ÇÃ·¹ÀÌ¾î °»½Å ÇÔ¼ö-------------------------------------------------------
+//-------------------------------------í”Œë ˆì´ì–´ ê°±ì‹  í•¨ìˆ˜-------------------------------------------------------
 void InvalidatePlayer() {
 	ShowPlayer(); P_BULLETDAMAGE = PlayerLevel;
 	if (DetectCollision_PlayerwithItem(ITEM_POS_X, ITEM_POS_Y)) ItemCollisionDetected = 1;

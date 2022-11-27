@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 #include <stdio.h>
 #include <Windows.h>
 #include "VariableSets.h"
 #ifndef BACKGROUND_H
 #define BACKGROUND_H
 
-//°ÔÀÓ¿µ¿ª ÀÌ»ê Å×ÀÌºí ¼±¾ğ
+//ê²Œì„ì˜ì—­ ì´ì‚° í…Œì´ë¸” ì„ ì–¸
 void InitUniBoard() {
 	for (int i = 0; i <= GAMEBOARD_COLUMN; i++) {
 		UniBoard[i][0] = UniBoard[i][GAMEBOARD_ROW + 1] = UniBoard[i][1] = UniBoard[i][GAMEBOARD_ROW] = 1;
@@ -15,46 +15,46 @@ void InitUniBoard() {
 	}
 }
 
-//°ÔÀÓ¿µ¿ª ¹é±×¶ó¿îµå Ãâ·Â
+//ê²Œì„ì˜ì—­ ë°±ê·¸ë¼ìš´ë“œ ì¶œë ¥
 void ShowBackGround() {
 	COORD b_ptr = { BACKGROUND_ORIGIN_X, BACKGROUND_ORIGIN_Y };
 	for (int i = 0; i < BACKGROUND_COLUMN - GAMEBOARD_COLUMN; i++) {
 		SetCurrentCursorPos(b_ptr.X, b_ptr.Y + i);
-		if(i == 0) printf("¦®");
-		else printf("¦­");
+		if(i == 0) printf("â”");
+		else printf("â”ƒ");
 		SetCurrentCursorPos(b_ptr.X + BACKGROUND_ROW, b_ptr.Y + i);
-		if (i == 0) printf("¦¯");
-		else printf("¦­");
+		if (i == 0) printf("â”“");
+		else printf("â”ƒ");
 	}
 	SetCurrentCursorPos(b_ptr.X, b_ptr.Y);
 	for (int i = 2; i < BACKGROUND_ROW; i += 2) {
 		SetCurrentCursorPos(b_ptr.X + i, b_ptr.Y);
-		printf("¦¬");
+		printf("â”");
 	}
 	SetCurrentCursorPos(b_ptr.X, b_ptr.Y);
 
 	COORD ptr = { GAMEBOARD_ORIGIN_X, GAMEBOARD_ORIGIN_Y };
 	for (int i = 0; i <= GAMEBOARD_COLUMN; i++) {
 		SetCurrentCursorPos(ptr.X, ptr.Y + i);
-		if (i == 0) printf("¦²");
-		else if (i == GAMEBOARD_COLUMN) printf("¦±");
-		else printf("¦­");
+		if (i == 0) printf("â”£");
+		else if (i == GAMEBOARD_COLUMN) printf("â”—");
+		else printf("â”ƒ");
 		SetCurrentCursorPos(ptr.X + GAMEBOARD_ROW, ptr.Y + i);
-		if (i == 0) printf("¦´");
-		else if (i == GAMEBOARD_COLUMN) printf("¦°");
-		else printf("¦­");
+		if (i == 0) printf("â”«");
+		else if (i == GAMEBOARD_COLUMN) printf("â”›");
+		else printf("â”ƒ");
 	}
 	SetCurrentCursorPos(ptr.X, ptr.Y);
 	for (int i = 2; i < GAMEBOARD_ROW; i += 2) {
 		SetCurrentCursorPos(ptr.X + i, ptr.Y);
-		printf("¦¬");
+		printf("â”");
 		SetCurrentCursorPos(ptr.X + i, ptr.Y + GAMEBOARD_COLUMN);
-		printf("¦¬");
+		printf("â”");
 	}
 	SetCurrentCursorPos(ptr.X, ptr.Y);
 }
 
-//ÀÌ»ê Å×ÀÌºí Ãâ·Â
+//ì´ì‚° í…Œì´ë¸” ì¶œë ¥
 void ShowUniBoard() {
 	SetCurrentCursorPos(GAMEBOARD_ORIGIN_X, GAMEBOARD_ORIGIN_Y);
 	COORD ptr = GetCurrentCursorPos();
