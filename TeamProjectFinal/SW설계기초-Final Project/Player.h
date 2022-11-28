@@ -127,11 +127,11 @@ void GetDamagedFromEnemy() {
 	if (UsingSkill == 3) return;
 	if (Invinsible == 1) { //무적인 상태에서 지속시간이 지나면 해제하는 함수
 		if (TimeCheckerEnd() - CollisionTime - PausingTime > InvinsibleTime) { 
-			Invinsible = 0; mciSendCommand(dwIDSE, MCI_SEEK, MCI_SEEK_TO_START, (DWORD)(LPVOID)NULL);
+			Invinsible = 0; mciSendCommand(dwIDSE_D, MCI_SEEK, MCI_SEEK_TO_START, (DWORD)(LPVOID)NULL);
 		}
 	}
 	if (DetectCollision_PlayerwithBullet(PLAYER_POS_X, PLAYER_POS_Y) && Invinsible == 0) {
-		PlayDamageSound();
+		PlayCOLLISIONSound();
 		if (PlayerLevel < 2) {		//플레이어 레벨 2보다 작은 경우 데미지 1을 받음
 			ReduceLifeGauge(BULLETDAMAGE);
 			InvalidateLifeGauge();												//라이프 게이지 갱신은 데미지를 받을 때만 수행
@@ -145,6 +145,7 @@ void GetDamagedFromEnemy() {
 		return;
 	}
 	if (DetectCollision_PlayerwithEnemy(PLAYER_POS_X, PLAYER_POS_Y) && Invinsible == 0) {
+		PlayCOLLISIONSound();
 		if (PlayerLevel > 2) { EXP -= 4; HidePlayer(); PlayerLevel -= 2; ShowPlayer(); }		//플레이어 레벨 3인 경우 2단계 강등
 		else if (PlayerLevel > 1) {		//플레이어 레벨 2인 경우 1단계 강등 및 데미지 1 받음
 			ReduceLifeGauge(BULLETDAMAGE);
@@ -275,7 +276,9 @@ int MoveP_Bullet_N(int P_bulletnumber) {
 void P_BulletLaunch() {
 	double CheckedTime = TimeCheckerEnd() - PausingTime;
 	if (CheckedTime - P_BulletLaunchTime > P_BULLETLAUNCHTIMEBUFFER) {
+		mciSendCommand(dwIDSE_B, MCI_SEEK, MCI_SEEK_TO_START, (DWORD)(LPVOID)NULL);
 		P_BulletLaunchTime = CheckedTime;
+		PlaySHOOTBULLETSound();
 		if (PlayerLevel <= 2) P_BULLETCOUNTEND += 2;
 		else P_BULLETCOUNTEND += 4;
 	}
