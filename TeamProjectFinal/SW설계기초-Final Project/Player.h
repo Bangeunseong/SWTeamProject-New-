@@ -126,9 +126,12 @@ void ReduceLifeGauge(int damage) {
 void GetDamagedFromEnemy() {
 	if (UsingSkill == 3) return;
 	if (Invinsible == 1) { //무적인 상태에서 지속시간이 지나면 해제하는 함수
-		if (TimeCheckerEnd() - CollisionTime - PausingTime > InvinsibleTime) Invinsible = 0;
+		if (TimeCheckerEnd() - CollisionTime - PausingTime > InvinsibleTime) { 
+			Invinsible = 0; mciSendCommand(dwIDSE, MCI_SEEK, MCI_SEEK_TO_START, (DWORD)(LPVOID)NULL);
+		}
 	}
 	if (DetectCollision_PlayerwithBullet(PLAYER_POS_X, PLAYER_POS_Y) && Invinsible == 0) {
+		PlayDamageSound();
 		if (PlayerLevel < 2) {		//플레이어 레벨 2보다 작은 경우 데미지 1을 받음
 			ReduceLifeGauge(BULLETDAMAGE);
 			InvalidateLifeGauge();												//라이프 게이지 갱신은 데미지를 받을 때만 수행
