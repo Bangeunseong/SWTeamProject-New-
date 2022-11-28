@@ -125,7 +125,9 @@ void ReduceLifeGauge(int damage) {
 //데미지 처리함수
 void GetDamagedFromEnemy() {
 	if (UsingSkill == 3) return;
-	if (Invinsible == 1) { if (TimeCheckerEnd() - CollisionTime - PausingTime > InvinsibleTime) Invinsible = 0; }		//무적인 상태에서 지속시간이 지나면 해제하는 함수
+	if (Invinsible == 1) { //무적인 상태에서 지속시간이 지나면 해제하는 함수
+		if (TimeCheckerEnd() - CollisionTime - PausingTime > InvinsibleTime) Invinsible = 0;
+	}
 	if (DetectCollision_PlayerwithBullet(PLAYER_POS_X, PLAYER_POS_Y) && Invinsible == 0) {
 		if (PlayerLevel < 2) {		//플레이어 레벨 2보다 작은 경우 데미지 1을 받음
 			ReduceLifeGauge(BULLETDAMAGE);

@@ -82,7 +82,7 @@
     <Media Include="BGM.mp3">
       <Filter>리소스 파일</Filter>
     </Media>
-    <Media Include="ExplosionSE.mp3">
+    <Media Include="EXPLOSION.WAV">
       <Filter>리소스 파일</Filter>
     </Media>
   </ItemGroup>

@@ -147,8 +147,14 @@
     <ClInclude Include="VariableSets.h" />
   </ItemGroup>
   <ItemGroup>
-    <Media Include="BGM.mp3" />
-    <Media Include="ExplosionSE.mp3" />
+    <Media Include="BGM.mp3">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </Media>
+    <Media Include="EXPLOSION.WAV">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </Media>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

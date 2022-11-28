@@ -57,7 +57,6 @@ void LevelUp() { if (EXP == levelFLAG[PlayerLevel - 1]) PlayerLevel++; }
 // get exp
 void GetExp() {
 	EXP++; LevelUp();
-	SetCurrentCursorPos(0, 0); printf("%d %d", EXP, PlayerLevel);  // 확인용 출력
 }
 
 
