@@ -29,7 +29,7 @@ void PlayDamageSound() {
 	openDamageSound.lpstrDeviceType = L"mpegvideo";    //mp3 형식
 	mciSendCommand(0, MCI_OPEN, MCI_OPEN_ELEMENT | MCI_OPEN_TYPE, (DWORD)(LPVOID)&openDamageSound);
 	dwID = openDamageSound.wDeviceID;
-	mciSendCommand(dwID, MCI_PLAY, MCI_NOTIFY, (DWORD)(LPVOID)&openDamageSound);    //음악을 한 번 재생
+	mciSendCommand(dwID, MCI_PLAY, MCI_NOTIFY, (DWORD)(LPVOID)&playDamageSound);    //음악을 한 번 재생
 	if (TimeCheckerEnd() - PausingTime - CollisionTime > 0.8)
 		mciSendCommand(dwID, MCI_SEEK, MCI_SEEK_TO_START, (DWORD)(LPVOID)NULL);    //음원 재생 위치를 처음으로 초기화
 }
