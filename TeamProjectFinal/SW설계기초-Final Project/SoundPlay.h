@@ -15,7 +15,7 @@ MCI_PLAY_PARMS playDamageSound;
 #define BGM L"C:\\Users\\bange\\OneDrive\\바탕 화면\\Documents\\GitHub\\새 폴더\\TeamProjectFinal\\BGM.mp3"	//BGM 파일 확장명
 #define DAMAGE L"C:\\Users\\bange\\OneDrive\\바탕 화면\\Documents\\GitHub\\새 폴더\\TeamProjectFinal\\Explosion.mp3"		//DAMAGE 효과음 확장명
 //#define CLEAR ""		//게임 클리어 시 들어가는 Clear 효과음 확장명
-int dwID;
+UINT dwID;
 
 void PlayBgm() {
 	openBgm.lpstrElementName = BGM;
