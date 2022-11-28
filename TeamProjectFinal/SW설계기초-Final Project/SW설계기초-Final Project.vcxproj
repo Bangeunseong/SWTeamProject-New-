@@ -137,12 +137,18 @@
     <ClInclude Include="Item.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="ResizeConsole.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="resource1.h" />
     <ClInclude Include="SoundPlay.h" />
     <ClInclude Include="StageMenu.h" />
     <ClInclude Include="StartMenu.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="VariableSets.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="BGM.mp3" />
+    <Media Include="ExplosionSE.mp3" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
