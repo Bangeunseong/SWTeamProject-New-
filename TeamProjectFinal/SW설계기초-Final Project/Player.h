@@ -278,7 +278,7 @@ void P_BulletLaunch() {
 	if (CheckedTime - P_BulletLaunchTime > P_BULLETLAUNCHTIMEBUFFER) {
 		mciSendCommand(dwIDSE_B, MCI_SEEK, MCI_SEEK_TO_START, (DWORD)(LPVOID)NULL);
 		P_BulletLaunchTime = CheckedTime;
-		PlaySHOOTBULLETSound();
+		PlayGUNSHOOTSound(SOUNDEFFECT_DEFAULTGUN, L"mpegvideo");
 		if (PlayerLevel <= 2) P_BULLETCOUNTEND += 2;
 		else P_BULLETCOUNTEND += 4;
 	}

@@ -137,8 +137,6 @@
     <ClInclude Include="Item.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="ResizeConsole.h" />
-    <ClInclude Include="resource.h" />
-    <ClInclude Include="resource1.h" />
     <ClInclude Include="SoundPlay.h" />
     <ClInclude Include="StageMenu.h" />
     <ClInclude Include="StartMenu.h" />
@@ -147,15 +145,13 @@
     <ClInclude Include="VariableSets.h" />
   </ItemGroup>
   <ItemGroup>
-    <Media Include="BGM.mp3">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-    </Media>
-    <Media Include="EXPLOSION.WAV">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-    </Media>
-    <Media Include="SHOOTBULLET.mp3" />
+    <Media Include="BGM_B1.mp3" />
+    <Media Include="COLLISION.mp3" />
+    <Media Include="DEFAULTGUN.mp3" />
+    <Media Include="MACHINEGUN.mp3" />
+    <Media Include="MISSIONCOMPLETE.mp3" />
+    <Media Include="MISSIONFAILED.mp3" />
+    <Media Include="SHOTGUN.mp3" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
