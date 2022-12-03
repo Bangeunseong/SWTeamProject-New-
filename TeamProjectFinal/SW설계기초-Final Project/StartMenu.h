@@ -49,9 +49,9 @@ void ShowIntro() {
 	CreateModeSelectionBox(ModeSelectionBox_Origin_X, ModeSelectionBox_Origin_Y);
 	SetCurrentCursorPos(ModeSelectionBox_Origin_X + (MODESELECTIONBOX_ROW - strlen("Story Mode")) / 2 + 1, ModeSelectionBox_Origin_Y + 1);
 	printf("Story Mode");
-	CreateModeSelectionBox(ModeSelectionBox_Origin_X + MODESELECTIONBOX_ROW + 4, ModeSelectionBox_Origin_Y);
+	/*CreateModeSelectionBox(ModeSelectionBox_Origin_X + MODESELECTIONBOX_ROW + 4, ModeSelectionBox_Origin_Y);
 	SetCurrentCursorPos(ModeSelectionBox_Origin_X + MODESELECTIONBOX_ROW + 4 + (MODESELECTIONBOX_ROW - strlen("Challenge Mode")) / 2 + 1, ModeSelectionBox_Origin_Y + 1);
-	printf("Challenge Mode");
+	printf("Challenge Mode");*/
 	CreateModeSelectionBox(ModeSelectionBox_Origin_X + MODESELECTIONBOX_ROW * 2 + 8, ModeSelectionBox_Origin_Y);
 	SetCurrentCursorPos(ModeSelectionBox_Origin_X + MODESELECTIONBOX_ROW * 2 + 8 + (MODESELECTIONBOX_ROW - strlen("Quit")) / 2 + 1, ModeSelectionBox_Origin_Y + 1);
 	printf("Quit");
@@ -99,10 +99,10 @@ int StartMenu() {
 			if (xx >= ModeSelectionBox_Origin_X && xx <= ModeSelectionBox_Origin_X + MODESELECTIONBOX_ROW) {
 				GameMode = 0; flag = 1; break;
 			}
-			else if (xx >= ModeSelectionBox_Origin_X + MODESELECTIONBOX_ROW + 4 && xx <= ModeSelectionBox_Origin_X + 2 * MODESELECTIONBOX_ROW + 4) {
+			/*else if (xx >= ModeSelectionBox_Origin_X + MODESELECTIONBOX_ROW + 4 && xx <= ModeSelectionBox_Origin_X + 2 * MODESELECTIONBOX_ROW + 4) {
 				GameMode = 1; flag = 1; break;
-			}
-			else if (xx >= ModeSelectionBox_Origin_X + 2 * (MODESELECTIONBOX_ROW + 4) && xx <= ModeSelectionBox_Origin_X + 3 * MODESELECTIONBOX_ROW + 8) break;
+			}*/
+			else if (xx >= ModeSelectionBox_Origin_X + MODESELECTIONBOX_ROW * 2 + 8 && xx <= ModeSelectionBox_Origin_X + 3 * MODESELECTIONBOX_ROW + 8) break;
 		}
 	}
 	HideIntro();

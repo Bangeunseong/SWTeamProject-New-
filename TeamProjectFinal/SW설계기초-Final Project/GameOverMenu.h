@@ -17,11 +17,12 @@ DWORD mode;
 int GameOver() {
 	if (CurrentLife <= 0) { 
 		TotalSec += (int)(TimeCheckerEnd() - PausingTime) % 60;
-		HidePlayer(); HideEnemy(); HideItem(); HideExp();
-		ClearPlayerPosition(); ClearEnemyPosition(); ClearBulletPosition(); ClearAll_PBulletPosition();
+		HidePlayer(); HideEnemy(); HideItem(); HideExp(); for (int i = 0; i < NPC_COUNT; i++) HideNpc(i);
+		ClearPlayerPosition(); ClearEnemyPosition(); ClearBulletPosition(); ClearAll_PBulletPosition(); ClearBulletPatternVisit(); ClearNpcPosition();
 		PlayerInputTime = 0; PlayerPos = 0; Invinsible = 0; CurSkill = SubSkill = UsingSkill = 0; PlayerLevel = 1; P_BulletLaunchTime = 0;
 		EnemyInputTime = EnemyMovementTiming = 0; EnemySpeed = 1.0;
 		DeactivateEnemySkill_Prison();
+		NpcInputTime = 0; NpcSpeed = 0.2; NpcDirection = 0; NpcIsMoving = 0; NpcPatternStartTime = NpcPatternEndTime = 0; NpcKilledOver = 0; NpcKillCount = 0;
 		itemFLAG = 0; ItemInputTime = 0; ItemCreationLoop = 1; flashFLAG = 0; flashCount = 0; 
 		ExpInputTime = 0; ExpCreationLoop = 1; expFLAG = 0;
 		BulletInputTime = 0;

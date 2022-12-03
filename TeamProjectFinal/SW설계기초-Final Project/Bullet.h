@@ -49,6 +49,12 @@ void DetectPatternVisitCheck() {
 	}
 }
 
+void ClearBulletPatternVisit() {
+	for (int i = 0; i < STAGEPATTERNCOUNT; i++) {
+		PatternStageVisit[i] = 0;
+	}
+}
+
 void HideBullet(int bulletnumber) {
 	SetCurrentCursorPos(bullet[bulletnumber].BULLET_POS_X, bullet[bulletnumber].BULLET_POS_Y);
 	UniBoard[bullet[bulletnumber].BULLET_POS_Y - GAMEBOARD_ORIGIN_Y][bullet[bulletnumber].BULLET_POS_X - GAMEBOARD_ORIGIN_X] = 0;
@@ -657,6 +663,7 @@ void InvalidateBullet() {
 		//총알이 버퍼시간으로 인해 움직이지 않을 때도 검사하기 위해 작성하였다
 		for (int i = 0; i < BULLETCOUNT; i++) {
 			if (bullet[i].BulletActivation) {
+				ShowBullet(i);
 				if (DetectCollision_BulletwithPlayer(bullet[i].BULLET_POS_X, bullet[i].BULLET_POS_Y)) { //플레이어와 부딪혔으면 총알 비활성화, 플레이어와 부딪혔다는 인디케이터 1로 갱신
 					HideBullet(i); bullet[i].BulletActivation = 0; bullet[i].CollisionPlayer = 1;	//플레이어와 충돌했다는 인디케이터 작동, 총알 비활성화, 총알 숨김
 				}

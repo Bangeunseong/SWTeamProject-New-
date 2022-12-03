@@ -21,17 +21,30 @@
 void StoryMode() { 
 	while (StageNumber < 4) {
 		InitStageEnemyHealth();
+		InitStageNpcHealth();
 		ShowCurrentNSubSkill();
 		ShowEnemyHealthBar();
 		ShowStoryModeTime();
 		ShowStageNumber();
 		TimeCheckerStart();
-		while (1) { InvalidatePlayerLevel(); InvalidateStoryModeTime(); InvalidateEnemyHealthBar(); InvalidateItem(); InvalidateExp(); InvalidateBullet(); InvalidateP_Bullet(); InvalidateEnemy(); InvalidatePlayer(); if (GameOver()) return; if (StageOver()) break; }
+		while (1) {
+			InvalidateStoryModeTime(); InvalidateEnemyHealthBar(); InvalidateItem(); InvalidateExp(); InvalidatePlayerLevel(); InvalidateP_Bullet(); InvalidateNpc(); InvalidatePlayer(); 
+			if (NpcKillCount > 30 && !NpcKilledOver) {
+				NpcKilledOver = 1; // npc를 30마리 잡았을 경우 InvalidBullet과 InvalidEnemy를 계속 적용하기 위한 변수 NpcKilledOver
+				BulletInputTime = TimeCheckerEnd() - BULLETTIMEBUFFER;
+				EnemyInputTime = TimeCheckerEnd() - ENEMYTIMEBUFFER;
+			}
+			if (NpcKilledOver) { // npc를 30마리 잡았을 경우 발동
+				InvalidateBullet();
+				InvalidateEnemy();
+			}
+			if (GameOver()) return; if (StageOver()) break;
+		}
 	}
 }
 
 //무한 모드
-void InfiniteMode() {		//UI 수정필요
+/*void InfiniteMode() {		//UI 수정필요
 	while (1) {
 		InitInfiniteModeEnemyHealth();
 		ShowCurrentNSubSkill();
@@ -40,7 +53,7 @@ void InfiniteMode() {		//UI 수정필요
 		TimeCheckerStart();
 		while (1) { InvalidateInfiniteModeTime(); InvalidateItem(); InvalidateExp(); InvalidateBullet(); InvalidateP_Bullet(); InvalidateEnemy(); InvalidatePlayer(); if (GameOver()) return; }
 	}
-}
+}*/
 
 //게임 실행 함수 ----게임을 실행할 때 initialize 해야할 것들만 넣기
 void RunGame() {
@@ -53,7 +66,7 @@ void RunGame() {
 			InitializeLifeGauge();
 			switch (GameMode) {
 			case 0: StoryMode(); break;
-			case 1: InfiniteMode(); break;
+			//case 1: InfiniteMode(); break;
 			}
 			if (GameOverMenu()) return;
 		}

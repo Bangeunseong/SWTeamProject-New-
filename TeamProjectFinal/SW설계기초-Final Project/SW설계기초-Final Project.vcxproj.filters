@@ -66,6 +66,9 @@
     <ClInclude Include="ExpItem.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Npc.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.c">
@@ -79,9 +82,6 @@
     <Media Include="DEFAULTGUN.mp3">
       <Filter>리소스 파일</Filter>
     </Media>
-    <Media Include="SHOTGUN.mp3">
-      <Filter>리소스 파일</Filter>
-    </Media>
     <Media Include="MACHINEGUN.mp3">
       <Filter>리소스 파일</Filter>
     </Media>
@@ -92,6 +92,18 @@
       <Filter>리소스 파일</Filter>
     </Media>
     <Media Include="BGM_B1.mp3">
+      <Filter>리소스 파일</Filter>
+    </Media>
+    <Media Include="SHOTGUN.mp3">
+      <Filter>리소스 파일</Filter>
+    </Media>
+    <Media Include="NPC_DAMAGED.mp3">
+      <Filter>리소스 파일</Filter>
+    </Media>
+    <Media Include="GETEXP.mp3">
+      <Filter>리소스 파일</Filter>
+    </Media>
+    <Media Include="GETITEM.mp3">
       <Filter>리소스 파일</Filter>
     </Media>
   </ItemGroup>

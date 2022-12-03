@@ -138,24 +138,31 @@ int PlayerPos = 0;
 //플레이어의 속도
 double SelectedSpeed, CurSpeed;
 
+//플레이어 주 무기
+int PlayerWeapon = 0;
+
 //플레이어 총알 관리 구조체
 typedef struct PlayerBullet {
 	int P_BULLET_POS_X, P_BULLET_POS_Y;	//플레이어 총알 위치
 	int BulletActivation;									//플레이어 총알 작동 인디케이더
+	int BulletDamage;
+	char BulletModel;
 	int CollisionEnemy;									//플레이어 총알이 enemy하고 충돌할 때 인디케이더
 	int CollisionWall;										//플레이어 총알이 wall하고 충돌할때 인디케이더
+	int CollisionNpc;										//플레이어 총알이 npc하고 충돌할때 인디케이더
 	int inProgress;
 }PlayerBullet;
 
 //플레이어 총알 구조체 배열
+#define PLAYERBULLET 5
 #define BULLETCOUNTLIMIT 100
 PlayerBullet PB[BULLETCOUNTLIMIT];
 
 int P_BULLETDAMAGE = 1;
-#define PLAYERBULLETMODEL '!'
-#define P_BULLETLAUNCHTIMEBUFFER 0.2
+char PLAYERBULLETMODEL[] = { '!','o','*' };
+double P_BULLETLAUNCHTIMEBUFFER = 0.15;
 #define P_BULLETTIMEBUFFER 0.03	//플레이어 총알 갱신 버퍼
-#define P_BulletSpeed 1.0					//플레이어 총알 속도
+double P_BulletSpeed = 1.0;					//플레이어 총알 속도
 
 //원형 배열처럼 이용
 int P_BULLETCOUNTSTART = 0;					//플레이어 총알 카운트 시작 index
@@ -175,7 +182,7 @@ double EnemyInputTime = 0;							//Enemy Invalidation Time
 #define ENEMYMOVEMENTDURATION_ver1 0.3		//When Enemy needs to move stop 0.3 sec and move
 double EnemyMovementTiming = 0;				//Enemy Movement start time
 
-int Enemy_Health[3] = { 280, 360, 440 };		//Enemy Health
+int Enemy_Health[3] = { 180, 260, 340 };		//Enemy Health
 int StageEnemyHealth;
 #define ENEMYSIZE_H 5		//Enemy Height
 #define ENEMYSIZE_W 11		//Enemy Width
@@ -216,6 +223,65 @@ char EnemyModel[ENEMYSIZE_H][ENEMYSIZE_W] =
 {' ',' ','V','-','V','|','V','-','V',' ',' '},
 {' ','-','-','V','^','|','^','V','-','-',' '},
 {' ',' ',' ',' ',' ','V',' ',' ',' ',' ',' '} };
+
+//-------------------------------------------------------------------
+//-------------------------Npc 상수------------------------------
+
+double NPCTIMEBUFFER = 0.02;					//Npc Invalidation Buffer Time : Invalidate after 0.02 sec
+
+double NpcInputTime = 0;							//Npc Invalidation Time
+
+#define NPCDAMAGE 2	//If player collision with npc get 2 damage
+#define NPCSIZE_H 2		//Npc Height
+#define NPCSIZE_W 5		//Npc Width
+#define NPC_COUNT 5	//Npc Count
+#define NPCPATTERNCOUNT 3
+#define NPC_PATTERNTIME_STAIRS 10.0//Stairs 패턴 지속시간
+#define NPC_PATTERNTIME_HEADBUTT 10.0//HeadButt 패턴 지속시간
+#define NPC_PATTERNTIME_SWEEPDOWN 10.0//SweepDown 패턴 지속시간
+
+typedef struct Npc {						//Npc 위치 저장 공간 구조체
+	int NPC_POS_X, NPC_POS_Y;
+	int NpcActivation;
+	int CollisionPlayer;
+	int CollisionWall;
+	int CollisionPbullet;
+	int life;
+	int cnt;
+}Npc;
+
+Npc npc[NPC_COUNT];
+
+int Npc_Health[3] = { 3, 6, 9 };			//Npc Health
+double NpcSpeed = 0.2;						//Npc Speed
+double NpcPatternStartTime = 0;				//패턴 시작시간
+double NpcPatternEndTime = 0;				//패턴 종료시간
+double NpcMovementTiming = 0;				//Npc Movement start time
+
+int NpcPatternStart = 0;					//패턴 시작 유무
+int NpcPatternTimeEnded = 1;				//패턴 지속시간 종료 유무
+int NpcPatternNumber = 0;					//패턴 넘버
+int NpcPatternCycle = 0;					//패턴 사이클
+int NpcSweepDownChecker = 0;				//SweepDown패턴 체커
+int NpcDirection = 0;
+int NpcIsMoving = 0;
+int NpcKillCount = 0;
+int NpcKilledOver = 0;
+int NPCCOUNT = 0;							//npc 개수
+
+char NpcModel[NPC_COUNT][NPCSIZE_H][NPCSIZE_W] = {
+	{{'-', '=','T', '=', '-'},
+	{' ','l', 'V', 'l', ' '}},
+	{{'V', '-','-', '-', 'V'},
+	{' ','v', 'o', 'v', ' '}},
+	{{'-', 'I','U', 'I', '-'},
+	{' ','(', 'v', ')', ' '}},
+	{{'-', 'w','T', 'w', '-'},
+	{' ','!', 'l', '!', ' '}},
+	{{'~', 'X',' ', 'X', '~'},
+	{' ','Y', 'x', 'Y', ' '}}
+};
+
 //-------------------------------------------------------------------
 //-------------------------Timer 상수------------------------------
 
@@ -276,6 +342,7 @@ int ITEM_POS_X, ITEM_POS_Y;
 //아이템과 플레이어 충돌 감지 변수
 int ItemCollisionDetected = 0;
 
+//아이템 번호
 int ItemNumber = 0;
 
 //플레이어의 주 스킬, 보조 스킬, 사용 중인 스킬
@@ -309,7 +376,7 @@ Bullet bullet[1000];							//Bullet 구조체 배열
 
 #define STAGEPATTERNCOUNT 6
 int PatternStage1[] = { 1, 2, 3, 4, 5, 6 };
-int PatternStage2[] = { 2, 3, 4, 5, 6, 7 };
+int PatternStage2[] = { 2, 3, 4, 6, 7, 8 };
 int PatternStage3[] = { 5, 6, 7, 8, 9, 10 };
 int PatternStageVisit[] = { 0, 0, 0, 0, 0, 0 };
 

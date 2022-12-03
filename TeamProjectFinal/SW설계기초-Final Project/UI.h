@@ -87,11 +87,11 @@ void ShowStoryModeTime() {
 }
 
 void InvalidateStoryModeTime() {
-	ShowStoryModeTime();
 	double CheckedTime = TimeCheckerEnd() - PausingTime;
 	MiSec = (int)(CheckedTime * 100) % 100;
 	Sec = (int)(CheckedTime) % 60;
 	Min = (int)(CheckedTime) / 60;
+	ShowStoryModeTime();
 }
 
 void ShowInfiniteModeTime() {

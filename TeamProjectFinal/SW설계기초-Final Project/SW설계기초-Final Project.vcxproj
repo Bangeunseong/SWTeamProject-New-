@@ -135,6 +135,7 @@
     <ClInclude Include="GameFile.h" />
     <ClInclude Include="GameOverMenu.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="Npc.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="ResizeConsole.h" />
     <ClInclude Include="SoundPlay.h" />
@@ -148,9 +149,12 @@
     <Media Include="BGM_B1.mp3" />
     <Media Include="COLLISION.mp3" />
     <Media Include="DEFAULTGUN.mp3" />
+    <Media Include="GETEXP.mp3" />
+    <Media Include="GETITEM.mp3" />
     <Media Include="MACHINEGUN.mp3" />
     <Media Include="MISSIONCOMPLETE.mp3" />
     <Media Include="MISSIONFAILED.mp3" />
+    <Media Include="NPC_DAMAGED.mp3" />
     <Media Include="SHOTGUN.mp3" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

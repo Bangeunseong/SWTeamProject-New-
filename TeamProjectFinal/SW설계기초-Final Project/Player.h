@@ -8,6 +8,7 @@
 #include "Item.h"
 #include "Timer.h"
 #include "UI.h"
+#include "Npc.h"
 #include "SoundPlay.h"
 #ifndef PLAYER_H
 #define PLAYER_H
@@ -45,10 +46,10 @@ void ShowPlayer() {
 	else if (UsingSkill > 0) SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), PLAYERUSINGSKILLCOLOR);
 	else SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), PLAYERCOLOR);
 
-	int Modellen;
-	if (PlayerLevel < 4) Modellen = PlayerLevel * 2;
-	else Modellen = 6;
-	for (int i = 0; i < Modellen; i++) { SetCurrentCursorPos(PLAYER_POS_X + i, PLAYER_POS_Y); printf("%c", PlayerModel[PlayerModelIndex][PlayerLevel - 1][i]); }
+	int Modellen; int ModifiedLevel;
+	if (PlayerLevel < 4) { Modellen = PlayerLevel * 2; ModifiedLevel = PlayerLevel - 1; }
+	else { Modellen = 6; ModifiedLevel = 2; }
+	for (int i = 0; i < Modellen; i++) { SetCurrentCursorPos(PLAYER_POS_X + i, PLAYER_POS_Y); printf("%c", PlayerModel[PlayerModelIndex][ModifiedLevel][i]); }
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
 	SetCurrentCursorPos(PLAYER_POS_X, PLAYER_POS_Y);
 }
@@ -99,6 +100,21 @@ int DetectCollision_PlayerwithBullet(int x, int y) {
 	else Modellen = 6;
 	for (int i = 0; i < Modellen; i++) {
 		if (UniBoard[y - GAMEBOARD_ORIGIN_Y][x - GAMEBOARD_ORIGIN_X + i] == BULLET) return 1;
+	}
+	return 0;
+}
+
+int DetectCollision_PlayerwithNpc(int x, int y, int n) {
+	int Modellen;
+	if (PlayerLevel < 4) Modellen = PlayerLevel * 2;
+	else Modellen = 6;
+	for (int i = 0; i < Modellen; i++) {
+		for (int j = 0; j < NPCSIZE_H; j++) {
+			for (int k = 0; k < NPCSIZE_W; k++) {
+				if (NpcModel[n][j][k] != ' ')
+					if ((npc[n].NPC_POS_Y) + j == PLAYER_POS_Y && (npc[n].NPC_POS_X) + k == PLAYER_POS_X + i) return 1;
+			}
+		}
 	}
 	return 0;
 }
@@ -160,6 +176,23 @@ void GetDamagedFromEnemy() {
 		Invinsible = 1; CollisionTime = TimeCheckerEnd() - PausingTime;		//무적상태로 만들고 충돌한 시간 갱신
 		return;
 	}
+	if (Invinsible == 0) {
+		for (int i = 0; i < NPC_COUNT; i++) {
+			if (DetectCollision_PlayerwithNpc(PLAYER_POS_X, PLAYER_POS_Y, i)) {
+				if (PlayerLevel < 2) {		//플레이어 레벨 2보다 작은 경우 데미지 1을 받음
+					ReduceLifeGauge(BULLETDAMAGE);
+					InvalidateLifeGauge();												//라이프 게이지 갱신은 데미지를 받을 때만 수행
+				}
+				else {
+					EXP -= 2;
+					if (PlayerLevel < 4) { HidePlayer(); PlayerLevel--; ShowPlayer(); }
+					else PlayerLevel--;
+				}
+				Invinsible = 1; CollisionTime = TimeCheckerEnd() - PausingTime;		//무적상태로 만들고 충돌한 시간 갱신
+				return;
+			}
+		}
+	}
 }
 
 
@@ -195,6 +228,9 @@ void shiftRight() {
 
 int CalculateP_BulletTimeBuffer() {
 	double CheckedTime = TimeCheckerEnd() - PausingTime;
+	if (PlayerWeapon == 0) P_BULLETLAUNCHTIMEBUFFER = 0.2;
+	else if (PlayerWeapon == 1) P_BULLETLAUNCHTIMEBUFFER = 0.1;
+	else if (PlayerWeapon == 2) P_BULLETLAUNCHTIMEBUFFER = 0.5;
 	if (CheckedTime - P_BulletInputTime > P_BULLETTIMEBUFFER / P_BulletSpeed) { P_BulletInputTime += P_BULLETTIMEBUFFER / P_BulletSpeed; return 0; }
 	else return 1;
 }
@@ -205,15 +241,14 @@ void HideP_Bullet(int P_bulletnumber) {
 }
 
 void ShowP_Bullet(int P_bulletnumber) {
-	if (!PB[P_bulletnumber].BulletActivation) PB[P_bulletnumber].BulletActivation = 1;
 	SetCurrentCursorPos(PB[P_bulletnumber].P_BULLET_POS_X, PB[P_bulletnumber].P_BULLET_POS_Y);
-	printf("%c", PLAYERBULLETMODEL);
+	printf("%c", PLAYERBULLETMODEL[PlayerWeapon]);
 }
 
 void ClearAll_PBulletPosition() {
 	for (int i = 0; i < BULLETCOUNTLIMIT; i++) {
 		HideP_Bullet(i);
-		PB[i].BulletActivation = PB[i].CollisionEnemy = PB[i].CollisionWall = PB[i].inProgress = 0;
+		PB[i].BulletActivation = PB[i].CollisionEnemy = PB[i].CollisionWall = PB[i].CollisionNpc = PB[i].inProgress = 0;
 	}
 	P_BULLETCOUNTSTART = 0;
 	P_BULLETCOUNTEND = -1;
@@ -221,25 +256,32 @@ void ClearAll_PBulletPosition() {
 }
 
 void ClearSingle_PBulletPosition(int P_bulletnumber) {
-	PB[P_bulletnumber].BulletActivation = PB[P_bulletnumber].CollisionEnemy = PB[P_bulletnumber].CollisionWall = PB[P_bulletnumber].inProgress = 0;
+	PB[P_bulletnumber].BulletActivation = PB[P_bulletnumber].CollisionEnemy = PB[P_bulletnumber].CollisionWall = PB[P_bulletnumber].CollisionNpc = PB[P_bulletnumber].BulletDamage = PB[P_bulletnumber].inProgress = 0;
+	PB[P_bulletnumber].BulletModel = "";
+}
+
+void InvalidateP_BulletDamageNModel(int P_bulletnumber) {
+	if (PlayerWeapon == 0) { PB[P_bulletnumber].BulletDamage = 1 + PlayerLevel / 2; PB[P_bulletnumber].BulletModel = PLAYERBULLETMODEL[PlayerWeapon]; }
+	else if (PlayerWeapon == 1) { PB[P_bulletnumber].BulletDamage = 2 + PlayerLevel / 2; PB[P_bulletnumber].BulletModel = PLAYERBULLETMODEL[PlayerWeapon]; }
+	else if (PlayerWeapon == 2) { PB[P_bulletnumber].BulletDamage = 4 + PlayerLevel / 2; PB[P_bulletnumber].BulletModel = PLAYERBULLETMODEL[PlayerWeapon]; }
 }
 
 void P_BulletPositionRenewal(int P_bulletnumber) {
 	int Modellen;
 	if (PlayerLevel < 4) Modellen = PlayerLevel * 2;
 	else Modellen = 6;
-	if (PlayerLevel == 1) {
-		if (P_bulletnumber % 2 == 0) { PB[P_bulletnumber].P_BULLET_POS_X = PLAYER_POS_X; PB[P_bulletnumber].P_BULLET_POS_Y = PLAYER_POS_Y; }
-		else { PB[P_bulletnumber].P_BULLET_POS_X = PLAYER_POS_X + 1; PB[P_bulletnumber].P_BULLET_POS_Y = PLAYER_POS_Y; }
+	if (PlayerWeapon == 0) {	//DEFAULT GUN BulletPosition
+		if (P_bulletnumber % 2 == 0) { PB[P_bulletnumber].P_BULLET_POS_X = PLAYER_POS_X + Modellen / 2 - 1; PB[P_bulletnumber].P_BULLET_POS_Y = PLAYER_POS_Y; }
+		else { PB[P_bulletnumber].P_BULLET_POS_X = PLAYER_POS_X + Modellen / 2; PB[P_bulletnumber].P_BULLET_POS_Y = PLAYER_POS_Y; }
 	}
-	else if (PlayerLevel == 2) {
+	else if (PlayerWeapon == 1) {	//MACHINEGUN BulletPosition
 		if (P_bulletnumber % 2 == 0) { PB[P_bulletnumber].P_BULLET_POS_X = PLAYER_POS_X; PB[P_bulletnumber].P_BULLET_POS_Y = PLAYER_POS_Y; }
 		else { PB[P_bulletnumber].P_BULLET_POS_X = PLAYER_POS_X + Modellen - 1; PB[P_bulletnumber].P_BULLET_POS_Y = PLAYER_POS_Y; }
 	}
-	else {
+	else if (PlayerWeapon == 2) {	//SHOTGUN BulletPosition
 		if (P_bulletnumber % 4 == 0) { PB[P_bulletnumber].P_BULLET_POS_X = PLAYER_POS_X; PB[P_bulletnumber].P_BULLET_POS_Y = PLAYER_POS_Y; }
 		else if(P_bulletnumber % 4 == 1){ PB[P_bulletnumber].P_BULLET_POS_X = PLAYER_POS_X + Modellen / 2 - 1; PB[P_bulletnumber].P_BULLET_POS_Y = PLAYER_POS_Y; }
-		else if (P_bulletnumber % 4 == 2) { PB[P_bulletnumber].P_BULLET_POS_X = PLAYER_POS_X + Modellen / 2; PB[P_bulletnumber].P_BULLET_POS_Y = PLAYER_POS_Y; }
+		else if(P_bulletnumber % 4 == 2) { PB[P_bulletnumber].P_BULLET_POS_X = PLAYER_POS_X + Modellen / 2; PB[P_bulletnumber].P_BULLET_POS_Y = PLAYER_POS_Y; }
 		else { PB[P_bulletnumber].P_BULLET_POS_X = PLAYER_POS_X + Modellen - 1; PB[P_bulletnumber].P_BULLET_POS_Y = PLAYER_POS_Y; }
 	}
 }
@@ -261,26 +303,45 @@ int DetectCollision_P_BulletwithEnemy(int x, int y) {
 	return 0;
 }
 
+int DetectCollision_P_BulletwithNpc(int x, int y, int n) {
+	for (int i = 0; i < NPCSIZE_H; i++) { 
+		if (npc[n].NPC_POS_Y + i != y) return 0;
+		else break;
+	}
+	for (int i = 0; i < NPCSIZE_W; i++) { if (npc[n].NPC_POS_X + i == x) return 1; }
+	return 0;
+}
+
+//----------------------BulletMovementFunction-------------------------
+
 int MoveP_Bullet_N(int P_bulletnumber) {
 	if (!PB[P_bulletnumber].BulletActivation) return 0;
-
 	HideP_Bullet(P_bulletnumber);
 	if (DetectCollision_P_BulletwithEnemy(PB[P_bulletnumber].P_BULLET_POS_X, PB[P_bulletnumber].P_BULLET_POS_Y)) { 
 		PB[P_bulletnumber].BulletActivation = 0; PB[P_bulletnumber].CollisionEnemy = 1; StageEnemyHealth -= P_BULLETDAMAGE; return 0;		//Enemy가 받는 데미지도 처리
 	}
 	if (!DetectCollision_P_BulletwithWall(PB[P_bulletnumber].P_BULLET_POS_X, PB[P_bulletnumber].P_BULLET_POS_Y - 1)) PB[P_bulletnumber].P_BULLET_POS_Y--;
 	else { PB[P_bulletnumber].BulletActivation = 0; PB[P_bulletnumber].CollisionWall = 1; return 0; }
+	for (int i = 0; i < NPC_COUNT; i++) {
+		if (DetectCollision_P_BulletwithNpc(PB[P_bulletnumber].P_BULLET_POS_X, PB[P_bulletnumber].P_BULLET_POS_Y, i)) {
+			PB[P_bulletnumber].BulletActivation = 0; PB[P_bulletnumber].CollisionNpc = 1; NpcGetDamagedFromPlayer(i); return 0;			//Npc가 받는 데미지도 처리
+		}
+	}
 	ShowP_Bullet(P_bulletnumber); return 1;
 }
+
+//-----------------------------------------------------------------------------
 
 void P_BulletLaunch() {
 	double CheckedTime = TimeCheckerEnd() - PausingTime;
 	if (CheckedTime - P_BulletLaunchTime > P_BULLETLAUNCHTIMEBUFFER) {
 		mciSendCommand(dwIDSE_B, MCI_SEEK, MCI_SEEK_TO_START, (DWORD)(LPVOID)NULL);
 		P_BulletLaunchTime = CheckedTime;
-		PlayGUNSHOOTSound(SOUNDEFFECT_DEFAULTGUN, L"mpegvideo");
-		if (PlayerLevel <= 2) P_BULLETCOUNTEND += 2;
-		else P_BULLETCOUNTEND += 4;
+		if (PlayerWeapon == 0) { PlayGUNSHOOTSound(SOUNDEFFECT_DEFAULTGUN, L"mpegvideo"); P_BulletSpeed = 1.0; }
+		else if (PlayerWeapon == 1) { PlayGUNSHOOTSound(SOUNDEFFECT_MACHINEGUN, L"mpegvideo"); P_BulletSpeed = 1.4; }
+		else if (PlayerWeapon == 2) { PlayGUNSHOOTSound(SOUNDEFFECT_SHOTGUN, L"mpegvideo"); P_BulletSpeed = 0.8; }
+		if (PlayerWeapon == 0 || PlayerWeapon == 1) P_BULLETCOUNTEND += 2;
+		else if(PlayerWeapon == 2) P_BULLETCOUNTEND += 4;
 	}
 }
 
@@ -288,7 +349,7 @@ void InvalidateP_Bullet() {
 	if (!CalculateP_BulletTimeBuffer()) {
 		for (int i = P_BULLETCOUNTSTART; i <= P_BULLETCOUNTEND; i++) {
 			if (!PB[i % BULLETCOUNTLIMIT].BulletActivation && !PB[i % BULLETCOUNTLIMIT].inProgress) {
-				P_BulletPositionRenewal(i % BULLETCOUNTLIMIT); PB[i % BULLETCOUNTLIMIT].BulletActivation = PB[i % BULLETCOUNTLIMIT].inProgress = 1;
+				P_BulletPositionRenewal(i % BULLETCOUNTLIMIT); PB[i % BULLETCOUNTLIMIT].BulletActivation = PB[i % BULLETCOUNTLIMIT].inProgress = 1; InvalidateP_BulletDamageNModel(i % BULLETCOUNTLIMIT);
 				ShowP_Bullet(i % BULLETCOUNTLIMIT);
 			}
 			if (!MoveP_Bullet_N(i % BULLETCOUNTLIMIT) && i == P_BULLETCOUNTSTART) { ClearSingle_PBulletPosition(i % BULLETCOUNTLIMIT); P_BULLETCOUNTSTART++; }
@@ -302,6 +363,14 @@ void InvalidateP_Bullet() {
 				if (i == P_BULLETCOUNTSTART) { ClearSingle_PBulletPosition(i % BULLETCOUNTLIMIT); P_BULLETCOUNTSTART++; }
 				else { PB[i % BULLETCOUNTLIMIT].BulletActivation = 0; PB[i % BULLETCOUNTLIMIT].CollisionEnemy = 1; }
 			}
+			for (int j = 0; j < NPC_COUNT; j++) {
+				if (DetectCollision_P_BulletwithNpc(PB[i % BULLETCOUNTLIMIT].P_BULLET_POS_X, PB[i % BULLETCOUNTLIMIT].P_BULLET_POS_Y, j)) {
+					HideP_Bullet(i % BULLETCOUNTLIMIT); 
+					if (PB[i % BULLETCOUNTLIMIT].BulletActivation) NpcGetDamagedFromPlayer(j);
+					if (i == P_BULLETCOUNTSTART) { ClearSingle_PBulletPosition(i % BULLETCOUNTLIMIT); P_BULLETCOUNTSTART++; }
+					else { PB[i % BULLETCOUNTLIMIT].BulletActivation = 0; PB[i % BULLETCOUNTLIMIT].CollisionNpc = 1; PB[i % BULLETCOUNTLIMIT].CollisionEnemy = 1; }
+				}
+			}
 		}
 	}
 }
@@ -310,7 +379,7 @@ void InvalidateP_Bullet() {
 
 //-------------------------------------플레이어 갱신 함수-------------------------------------------------------
 void InvalidatePlayer() {
-	ShowPlayer(); P_BULLETDAMAGE = PlayerLevel;
+	ShowPlayer(); 
 	if (DetectCollision_PlayerwithItem(ITEM_POS_X, ITEM_POS_Y)) ItemCollisionDetected = 1;
 	if (!CalculatePlayerTimeBuffer()) {
 		if (kbhit()) {
@@ -318,7 +387,8 @@ void InvalidatePlayer() {
 			if (GetAsyncKeyState(RIGHT) & 0x8000) shiftRight();
 			if (GetAsyncKeyState(UP) & 0x8000) shiftUp();
 			if (GetAsyncKeyState(DOWN) & 0x8000) shiftDown();
-			if (GetAsyncKeyState(BULLETLAUNCH) & 0x8000) P_BulletLaunch();
+			if (PlayerWeapon == 1) { if (GetAsyncKeyState(BULLETLAUNCH) & 0x8000) P_BulletLaunch(); }
+			else { if (GetAsyncKeyState(BULLETLAUNCH) & 0x0001) P_BulletLaunch(); }
 			if (GetAsyncKeyState(SKILLACTIVE) & 0x0001) ActivateSkillItem();
 			if (GetAsyncKeyState(SWAP) & 0x0001) SwapItem();
 			if (GetAsyncKeyState(QUIT) & 0x0001) GamePause();
