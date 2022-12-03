@@ -20,6 +20,10 @@ MCI_OPEN_PARMS openMissionCompleteSound;
 MCI_PLAY_PARMS playMissionCompleteSound;
 MCI_OPEN_PARMS openMissionFailedSound;
 MCI_PLAY_PARMS playMissionFailedSound;
+MCI_OPEN_PARMS openGetExpSound;
+MCI_PLAY_PARMS playGetExpSound;
+MCI_OPEN_PARMS openGetItemSound;
+MCI_PLAY_PARMS playGetItemSound;
 
 #define BGM L"BGM_B1.mp3"	//BGM
 #define SOUNDEFFECT_COLLISION L"COLLISION.mp3"		//DAMAGE 효과음
@@ -27,6 +31,8 @@ MCI_PLAY_PARMS playMissionFailedSound;
 #define SOUNDEFFECT_SHOTGUN L"SHOTGUN.mp3"
 #define SOUNDEFFECT_MACHINEGUN L"MACHINEGUN.mp3"
 #define SOUNDEFFECT_NPCDAMAGED L"NPC_DAMAGED.mp3"
+#define SOUNDEFFECT_GETEXP L"GETEXP.mp3"
+#define SOUNDEFFECT_GETITEM L"GETITEM.mp3"
 #define MISSIONCOMPLETE L"MISSIONCOMPLETE.mp3"
 #define MISSIONFAILED L"MISSIONFAILED.mp3"
 
@@ -85,12 +91,38 @@ void PlayGUNSHOOTSound(LPCWSTR Filename, LPCWSTR Filetype) {
 	mciSendCommandW(dwIDSE_B, MCI_PLAY, MCI_NOTIFY, (DWORD)(LPVOID)&playBulletSound);    //음악을 한 번 재생
 }
 
+UINT dwIDSE_EXP;
+
+void PlayGETEXPSound() {
+	MCI_DGV_SETAUDIO_PARMS GETEXPVolume;
+	GETEXPVolume.dwItem = MCI_DGV_SETAUDIO_VOLUME;
+	GETEXPVolume.dwValue = 450;
+	openGetExpSound.lpstrElementName = SOUNDEFFECT_GETEXP;    //파일 오픈
+	openGetExpSound.lpstrDeviceType = L"mpegvideo";    //mp3 형식
+	mciSendCommandW(NULL, MCI_OPEN, MCI_OPEN_ELEMENT | MCI_OPEN_TYPE, (DWORD)(LPVOID)&openGetExpSound);
+	dwIDSE_EXP = openGetExpSound.wDeviceID;
+	mciSendCommandW(dwIDSE_EXP, MCI_PLAY, MCI_NOTIFY, (DWORD)(LPVOID)&playGetExpSound);    //음악을 한 번 재생
+}
+
+UINT dwIDSE_ITEM;
+
+void PlayGETITEMSound() {
+	MCI_DGV_SETAUDIO_PARMS GETITEMVolume;
+	GETITEMVolume.dwItem = MCI_DGV_SETAUDIO_VOLUME;
+	GETITEMVolume.dwValue = 350;
+	openGetItemSound.lpstrElementName = SOUNDEFFECT_GETITEM;    //파일 오픈
+	openGetItemSound.lpstrDeviceType = L"mpegvideo";    //mp3 형식
+	mciSendCommandW(NULL, MCI_OPEN, MCI_OPEN_ELEMENT | MCI_OPEN_TYPE, (DWORD)(LPVOID)&openGetItemSound);
+	dwIDSE_ITEM = openGetExpSound.wDeviceID;
+	mciSendCommandW(dwIDSE_ITEM, MCI_PLAY, MCI_NOTIFY, (DWORD)(LPVOID)&playGetItemSound);    //음악을 한 번 재생
+}
+
 UINT dwID_MC;
 
 void PlayMISSIONCOMPLETESound() {
 	MCI_DGV_SETAUDIO_PARMS MCVolume;
 	MCVolume.dwItem = MCI_DGV_SETAUDIO_VOLUME;
-	MCVolume.dwValue = 450;
+	MCVolume.dwValue = 350;
 	openMissionCompleteSound.lpstrElementName = MISSIONCOMPLETE;    //파일 오픈
 	openMissionCompleteSound.lpstrDeviceType = L"mpegvideo";    //mp3 형식
 	mciSendCommandW(NULL, MCI_OPEN, MCI_OPEN_ELEMENT | MCI_OPEN_TYPE, (DWORD)(LPVOID)&openMissionCompleteSound);

@@ -56,6 +56,8 @@ void LevelUp() { if (EXP == levelFLAG[PlayerLevel - 1]) PlayerLevel++; }
 
 // get exp
 void GetExp() {
+	mciSendCommandW(dwIDSE_EXP, MCI_SEEK, MCI_SEEK_TO_START, (DWORD)(LPVOID)NULL);
+	PlayGETEXPSound();
 	EXP++; LevelUp();
 }
 

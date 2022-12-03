@@ -6,6 +6,7 @@
 #include "Bullet.h"
 #include "Timer.h"
 #include "UI.h"
+#include "SoundPlay.h"
 
 #ifndef ITEM_H
 #define ITEM_H
@@ -228,6 +229,8 @@ void ResetItem() { HideItem(); itemFLAG = 0; }
 void shiftItemDown() {
 	HideItem();
 	if (ItemCollisionDetected) {
+		mciSendCommandW(dwIDSE_ITEM, MCI_SEEK, MCI_SEEK_TO_START, (DWORD)(LPVOID)NULL);
+		PlayGETITEMSound();
 		ItemCollisionDetected = 0;
 		ResetItem(); 
 		HidePreviousCurrentNSubSkill(); 
@@ -237,7 +240,6 @@ void shiftItemDown() {
 	}
 	if (DetectCollision_ItemwithWall(ITEM_POS_X, ITEM_POS_Y + 1)) { ResetItem(); return; }
 	else ITEM_POS_Y++;
-	
 	ShowItem();
 }
 
@@ -249,6 +251,8 @@ void InvalidateItem() {
 		if (!CalculateItemTimeBuffer()) shiftItemDown();
 		else {
 			if (ItemCollisionDetected) {
+				mciSendCommandW(dwIDSE_ITEM, MCI_SEEK, MCI_SEEK_TO_START, (DWORD)(LPVOID)NULL);
+				PlayGETITEMSound();
 				ItemCollisionDetected = 0;
 				HideItem(); ResetItem();
 				HidePreviousCurrentNSubSkill();
