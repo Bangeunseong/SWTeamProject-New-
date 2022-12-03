@@ -252,7 +252,7 @@ typedef struct Npc {						//Npc 위치 저장 공간 구조체
 
 Npc npc[NPC_COUNT];
 
-int Npc_Health[3] = { 6, 9, 12 };			//Npc Health
+int Npc_Health[3] = { 4, 8, 12 };			//Npc Health
 double NpcSpeed = 0.2;						//Npc Speed
 double NpcPatternStartTime = 0;				//패턴 시작시간
 double NpcPatternEndTime = 0;				//패턴 종료시간
