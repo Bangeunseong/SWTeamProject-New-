@@ -108,17 +108,18 @@ int DetectCollision_NpcwithWall(int x, int y) {
 }
 //Npc가 플레이어와 충돌하였는지 유무 확인 함수
 int DetectCollision_NpcwithPlayer(int x, int y, int n) {
-	if (y == PLAYER_POS_Y) {
-		int Modellen;
-		if (PlayerLevel < 4) Modellen = PlayerLevel * 2;
-		else Modellen = 6;
-		for (int i = 0; i < Modellen; i++) {
-			for (int j = 0; j < NPCSIZE_H; j++) {
-				for (int k = 0; k < NPCSIZE_W; k++) {
-					if (NpcModel[n][j][k] != ' ')
-						if ((npc[n].NPC_POS_Y + j == PLAYER_POS_Y) && (npc[n].NPC_POS_X + k == PLAYER_POS_X + i)) return 1;
-				}
-			}
+	int Modellen;
+	if (PlayerLevel < 4) Modellen = PlayerLevel * 2;
+	else Modellen = 6;
+
+	int flag = 0; int index;
+	for (int i = 0; i < NPCSIZE_H; i++) { if (npc[n].NPC_POS_Y + i == PLAYER_POS_Y) { index = 1; flag = 1; break; } }
+	if (!flag) return 0;
+
+	for (int i = 0; i < Modellen; i++) {
+		for (int j = 0; j < NPCSIZE_W; j++) {
+			if (NpcModel[n][index][j] != ' ')
+				if (npc[n].NPC_POS_X + j == PLAYER_POS_X + i) return 1;
 		}
 	}
 	return 0;
@@ -126,11 +127,11 @@ int DetectCollision_NpcwithPlayer(int x, int y, int n) {
 
 //npc데미지 처리함수
 void NpcGetDamagedFromPlayer(int n) {
-	mciSendCommandW(dwIDSE_NPCD, MCI_SEEK, MCI_SEEK_TO_START, (DWORD)(LPVOID)NULL);
-	PlayNPCDAMAGEDSound();
 	npc[n].life -= P_BULLETDAMAGE;
 	if (npc[n].life > 0) return;
 	else {
+		mciSendCommandW(dwIDSE_NPCD, MCI_SEEK, MCI_SEEK_TO_START, (DWORD)(LPVOID)NULL);
+		PlayNPCDAMAGEDSound();
 		HideNpc(n); npc[n].NpcActivation = 0; npc[n].CollisionPbullet = 1; npc[n].life = Npc_Health[StageNumber - 1];
 		NpcKillCount++;
 		NpcPostionRenewal(n);

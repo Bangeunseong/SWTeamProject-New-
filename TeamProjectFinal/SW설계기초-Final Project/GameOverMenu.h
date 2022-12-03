@@ -59,6 +59,8 @@ void CreateOptionSelectionBox(int x, int y) {
 
 //게임오버 로고 출력
 void ShowGameOver() {
+	mciSendCommandW(dwID, MCI_PLAY, MCI_PAUSE, (DWORD)(LPVOID)&playBgm);
+	PlayMISSIONFAILEDSound();
 	COORD center = { BACKGROUND_ORIGIN_X + BACKGROUND_ROW / 2, BACKGROUND_ORIGIN_Y + BACKGROUND_COLUMN / 2 };
 	int modifiedX = center.X - 46, modifiedY = center.Y - 5;
 	for (int i = 0; i < 8; i++) {

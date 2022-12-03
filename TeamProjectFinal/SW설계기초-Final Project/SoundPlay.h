@@ -88,20 +88,20 @@ void PlayGUNSHOOTSound(LPCWSTR Filename, LPCWSTR Filetype) {
 UINT dwID_MC;
 
 void PlayMISSIONCOMPLETESound() {
-	openDamageSound.lpstrElementName = MISSIONCOMPLETE;    //파일 오픈
-	openDamageSound.lpstrDeviceType = L"mpegvideo";    //mp3 형식
+	openMissionCompleteSound.lpstrElementName = MISSIONCOMPLETE;    //파일 오픈
+	openMissionCompleteSound.lpstrDeviceType = L"mpegvideo";    //mp3 형식
 	mciSendCommandW(NULL, MCI_OPEN, MCI_OPEN_ELEMENT | MCI_OPEN_TYPE, (DWORD)(LPVOID)&openMissionCompleteSound);
-	dwIDSE_D = openMissionCompleteSound.wDeviceID;
-	mciSendCommandW(dwIDSE_D, MCI_PLAY, MCI_NOTIFY, (DWORD)(LPVOID)&playMissionCompleteSound);    //음악을 한 번 재생
+	dwID_MC = openMissionCompleteSound.wDeviceID;
+	mciSendCommandW(dwID_MC, MCI_PLAY, MCI_NOTIFY, (DWORD)(LPVOID)&playMissionCompleteSound);    //음악을 한 번 재생
 }
 
 UINT dwID_MF;
 
 void PlayMISSIONFAILEDSound() {
-	openDamageSound.lpstrElementName = MISSIONFAILED;    //파일 오픈
-	openDamageSound.lpstrDeviceType = L"mpegvideo";    //mp3 형식
+	openMissionFailedSound.lpstrElementName = MISSIONFAILED;    //파일 오픈
+	openMissionFailedSound.lpstrDeviceType = L"mpegvideo";    //mp3 형식
 	mciSendCommandW(NULL, MCI_OPEN, MCI_OPEN_ELEMENT | MCI_OPEN_TYPE, (DWORD)(LPVOID)&openMissionFailedSound);
-	dwIDSE_D = openMissionFailedSound.wDeviceID;
-	mciSendCommandW(dwIDSE_D, MCI_PLAY, MCI_NOTIFY, (DWORD)(LPVOID)&playMissionFailedSound);    //음악을 한 번 재생
+	dwID_MF = openMissionFailedSound.wDeviceID;
+	mciSendCommandW(dwID_MF, MCI_PLAY, MCI_NOTIFY, (DWORD)(LPVOID)&playMissionFailedSound);    //음악을 한 번 재생
 }
 #endif // !SOUNDPLAY_H
