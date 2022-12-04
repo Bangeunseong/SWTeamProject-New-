@@ -126,7 +126,7 @@ int DetectCollision_PlayerwithItem(int x, int y) {
 	else Modellen = 6;
 	if (itemFLAG) {
 		for (int i = 0; i < Modellen; i++) {
-			if (x == PLAYER_POS_X + i && y == PLAYER_POS_Y) return 1;
+			if (x == PLAYER_POS_X + i && y == PLAYER_POS_Y) return 1; 
 		}
 	}
 	return 0;
@@ -257,7 +257,7 @@ void ClearAll_PBulletPosition() {
 
 void ClearSingle_PBulletPosition(int P_bulletnumber) {
 	PB[P_bulletnumber].BulletActivation = PB[P_bulletnumber].CollisionEnemy = PB[P_bulletnumber].CollisionWall = PB[P_bulletnumber].CollisionNpc = PB[P_bulletnumber].BulletDamage = PB[P_bulletnumber].inProgress = 0;
-	PB[P_bulletnumber].BulletModel = "";
+	PB[P_bulletnumber].BulletModel = PLAYERBULLETMODEL[PlayerWeapon];
 }
 
 void InvalidateP_BulletDamageNModel(int P_bulletnumber) {

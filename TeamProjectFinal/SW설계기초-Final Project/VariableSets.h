@@ -159,7 +159,7 @@ typedef struct PlayerBullet {
 PlayerBullet PB[BULLETCOUNTLIMIT];
 
 int P_BULLETDAMAGE = 1;
-char PLAYERBULLETMODEL[] = { '!','o','*' };
+const char PLAYERBULLETMODEL[] = { '!','o','*' };
 double P_BULLETLAUNCHTIMEBUFFER = 0.15;
 #define P_BULLETTIMEBUFFER 0.03	//플레이어 총알 갱신 버퍼
 double P_BulletSpeed = 1.0;					//플레이어 총알 속도
@@ -408,15 +408,20 @@ char BulletModelPerPattern[TOTALPATTERNCOUNT] = { 'o','v','v','o','o','x','o','o
 //---------------------------------------------------------
 //----------------------Exp 상수--------------------------
 
-//아이템 움직임 버퍼 시간
-#define EXPTIMEBUFFER 0.2
-double ExpInputTime = 0;
-int ExpCreateTime = 10;			//아이템 생성 시간 간격, 확인을 위해 5초 단위로 생성시켰습니다. 
-double ExpCreationLoop = 1;		//아이템 생성 루프
+typedef struct EXPList {
+	int EXP_POS_X, EXP_POS_Y;
+	double ExpCreationTime;
+	int ExpActivation;
+}EXPList;
+
+#define MAXEXPCREATE 20
+EXPList exp[MAXEXPCREATE];
+int EXPCOUNTSTART = 0;
+int EXPCOUNTEND = -1;
+
+double ExpDurationTime = 5;			//아이템 생성 시간 간격, 확인을 위해 5초 단위로 생성시켰습니다. 
 
 int expFLAG = 0; // 게임 내 아이템 출력 여부
 int levelFLAG[] = { 2, 4, 6, 8, 10, 12, 14, 16, 18 }; // 레벨업에 필요한 경험치 양
-
-int EXP_POS_X, EXP_POS_Y;
 
 #endif //!VARIABLESETS_H

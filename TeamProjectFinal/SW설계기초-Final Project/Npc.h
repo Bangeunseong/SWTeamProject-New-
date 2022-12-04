@@ -3,6 +3,7 @@
 #pragma warning(disable:4996)
 #include "CursorFunctions.h"
 #include "VariableSets.h"
+#include "ExpItem.h"
 #include "Timer.h"
 #include "SoundPlay.h"
 #ifndef NPC_H
@@ -132,7 +133,8 @@ void NpcGetDamagedFromPlayer(int n) {
 	else {
 		mciSendCommandW(dwIDSE_NPCD, MCI_SEEK, MCI_SEEK_TO_START, (DWORD)(LPVOID)NULL);
 		PlayNPCDAMAGEDSound();
-		HideNpc(n); npc[n].NpcActivation = 0; npc[n].CollisionPbullet = 1; npc[n].life = Npc_Health[StageNumber - 1];
+		HideNpc(n); CreateExp(n);
+		npc[n].NpcActivation = 0; npc[n].CollisionPbullet = 1; npc[n].life = Npc_Health[StageNumber - 1];
 		NpcKillCount++;
 		NpcPostionRenewal(n);
 	}

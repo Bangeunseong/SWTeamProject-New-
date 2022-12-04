@@ -4,6 +4,7 @@
 #include "Enemy.h"
 #include "Bullet.h"
 #include "Npc.h"
+#include "ExpItem.h"
 #include "UI.h"
 #ifndef STAGEMENU_H
 #define STAGEMENU_H
@@ -22,14 +23,13 @@ void ShowStageNumber() {
 int StageOver() {
 	if (StageEnemyHealth <= 0) {
 		TotalSec += (int)(TimeCheckerEnd() - PausingTime) % 60;
-		HidePlayer(); HideEnemy(); HideItem(); HideExp(); for (int i = 0; i < NPC_COUNT; i++) HideNpc(i);
-		ClearPlayerPosition(); ClearEnemyPosition(); ClearBulletPosition(); ClearAll_PBulletPosition(); ClearBulletPatternVisit(); ClearNpcPosition();
+		HidePlayer(); HideEnemy(); HideItem(); for (int i = 0; i < NPC_COUNT; i++) HideNpc(i);
+		ClearPlayerPosition(); ClearEnemyPosition(); ClearBulletPosition(); ClearAll_PBulletPosition(); ClearBulletPatternVisit(); ClearNpcPosition(); ClearAllExp();
 		PlayerInputTime = 0; PlayerPos = 0; Invinsible = 0; UsingSkill = 0; P_BulletLaunchTime = 0;
 		EnemyInputTime = EnemyMovementTiming = 0; EnemySpeed = 1.0;
 		DeactivateEnemySkill_Prison();
 		NpcInputTime = 0; NpcSpeed = 0.2; NpcDirection = 0; NpcIsMoving = 0; NpcPatternStartTime = NpcPatternEndTime = 0; NpcKilledOver = 0; NpcKillCount = 0;
 		ItemInputTime = 0; ItemCreationLoop = 1; flashFLAG = 0; flashCount = 0; itemFLAG = 0;
-		ExpInputTime = 0; ExpCreationLoop = 1; expFLAG = 0;
 		BulletInputTime = 0;
 		BulletPatternStartTime = BulletPatternEndTime = 0;
 		PausedTime = PausingTime = 0; StageNumber++;

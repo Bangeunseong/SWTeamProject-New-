@@ -101,6 +101,7 @@ void PlayGETEXPSound() {
 	openGetExpSound.lpstrDeviceType = L"mpegvideo";    //mp3 형식
 	mciSendCommandW(NULL, MCI_OPEN, MCI_OPEN_ELEMENT | MCI_OPEN_TYPE, (DWORD)(LPVOID)&openGetExpSound);
 	dwIDSE_EXP = openGetExpSound.wDeviceID;
+	mciSendCommandW(dwIDSE_EXP, MCI_SETAUDIO, MCI_DGV_SETAUDIO_VALUE | MCI_DGV_SETAUDIO_ITEM, (DWORD)(LPVOID)&GETEXPVolume);
 	mciSendCommandW(dwIDSE_EXP, MCI_PLAY, MCI_NOTIFY, (DWORD)(LPVOID)&playGetExpSound);    //음악을 한 번 재생
 }
 
@@ -109,11 +110,12 @@ UINT dwIDSE_ITEM;
 void PlayGETITEMSound() {
 	MCI_DGV_SETAUDIO_PARMS GETITEMVolume;
 	GETITEMVolume.dwItem = MCI_DGV_SETAUDIO_VOLUME;
-	GETITEMVolume.dwValue = 350;
+	GETITEMVolume.dwValue = 450;
 	openGetItemSound.lpstrElementName = SOUNDEFFECT_GETITEM;    //파일 오픈
 	openGetItemSound.lpstrDeviceType = L"mpegvideo";    //mp3 형식
 	mciSendCommandW(NULL, MCI_OPEN, MCI_OPEN_ELEMENT | MCI_OPEN_TYPE, (DWORD)(LPVOID)&openGetItemSound);
-	dwIDSE_ITEM = openGetExpSound.wDeviceID;
+	dwIDSE_ITEM = openGetItemSound.wDeviceID;
+	mciSendCommandW(dwIDSE_ITEM, MCI_SETAUDIO, MCI_DGV_SETAUDIO_VALUE | MCI_DGV_SETAUDIO_ITEM, (DWORD)(LPVOID)&GETITEMVolume);
 	mciSendCommandW(dwIDSE_ITEM, MCI_PLAY, MCI_NOTIFY, (DWORD)(LPVOID)&playGetItemSound);    //음악을 한 번 재생
 }
 

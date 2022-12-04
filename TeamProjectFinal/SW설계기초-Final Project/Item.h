@@ -223,17 +223,16 @@ void CreateItemInInfiniteMode() {
 }
 
 //reset item
-void ResetItem() { HideItem(); itemFLAG = 0; }
+void ResetItem() { HideItem(); mciSendCommandW(dwIDSE_ITEM, MCI_SEEK, MCI_SEEK_TO_START, (DWORD)(LPVOID)NULL); itemFLAG = 0; }
 
 //moving item down
 void shiftItemDown() {
 	HideItem();
 	if (ItemCollisionDetected) {
-		mciSendCommandW(dwIDSE_ITEM, MCI_SEEK, MCI_SEEK_TO_START, (DWORD)(LPVOID)NULL);
-		PlayGETITEMSound();
 		ItemCollisionDetected = 0;
 		ResetItem(); 
-		HidePreviousCurrentNSubSkill(); 
+		HidePreviousCurrentNSubSkill();
+		PlayGETITEMSound();
 		getItem(); 
 		ShowCurrentNSubSkill();
 		return; 
@@ -251,11 +250,10 @@ void InvalidateItem() {
 		if (!CalculateItemTimeBuffer()) shiftItemDown();
 		else {
 			if (ItemCollisionDetected) {
-				mciSendCommandW(dwIDSE_ITEM, MCI_SEEK, MCI_SEEK_TO_START, (DWORD)(LPVOID)NULL);
-				PlayGETITEMSound();
 				ItemCollisionDetected = 0;
-				HideItem(); ResetItem();
+				ResetItem();
 				HidePreviousCurrentNSubSkill();
+				PlayGETITEMSound();
 				getItem();
 				ShowCurrentNSubSkill();
 				return;
