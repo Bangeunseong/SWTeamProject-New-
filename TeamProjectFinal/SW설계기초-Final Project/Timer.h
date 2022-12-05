@@ -1,6 +1,7 @@
 ﻿#pragma once
 #pragma warning(disable:4996)
 #include <time.h>
+#include <stdlib.h>
 #include <Windows.h>
 #include <stdbool.h>
 #include "VariableSets.h"

@@ -80,6 +80,7 @@ int DetectCollision_PlayerwithWall(int x, int y) {
 }
 //플레이어 기준 적과 부딫혔을 때 사용하는 함수
 int DetectCollision_PlayerwithEnemy(int x, int y) {
+	if (!NpcKilledOver) return 0;
 	int Modellen;
 	if (PlayerLevel < 4) Modellen = PlayerLevel * 2;
 	else Modellen = 6;
@@ -105,6 +106,7 @@ int DetectCollision_PlayerwithBullet(int x, int y) {
 }
 
 int DetectCollision_PlayerwithNpc(int x, int y, int n) {
+	if (!npc[n].NpcActivation) return 0;
 	int Modellen;
 	if (PlayerLevel < 4) Modellen = PlayerLevel * 2;
 	else Modellen = 6;
@@ -184,7 +186,7 @@ void GetDamagedFromEnemy() {
 					InvalidateLifeGauge();												//라이프 게이지 갱신은 데미지를 받을 때만 수행
 				}
 				else {
-					EXP -= 2;
+					if (EXP >= 2) EXP -= 2;
 					if (PlayerLevel < 4) { HidePlayer(); PlayerLevel--; ShowPlayer(); }
 					else PlayerLevel--;
 				}
@@ -305,11 +307,11 @@ int DetectCollision_P_BulletwithEnemy(int x, int y) {
 
 int DetectCollision_P_BulletwithNpc(int x, int y, int n) {
 	if (!npc[n].NpcActivation) return 0;
-	int flag = 0;
-	for (int i = 0; i < NPCSIZE_H; i++) { if (npc[n].NPC_POS_Y + i == y) { flag = 1; break; } }
+	int flag = 0; int index;
+	for (int i = 0; i < NPCSIZE_H; i++) { if (npc[n].NPC_POS_Y + i == y) { index = i; flag = 1; break; } }
 	if (!flag) return 0;
 
-	for (int i = 0; i < NPCSIZE_W; i++) { if (npc[n].NPC_POS_X + i == x) return 1; }
+	for (int i = 0; i < NPCSIZE_W; i++) { if (npc[n].NPC_POS_X + i == x && NpcModel[n][index][i] != ' ') return 1; }
 	return 0;
 }
 
@@ -320,12 +322,12 @@ int MoveP_Bullet_N(int P_bulletnumber) {
 	HideP_Bullet(P_bulletnumber);
 	if (NpcKilledOver) {
 		if (DetectCollision_P_BulletwithEnemy(PB[P_bulletnumber].P_BULLET_POS_X, PB[P_bulletnumber].P_BULLET_POS_Y)) {
-			PB[P_bulletnumber].BulletActivation = 0; PB[P_bulletnumber].CollisionEnemy = 1; StageEnemyHealth -= P_BULLETDAMAGE; return 0;		//Enemy가 받는 데미지도 처리
+			PB[P_bulletnumber].BulletActivation = 0; PB[P_bulletnumber].CollisionEnemy = 1; StageEnemyHealth -= PB[P_bulletnumber].BulletDamage; return 0;		//Enemy가 받는 데미지도 처리
 		}
 	}
 	for (int i = 0; i < NPC_COUNT; i++) {
 		if (DetectCollision_P_BulletwithNpc(PB[P_bulletnumber].P_BULLET_POS_X, PB[P_bulletnumber].P_BULLET_POS_Y, i)) {
-			PB[P_bulletnumber].BulletActivation = 0; PB[P_bulletnumber].CollisionNpc = 1; NpcGetDamagedFromPlayer(i); return 0;			//Npc가 받는 데미지도 처리
+			PB[P_bulletnumber].BulletActivation = 0; PB[P_bulletnumber].CollisionNpc = 1; NpcGetDamagedFromPlayer(i, P_bulletnumber); return 0;			//Npc가 받는 데미지도 처리
 		}
 	}
 	if (!DetectCollision_P_BulletwithWall(PB[P_bulletnumber].P_BULLET_POS_X, PB[P_bulletnumber].P_BULLET_POS_Y - 1)) PB[P_bulletnumber].P_BULLET_POS_Y--;
@@ -352,7 +354,8 @@ void InvalidateP_Bullet() {
 	if (!CalculateP_BulletTimeBuffer()) {
 		for (int i = P_BULLETCOUNTSTART; i <= P_BULLETCOUNTEND; i++) {
 			if (!PB[i % BULLETCOUNTLIMIT].BulletActivation && !PB[i % BULLETCOUNTLIMIT].inProgress) {
-				P_BulletPositionRenewal(i % BULLETCOUNTLIMIT); PB[i % BULLETCOUNTLIMIT].BulletActivation = PB[i % BULLETCOUNTLIMIT].inProgress = 1; InvalidateP_BulletDamageNModel(i % BULLETCOUNTLIMIT);
+				InvalidateP_BulletDamageNModel(i % BULLETCOUNTLIMIT);
+				P_BulletPositionRenewal(i % BULLETCOUNTLIMIT); PB[i % BULLETCOUNTLIMIT].BulletActivation = PB[i % BULLETCOUNTLIMIT].inProgress = 1;
 				ShowP_Bullet(i % BULLETCOUNTLIMIT);
 			}
 			if (!MoveP_Bullet_N(i % BULLETCOUNTLIMIT) && i == P_BULLETCOUNTSTART) { ClearSingle_PBulletPosition(i % BULLETCOUNTLIMIT); P_BULLETCOUNTSTART++; }
@@ -363,7 +366,7 @@ void InvalidateP_Bullet() {
 			if (NpcKilledOver) {
 				if (DetectCollision_P_BulletwithEnemy(PB[i % BULLETCOUNTLIMIT].P_BULLET_POS_X, PB[i % BULLETCOUNTLIMIT].P_BULLET_POS_Y)) {
 					HideP_Bullet(i % BULLETCOUNTLIMIT);
-					if (PB[i % BULLETCOUNTLIMIT].BulletActivation) StageEnemyHealth -= P_BULLETDAMAGE; //Enemy가 받는 데미지도 처리
+					if (PB[i % BULLETCOUNTLIMIT].BulletActivation) StageEnemyHealth -= PB[i % BULLETCOUNTLIMIT].BulletDamage; //Enemy가 받는 데미지도 처리
 					if (i == P_BULLETCOUNTSTART) { ClearSingle_PBulletPosition(i % BULLETCOUNTLIMIT); P_BULLETCOUNTSTART++; }
 					else { PB[i % BULLETCOUNTLIMIT].BulletActivation = 0; PB[i % BULLETCOUNTLIMIT].CollisionEnemy = 1; }
 				}
@@ -371,7 +374,7 @@ void InvalidateP_Bullet() {
 			for (int j = 0; j < NPC_COUNT; j++) {
 				if (DetectCollision_P_BulletwithNpc(PB[i % BULLETCOUNTLIMIT].P_BULLET_POS_X, PB[i % BULLETCOUNTLIMIT].P_BULLET_POS_Y, j)) {
 					HideP_Bullet(i % BULLETCOUNTLIMIT); 
-					if (PB[i % BULLETCOUNTLIMIT].BulletActivation) NpcGetDamagedFromPlayer(j);
+					if (PB[i % BULLETCOUNTLIMIT].BulletActivation) NpcGetDamagedFromPlayer(j, i % BULLETCOUNTLIMIT);
 					if (i == P_BULLETCOUNTSTART) { ClearSingle_PBulletPosition(i % BULLETCOUNTLIMIT); P_BULLETCOUNTSTART++; }
 					else { PB[i % BULLETCOUNTLIMIT].BulletActivation = 0; PB[i % BULLETCOUNTLIMIT].CollisionNpc = 1; PB[i % BULLETCOUNTLIMIT].CollisionEnemy = 1; }
 				}

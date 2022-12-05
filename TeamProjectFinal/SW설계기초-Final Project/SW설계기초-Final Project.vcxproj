@@ -144,6 +144,7 @@
     <ClInclude Include="Timer.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="VariableSets.h" />
+    <ClInclude Include="WeaponItem.h" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="BGM_B1.mp3" />

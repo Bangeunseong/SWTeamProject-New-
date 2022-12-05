@@ -31,8 +31,8 @@ void StoryMode() {
 			InvalidateStoryModeTime(); InvalidateEnemyHealthBar(); InvalidateItem(); InvalidateExp(); InvalidatePlayerLevel(); InvalidateP_Bullet(); InvalidateNpc(); InvalidatePlayer(); 
 			if (NpcKillCount > 30 && !NpcKilledOver) {
 				NpcKilledOver = 1; // npc를 30마리 잡았을 경우 InvalidBullet과 InvalidEnemy를 계속 적용하기 위한 변수 NpcKilledOver
-				BulletInputTime = TimeCheckerEnd() - BULLETTIMEBUFFER;
-				EnemyInputTime = TimeCheckerEnd() - ENEMYTIMEBUFFER;
+				BulletInputTime = TimeCheckerEnd() - PausingTime - BULLETTIMEBUFFER;
+				EnemyInputTime = TimeCheckerEnd() - PausingTime - ENEMYTIMEBUFFER;
 			}
 			if (NpcKilledOver) { // npc를 30마리 잡았을 경우 발동
 				InvalidateBullet();

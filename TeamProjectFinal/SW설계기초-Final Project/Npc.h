@@ -19,7 +19,7 @@ int CalculateNpcTimeBuffer() {
 }
 
 //Npc 위치 갱신
-void NpcPostionRenewal(int n) { // n = Npc number
+void NpcPositionRenewal(int n) { // n = Npc number
 	switch (n) {
 	case 0:
 		npc[n].NPC_POS_X = GAMEBOARD_ORIGIN_X + 2;
@@ -79,7 +79,7 @@ void ShowNpc(int n) {
 void ClearNpcPosition() {
 	for (int i = 0; i < NPC_COUNT; i++) {
 		HideNpc(i);
-		NpcPostionRenewal(i);
+		NpcPositionRenewal(i);
 		npc[i].cnt = npc[i].NpcActivation = npc[i].CollisionPlayer = npc[i].CollisionPbullet = npc[i].CollisionWall = 0; npc[i].life = Npc_Health[StageNumber - 1];
 	}
 	NpcPatternStart = 0;
@@ -127,8 +127,8 @@ int DetectCollision_NpcwithPlayer(int x, int y, int n) {
 }
 
 //npc데미지 처리함수
-void NpcGetDamagedFromPlayer(int n) {
-	npc[n].life -= P_BULLETDAMAGE;
+void NpcGetDamagedFromPlayer(int n, int P_bulletnumber) {
+	npc[n].life -= PB[P_bulletnumber].BulletDamage;
 	if (npc[n].life > 0) return;
 	else {
 		mciSendCommandW(dwIDSE_NPCD, MCI_SEEK, MCI_SEEK_TO_START, (DWORD)(LPVOID)NULL);
@@ -136,7 +136,7 @@ void NpcGetDamagedFromPlayer(int n) {
 		HideNpc(n); CreateExp(n);
 		npc[n].NpcActivation = 0; npc[n].CollisionPbullet = 1; npc[n].life = Npc_Health[StageNumber - 1];
 		NpcKillCount++;
-		NpcPostionRenewal(n);
+		NpcPositionRenewal(n);
 	}
 }
 
@@ -256,7 +256,7 @@ int NpcPattern_HeadButt() {
 	if (CheckedTime < NPC_PATTERNTIME_HEADBUTT + NpcPatternStartTime && CheckedTime > NpcPatternStartTime) NPCCOUNT = 5; //Pattern Cycle 유무 고민중
 	else NpcPatternTimeEnded = 1;	//패턴 지속시간 끝날시 patterntimeended 1로 갱신
 	for (int i = 0; i < 5; i++) {
-		if (!npc[i].NpcActivation && !npc[i].CollisionPlayer && !npc[i].CollisionWall && !npc[i].CollisionPbullet) { NpcPostionRenewal(i); npc[i].NpcActivation = 1; ShowNpc(i); }	//만약 npc 나타나지 않은 것이라면 초기 위치를 패턴에 맞게 초기화를 시키고 npc 출력
+		if (!npc[i].NpcActivation && !npc[i].CollisionPlayer && !npc[i].CollisionWall && !npc[i].CollisionPbullet) { NpcPositionRenewal(i); npc[i].NpcActivation = 1; ShowNpc(i); }	//만약 npc 나타나지 않은 것이라면 초기 위치를 패턴에 맞게 초기화를 시키고 npc 출력
 		if (npc[i].NPC_POS_X < GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW / 2 - 15) {
 			switch (i) {
 			case 0: flag += MoveNpc_E(i); break;
@@ -304,7 +304,7 @@ int NpcPattern_Stairs() {
 	if (CheckedTime < NPC_PATTERNTIME_STAIRS + NpcPatternStartTime && CheckedTime > NpcPatternStartTime) NPCCOUNT = (++NpcPatternCycle) * 5; //패턴 지속시간일때 패턴사이클 및 bulletcount 증가
 	else PatternTimeEnded = 1;	//패턴 지속시간 끝날시 patterntimeended 1로 갱신
 	for (int i = 0; i < 5; i++) {
-		if (!npc[i].NpcActivation && !npc[i].CollisionPlayer && !npc[i].CollisionWall && !npc[i].CollisionPbullet) { NpcPostionRenewal(i); npc[i].NpcActivation = 1; ShowNpc(i); }	//만약 npc 나타나지 않은 것이라면 초기 위치를 패턴에 맞게 초기화를 시키고 npc 출력
+		if (!npc[i].NpcActivation && !npc[i].CollisionPlayer && !npc[i].CollisionWall && !npc[i].CollisionPbullet) { NpcPositionRenewal(i); npc[i].NpcActivation = 1; ShowNpc(i); }	//만약 npc 나타나지 않은 것이라면 초기 위치를 패턴에 맞게 초기화를 시키고 npc 출력
 		if (npc[i].NPC_POS_X % 6 < 3) {
 			switch (i % 5) {
 			case 0: flag += MoveNpc_SE(i); break;
@@ -335,7 +335,7 @@ int NpcPattern_SweepDown() {
 	if (CheckedTime < NPC_PATTERNTIME_SWEEPDOWN + NpcPatternStartTime && CheckedTime > NpcPatternStartTime) NPCCOUNT = 5; //Pattern Cycle 유무 고민중
 	else NpcPatternTimeEnded = 1;	//패턴 지속시간 끝날시 patterntimeended 1로 갱신
 	for (int i = 0; i < 5; i++) {
-		if (!npc[i].NpcActivation && !npc[i].CollisionPlayer && !npc[i].CollisionWall && !npc[i].CollisionPbullet) { NpcPostionRenewal(i); npc[i].NpcActivation = 1; ShowNpc(i); }	//만약 npc 나타나지 않은 것이라면 초기 위치를 패턴에 맞게 초기화를 시키고 npc 출력
+		if (!npc[i].NpcActivation && !npc[i].CollisionPlayer && !npc[i].CollisionWall && !npc[i].CollisionPbullet) { NpcPositionRenewal(i); npc[i].NpcActivation = 1; ShowNpc(i); }	//만약 npc 나타나지 않은 것이라면 초기 위치를 패턴에 맞게 초기화를 시키고 npc 출력
 		if (NpcSweepDownChecker) {
 			switch (i % 5) {
 			case 0: flag += MoveNpc_SW(i); break;

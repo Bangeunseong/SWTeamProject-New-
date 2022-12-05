@@ -132,9 +132,6 @@ int Invinsible = 0; double CollisionTime = 0;
 //플레이어의 라이프게이지
 int SelectedLife = 5; int CurrentLife; int *LifeGauge;
 
-//플레이어의 위치
-int PlayerPos = 0;
-
 //플레이어의 속도
 double SelectedSpeed, CurSpeed;
 
@@ -158,7 +155,6 @@ typedef struct PlayerBullet {
 #define BULLETCOUNTLIMIT 100
 PlayerBullet PB[BULLETCOUNTLIMIT];
 
-int P_BULLETDAMAGE = 1;
 const char PLAYERBULLETMODEL[] = { '!','o','*' };
 double P_BULLETLAUNCHTIMEBUFFER = 0.15;
 #define P_BULLETTIMEBUFFER 0.03	//플레이어 총알 갱신 버퍼
@@ -182,7 +178,7 @@ double EnemyInputTime = 0;							//Enemy Invalidation Time
 #define ENEMYMOVEMENTDURATION_ver1 0.3		//When Enemy needs to move stop 0.3 sec and move
 double EnemyMovementTiming = 0;				//Enemy Movement start time
 
-int Enemy_Health[3] = { 180, 260, 340 };		//Enemy Health
+int Enemy_Health[3] = { 300, 450, 600 };		//Enemy Health
 int StageEnemyHealth;
 #define ENEMYSIZE_H 5		//Enemy Height
 #define ENEMYSIZE_W 11		//Enemy Width
@@ -252,7 +248,7 @@ typedef struct Npc {						//Npc 위치 저장 공간 구조체
 
 Npc npc[NPC_COUNT];
 
-int Npc_Health[3] = { 4, 6, 8 };			//Npc Health
+int Npc_Health[3] = { 4, 8, 12 };			//Npc Health
 double NpcSpeed = 0.3;						//Npc Speed
 double NpcPatternStartTime = 0;				//패턴 시작시간
 double NpcPatternEndTime = 0;				//패턴 종료시간
@@ -422,6 +418,22 @@ int EXPCOUNTEND = -1;
 double ExpDurationTime = 5;			//아이템 생성 시간 간격, 확인을 위해 5초 단위로 생성시켰습니다. 
 
 int expFLAG = 0; // 게임 내 아이템 출력 여부
-int levelFLAG[] = { 2, 4, 6, 8, 10, 12, 14, 16, 18 }; // 레벨업에 필요한 경험치 양
+int levelFLAG[] = { 4, 8, 14, 20, 26, 34, 42, 50, 60  }; // 레벨업에 필요한 경험치 양
+
+//----------------------------------------------------------
+//------------------WeaponItem 상수---------------------
+
+typedef struct WeaponList {
+	int WEAPON_POS_X, WEAPON_POS_Y;
+	int WeaponNumber;
+	int WeaponActivation;
+}WeaponList;
+
+#define MAXWEAPONCREATE 10
+WeaponList weapon[MAXWEAPONCREATE];
+int WEAPONCOUNTSTART = 0;
+int WEAPONCOUNTEND = -1;
+
+const char WeaponItemModel[] = { 'D', 'M', 'S', 'I' };	//첫번째는 기본 총(구분을 위해 넣었습니다.)
 
 #endif //!VARIABLESETS_H

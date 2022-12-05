@@ -25,7 +25,7 @@ int StageOver() {
 		TotalSec += (int)(TimeCheckerEnd() - PausingTime) % 60;
 		HidePlayer(); HideEnemy(); HideItem(); for (int i = 0; i < NPC_COUNT; i++) HideNpc(i);
 		ClearPlayerPosition(); ClearEnemyPosition(); ClearBulletPosition(); ClearAll_PBulletPosition(); ClearBulletPatternVisit(); ClearNpcPosition(); ClearAllExp();
-		PlayerInputTime = 0; PlayerPos = 0; Invinsible = 0; UsingSkill = 0; P_BulletLaunchTime = 0;
+		PlayerInputTime = 0; Invinsible = 0; UsingSkill = 0; P_BulletLaunchTime = 0;
 		EnemyInputTime = EnemyMovementTiming = 0; EnemySpeed = 1.0;
 		DeactivateEnemySkill_Prison();
 		NpcInputTime = 0; NpcSpeed = 0.2; NpcDirection = 0; NpcIsMoving = 0; NpcPatternStartTime = NpcPatternEndTime = 0; NpcKilledOver = 0; NpcKillCount = 0;
