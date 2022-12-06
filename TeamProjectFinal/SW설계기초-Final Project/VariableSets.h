@@ -156,7 +156,7 @@ typedef struct PlayerBullet {
 PlayerBullet PB[BULLETCOUNTLIMIT];
 
 const char PLAYERBULLETMODEL[] = { '!','o','*' };
-double P_BULLETLAUNCHTIMEBUFFER = 0.15;
+double P_BULLETLAUNCHTIMEBUFFER = 0.2;
 #define P_BULLETTIMEBUFFER 0.03	//플레이어 총알 갱신 버퍼
 double P_BulletSpeed = 1.0;					//플레이어 총알 속도
 

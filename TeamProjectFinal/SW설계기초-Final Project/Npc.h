@@ -134,10 +134,10 @@ void NpcGetDamagedFromPlayer(int n, int P_bulletnumber) {
 	else {
 		mciSendCommandW(dwIDSE_NPCD, MCI_SEEK, MCI_SEEK_TO_START, (DWORD)(LPVOID)NULL);
 		PlayNPCDAMAGEDSound();
-		int ran_N = rand() % 10;
+		int ran_N = rand() % 100;
 		HideNpc(n);
-		if (ran_N % 2 == 0 && ran_N != 0) CreateExp(n);	//0 2 4 6 8 일때 경험치 생성
-		else if (ran_N != 0 && ran_N != 1 && ran_N != 9) CreateWeaponItem(n);
+		if (ran_N >= 0 && ran_N < 20) CreateExp(n);	//0 2 4 6 8 일때 경험치 생성
+		else if (ran_N >= 20 && ran_N < 30) CreateWeaponItem(n);
 		npc[n].NpcActivation = 0; npc[n].CollisionPbullet = 1; npc[n].life = Npc_Health[StageNumber - 1];
 		NpcKillCount++;
 		NpcPositionRenewal(n);
