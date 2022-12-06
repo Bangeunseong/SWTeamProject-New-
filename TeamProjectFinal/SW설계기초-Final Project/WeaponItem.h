@@ -22,7 +22,7 @@ void SetWeaponItem(int npc_number) {	//WeaponItem 설정
 	weapon[WEAPONCOUNTEND % MAXWEAPONCREATE].WEAPON_POS_Y = npc[npc_number].NPC_POS_Y;
 	weapon[WEAPONCOUNTEND % MAXWEAPONCREATE].WeaponActivation = 1;
 	weapon[WEAPONCOUNTEND % MAXWEAPONCREATE].WeaponCreationTime = CheckedTime;
-	weapon[WEAPONCOUNTEND % MAXWEAPONCREATE].WeaponNumber = rand() % 2;		//Weaponnumber를 난수로 설정
+	weapon[WEAPONCOUNTEND % MAXWEAPONCREATE].WeaponNumber = rand() % 3;		//Weaponnumber를 난수로 설정
 }
 
 void CreateWeaponItem(int npc_number) { 
