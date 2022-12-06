@@ -5,6 +5,7 @@
 #include "Bullet.h"
 #include "Npc.h"
 #include "ExpItem.h"
+#include "WeaponItem.h"
 #include "UI.h"
 #ifndef STAGEMENU_H
 #define STAGEMENU_H
@@ -24,7 +25,7 @@ int StageOver() {
 	if (StageEnemyHealth <= 0) {
 		TotalSec += (int)(TimeCheckerEnd() - PausingTime) % 60;
 		HidePlayer(); HideEnemy(); HideItem(); for (int i = 0; i < NPC_COUNT; i++) HideNpc(i);
-		ClearPlayerPosition(); ClearEnemyPosition(); ClearBulletPosition(); ClearAll_PBulletPosition(); ClearBulletPatternVisit(); ClearNpcPosition(); ClearAllExp();
+		ClearPlayerPosition(); ClearEnemyPosition(); ClearBulletPosition(); ClearAll_PBulletPosition(); ClearBulletPatternVisit(); ClearNpcPosition(); ClearAllExp(); ClearAllWeapon();
 		PlayerInputTime = 0; Invinsible = 0; UsingSkill = 0; P_BulletLaunchTime = 0;
 		EnemyInputTime = EnemyMovementTiming = 0; EnemySpeed = 1.0;
 		DeactivateEnemySkill_Prison();

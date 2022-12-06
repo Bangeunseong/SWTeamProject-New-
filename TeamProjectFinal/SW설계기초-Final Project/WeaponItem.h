@@ -15,14 +15,14 @@ void ShowWeaponItem(int Weapon_number) {
 	printf("%c", WeaponItemModel[weapon[Weapon_number % MAXWEAPONCREATE].WeaponNumber]);
 }
 
-void SetWeaponItem(int npc_number) {
+void SetWeaponItem(int npc_number) {	//WeaponItem 설정
 	double CheckedTime = TimeCheckerEnd() - PausingTime;
 	++WEAPONCOUNTEND;
 	weapon[WEAPONCOUNTEND % MAXWEAPONCREATE].WEAPON_POS_X = npc[npc_number].NPC_POS_X;
 	weapon[WEAPONCOUNTEND % MAXWEAPONCREATE].WEAPON_POS_Y = npc[npc_number].NPC_POS_Y;
 	weapon[WEAPONCOUNTEND % MAXWEAPONCREATE].WeaponActivation = 1;
 	weapon[WEAPONCOUNTEND % MAXWEAPONCREATE].WeaponCreationTime = CheckedTime;
-	weapon[WEAPONCOUNTEND % MAXWEAPONCREATE].WeaponNumber = rand() % 2;
+	weapon[WEAPONCOUNTEND % MAXWEAPONCREATE].WeaponNumber = rand() % 2;		//Weaponnumber를 난수로 설정
 }
 
 void CreateWeaponItem(int npc_number) { 
@@ -32,7 +32,7 @@ void CreateWeaponItem(int npc_number) {
 
 void DeleteWeaponItem(int Weapon_number) {
 	HideWeaponItem(Weapon_number % MAXWEAPONCREATE);
-	weapon[Weapon_number % MAXWEAPONCREATE].WeaponActivation = 0;
+	weapon[Weapon_number % MAXWEAPONCREATE].WeaponActivation = 0;	//WeaponItem 해제(충돌 함수에서 제외하기 위함)
 	weapon[Weapon_number % MAXWEAPONCREATE].WEAPON_POS_X = weapon[Weapon_number % MAXWEAPONCREATE].WEAPON_POS_Y = 0;
 }
 

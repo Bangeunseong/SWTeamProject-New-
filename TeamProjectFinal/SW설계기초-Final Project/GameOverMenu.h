@@ -7,6 +7,7 @@
 #include "Bullet.h"
 #include "Npc.h"
 #include "ExpItem.h"
+#include "WeaponItem.h"
 #ifndef GAMEOVERMENU_H
 #define GAMEOVERMENU_H
 //------------------------게임오버 조건 관련 함수 및 UI함수----------------------------
@@ -20,7 +21,7 @@ int GameOver() {
 	if (CurrentLife <= 0) { 
 		TotalSec += (int)(TimeCheckerEnd() - PausingTime) % 60;
 		HidePlayer(); HideEnemy(); HideItem(); for (int i = 0; i < NPC_COUNT; i++) HideNpc(i);
-		ClearPlayerPosition(); ClearEnemyPosition(); ClearBulletPosition(); ClearAll_PBulletPosition(); ClearBulletPatternVisit(); ClearNpcPosition(); ClearAllExp();
+		ClearPlayerPosition(); ClearEnemyPosition(); ClearBulletPosition(); ClearAll_PBulletPosition(); ClearBulletPatternVisit(); ClearNpcPosition(); ClearAllExp(); ClearAllWeapon();
 		PlayerInputTime = 0; Invinsible = 0; CurSkill = SubSkill = UsingSkill = 0; PlayerLevel = 1; P_BulletLaunchTime = 0; EXP = 0;
 		EnemyInputTime = EnemyMovementTiming = 0; EnemySpeed = 1.0;
 		DeactivateEnemySkill_Prison();
