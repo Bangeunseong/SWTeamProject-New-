@@ -1,6 +1,7 @@
 #pragma once
 #include "CursorFunctions.h"
 #include "VariableSets.h"
+#include "SoundPlay.h"
 #include "Timer.h"
 #ifndef WEAPONITEM_H
 #define WEAPONITEM_H
@@ -12,7 +13,9 @@ void HideWeaponItem(int Weapon_number) {
 
 void ShowWeaponItem(int Weapon_number) {
 	SetCurrentCursorPos(weapon[Weapon_number % MAXWEAPONCREATE].WEAPON_POS_X, weapon[Weapon_number % MAXWEAPONCREATE].WEAPON_POS_Y);
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 3);
 	printf("%c", WeaponItemModel[weapon[Weapon_number % MAXWEAPONCREATE].WeaponNumber]);
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
 }
 
 void SetWeaponItem(int npc_number) {	//WeaponItem ¼³Á¤
@@ -55,7 +58,10 @@ int DetectCollision_WeaponwithPlayer(int Weapon_number) {
 	return 0;
 }
 
-void SwapWeapon(int Weapon_number) { PlayerWeapon = weapon[Weapon_number % MAXWEAPONCREATE].WeaponNumber; }
+void SwapWeapon(int Weapon_number) { 
+	mciSendCommandW(dwIDSE_B, MCI_CLOSE, 0, (DWORD)(LPVOID)NULL);
+	PlayerWeapon = weapon[Weapon_number % MAXWEAPONCREATE].WeaponNumber;
+}
 
 void InvalidateWeaponItem() {
 	double CheckedTime = TimeCheckerEnd() - PausingTime;

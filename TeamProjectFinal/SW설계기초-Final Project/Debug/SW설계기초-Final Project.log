@@ -16,5 +16,5 @@ c:\users\bange\onedrive\바탕 화면\documents\github\새 폴더\teamprojectfin
 c:\users\bange\onedrive\바탕 화면\documents\github\새 폴더\teamprojectfinal\sw설계기초-final project\soundplay.h(144): warning C4047: '함수': 'MCIDEVICEID'의 간접 참조 수준이 'void *'과(와) 다릅니다.
 c:\users\bange\onedrive\바탕 화면\documents\github\새 폴더\teamprojectfinal\sw설계기초-final project\soundplay.h(144): warning C4024: 'mciSendCommandW': 형식 및 실제 매개 변수 1의 형식이 서로 다릅니다.
 c:\users\bange\onedrive\바탕 화면\documents\github\새 폴더\teamprojectfinal\sw설계기초-final project\expitem.h(43): warning C4244: '=': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\bange\onedrive\바탕 화면\documents\github\새 폴더\teamprojectfinal\sw설계기초-final project\weaponitem.h(41): warning C4244: '=': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\bange\onedrive\바탕 화면\documents\github\새 폴더\teamprojectfinal\sw설계기초-final project\weaponitem.h(44): warning C4244: '=': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   SW설계기초-Final Project.vcxproj -> C:\Users\bange\OneDrive\바탕 화면\Documents\GitHub\새 폴더\TeamProjectFinal\Debug\SW설계기초-Final Project.exe
