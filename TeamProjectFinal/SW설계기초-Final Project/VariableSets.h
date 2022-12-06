@@ -425,6 +425,7 @@ int levelFLAG[] = { 4, 8, 14, 20, 26, 34, 42, 50, 60  }; // 레벨업에 필요�
 
 typedef struct WeaponList {
 	int WEAPON_POS_X, WEAPON_POS_Y;
+	double WeaponCreationTime;
 	int WeaponNumber;
 	int WeaponActivation;
 }WeaponList;
@@ -434,6 +435,8 @@ WeaponList weapon[MAXWEAPONCREATE];
 int WEAPONCOUNTSTART = 0;
 int WEAPONCOUNTEND = -1;
 
-const char WeaponItemModel[] = { 'D', 'M', 'S', 'I' };	//첫번째는 기본 총(구분을 위해 넣었습니다.)
+double WeaponDurationTime = 5.0;
+
+const char WeaponItemModel[] = { 'D', 'H', 'S' };	//첫번째는 기본 총(구분을 위해 넣었습니다.)
 
 #endif //!VARIABLESETS_H

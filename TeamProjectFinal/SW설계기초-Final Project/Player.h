@@ -343,7 +343,7 @@ void P_BulletLaunch() {
 		mciSendCommand(dwIDSE_B, MCI_SEEK, MCI_SEEK_TO_START, (DWORD)(LPVOID)NULL);
 		P_BulletLaunchTime = CheckedTime;
 		if (PlayerWeapon == 0) { PlayGUNSHOOTSound(SOUNDEFFECT_DEFAULTGUN, L"mpegvideo"); P_BulletSpeed = 1.0; }
-		else if (PlayerWeapon == 1) { PlayGUNSHOOTSound(SOUNDEFFECT_MACHINEGUN, L"mpegvideo"); P_BulletSpeed = 1.4; }
+		else if (PlayerWeapon == 1) { PlayGUNSHOOTSound(SOUNDEFFECT_MACHINEGUN, L"mpegvideo"); P_BulletSpeed = 1.2; }
 		else if (PlayerWeapon == 2) { PlayGUNSHOOTSound(SOUNDEFFECT_SHOTGUN, L"mpegvideo"); P_BulletSpeed = 0.8; }
 		if (PlayerWeapon == 0 || PlayerWeapon == 1) P_BULLETCOUNTEND += 2;
 		else if(PlayerWeapon == 2) P_BULLETCOUNTEND += 4;

@@ -9,6 +9,7 @@
 #include "Bullet.h"
 #include "Item.h"
 #include "ExpItem.h"
+#include "WeaponItem.h"
 #include "UI.h"
 #include "Timer.h"
 #include "StageMenu.h"
@@ -28,7 +29,7 @@ void StoryMode() {
 		ShowStageNumber();
 		TimeCheckerStart();
 		while (1) {
-			InvalidateStoryModeTime(); InvalidateEnemyHealthBar(); InvalidateItem(); InvalidateExp(); InvalidatePlayerLevel(); InvalidateP_Bullet(); InvalidateNpc(); InvalidatePlayer(); 
+			InvalidateStoryModeTime(); InvalidateEnemyHealthBar(); InvalidateItem(); InvalidateExp(); InvalidateWeaponItem(); InvalidatePlayerLevel(); InvalidateP_Bullet(); InvalidateNpc(); InvalidatePlayer();
 			if (NpcKillCount > 30 && !NpcKilledOver) {
 				NpcKilledOver = 1; // npc를 30마리 잡았을 경우 InvalidBullet과 InvalidEnemy를 계속 적용하기 위한 변수 NpcKilledOver
 				BulletInputTime = TimeCheckerEnd() - PausingTime - BULLETTIMEBUFFER;

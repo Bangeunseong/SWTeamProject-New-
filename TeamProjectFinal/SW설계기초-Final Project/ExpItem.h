@@ -42,6 +42,7 @@ void ClearAllExp() {
 	for (int i = EXPCOUNTSTART; i <= EXPCOUNTEND; i++) {
 		HideExp(i % MAXEXPCREATE); exp[i % MAXEXPCREATE].ExpActivation = exp[i % MAXEXPCREATE].ExpCreationTime = 0;
 	}
+	EXPCOUNTSTART = 0; EXPCOUNTEND = -1;
 }
 
 //DetectCollision with player
@@ -75,7 +76,7 @@ void InvalidateExp() {
 	double CheckedTime = TimeCheckerEnd() - PausingTime;
 	for (int i = EXPCOUNTSTART; i <= EXPCOUNTEND; i++) {
 		if (CheckedTime > exp[i % MAXEXPCREATE].ExpCreationTime + ExpDurationTime) DeleteExp(i);
-		if (DetectCollision_ExpwithPlayer(i % MAXEXPCREATE)) GetExp();
+		if (DetectCollision_ExpwithPlayer(i)) GetExp();
 		else { if (exp[i % MAXEXPCREATE].ExpActivation) ShowExp(i % MAXEXPCREATE); }
 	}
 }
