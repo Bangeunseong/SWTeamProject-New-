@@ -138,6 +138,7 @@
     <ClInclude Include="Npc.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="ResizeConsole.h" />
+    <ClInclude Include="Score.h" />
     <ClInclude Include="SoundPlay.h" />
     <ClInclude Include="StageMenu.h" />
     <ClInclude Include="StartMenu.h" />
@@ -147,16 +148,20 @@
     <ClInclude Include="WeaponItem.h" />
   </ItemGroup>
   <ItemGroup>
-    <Media Include="BGM_B1.mp3" />
-    <Media Include="COLLISION.mp3" />
-    <Media Include="DEFAULTGUN.mp3" />
-    <Media Include="GETEXP.mp3" />
-    <Media Include="GETITEM.mp3" />
-    <Media Include="MACHINEGUN.mp3" />
-    <Media Include="MISSIONCOMPLETE.mp3" />
-    <Media Include="MISSIONFAILED.mp3" />
-    <Media Include="NPC_DAMAGED.mp3" />
-    <Media Include="SHOTGUN.mp3" />
+    <Media Include="RELOAD.mp3" />
+    <Media Include="Resource\BGM_B1.mp3" />
+    <Media Include="Resource\COLLISION.mp3" />
+    <Media Include="Resource\DEFAULTGUN.mp3" />
+    <Media Include="Resource\GETEXP.mp3" />
+    <Media Include="Resource\GETITEM.mp3" />
+    <Media Include="Resource\MACHINEGUN.mp3" />
+    <Media Include="Resource\MISSIONCOMPLETE.mp3" />
+    <Media Include="Resource\MISSIONFAILED.mp3" />
+    <Media Include="Resource\NPC_DAMAGED.mp3" />
+    <Media Include="Resource\SHOTGUN.mp3" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Resource\Scoreboard.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

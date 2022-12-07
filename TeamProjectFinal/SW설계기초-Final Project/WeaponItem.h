@@ -41,7 +41,8 @@ void DeleteWeaponItem(int Weapon_number) {
 
 void ClearAllWeapon() {
 	for (int i = WEAPONCOUNTSTART; i <= WEAPONCOUNTEND; i++) {
-		weapon[i].WeaponActivation = weapon[i].WEAPON_POS_X = weapon[i].WEAPON_POS_Y = weapon[i].WeaponCreationTime = weapon[i].WeaponNumber = 0;
+		HideWeaponItem(i % MAXWEAPONCREATE);
+		weapon[i % MAXWEAPONCREATE].WeaponActivation = weapon[i % MAXWEAPONCREATE].WEAPON_POS_X = weapon[i % MAXWEAPONCREATE].WEAPON_POS_Y = weapon[i % MAXWEAPONCREATE].WeaponCreationTime = weapon[i].WeaponNumber = 0;
 	}
 	WEAPONCOUNTSTART = 0; WEAPONCOUNTEND = -1;
 }
@@ -60,6 +61,8 @@ int DetectCollision_WeaponwithPlayer(int Weapon_number) {
 
 void SwapWeapon(int Weapon_number) { 
 	mciSendCommandW(dwIDSE_B, MCI_CLOSE, 0, (DWORD)(LPVOID)NULL);
+	mciSendCommandW(dwIDSE_R, MCI_SEEK, MCI_SEEK_TO_START, (DWORD)(LPVOID)NULL);
+	PlayRELOADSound();
 	PlayerWeapon = weapon[Weapon_number % MAXWEAPONCREATE].WeaponNumber;
 }
 

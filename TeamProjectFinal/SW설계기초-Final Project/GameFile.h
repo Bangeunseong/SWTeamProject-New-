@@ -26,7 +26,7 @@ void StoryMode() {
 		ShowCurrentNSubSkill();
 		ShowEnemyHealthBar();
 		ShowStoryModeTime();
-		ShowStageNumber();
+		ShownHideStageNumber();
 		TimeCheckerStart();
 		while (1) {
 			InvalidateStoryModeTime(); InvalidateEnemyHealthBar(); InvalidateItem(); InvalidateExp(); InvalidateWeaponItem(); InvalidatePlayerLevel(); InvalidateP_Bullet(); InvalidateNpc(); InvalidatePlayer();
@@ -59,11 +59,12 @@ void StoryMode() {
 //게임 실행 함수 ----게임을 실행할 때 initialize 해야할 것들만 넣기
 void RunGame() {
 	ResizeConsole(); ResizeConsoleBuffer(); RemoveCursor(); InitUniBoard(); InitializePrisonInfo(); 
+	srand((unsigned)time(NULL));
 	while (1) {
 		mciSendCommandW(dwID, MCI_SEEK, MCI_SEEK_TO_START, (DWORD)(LPVOID)NULL);
+		mciSendCommandW(dwID_MC, MCI_SEEK, MCI_SEEK_TO_START, (DWORD)(LPVOID)NULL);
 		mciSendCommandW(dwID_MF, MCI_SEEK, MCI_SEEK_TO_START, (DWORD)(LPVOID)NULL);
 		PlayBGMSound();
-		srand((unsigned)time(NULL));
 		if (StartMenu()) {
 			ShowCharacterSelectionMenu();
 			ShowBackGround();

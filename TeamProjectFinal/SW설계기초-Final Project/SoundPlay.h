@@ -16,6 +16,8 @@ MCI_OPEN_PARMS openNpcSound;
 MCI_PLAY_PARMS playNpcSound;
 MCI_OPEN_PARMS openBulletSound;
 MCI_PLAY_PARMS playBulletSound;
+MCI_OPEN_PARMS openReloadSound;
+MCI_PLAY_PARMS playReloadSound;
 MCI_OPEN_PARMS openMissionCompleteSound;
 MCI_PLAY_PARMS playMissionCompleteSound;
 MCI_OPEN_PARMS openMissionFailedSound;
@@ -30,6 +32,7 @@ MCI_PLAY_PARMS playGetItemSound;
 #define SOUNDEFFECT_DEFAULTGUN L"DEFAULTGUN.mp3"
 #define SOUNDEFFECT_SHOTGUN L"SHOTGUN.mp3"
 #define SOUNDEFFECT_MACHINEGUN L"MACHINEGUN.mp3"
+#define SOUNDEFFECT_RELOAD L"RELOAD.mp3"
 #define SOUNDEFFECT_NPCDAMAGED L"NPC_DAMAGED.mp3"
 #define SOUNDEFFECT_GETEXP L"GETEXP.mp3"
 #define SOUNDEFFECT_GETITEM L"GETITEM.mp3"
@@ -75,6 +78,19 @@ void PlayNPCDAMAGEDSound() {
 	mciSendCommandW(NULL, MCI_OPEN, MCI_OPEN_ELEMENT | MCI_OPEN_TYPE, (DWORD)(LPVOID)&openNpcSound);
 	dwIDSE_NPCD = openNpcSound.wDeviceID;
 	mciSendCommandW(dwIDSE_NPCD, MCI_PLAY, MCI_NOTIFY, (DWORD)(LPVOID)&playNpcSound);    //음악을 한 번 재생
+}
+
+UINT dwIDSE_R;
+
+void PlayRELOADSound() {
+	MCI_DGV_SETAUDIO_PARMS RELOADVolume;
+	RELOADVolume.dwItem = MCI_DGV_SETAUDIO_VOLUME;
+	RELOADVolume.dwValue = 450;
+	openReloadSound.lpstrElementName = SOUNDEFFECT_RELOAD;    //파일 오픈
+	openReloadSound.lpstrDeviceType = L"mpegvideo";    //mp3 형식
+	mciSendCommandW(NULL, MCI_OPEN, MCI_OPEN_ELEMENT | MCI_OPEN_TYPE, (DWORD)(LPVOID)&openReloadSound);
+	dwIDSE_R = openReloadSound.wDeviceID;
+	mciSendCommandW(dwIDSE_R, MCI_PLAY, MCI_NOTIFY, (DWORD)(LPVOID)&playReloadSound);    //음악을 한 번 재생
 }
 
 UINT dwIDSE_B;

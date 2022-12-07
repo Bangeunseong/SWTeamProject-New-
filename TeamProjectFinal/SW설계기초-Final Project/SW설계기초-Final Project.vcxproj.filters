@@ -72,6 +72,9 @@
     <ClInclude Include="WeaponItem.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Score.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.c">
@@ -79,35 +82,43 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Media Include="COLLISION.mp3">
+    <Media Include="Resource\BGM_B1.mp3">
       <Filter>리소스 파일</Filter>
     </Media>
-    <Media Include="DEFAULTGUN.mp3">
+    <Media Include="Resource\COLLISION.mp3">
       <Filter>리소스 파일</Filter>
     </Media>
-    <Media Include="MACHINEGUN.mp3">
+    <Media Include="Resource\DEFAULTGUN.mp3">
       <Filter>리소스 파일</Filter>
     </Media>
-    <Media Include="MISSIONCOMPLETE.mp3">
+    <Media Include="Resource\GETEXP.mp3">
       <Filter>리소스 파일</Filter>
     </Media>
-    <Media Include="MISSIONFAILED.mp3">
+    <Media Include="Resource\GETITEM.mp3">
       <Filter>리소스 파일</Filter>
     </Media>
-    <Media Include="BGM_B1.mp3">
+    <Media Include="Resource\MACHINEGUN.mp3">
       <Filter>리소스 파일</Filter>
     </Media>
-    <Media Include="SHOTGUN.mp3">
+    <Media Include="Resource\MISSIONCOMPLETE.mp3">
       <Filter>리소스 파일</Filter>
     </Media>
-    <Media Include="NPC_DAMAGED.mp3">
+    <Media Include="Resource\MISSIONFAILED.mp3">
       <Filter>리소스 파일</Filter>
     </Media>
-    <Media Include="GETEXP.mp3">
+    <Media Include="Resource\NPC_DAMAGED.mp3">
       <Filter>리소스 파일</Filter>
     </Media>
-    <Media Include="GETITEM.mp3">
+    <Media Include="Resource\SHOTGUN.mp3">
       <Filter>리소스 파일</Filter>
     </Media>
+    <Media Include="RELOAD.mp3">
+      <Filter>리소스 파일</Filter>
+    </Media>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Resource\Scoreboard.txt">
+      <Filter>리소스 파일</Filter>
+    </Text>
   </ItemGroup>
 </Project>

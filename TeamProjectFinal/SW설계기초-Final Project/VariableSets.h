@@ -418,7 +418,7 @@ int EXPCOUNTEND = -1;
 double ExpDurationTime = 5;			//아이템 생성 시간 간격, 확인을 위해 5초 단위로 생성시켰습니다. 
 
 int expFLAG = 0; // 게임 내 아이템 출력 여부
-int levelFLAG[] = { 4, 8, 14, 20, 26, 34, 42, 50, 60  }; // 레벨업에 필요한 경험치 양
+int levelFLAG[] = { 4, 8, 12, 16, 20, 24, 28, 32, 36  }; // 레벨업에 필요한 경험치 양
 
 //----------------------------------------------------------
 //------------------WeaponItem 상수---------------------
@@ -438,5 +438,18 @@ int WEAPONCOUNTEND = -1;
 double WeaponDurationTime = 5.0;
 
 const char WeaponItemModel[] = { 'D', 'H', 'S' };	//첫번째는 기본 총(구분을 위해 넣었습니다.)
+
+//-------------------------------------------------------------
+//----------------------SCORE 상수--------------------------
+
+int TotalScore = 0;
+int StageClearBonusScore = 0;
+double ScorePrintDurationTime = 2;
+
+typedef struct ScoreInfo {						//Score 위치 저장 공간 구조체
+	char name[20];
+	int score;
+}ScoreInfo;
+ScoreInfo PlayerInfo[10];
 
 #endif //!VARIABLESETS_H

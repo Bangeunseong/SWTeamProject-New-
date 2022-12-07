@@ -8,6 +8,7 @@
 #include "Npc.h"
 #include "ExpItem.h"
 #include "WeaponItem.h"
+#include "Score.h"
 #ifndef GAMEOVERMENU_H
 #define GAMEOVERMENU_H
 //------------------------게임오버 조건 관련 함수 및 UI함수----------------------------
@@ -19,19 +20,29 @@ DWORD mode;
 //게임 종료 조건 (모든 항목 초기화)
 int GameOver() {
 	if (CurrentLife <= 0) { 
-		TotalSec += (int)(TimeCheckerEnd() - PausingTime) % 60;
+		TotalSec += (int)(TimeCheckerEnd() - PausingTime);
 		HidePlayer(); HideEnemy(); HideItem(); for (int i = 0; i < NPC_COUNT; i++) HideNpc(i);
 		ClearPlayerPosition(); ClearEnemyPosition(); ClearBulletPosition(); ClearAll_PBulletPosition(); ClearBulletPatternVisit(); ClearNpcPosition(); ClearAllExp(); ClearAllWeapon();
-		PlayerInputTime = 0; Invinsible = 0; CurSkill = SubSkill = UsingSkill = 0; PlayerLevel = 1; P_BulletLaunchTime = 0; EXP = 0;
-		EnemyInputTime = EnemyMovementTiming = 0; EnemySpeed = 1.0;
 		DeactivateEnemySkill_Prison();
+
+		mciSendCommandW(dwID, MCI_CLOSE, 0, (DWORD)(LPVOID)NULL);
+		PlayMISSIONFAILEDSound();
+		ShowScore();
+		TimeCheckerStart();
+		while (TimeCheckerEnd() < ScorePrintDurationTime);
+		HideScore();
+
+		PlayerInputTime = 0; Invinsible = 0; CurSkill = SubSkill = UsingSkill = 0; PlayerLevel = 1; P_BulletLaunchTime = 0; EXP = 0; PlayerWeapon = 0;
+		EnemyInputTime = EnemyMovementTiming = 0; EnemySpeed = 1.0;
 		NpcInputTime = 0; NpcSpeed = 0.2; NpcDirection = 0; NpcIsMoving = 0; NpcPatternStartTime = NpcPatternEndTime = 0; NpcKilledOver = 0; NpcKillCount = 0;
 		itemFLAG = 0; ItemInputTime = 0; ItemCreationLoop = 1; flashFLAG = 0; flashCount = 0;
 		BulletInputTime = 0;
 		BulletPatternStartTime = BulletPatternEndTime = 0;
+		
 		PausedTime = PausingTime = 0; StageNumber = 1;
 		Min = Sec = MiSec = 0;
-		free(LifeGauge); 
+		free(LifeGauge);
+		
 		return 1;
 	}
 	return 0;
@@ -61,8 +72,6 @@ void CreateOptionSelectionBox(int x, int y) {
 
 //게임오버 로고 출력
 void ShowGameOver() {
-	mciSendCommandW(dwID, MCI_PLAY, MCI_PAUSE, (DWORD)(LPVOID)&playBgm);
-	PlayMISSIONFAILEDSound();
 	COORD center = { BACKGROUND_ORIGIN_X + BACKGROUND_ROW / 2, BACKGROUND_ORIGIN_Y + BACKGROUND_COLUMN / 2 };
 	int modifiedX = center.X - 46, modifiedY = center.Y - 5;
 	for (int i = 0; i < 8; i++) {
@@ -111,6 +120,8 @@ void GameOptionBoxClick(int *xx, int *yy) {
 //게임을 완전히 종료할 지 아니면 다시 할 지 선택하는 창 출력
 int GameOverMenu() {
 	HideGameOver();	//게임판 전체 삭제
+	ShowRecordScore();
+	HideGameOver();
 
 	//system 함수를 쓴 이후엔 INPUT 핸들 다시 재활성화
 	HANDLE CIN = GetStdHandle(STD_INPUT_HANDLE);

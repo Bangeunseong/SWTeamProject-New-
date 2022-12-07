@@ -155,7 +155,7 @@ void GetDamagedFromEnemy() {
 			InvalidateLifeGauge();												//라이프 게이지 갱신은 데미지를 받을 때만 수행
 		}
 		else { 
-			EXP -= 2;
+			EXP -= 4;
 			if (PlayerLevel < 4) { HidePlayer(); PlayerLevel--; ShowPlayer(); }
 			else PlayerLevel--;
 		}
@@ -164,7 +164,10 @@ void GetDamagedFromEnemy() {
 	}
 	if (DetectCollision_PlayerwithEnemy(PLAYER_POS_X, PLAYER_POS_Y) && Invinsible == 0) {
 		PlayCOLLISIONSound();
-		if (PlayerLevel > 2) { EXP -= 4; HidePlayer(); PlayerLevel -= 2; ShowPlayer(); }		//플레이어 레벨 3인 경우 2단계 강등
+		if (PlayerLevel > 2) {		//플레이어 레벨 3이상인 경우 2단계 강등
+			EXP -= 8;
+			HidePlayer(); PlayerLevel -= 2; ShowPlayer();
+		}		
 		else if (PlayerLevel > 1) {		//플레이어 레벨 2인 경우 1단계 강등 및 데미지 1 받음
 			ReduceLifeGauge(BULLETDAMAGE);
 			InvalidateLifeGauge();												//라이프 게이지 갱신은 데미지를 받을 때만 수행
@@ -181,14 +184,10 @@ void GetDamagedFromEnemy() {
 	if (Invinsible == 0) {
 		for (int i = 0; i < NPC_COUNT; i++) {
 			if (DetectCollision_PlayerwithNpc(PLAYER_POS_X, PLAYER_POS_Y, i)) {
-				if (PlayerLevel < 2) {		//플레이어 레벨 2보다 작은 경우 데미지 1을 받음
-					ReduceLifeGauge(BULLETDAMAGE);
-					InvalidateLifeGauge();												//라이프 게이지 갱신은 데미지를 받을 때만 수행
-				}
+				if (PlayerLevel > 1) { EXP -= 4; PlayerLevel--; }
 				else {
-					if (EXP >= 2) EXP -= 2;
-					if (PlayerLevel < 4) { HidePlayer(); PlayerLevel--; ShowPlayer(); }
-					else PlayerLevel--;
+					ReduceLifeGauge(BULLETDAMAGE);
+					InvalidateLifeGauge();
 				}
 				Invinsible = 1; CollisionTime = TimeCheckerEnd() - PausingTime;		//무적상태로 만들고 충돌한 시간 갱신
 				return;
