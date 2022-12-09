@@ -115,7 +115,7 @@ int DetectCollision_NpcwithPlayer(int x, int y, int n) {
 	else Modellen = 6;
 
 	int flag = 0; int index;
-	for (int i = 0; i < NPCSIZE_H; i++) { if (npc[n].NPC_POS_Y + i == PLAYER_POS_Y) { index = 1; flag = 1; break; } }
+	for (int i = 0; i < NPCSIZE_H; i++) { if (npc[n].NPC_POS_Y + i == PLAYER_POS_Y) { index = i; flag = 1; break; } }
 	if (!flag) return 0;
 
 	for (int i = 0; i < Modellen; i++) {

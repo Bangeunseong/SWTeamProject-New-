@@ -110,12 +110,12 @@ void ShowRecordScore() {
 	// Top 10을 출력해준다.
 	for (int j = 0; j < 10; j++) {
 		SetCurrentCursorPos(BACKGROUND_ORIGIN_X + BACKGROUND_ROW / 2 - 24, BACKGROUND_ORIGIN_Y + BACKGROUND_COLUMN / 2 + j);
-		printf("%d\t위\tID = %s\t\tSCORE = %d", j + 1, PlayerInfo[j].name, PlayerInfo[j].score);
+		printf("%2d위\tID : %20s\tSCORE : %d", j + 1, PlayerInfo[j].name, PlayerInfo[j].score);
 	}
 	saveFile();
 	TotalScore = 0;
 	SetCurrentCursorPos(BACKGROUND_ORIGIN_X + BACKGROUND_ROW / 2 - 24, BACKGROUND_ORIGIN_Y + BACKGROUND_COLUMN / 2 + 10);
-	printf("계속하려면 아무 키나 누르세요...");
-	while (1) { if (kbhit()) return; }
+	printf("계속하려면 엔터 키를 누르세요...");
+	while (1) { if (getch() ==VK_RETURN) return; }
 }
 #endif//!SCORE_H
