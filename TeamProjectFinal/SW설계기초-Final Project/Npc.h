@@ -56,7 +56,7 @@ void NpcPositionRenewal(int n) { // n = Npc number
 		switch (n) {
 		case 0:
 			npc[n].NPC_POS_X = GAMEBOARD_ORIGIN_X + 2;
-			npc[n].NPC_POS_Y = GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN / 6;
+			npc[n].NPC_POS_Y = GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN / 5;
 			break;
 		case 1:
 			npc[n].NPC_POS_X = GAMEBOARD_ORIGIN_X + 2;
@@ -68,7 +68,7 @@ void NpcPositionRenewal(int n) { // n = Npc number
 			break;
 		case 3:
 			npc[n].NPC_POS_X = GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW - 6;
-			npc[n].NPC_POS_Y = GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN / 6;
+			npc[n].NPC_POS_Y = GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN / 5;
 			break;
 		case 4:
 			npc[n].NPC_POS_X = GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW - 6;
