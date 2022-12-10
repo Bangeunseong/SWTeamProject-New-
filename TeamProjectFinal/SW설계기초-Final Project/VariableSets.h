@@ -231,10 +231,12 @@ double NpcInputTime = 0;							//Npc Invalidation Time
 #define NPCSIZE_H 2		//Npc Height
 #define NPCSIZE_W 5		//Npc Width
 #define NPC_COUNT 5	//Npc Count
-#define NPCPATTERNCOUNT 3
+#define NPCPATTERNCOUNT 5
 #define NPC_PATTERNTIME_STAIRS 10.0//Stairs 패턴 지속시간
 #define NPC_PATTERNTIME_HEADBUTT 10.0//HeadButt 패턴 지속시간
 #define NPC_PATTERNTIME_SWEEPDOWN 10.0//SweepDown 패턴 지속시간
+#define NPC_PATTERNTIME_SPIRALMOVE 10.0//RandomMove 패턴 지속시간
+#define NPC_PATTERNTIME_TRACKING 10.0
 
 typedef struct Npc {						//Npc 위치 저장 공간 구조체
 	int NPC_POS_X, NPC_POS_Y;
@@ -242,14 +244,15 @@ typedef struct Npc {						//Npc 위치 저장 공간 구조체
 	int CollisionPlayer;
 	int CollisionWall;
 	int CollisionPbullet;
+	int distance; int Movecount;
+	int destinationX, destinationY; int arrived;
 	int life;
-	int cnt;
 }Npc;
 
 Npc npc[NPC_COUNT];
 
 int Npc_Health[3] = { 4, 8, 12 };			//Npc Health
-double NpcSpeed = 0.3;						//Npc Speed
+double NpcSpeed = 0.35;						//Npc Speed
 double NpcPatternStartTime = 0;				//패턴 시작시간
 double NpcPatternEndTime = 0;				//패턴 종료시간
 double NpcMovementTiming = 0;				//Npc Movement start time

@@ -114,7 +114,7 @@ void ShowRecordScore() {
 	}
 	saveFile();
 	TotalScore = 0;
-	SetCurrentCursorPos(BACKGROUND_ORIGIN_X + BACKGROUND_ROW / 2 - 24, BACKGROUND_ORIGIN_Y + BACKGROUND_COLUMN / 2 + 10);
+	SetCurrentCursorPos(BACKGROUND_ORIGIN_X + BACKGROUND_ROW / 2 - 24, BACKGROUND_ORIGIN_Y + BACKGROUND_COLUMN / 2 + 11);
 	printf("계속하려면 엔터 키를 누르세요...");
 	while (1) { if (getch() ==VK_RETURN) return; }
 }

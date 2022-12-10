@@ -15,33 +15,66 @@
 
 //Npc 버퍼 시간 계산 함수
 int CalculateNpcTimeBuffer() {
-	if (TimeCheckerEnd() - NpcInputTime - PausingTime > NPCTIMEBUFFER / NpcSpeed) { NpcInputTime += NPCTIMEBUFFER / NpcSpeed; return 0; }
+	double CheckedTime = TimeCheckerEnd() - PausingTime;
+	if (CheckedTime - NpcInputTime> NPCTIMEBUFFER / NpcSpeed) { NpcInputTime = CheckedTime; return 0; }
 	else return 1;
 }
 
 //Npc 위치 갱신
 void NpcPositionRenewal(int n) { // n = Npc number
-	switch (n) {
-	case 0:
-		npc[n].NPC_POS_X = GAMEBOARD_ORIGIN_X + 2;
-		npc[n].NPC_POS_Y = GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN / 6;
-		break;
-	case 1:
-		npc[n].NPC_POS_X = GAMEBOARD_ORIGIN_X + 2;
-		npc[n].NPC_POS_Y = GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN / 3;
-		break;
-	case 2:
-		npc[n].NPC_POS_X = GAMEBOARD_ORIGIN_X + 2;
-		npc[n].NPC_POS_Y = GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN / 2;
-		break;
-	case 3:
-		npc[n].NPC_POS_X = GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW - 6;
-		npc[n].NPC_POS_Y = GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN / 6;
-		break;
-	case 4:
-		npc[n].NPC_POS_X = GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW - 6;
-		npc[n].NPC_POS_Y = GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN / 3;
-		break;
+	if (NpcPatternNumber == 5) {	//NpcPattern-SpiralMove일때만 적용
+		npc[n].destinationX = npc[n].destinationY = npc[n].arrived = 0;
+		switch (n) {
+		case 0:
+			npc[n].NPC_POS_X = GAMEBOARD_ORIGIN_X + 2;
+			npc[n].NPC_POS_Y = rand() % (GAMEBOARD_COLUMN - 30) + GAMEBOARD_ORIGIN_Y + 6;
+			npc[n].distance = rand() % (GAMEBOARD_ROW / 2 - 30) + 6;
+			break;
+		case 1:
+			npc[n].NPC_POS_X = GAMEBOARD_ORIGIN_X + 2;
+			npc[n].NPC_POS_Y = rand() % (GAMEBOARD_COLUMN - 20) + GAMEBOARD_ORIGIN_Y + 6;
+			npc[n].distance = rand() % (GAMEBOARD_ROW / 2 - 40) + 6;
+			break;
+		case 2:
+			npc[n].NPC_POS_X = GAMEBOARD_ORIGIN_X + 2;
+			npc[n].NPC_POS_Y = rand() % (GAMEBOARD_COLUMN - 20) + GAMEBOARD_ORIGIN_Y + 6;
+			npc[n].distance = rand() % (GAMEBOARD_ROW / 2 - 40) + 6;
+			break;
+		case 3:
+			npc[n].NPC_POS_X = GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW - 6;
+			npc[n].NPC_POS_Y = rand() % (GAMEBOARD_COLUMN - 20) + GAMEBOARD_ORIGIN_Y + 6;
+			npc[n].distance = rand() % (GAMEBOARD_ROW / 2 - 40) + 6;
+			break;
+		case 4:
+			npc[n].NPC_POS_X = GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW - 6;
+			npc[n].NPC_POS_Y = rand() % (GAMEBOARD_COLUMN - 20) + GAMEBOARD_ORIGIN_Y + 6;
+			npc[n].distance = rand() % (GAMEBOARD_ROW / 2 - 40) + 6;
+			break;
+		}
+	}
+	else {
+		switch (n) {
+		case 0:
+			npc[n].NPC_POS_X = GAMEBOARD_ORIGIN_X + 2;
+			npc[n].NPC_POS_Y = GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN / 6;
+			break;
+		case 1:
+			npc[n].NPC_POS_X = GAMEBOARD_ORIGIN_X + 2;
+			npc[n].NPC_POS_Y = GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN / 3;
+			break;
+		case 2:
+			npc[n].NPC_POS_X = GAMEBOARD_ORIGIN_X + 2;
+			npc[n].NPC_POS_Y = GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN / 2;
+			break;
+		case 3:
+			npc[n].NPC_POS_X = GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW - 6;
+			npc[n].NPC_POS_Y = GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN / 6;
+			break;
+		case 4:
+			npc[n].NPC_POS_X = GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW - 6;
+			npc[n].NPC_POS_Y = GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN / 3;
+			break;
+		}
 	}
 }
 
@@ -81,16 +114,16 @@ void ClearNpcPosition() {
 	for (int i = 0; i < NPC_COUNT; i++) {
 		HideNpc(i);
 		NpcPositionRenewal(i);
-		npc[i].cnt = npc[i].NpcActivation = npc[i].CollisionPlayer = npc[i].CollisionPbullet = npc[i].CollisionWall = 0; npc[i].life = Npc_Health[StageNumber - 1];
+		npc[i].distance = npc[i].Movecount = npc[i].NpcActivation = npc[i].CollisionPlayer = npc[i].CollisionPbullet = npc[i].CollisionWall = 0;
+		npc[i].life = Npc_Health[StageNumber - 1];
 	}
 	NpcPatternStart = 0;
 	NpcPatternCycle = 0;
 	NpcPatternNumber = 0;
 	NpcPatternTimeEnded = 1;
 	NpcSweepDownChecker = 0;
-	NpcIsMoving = 0;
+	NpcIsMoving = NPC_COUNT;
 	NPCCOUNT = 0;
-	NpcSpeed = 0.2;
 }
 //Npc 랜덤 패턴 넘버 지정
 void SetNpcRandomPatternNumber() {
@@ -104,7 +137,7 @@ void SetNpcRandomPatternNumber() {
 int DetectCollision_NpcwithWall(int x, int y) {
 	for (int i = 0; i < NPCSIZE_H; i++) {
 		for (int j = 0; j < NPCSIZE_W; j++)
-			if (UniBoard[y - GAMEBOARD_ORIGIN_Y + i][x - GAMEBOARD_ORIGIN_X + j] == WALL) return 1;
+			if (UniBoard[y - GAMEBOARD_ORIGIN_Y + i][x - GAMEBOARD_ORIGIN_X + j] == WALL) { NpcIsMoving--; return 1; }
 	}
 	return 0;
 }
@@ -121,7 +154,7 @@ int DetectCollision_NpcwithPlayer(int x, int y, int n) {
 	for (int i = 0; i < Modellen; i++) {
 		for (int j = 0; j < NPCSIZE_W; j++) {
 			if (NpcModel[n][index][j] != ' ')
-				if (npc[n].NPC_POS_X + j == PLAYER_POS_X + i) return 1;
+				if (npc[n].NPC_POS_X + j == PLAYER_POS_X + i) { NpcIsMoving--; return 1; }
 		}
 	}
 	return 0;
@@ -139,7 +172,7 @@ void NpcGetDamagedFromPlayer(int n, int P_bulletnumber) {
 		if (ran_N >= 0 && ran_N < 20) CreateExp(n);	//0 2 4 6 8 일때 경험치 생성
 		else if (ran_N >= 20 && ran_N < 30) CreateWeaponItem(n);
 		npc[n].NpcActivation = 0; npc[n].CollisionPbullet = 1; npc[n].life = Npc_Health[StageNumber - 1];
-		NpcKillCount++;
+		NpcKillCount++; NpcIsMoving--;
 		NpcPositionRenewal(n);
 	}
 }
@@ -164,7 +197,7 @@ int MoveNpc_NW(int n) {
 
 	HideNpc(n);
 	if (DetectCollision_NpcwithPlayer(npc[n].NPC_POS_X, npc[n].NPC_POS_Y, n)) { npc[n].NpcActivation = 0; npc[n].CollisionPlayer = 1; return 0; }//플레이어와 부딪혔으면 npc 비활성화, 플레이어와 부딪혔다는 인디케이터 1로 갱신 0을 리턴하며 종료
-	if (!DetectCollision_NpcwithWall(npc[n].NPC_POS_X - 2, npc[n].NPC_POS_Y - 1)) { npc[n].NPC_POS_X -= 2; npc[n].NPC_POS_Y--; }
+	if (!DetectCollision_NpcwithWall(npc[n].NPC_POS_X - 1, npc[n].NPC_POS_Y - 1)) { npc[n].NPC_POS_X--; npc[n].NPC_POS_Y--; }
 	else { npc[n].NpcActivation = 0; npc[n].CollisionWall = 1; return 0; }
 	ShowNpc(n); return 1;
 }
@@ -175,7 +208,7 @@ int MoveNpc_NE(int n) {
 
 	HideNpc(n);
 	if (DetectCollision_NpcwithPlayer(npc[n].NPC_POS_X, npc[n].NPC_POS_Y, n)) { npc[n].NpcActivation = 0; npc[n].CollisionPlayer = 1; return 0; }//플레이어와 부딪혔으면 npc 비활성화, 플레이어와 부딪혔다는 인디케이터 1로 갱신 0을 리턴하며 종료
-	if (!DetectCollision_NpcwithWall(npc[n].NPC_POS_X + 2, npc[n].NPC_POS_Y - 1)) { npc[n].NPC_POS_X += 2; npc[n].NPC_POS_Y--; }
+	if (!DetectCollision_NpcwithWall(npc[n].NPC_POS_X + 1, npc[n].NPC_POS_Y - 1)) { npc[n].NPC_POS_X++; npc[n].NPC_POS_Y--; }
 	else { npc[n].NpcActivation = 0; npc[n].CollisionWall = 1; return 0; }
 	ShowNpc(n); return 1;
 }
@@ -186,7 +219,7 @@ int MoveNpc_W(int n) {
 
 	HideNpc(n);
 	if (DetectCollision_NpcwithPlayer(npc[n].NPC_POS_X, npc[n].NPC_POS_Y, n)) { npc[n].NpcActivation = 0; npc[n].CollisionPlayer = 1; return 0; }//플레이어와 부딪혔으면 npc 비활성화, 플레이어와 부딪혔다는 인디케이터 1로 갱신 0을 리턴하며 종료
-	if (!DetectCollision_NpcwithWall(npc[n].NPC_POS_X - 2, npc[n].NPC_POS_Y)) npc[n].NPC_POS_X -= 2;
+	if (!DetectCollision_NpcwithWall(npc[n].NPC_POS_X - 1, npc[n].NPC_POS_Y)) npc[n].NPC_POS_X--;
 	else { npc[n].NpcActivation = 0; npc[n].CollisionWall = 1; return 0; }
 	ShowNpc(n); return 1;
 }
@@ -197,7 +230,7 @@ int MoveNpc_SW(int n) {
 
 	HideNpc(n);
 	if (DetectCollision_NpcwithPlayer(npc[n].NPC_POS_X, npc[n].NPC_POS_Y, n)) { npc[n].NpcActivation = 0; npc[n].CollisionPlayer = 1; return 0; }//플레이어와 부딪혔으면 npc 비활성화, 플레이어와 부딪혔다는 인디케이터 1로 갱신 0을 리턴하며 종료
-	if (!DetectCollision_NpcwithWall(npc[n].NPC_POS_X - 2, npc[n].NPC_POS_Y + 1)) { npc[n].NPC_POS_X -= 2; npc[n].NPC_POS_Y++; }
+	if (!DetectCollision_NpcwithWall(npc[n].NPC_POS_X - 1, npc[n].NPC_POS_Y + 1)) { npc[n].NPC_POS_X--; npc[n].NPC_POS_Y++; }
 	else { npc[n].NpcActivation = 0; npc[n].CollisionWall = 1; return 0; }
 	ShowNpc(n); return 1;
 }
@@ -219,7 +252,7 @@ int MoveNpc_SE(int n) {
 
 	HideNpc(n);
 	if (DetectCollision_NpcwithPlayer(npc[n].NPC_POS_X, npc[n].NPC_POS_Y, n)) { npc[n].NpcActivation = 0; npc[n].CollisionPlayer = 1; return 0; }//플레이어와 부딪혔으면 npc 비활성화, 플레이어와 부딪혔다는 인디케이터 1로 갱신 0을 리턴하며 종료
-	if (!DetectCollision_NpcwithWall(npc[n].NPC_POS_X + 2, npc[n].NPC_POS_Y + 1)) { npc[n].NPC_POS_X += 2; npc[n].NPC_POS_Y++; }
+	if (!DetectCollision_NpcwithWall(npc[n].NPC_POS_X + 1, npc[n].NPC_POS_Y + 1)) { npc[n].NPC_POS_X++; npc[n].NPC_POS_Y++; }
 	else { npc[n].NpcActivation = 0; npc[n].CollisionWall = 1; return 0; }
 	ShowNpc(n); return 1;
 }
@@ -230,7 +263,7 @@ int MoveNpc_E(int n) {
 
 	HideNpc(n);
 	if (DetectCollision_NpcwithPlayer(npc[n].NPC_POS_X, npc[n].NPC_POS_Y, n)) { npc[n].NpcActivation = 0; npc[n].CollisionPlayer = 1; return 0; }//플레이어와 부딪혔으면 npc 비활성화, 플레이어와 부딪혔다는 인디케이터 1로 갱신 0을 리턴하며 종료
-	if (!DetectCollision_NpcwithWall(npc[n].NPC_POS_X + 2, npc[n].NPC_POS_Y)) { npc[n].NPC_POS_X += 2; }
+	if (!DetectCollision_NpcwithWall(npc[n].NPC_POS_X + 1, npc[n].NPC_POS_Y)) { npc[n].NPC_POS_X++; }
 	else { npc[n].NpcActivation = 0; npc[n].CollisionWall = 1; return 0; }
 	ShowNpc(n); return 1;
 }
@@ -243,7 +276,7 @@ void NpcLaunchTime() {
 		double CheckedTime = TimeCheckerEnd() - PausingTime;
 		if (CheckedTime > NpcPatternEndTime + PATTERNDURATION) {		//체크한 시간이 패턴 종료시간 + durationtime보다 크면 작동
 			SetNpcRandomPatternNumber();		//패턴 넘버 결정(랜덤)
-			NpcPatternStart = NpcIsMoving = 1; NpcPatternTimeEnded = 0; NpcMovementTiming = NpcPatternStartTime = CheckedTime;	//패턴 시작 인디케이터 1로 갱신, 패턴 시작시간 갱신, Enemy가 움직이고 있다는 인디케이터 1로 갱신
+			NpcPatternStart = NpcIsMoving = NPC_COUNT; NpcPatternTimeEnded = 0; NpcMovementTiming = NpcPatternStartTime = CheckedTime;	//패턴 시작 인디케이터 1로 갱신, 패턴 시작시간 갱신, Enemy가 움직이고 있다는 인디케이터 1로 갱신
 		}
 	}
 	else return;
@@ -263,41 +296,42 @@ int NpcPattern_HeadButt() {
 		if (!npc[i].NpcActivation && !npc[i].CollisionPlayer && !npc[i].CollisionWall && !npc[i].CollisionPbullet) { NpcPositionRenewal(i); npc[i].NpcActivation = 1; ShowNpc(i); }	//만약 npc 나타나지 않은 것이라면 초기 위치를 패턴에 맞게 초기화를 시키고 npc 출력
 		if (npc[i].NPC_POS_X < GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW / 2 - 15) {
 			switch (i) {
-			case 0: flag += MoveNpc_E(i); break;
-			case 1: flag += MoveNpc_E(i); break;
-			case 2: flag += MoveNpc_E(i); break;
+			case 0: MoveNpc_E(i); break;
+			case 1: MoveNpc_E(i); break;
+			case 2: MoveNpc_E(i); break;
 			}
 		}
 		else if (npc[i].NPC_POS_X > GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW / 2 + 15) {
 			switch (i) {
-			case 3: flag += MoveNpc_W(i); break;
-			case 4: flag += MoveNpc_W(i); break;
+			case 3: MoveNpc_W(i); break;
+			case 4: MoveNpc_W(i); break;
 			}
 		}
 		else if (npc[i].NPC_POS_X < GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW / 2 - 8) {
 			switch (i) {
-			case 0: flag += MoveNpc_NE(i); break;
-			case 1: flag += MoveNpc_NE(i); break;
-			case 2: flag += MoveNpc_NE(i); break;
+			case 0: MoveNpc_NE(i); break;
+			case 1: MoveNpc_NE(i); break;
+			case 2: MoveNpc_NE(i); break;
 			}
 		}
 		else if (npc[i].NPC_POS_X > GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW / 2 + 8) {
 			switch (i) {
-			case 3: flag += MoveNpc_NW(i); break;
-			case 4: flag += MoveNpc_NW(i); break;
+			case 3: MoveNpc_NW(i); break;
+			case 4: MoveNpc_NW(i); break;
 			}
 		}
 		else {
 			switch (i % 5) {
-			case 0: flag += MoveNpc_S(i); break;
-			case 1: flag += MoveNpc_S(i); break;
-			case 2: flag += MoveNpc_S(i); break;
-			case 3: flag += MoveNpc_S(i); break;
-			case 4: flag += MoveNpc_S(i); break;
+			case 0: MoveNpc_S(i); break;
+			case 1: MoveNpc_S(i); break;
+			case 2: MoveNpc_S(i); break;
+			case 3: MoveNpc_S(i); break;
+			case 4: MoveNpc_S(i); break;
 			}
 		}
+		flag += npc[i].NpcActivation;
 	}
-	if (!flag) { NpcPatternEndTime = TimeCheckerEnd() - PausingTime; return 1; }
+	if (!flag && !NpcIsMoving) { NpcPatternEndTime = TimeCheckerEnd() - PausingTime; return 1; }
 	return 0;
 }
 
@@ -311,24 +345,25 @@ int NpcPattern_Stairs() {
 		if (!npc[i].NpcActivation && !npc[i].CollisionPlayer && !npc[i].CollisionWall && !npc[i].CollisionPbullet) { NpcPositionRenewal(i); npc[i].NpcActivation = 1; ShowNpc(i); }	//만약 npc 나타나지 않은 것이라면 초기 위치를 패턴에 맞게 초기화를 시키고 npc 출력
 		if (npc[i].NPC_POS_X % 6 < 3) {
 			switch (i % 5) {
-			case 0: flag += MoveNpc_SE(i); break;
-			case 1: flag += MoveNpc_SE(i); break;
-			case 2: flag += MoveNpc_SE(i); break;
-			case 3: flag += MoveNpc_SW(i); break;
-			case 4: flag += MoveNpc_SW(i); break;
+			case 0: MoveNpc_SE(i); break;
+			case 1: MoveNpc_SE(i); break;
+			case 2: MoveNpc_SE(i); break;
+			case 3: MoveNpc_SW(i); break;
+			case 4: MoveNpc_SW(i); break;
 			}
 		}
 		else {
 			switch (i % 5) {
-			case 0: flag += MoveNpc_E(i); break;
-			case 1: flag += MoveNpc_E(i); break;
-			case 2: flag += MoveNpc_E(i); break;
-			case 3: flag += MoveNpc_W(i); break;
-			case 4: flag += MoveNpc_W(i); break;
+			case 0: MoveNpc_E(i); break;
+			case 1: MoveNpc_E(i); break;
+			case 2: MoveNpc_E(i); break;
+			case 3: MoveNpc_W(i); break;
+			case 4: MoveNpc_W(i); break;
 			}
 		}
+		flag += npc[i].NpcActivation;
 	}
-	if (!flag) { NpcPatternEndTime = TimeCheckerEnd() - PausingTime; return 1; }
+	if (!flag && !NpcIsMoving) { NpcPatternEndTime = TimeCheckerEnd() - PausingTime; return 1; }
 	return 0;
 }
 
@@ -342,28 +377,208 @@ int NpcPattern_SweepDown() {
 		if (!npc[i].NpcActivation && !npc[i].CollisionPlayer && !npc[i].CollisionWall && !npc[i].CollisionPbullet) { NpcPositionRenewal(i); npc[i].NpcActivation = 1; ShowNpc(i); }	//만약 npc 나타나지 않은 것이라면 초기 위치를 패턴에 맞게 초기화를 시키고 npc 출력
 		if (NpcSweepDownChecker) {
 			switch (i % 5) {
-			case 0: flag += MoveNpc_SW(i); break;
-			case 1: flag += MoveNpc_SW(i); break;
-			case 2: flag += MoveNpc_SW(i); break;
-			case 3: flag += MoveNpc_SW(i); break;
-			case 4: flag += MoveNpc_SW(i); break;
+			case 0: MoveNpc_SW(i); break;
+			case 1: MoveNpc_SW(i); break;
+			case 2: MoveNpc_SW(i); break;
+			case 3: MoveNpc_SW(i); break;
+			case 4: MoveNpc_SW(i); break;
 			}
 		}
 		else if (npc[i].NPC_POS_X < GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW / 2 + 1) {
 			switch (i) {
-			case 0: flag += MoveNpc_E(i); break;
-			case 1: flag += MoveNpc_E(i); break;
-			case 2: flag += MoveNpc_E(i); break;
+			case 0: MoveNpc_E(i); break;
+			case 1: MoveNpc_E(i); break;
+			case 2: MoveNpc_E(i); break;
 			}
 		}
-		else if (npc[0].NPC_POS_X > GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW / 2) {
+		else if (npc[0].NPC_POS_X > GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW / 2 || (!npc[0].NpcActivation && !npc[1].NpcActivation && !npc[2].NpcActivation)) {
 			NpcSweepDownChecker = 1;
 		}
+		flag += npc[i].NpcActivation;
 	}
-	if (!flag) { NpcPatternEndTime = TimeCheckerEnd() - PausingTime; return 1; }
+	if (!flag && !NpcIsMoving) { NpcPatternEndTime = TimeCheckerEnd() - PausingTime; return 1; }
 	return 0;
 }
 
+int NpcPattern_Tracking() {
+	int flag = 0;
+	double CheckedTime = TimeCheckerEnd() - PausingTime;
+	if (CheckedTime < NPC_PATTERNTIME_TRACKING + NpcPatternStartTime && CheckedTime > NpcPatternStartTime) NPCCOUNT = 5; //Pattern Cycle 유무 고민중
+	else NpcPatternTimeEnded = 1;	//패턴 지속시간 끝날시 patterntimeended 1로 갱신
+	for (int i = 0; i < 5; i++) {
+		if (!npc[i].NpcActivation && !npc[i].CollisionPlayer && !npc[i].CollisionWall && !npc[i].CollisionPbullet) { NpcPositionRenewal(i); npc[i].NpcActivation = 1; ShowNpc(i); }	//만약 npc 나타나지 않은 것이라면 초기 위치를 패턴에 맞게 초기화를 시키고 npc 출력
+		if (npc[i].NPC_POS_Y > PLAYER_POS_Y) {
+			switch (i) {
+			case 0: flag += MoveNpc_N(i); break;
+			case 1: flag += MoveNpc_N(i); break;
+			case 2: flag += MoveNpc_N(i); break;
+			case 3: flag += MoveNpc_N(i); break;
+			case 4: flag += MoveNpc_N(i); break;
+			}
+		}
+		else if (npc[i].NPC_POS_Y > PLAYER_POS_Y && npc[i].NPC_POS_X < PLAYER_POS_X - 5) {
+			switch (i) {
+			case 0: flag += MoveNpc_E(i); break;
+			case 1: flag += MoveNpc_NE(i); break;
+			case 2: flag += MoveNpc_E(i); break;
+			case 3: flag += MoveNpc_NE(i); break;
+			case 4: flag += MoveNpc_E(i); break;
+			}
+		}
+		else if (npc[i].NPC_POS_Y > PLAYER_POS_Y && npc[i].NPC_POS_X > PLAYER_POS_X + 5) {
+			switch (i) {
+			case 0: flag += MoveNpc_NW(i); break;
+			case 1: flag += MoveNpc_N(i); break;
+			case 2: flag += MoveNpc_NW(i); break;
+			case 3: flag += MoveNpc_N(i); break;
+			case 4: flag += MoveNpc_NW(i); break;
+			}
+		}
+		else if (npc[i].NPC_POS_X < PLAYER_POS_X - 5) {
+			switch (i) {
+			case 0: flag += MoveNpc_SE(i); break;
+			case 1: flag += MoveNpc_E(i); break;
+			case 2: flag += MoveNpc_SE(i); break;
+			case 3: flag += MoveNpc_E(i); break;
+			case 4: flag += MoveNpc_SE(i); break;
+			}
+		}
+		else if (npc[i].NPC_POS_X > PLAYER_POS_X + 5) {
+			switch (i) {
+			case 0: flag += MoveNpc_W(i); break;
+			case 1: flag += MoveNpc_SW(i); break;
+			case 2: flag += MoveNpc_W(i); break;
+			case 3: flag += MoveNpc_SW(i); break;
+			case 4: flag += MoveNpc_W(i); break;
+			}
+		}
+		else {
+			switch (i % 5) {
+			case 0: flag += MoveNpc_S(i); break;
+			case 1: flag += MoveNpc_S(i); break;
+			case 2: flag += MoveNpc_S(i); break;
+			case 3: flag += MoveNpc_S(i); break;
+			case 4: flag += MoveNpc_S(i); break;
+			}
+		}
+	}
+	if (!flag && !NpcIsMoving) { NpcPatternEndTime = TimeCheckerEnd() - PausingTime; return 1; }
+	return 0;
+}
+
+int NpcPattern_SpiralMove() {
+	int flag = 0;
+	double CheckedTime = TimeCheckerEnd() - PausingTime;
+	if (CheckedTime < NPC_PATTERNTIME_SPIRALMOVE + NpcPatternStartTime && CheckedTime > NpcPatternStartTime) NPCCOUNT = 5; //Pattern Cycle 유무 고민중
+	else NpcPatternTimeEnded = 1;	//패턴 지속시간 끝날시 patterntimeended 1로 갱신
+	for (int i = 0; i < 5; i++) {
+		if (!npc[i].NpcActivation && !npc[i].CollisionPlayer && !npc[i].CollisionWall && !npc[i].CollisionPbullet) { NpcPositionRenewal(i); npc[i].NpcActivation = 1; ShowNpc(i); }	//만약 npc 나타나지 않은 것이라면 초기 위치를 패턴에 맞게 초기화를 시키고 npc 출력
+		switch (i) {
+		case 0:
+			if (npc[i].Movecount < npc[i].distance) MoveNpc_E(i);
+			else if (npc[i].Movecount >= npc[i].distance && npc[i].Movecount < npc[i].distance + 2) MoveNpc_E(i);
+			else if (npc[i].Movecount >= npc[i].distance + 2 && npc[i].Movecount < npc[i].distance + 4) MoveNpc_NE(i);
+			else if (npc[i].Movecount >= npc[i].distance + 4 && npc[i].Movecount < npc[i].distance + 6) MoveNpc_N(i);
+			else if (npc[i].Movecount >= npc[i].distance + 6 && npc[i].Movecount < npc[i].distance + 8) MoveNpc_NW(i);
+			else if (npc[i].Movecount >= npc[i].distance + 8 && npc[i].Movecount < npc[i].distance + 10) MoveNpc_W(i);
+			else if (npc[i].Movecount >= npc[i].distance + 10 && npc[i].Movecount < npc[i].distance + 12) MoveNpc_SW(i);
+			else {
+				if (!npc[i].destinationX && !npc[i].destinationY) { npc[i].destinationX = PLAYER_POS_X; npc[i].destinationY = PLAYER_POS_Y; }
+				if (!npc[i].arrived) {
+					if (npc[i].NPC_POS_X < npc[i].destinationX) MoveNpc_E(i);
+					else if (npc[i].NPC_POS_X > npc[i].destinationX) MoveNpc_W(i);
+					if (npc[i].NPC_POS_Y < npc[i].destinationY) MoveNpc_S(i);
+					else if (npc[i].NPC_POS_Y > npc[i].destinationY) MoveNpc_N(i);
+					if (npc[i].destinationX == npc[i].NPC_POS_X && npc[i].destinationY == npc[i].NPC_POS_Y) npc[i].arrived = 1;
+				}
+				else MoveNpc_NW(i);
+			}
+			npc[i].Movecount++; break;
+		case 1:
+			if (npc[i].Movecount < npc[i].distance) MoveNpc_E(i);
+			else if (npc[i].Movecount >= npc[i].distance && npc[i].Movecount < npc[i].distance + 2) MoveNpc_E(i);
+			else if (npc[i].Movecount >= npc[i].distance + 2 && npc[i].Movecount < npc[i].distance + 4) MoveNpc_NE(i);
+			else if (npc[i].Movecount >= npc[i].distance + 4 && npc[i].Movecount < npc[i].distance + 6) MoveNpc_N(i);
+			else if (npc[i].Movecount >= npc[i].distance + 6 && npc[i].Movecount < npc[i].distance + 8) MoveNpc_NW(i);
+			else if (npc[i].Movecount >= npc[i].distance + 8 && npc[i].Movecount < npc[i].distance + 10) MoveNpc_W(i);
+			else if (npc[i].Movecount >= npc[i].distance + 10 && npc[i].Movecount < npc[i].distance + 12) MoveNpc_SW(i);
+			else {
+				if (!npc[i].destinationX && !npc[i].destinationY) { npc[i].destinationX = PLAYER_POS_X; npc[i].destinationY = PLAYER_POS_Y; }
+				if (!npc[i].arrived) {
+					if (npc[i].NPC_POS_X < npc[i].destinationX) MoveNpc_E(i);
+					else if (npc[i].NPC_POS_X > npc[i].destinationX) MoveNpc_W(i);
+					if (npc[i].NPC_POS_Y < npc[i].destinationY) MoveNpc_S(i);
+					else if (npc[i].NPC_POS_Y > npc[i].destinationY) MoveNpc_N(i);
+					if (npc[i].destinationX == npc[i].NPC_POS_X && npc[i].destinationY == npc[i].NPC_POS_Y) npc[i].arrived = 1;
+				}
+				else MoveNpc_NE(i);
+			}
+			npc[i].Movecount++; break;
+		case 2:
+			if (npc[i].Movecount < npc[i].distance) MoveNpc_E(i);
+			else if (npc[i].Movecount >= npc[i].distance && npc[i].Movecount < npc[i].distance + 2) MoveNpc_E(i);
+			else if (npc[i].Movecount >= npc[i].distance + 2 && npc[i].Movecount < npc[i].distance + 4) MoveNpc_NE(i);
+			else if (npc[i].Movecount >= npc[i].distance + 4 && npc[i].Movecount < npc[i].distance + 6) MoveNpc_N(i);
+			else if (npc[i].Movecount >= npc[i].distance + 6 && npc[i].Movecount < npc[i].distance + 8) MoveNpc_NW(i);
+			else if (npc[i].Movecount >= npc[i].distance + 8 && npc[i].Movecount < npc[i].distance + 10) MoveNpc_W(i);
+			else if (npc[i].Movecount >= npc[i].distance + 10 && npc[i].Movecount < npc[i].distance + 12) MoveNpc_SW(i);
+			else {
+				if (!npc[i].destinationX && !npc[i].destinationY) { npc[i].destinationX = PLAYER_POS_X; npc[i].destinationY = PLAYER_POS_Y; }
+				if (!npc[i].arrived) {
+					if (npc[i].NPC_POS_X < npc[i].destinationX) MoveNpc_E(i);
+					else if (npc[i].NPC_POS_X > npc[i].destinationX) MoveNpc_W(i);
+					if (npc[i].NPC_POS_Y < npc[i].destinationY) MoveNpc_S(i);
+					else if (npc[i].NPC_POS_Y > npc[i].destinationY) MoveNpc_N(i);
+					if (npc[i].destinationX == npc[i].NPC_POS_X && npc[i].destinationY == npc[i].NPC_POS_Y) npc[i].arrived = 1;
+				}
+				else MoveNpc_SW(i);
+			}
+			npc[i].Movecount++; break;
+		case 3:
+			if (npc[i].Movecount < npc[i].distance) MoveNpc_W(i);
+			else if (npc[i].Movecount >= npc[i].distance && npc[i].Movecount < npc[i].distance + 2) MoveNpc_W(i);
+			else if (npc[i].Movecount >= npc[i].distance + 2 && npc[i].Movecount < npc[i].distance + 4) MoveNpc_NW(i);
+			else if (npc[i].Movecount >= npc[i].distance + 4 && npc[i].Movecount < npc[i].distance + 6) MoveNpc_NE(i);
+			else if (npc[i].Movecount >= npc[i].distance + 6 && npc[i].Movecount < npc[i].distance + 8) MoveNpc_NE(i);
+			else if (npc[i].Movecount >= npc[i].distance + 8 && npc[i].Movecount < npc[i].distance + 10) MoveNpc_E(i);
+			else if (npc[i].Movecount >= npc[i].distance + 10 && npc[i].Movecount < npc[i].distance + 12) MoveNpc_SE(i);
+			else {
+				if (!npc[i].destinationX && !npc[i].destinationY) { npc[i].destinationX = PLAYER_POS_X; npc[i].destinationY = PLAYER_POS_Y; }
+				if (!npc[i].arrived) {
+					if (npc[i].NPC_POS_X < npc[i].destinationX) MoveNpc_E(i);
+					else if (npc[i].NPC_POS_X > npc[i].destinationX) MoveNpc_W(i);
+					if (npc[i].NPC_POS_Y < npc[i].destinationY) MoveNpc_S(i);
+					else if (npc[i].NPC_POS_Y > npc[i].destinationY) MoveNpc_N(i);
+					if (npc[i].destinationX == npc[i].NPC_POS_X && npc[i].destinationY == npc[i].NPC_POS_Y) npc[i].arrived = 1;
+				}
+				else MoveNpc_SE(i);
+			}
+			npc[i].Movecount++; break;
+		case 4:
+			if (npc[i].Movecount < npc[i].distance) MoveNpc_W(i);
+			else if (npc[i].Movecount >= npc[i].distance && npc[i].Movecount < npc[i].distance + 2) MoveNpc_W(i);
+			else if (npc[i].Movecount >= npc[i].distance + 2 && npc[i].Movecount < npc[i].distance + 4) MoveNpc_NW(i);
+			else if (npc[i].Movecount >= npc[i].distance + 4 && npc[i].Movecount < npc[i].distance + 6) MoveNpc_N(i);
+			else if (npc[i].Movecount >= npc[i].distance + 6 && npc[i].Movecount < npc[i].distance + 8) MoveNpc_NE(i);
+			else if (npc[i].Movecount >= npc[i].distance + 8 && npc[i].Movecount < npc[i].distance + 10) MoveNpc_E(i);
+			else if (npc[i].Movecount >= npc[i].distance + 10 && npc[i].Movecount < npc[i].distance + 12) MoveNpc_SE(i);
+			else {
+				if (!npc[i].destinationX && !npc[i].destinationY) { npc[i].destinationX = PLAYER_POS_X; npc[i].destinationY = PLAYER_POS_Y; }
+				if (!npc[i].arrived) {
+					if (npc[i].NPC_POS_X < npc[i].destinationX) MoveNpc_E(i);
+					else if (npc[i].NPC_POS_X > npc[i].destinationX) MoveNpc_W(i);
+					if (npc[i].NPC_POS_Y < npc[i].destinationY) MoveNpc_S(i);
+					else if (npc[i].NPC_POS_Y > npc[i].destinationY) MoveNpc_N(i);
+					if (npc[i].destinationX == npc[i].NPC_POS_X && npc[i].destinationY == npc[i].NPC_POS_Y) npc[i].arrived = 1;
+				}
+				else MoveNpc_S(i);
+			}
+			npc[i].Movecount++; break;
+		}
+	}
+	if (!flag && !NpcIsMoving) { NpcPatternEndTime = TimeCheckerEnd() - PausingTime; return 1; }
+	return 0;
+}
 
 
 //--------------------------------------------------------------
@@ -379,6 +594,8 @@ void InvalidateNpc() {
 				case 1: if (NpcPattern_Stairs()) ClearNpcPosition(); break;
 				case 2: if (NpcPattern_HeadButt()) ClearNpcPosition(); break;
 				case 3: if (NpcPattern_SweepDown()) ClearNpcPosition(); break;
+				case 4: if (NpcPattern_Tracking()) ClearNpcPosition(); break;
+				case 5: if (NpcPattern_SpiralMove()) ClearNpcPosition(); break;
 				default: break;
 				}
 			}

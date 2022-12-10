@@ -114,7 +114,7 @@ int DetectCollision_PlayerwithNpc(int x, int y, int n) {
 		for (int j = 0; j < NPCSIZE_H; j++) {
 			for (int k = 0; k < NPCSIZE_W; k++) {
 				if (NpcModel[n][j][k] != ' ')
-					if ((npc[n].NPC_POS_Y) + j == PLAYER_POS_Y && (npc[n].NPC_POS_X) + k == PLAYER_POS_X + i) return 1;
+					if ((npc[n].NPC_POS_Y + j) == PLAYER_POS_Y && (npc[n].NPC_POS_X + k) == (PLAYER_POS_X + i)) return 1;
 			}
 		}
 	}
@@ -184,7 +184,11 @@ void GetDamagedFromEnemy() {
 	if (Invinsible == 0) {
 		for (int i = 0; i < NPC_COUNT; i++) {
 			if (DetectCollision_PlayerwithNpc(PLAYER_POS_X, PLAYER_POS_Y, i)) {
-				if (PlayerLevel > 1) { EXP -= 4; PlayerLevel--; }
+				if (PlayerLevel > 1) { 
+					EXP -= 4; 
+					if (PlayerLevel < 4) { HidePlayer(); PlayerLevel--; ShowPlayer(); }
+					else PlayerLevel--;
+				}
 				else {
 					ReduceLifeGauge(BULLETDAMAGE);
 					InvalidateLifeGauge();

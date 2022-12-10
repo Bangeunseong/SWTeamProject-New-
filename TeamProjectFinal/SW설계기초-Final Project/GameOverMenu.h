@@ -34,7 +34,7 @@ int GameOver() {
 
 		PlayerInputTime = 0; Invinsible = 0; CurSkill = SubSkill = UsingSkill = 0; PlayerLevel = 1; P_BulletLaunchTime = 0; EXP = 0; PlayerWeapon = 0;
 		EnemyInputTime = EnemyMovementTiming = 0; EnemySpeed = 1.0;
-		NpcInputTime = 0; NpcSpeed = 0.2; NpcDirection = 0; NpcIsMoving = 0; NpcPatternStartTime = NpcPatternEndTime = 0; NpcKilledOver = 0; NpcKillCount = 0;
+		NpcInputTime = 0; NpcDirection = 0; NpcIsMoving = 0; NpcPatternStartTime = NpcPatternEndTime = 0; NpcKilledOver = 0; NpcKillCount = 0;
 		itemFLAG = 0; ItemInputTime = 0; ItemCreationLoop = 1; flashFLAG = 0; flashCount = 0;
 		BulletInputTime = 0;
 		BulletPatternStartTime = BulletPatternEndTime = 0;

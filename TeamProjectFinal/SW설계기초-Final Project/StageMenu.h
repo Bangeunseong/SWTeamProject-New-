@@ -40,7 +40,7 @@ int StageOver() {
 
 		PlayerInputTime = 0; Invinsible = 0; UsingSkill = 0; P_BulletLaunchTime = 0;
 		EnemyInputTime = EnemyMovementTiming = 0; EnemySpeed = 1.0;
-		NpcInputTime = 0; NpcSpeed = 0.2; NpcDirection = 0; NpcIsMoving = 0; NpcPatternStartTime = NpcPatternEndTime = 0; NpcKilledOver = 0; NpcKillCount = 0;
+		NpcInputTime = 0; NpcDirection = 0; NpcIsMoving = 0; NpcPatternStartTime = NpcPatternEndTime = 0; NpcKilledOver = 0; NpcKillCount = 0;
 		ItemInputTime = 0; ItemCreationLoop = 1; flashFLAG = 0; flashCount = 0; itemFLAG = 0;
 		BulletInputTime = 0;
 		BulletPatternStartTime = BulletPatternEndTime = 0;
