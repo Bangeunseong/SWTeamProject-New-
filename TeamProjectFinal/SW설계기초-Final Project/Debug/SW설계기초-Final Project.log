@@ -1,22 +1,24 @@
 ﻿  main.c
-c:\users\bange\onedrive\바탕 화면\documents\github\새 폴더\teamprojectfinal\sw설계기초-final project\soundplay.h(50): warning C4047: '함수': 'MCIDEVICEID'의 간접 참조 수준이 'void *'과(와) 다릅니다.
-c:\users\bange\onedrive\바탕 화면\documents\github\새 폴더\teamprojectfinal\sw설계기초-final project\soundplay.h(50): warning C4024: 'mciSendCommandW': 형식 및 실제 매개 변수 1의 형식이 서로 다릅니다.
-c:\users\bange\onedrive\바탕 화면\documents\github\새 폴더\teamprojectfinal\sw설계기초-final project\soundplay.h(64): warning C4047: '함수': 'MCIDEVICEID'의 간접 참조 수준이 'void *'과(와) 다릅니다.
-c:\users\bange\onedrive\바탕 화면\documents\github\새 폴더\teamprojectfinal\sw설계기초-final project\soundplay.h(64): warning C4024: 'mciSendCommandW': 형식 및 실제 매개 변수 1의 형식이 서로 다릅니다.
-c:\users\bange\onedrive\바탕 화면\documents\github\새 폴더\teamprojectfinal\sw설계기초-final project\soundplay.h(78): warning C4047: '함수': 'MCIDEVICEID'의 간접 참조 수준이 'void *'과(와) 다릅니다.
-c:\users\bange\onedrive\바탕 화면\documents\github\새 폴더\teamprojectfinal\sw설계기초-final project\soundplay.h(78): warning C4024: 'mciSendCommandW': 형식 및 실제 매개 변수 1의 형식이 서로 다릅니다.
-c:\users\bange\onedrive\바탕 화면\documents\github\새 폴더\teamprojectfinal\sw설계기초-final project\soundplay.h(91): warning C4047: '함수': 'MCIDEVICEID'의 간접 참조 수준이 'void *'과(와) 다릅니다.
-c:\users\bange\onedrive\바탕 화면\documents\github\새 폴더\teamprojectfinal\sw설계기초-final project\soundplay.h(91): warning C4024: 'mciSendCommandW': 형식 및 실제 매개 변수 1의 형식이 서로 다릅니다.
-c:\users\bange\onedrive\바탕 화면\documents\github\새 폴더\teamprojectfinal\sw설계기초-final project\soundplay.h(104): warning C4047: '함수': 'MCIDEVICEID'의 간접 참조 수준이 'void *'과(와) 다릅니다.
-c:\users\bange\onedrive\바탕 화면\documents\github\새 폴더\teamprojectfinal\sw설계기초-final project\soundplay.h(104): warning C4024: 'mciSendCommandW': 형식 및 실제 매개 변수 1의 형식이 서로 다릅니다.
-c:\users\bange\onedrive\바탕 화면\documents\github\새 폴더\teamprojectfinal\sw설계기초-final project\soundplay.h(118): warning C4047: '함수': 'MCIDEVICEID'의 간접 참조 수준이 'void *'과(와) 다릅니다.
-c:\users\bange\onedrive\바탕 화면\documents\github\새 폴더\teamprojectfinal\sw설계기초-final project\soundplay.h(118): warning C4024: 'mciSendCommandW': 형식 및 실제 매개 변수 1의 형식이 서로 다릅니다.
-c:\users\bange\onedrive\바탕 화면\documents\github\새 폴더\teamprojectfinal\sw설계기초-final project\soundplay.h(132): warning C4047: '함수': 'MCIDEVICEID'의 간접 참조 수준이 'void *'과(와) 다릅니다.
-c:\users\bange\onedrive\바탕 화면\documents\github\새 폴더\teamprojectfinal\sw설계기초-final project\soundplay.h(132): warning C4024: 'mciSendCommandW': 형식 및 실제 매개 변수 1의 형식이 서로 다릅니다.
-c:\users\bange\onedrive\바탕 화면\documents\github\새 폴더\teamprojectfinal\sw설계기초-final project\soundplay.h(146): warning C4047: '함수': 'MCIDEVICEID'의 간접 참조 수준이 'void *'과(와) 다릅니다.
-c:\users\bange\onedrive\바탕 화면\documents\github\새 폴더\teamprojectfinal\sw설계기초-final project\soundplay.h(146): warning C4024: 'mciSendCommandW': 형식 및 실제 매개 변수 1의 형식이 서로 다릅니다.
-c:\users\bange\onedrive\바탕 화면\documents\github\새 폴더\teamprojectfinal\sw설계기초-final project\soundplay.h(160): warning C4047: '함수': 'MCIDEVICEID'의 간접 참조 수준이 'void *'과(와) 다릅니다.
-c:\users\bange\onedrive\바탕 화면\documents\github\새 폴더\teamprojectfinal\sw설계기초-final project\soundplay.h(160): warning C4024: 'mciSendCommandW': 형식 및 실제 매개 변수 1의 형식이 서로 다릅니다.
+c:\users\bange\onedrive\바탕 화면\documents\github\새 폴더\teamprojectfinal\sw설계기초-final project\soundplay.h(53): warning C4047: '함수': 'MCIDEVICEID'의 간접 참조 수준이 'void *'과(와) 다릅니다.
+c:\users\bange\onedrive\바탕 화면\documents\github\새 폴더\teamprojectfinal\sw설계기초-final project\soundplay.h(53): warning C4024: 'mciSendCommandW': 형식 및 실제 매개 변수 1의 형식이 서로 다릅니다.
+c:\users\bange\onedrive\바탕 화면\documents\github\새 폴더\teamprojectfinal\sw설계기초-final project\soundplay.h(67): warning C4047: '함수': 'MCIDEVICEID'의 간접 참조 수준이 'void *'과(와) 다릅니다.
+c:\users\bange\onedrive\바탕 화면\documents\github\새 폴더\teamprojectfinal\sw설계기초-final project\soundplay.h(67): warning C4024: 'mciSendCommandW': 형식 및 실제 매개 변수 1의 형식이 서로 다릅니다.
+c:\users\bange\onedrive\바탕 화면\documents\github\새 폴더\teamprojectfinal\sw설계기초-final project\soundplay.h(81): warning C4047: '함수': 'MCIDEVICEID'의 간접 참조 수준이 'void *'과(와) 다릅니다.
+c:\users\bange\onedrive\바탕 화면\documents\github\새 폴더\teamprojectfinal\sw설계기초-final project\soundplay.h(81): warning C4024: 'mciSendCommandW': 형식 및 실제 매개 변수 1의 형식이 서로 다릅니다.
+c:\users\bange\onedrive\바탕 화면\documents\github\새 폴더\teamprojectfinal\sw설계기초-final project\soundplay.h(94): warning C4047: '함수': 'MCIDEVICEID'의 간접 참조 수준이 'void *'과(와) 다릅니다.
+c:\users\bange\onedrive\바탕 화면\documents\github\새 폴더\teamprojectfinal\sw설계기초-final project\soundplay.h(94): warning C4024: 'mciSendCommandW': 형식 및 실제 매개 변수 1의 형식이 서로 다릅니다.
+c:\users\bange\onedrive\바탕 화면\documents\github\새 폴더\teamprojectfinal\sw설계기초-final project\soundplay.h(107): warning C4047: '함수': 'MCIDEVICEID'의 간접 참조 수준이 'void *'과(와) 다릅니다.
+c:\users\bange\onedrive\바탕 화면\documents\github\새 폴더\teamprojectfinal\sw설계기초-final project\soundplay.h(107): warning C4024: 'mciSendCommandW': 형식 및 실제 매개 변수 1의 형식이 서로 다릅니다.
+c:\users\bange\onedrive\바탕 화면\documents\github\새 폴더\teamprojectfinal\sw설계기초-final project\soundplay.h(121): warning C4047: '함수': 'MCIDEVICEID'의 간접 참조 수준이 'void *'과(와) 다릅니다.
+c:\users\bange\onedrive\바탕 화면\documents\github\새 폴더\teamprojectfinal\sw설계기초-final project\soundplay.h(121): warning C4024: 'mciSendCommandW': 형식 및 실제 매개 변수 1의 형식이 서로 다릅니다.
+c:\users\bange\onedrive\바탕 화면\documents\github\새 폴더\teamprojectfinal\sw설계기초-final project\soundplay.h(135): warning C4047: '함수': 'MCIDEVICEID'의 간접 참조 수준이 'void *'과(와) 다릅니다.
+c:\users\bange\onedrive\바탕 화면\documents\github\새 폴더\teamprojectfinal\sw설계기초-final project\soundplay.h(135): warning C4024: 'mciSendCommandW': 형식 및 실제 매개 변수 1의 형식이 서로 다릅니다.
+c:\users\bange\onedrive\바탕 화면\documents\github\새 폴더\teamprojectfinal\sw설계기초-final project\soundplay.h(149): warning C4047: '함수': 'MCIDEVICEID'의 간접 참조 수준이 'void *'과(와) 다릅니다.
+c:\users\bange\onedrive\바탕 화면\documents\github\새 폴더\teamprojectfinal\sw설계기초-final project\soundplay.h(149): warning C4024: 'mciSendCommandW': 형식 및 실제 매개 변수 1의 형식이 서로 다릅니다.
+c:\users\bange\onedrive\바탕 화면\documents\github\새 폴더\teamprojectfinal\sw설계기초-final project\soundplay.h(163): warning C4047: '함수': 'MCIDEVICEID'의 간접 참조 수준이 'void *'과(와) 다릅니다.
+c:\users\bange\onedrive\바탕 화면\documents\github\새 폴더\teamprojectfinal\sw설계기초-final project\soundplay.h(163): warning C4024: 'mciSendCommandW': 형식 및 실제 매개 변수 1의 형식이 서로 다릅니다.
+c:\users\bange\onedrive\바탕 화면\documents\github\새 폴더\teamprojectfinal\sw설계기초-final project\soundplay.h(177): warning C4047: '함수': 'MCIDEVICEID'의 간접 참조 수준이 'void *'과(와) 다릅니다.
+c:\users\bange\onedrive\바탕 화면\documents\github\새 폴더\teamprojectfinal\sw설계기초-final project\soundplay.h(177): warning C4024: 'mciSendCommandW': 형식 및 실제 매개 변수 1의 형식이 서로 다릅니다.
 c:\users\bange\onedrive\바탕 화면\documents\github\새 폴더\teamprojectfinal\sw설계기초-final project\expitem.h(43): warning C4244: '=': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
 c:\users\bange\onedrive\바탕 화면\documents\github\새 폴더\teamprojectfinal\sw설계기초-final project\weaponitem.h(45): warning C4244: '=': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
 c:\users\bange\onedrive\바탕 화면\documents\github\새 폴더\teamprojectfinal\sw설계기초-final project\score.h(64): warning C4101: 'buffer' :참조되지 않은 지역 변수입니다.

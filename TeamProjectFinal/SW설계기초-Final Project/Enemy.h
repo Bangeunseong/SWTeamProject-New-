@@ -11,7 +11,8 @@
 
 //적 NPC 버퍼 시간 계산 함수
 int CalculateEnemyTimeBuffer() {
-	if (TimeCheckerEnd() - EnemyInputTime - PausingTime > ENEMYTIMEBUFFER / EnemySpeed) { EnemyInputTime += ENEMYTIMEBUFFER / EnemySpeed; return 0; }
+	double CheckedTime = TimeCheckerEnd() - PausingTime;
+	if (CheckedTime - EnemyInputTime > ENEMYTIMEBUFFER / EnemySpeed) { EnemyInputTime = CheckedTime; return 0; }
 	else return 1;
 }
 

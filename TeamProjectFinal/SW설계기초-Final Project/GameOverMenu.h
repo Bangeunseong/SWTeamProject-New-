@@ -38,7 +38,8 @@ int GameOver() {
 		itemFLAG = 0; ItemInputTime = 0; ItemCreationLoop = 1; flashFLAG = 0; flashCount = 0;
 		BulletInputTime = 0;
 		BulletPatternStartTime = BulletPatternEndTime = 0;
-		
+		Warningsignflag = 0;
+
 		PausedTime = PausingTime = 0; StageNumber = 1;
 		Min = Sec = MiSec = 0;
 		free(LifeGauge);

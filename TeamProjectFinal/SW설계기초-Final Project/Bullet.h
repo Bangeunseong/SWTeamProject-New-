@@ -8,7 +8,8 @@
 
 //Bullet Time Buffer
 int CalculateBulletTimeBuffer() {
-	if (TimeCheckerEnd() - BulletInputTime - PausingTime > BULLETTIMEBUFFER / BulletSpeed) { BulletInputTime += BULLETTIMEBUFFER / BulletSpeed; return 0; }
+	double CheckedTime = TimeCheckerEnd() - PausingTime;
+	if (CheckedTime - BulletInputTime > BULLETTIMEBUFFER / BulletSpeed) { BulletInputTime = CheckedTime; return 0; }
 	else return 1;
 }
 

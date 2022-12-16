@@ -21,6 +21,18 @@ void ShownHideStageNumber() {
 	for (int i = 0; i < 7; i++) printf(" ");
 }
 
+void ShowWarningSign() {
+	SetCurrentCursorPos(BACKGROUND_ORIGIN_X + BACKGROUND_ROW / 2 - 4, BACKGROUND_ORIGIN_Y + BACKGROUND_COLUMN / 2 + 2);
+	printf("!! Warning !!");
+}
+
+void HideWarningSign() {
+	SetCurrentCursorPos(BACKGROUND_ORIGIN_X + BACKGROUND_ROW / 2 - 4, BACKGROUND_ORIGIN_Y + BACKGROUND_COLUMN / 2 + 2);
+	for (int i = 0; i < 14; i++) printf(" ");
+}
+
+
+
 //스테이지 종료 조건
 int StageOver() {
 	if (StageEnemyHealth <= 0) {
@@ -44,6 +56,7 @@ int StageOver() {
 		ItemInputTime = 0; ItemCreationLoop = 1; flashFLAG = 0; flashCount = 0; itemFLAG = 0;
 		BulletInputTime = 0;
 		BulletPatternStartTime = BulletPatternEndTime = 0;
+		Warningsignflag = 0;
 		PausedTime = PausingTime = 0; StageNumber++;
 		Min = Sec = MiSec = 0;
 		return 1; 

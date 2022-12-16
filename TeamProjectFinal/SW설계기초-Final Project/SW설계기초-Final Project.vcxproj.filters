@@ -115,6 +115,9 @@
     <Media Include="RELOAD.mp3">
       <Filter>리소스 파일</Filter>
     </Media>
+    <Media Include="WARNING.mp3">
+      <Filter>리소스 파일</Filter>
+    </Media>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Resource\Scoreboard.txt">

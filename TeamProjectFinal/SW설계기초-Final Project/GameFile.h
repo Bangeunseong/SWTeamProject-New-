@@ -32,12 +32,18 @@ void StoryMode() {
 			InvalidateStoryModeTime(); InvalidateEnemyHealthBar(); InvalidateItem(); InvalidateExp(); InvalidateWeaponItem(); InvalidatePlayerLevel(); InvalidateP_Bullet(); InvalidateNpc(); InvalidatePlayer();
 			if (NpcKillCount > 30 && !NpcKilledOver) {
 				NpcKilledOver = 1; // npc를 30마리 잡았을 경우 InvalidBullet과 InvalidEnemy를 계속 적용하기 위한 변수 NpcKilledOver
-				BulletInputTime = TimeCheckerEnd() - PausingTime - BULLETTIMEBUFFER;
-				EnemyInputTime = TimeCheckerEnd() - PausingTime - ENEMYTIMEBUFFER;
+				NpcCountOverTimeStart = TimeCheckerEnd() - PausingTime;
 			}
 			if (NpcKilledOver) { // npc를 30마리 잡았을 경우 발동
-				InvalidateBullet();
-				InvalidateEnemy();
+				if (TimeCheckerEnd() - PausingTime - NpcCountOverTimeStart > BOSSDURATIONTIME) {
+					if (Warningsignflag) { Warningsignflag = 0; HideWarningSign(); mciSendCommandW(dwIDSE_W, MCI_SEEK, MCI_SEEK_TO_START, (DWORD)(LPVOID)NULL); }
+					InvalidateBullet();
+					InvalidateEnemy();
+				}
+				else { 
+					if (!Warningsignflag) { Warningsignflag = 1;  PlayWARNINGSound(); }
+					ShowWarningSign();
+				}
 			}
 			if (GameOver()) return; if (StageOver()) break;
 		}

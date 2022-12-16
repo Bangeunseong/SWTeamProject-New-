@@ -26,6 +26,8 @@ MCI_OPEN_PARMS openGetExpSound;
 MCI_PLAY_PARMS playGetExpSound;
 MCI_OPEN_PARMS openGetItemSound;
 MCI_PLAY_PARMS playGetItemSound;
+MCI_OPEN_PARMS openWarningSound;
+MCI_PLAY_PARMS playWarningSound;
 
 #define BGM L"BGM_B1.mp3"	//BGM
 #define SOUNDEFFECT_COLLISION L"COLLISION.mp3"		//DAMAGE 효과음
@@ -36,6 +38,7 @@ MCI_PLAY_PARMS playGetItemSound;
 #define SOUNDEFFECT_NPCDAMAGED L"NPC_DAMAGED.mp3"
 #define SOUNDEFFECT_GETEXP L"GETEXP.mp3"
 #define SOUNDEFFECT_GETITEM L"GETITEM.mp3"
+#define SOUNDEFFECT_WARNING L"WARNING.mp3"
 #define MISSIONCOMPLETE L"MISSIONCOMPLETE.mp3"
 #define MISSIONFAILED L"MISSIONFAILED.mp3"
 
@@ -161,5 +164,19 @@ void PlayMISSIONFAILEDSound() {
 	dwID_MF = openMissionFailedSound.wDeviceID;
 	mciSendCommandW(dwID_MF, MCI_SETAUDIO, MCI_DGV_SETAUDIO_VALUE | MCI_DGV_SETAUDIO_ITEM, (DWORD)(LPVOID)&MFVolume);
 	mciSendCommandW(dwID_MF, MCI_PLAY, MCI_NOTIFY, (DWORD)(LPVOID)&playMissionFailedSound);    //음악을 한 번 재생
+}
+
+UINT dwIDSE_W;
+
+void PlayWARNINGSound() {
+	MCI_DGV_SETAUDIO_PARMS WVolume;
+	WVolume.dwItem = MCI_DGV_SETAUDIO_VOLUME;
+	WVolume.dwValue = 450;
+	openWarningSound.lpstrElementName = SOUNDEFFECT_WARNING;    //파일 오픈
+	openWarningSound.lpstrDeviceType = L"mpegvideo";    //mp3 형식
+	mciSendCommandW(NULL, MCI_OPEN, MCI_OPEN_ELEMENT | MCI_OPEN_TYPE, (DWORD)(LPVOID)&openWarningSound);
+	dwIDSE_W = openWarningSound.wDeviceID;
+	mciSendCommandW(dwIDSE_W, MCI_SETAUDIO, MCI_DGV_SETAUDIO_VALUE | MCI_DGV_SETAUDIO_ITEM, (DWORD)(LPVOID)&WVolume);
+	mciSendCommandW(dwIDSE_W, MCI_PLAY, MCI_DGV_PLAY_REPEAT, (DWORD)(LPVOID)&playWarningSound);    //음악을 한 번 재생
 }
 #endif // !SOUNDPLAY_H

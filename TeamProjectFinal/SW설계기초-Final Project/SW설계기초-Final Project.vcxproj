@@ -159,6 +159,7 @@
     <Media Include="Resource\MISSIONFAILED.mp3" />
     <Media Include="Resource\NPC_DAMAGED.mp3" />
     <Media Include="Resource\SHOTGUN.mp3" />
+    <Media Include="WARNING.mp3" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Resource\Scoreboard.txt" />

@@ -70,6 +70,10 @@ int StageNumber = 1;
 //다음 스테이지로 넘어갈 때 Duration time
 #define STAGEDURATIONTIME 2.0
 
+//보스 출연까지 지연시간
+int Warningsignflag = 0;
+double NpcCountOverTimeStart;
+#define BOSSDURATIONTIME 2.0
 
 #define OPTIONSELECTIONBOX_ROW 18 //게임 모드 선택박스 가로 길이
 #define OPTIONSELECTIONBOX_COLUMN 3 // 게임 모드 선택박스 세로 길이
