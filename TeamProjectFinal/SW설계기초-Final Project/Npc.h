@@ -125,9 +125,11 @@ void ClearNpcPosition() {
 	NpcIsMoving = NPC_COUNT;
 	NPCCOUNT = 0;
 }
+
 //Npc 랜덤 패턴 넘버 지정
 void SetNpcRandomPatternNumber() {
-	NpcPatternNumber = rand() % NPCPATTERNCOUNT + 1;
+	if (StageNumber < 2) NpcPatternNumber = rand() % (NPCPATTERNCOUNT - 2) + 1;
+	else NpcPatternNumber = rand() % NPCPATTERNCOUNT + 1;
 }
 
 //----------------------------------------------------------
