@@ -33,22 +33,22 @@ void NpcPositionRenewal(int n) { // n = Npc number
 		case 1:
 			npc[n].NPC_POS_X = GAMEBOARD_ORIGIN_X + 2;
 			npc[n].NPC_POS_Y = rand() % (GAMEBOARD_COLUMN - 20) + GAMEBOARD_ORIGIN_Y + 6;
-			npc[n].distance = rand() % (GAMEBOARD_ROW / 2 - 40) + 6;
+			npc[n].distance = rand() % (GAMEBOARD_ROW / 2 - 30) + 6;
 			break;
 		case 2:
 			npc[n].NPC_POS_X = GAMEBOARD_ORIGIN_X + 2;
 			npc[n].NPC_POS_Y = rand() % (GAMEBOARD_COLUMN - 20) + GAMEBOARD_ORIGIN_Y + 6;
-			npc[n].distance = rand() % (GAMEBOARD_ROW / 2 - 40) + 6;
+			npc[n].distance = rand() % (GAMEBOARD_ROW / 2 - 30) + 6;
 			break;
 		case 3:
 			npc[n].NPC_POS_X = GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW - 6;
 			npc[n].NPC_POS_Y = rand() % (GAMEBOARD_COLUMN - 20) + GAMEBOARD_ORIGIN_Y + 6;
-			npc[n].distance = rand() % (GAMEBOARD_ROW / 2 - 40) + 6;
+			npc[n].distance = rand() % (GAMEBOARD_ROW / 2 - 30) + 6;
 			break;
 		case 4:
 			npc[n].NPC_POS_X = GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW - 6;
 			npc[n].NPC_POS_Y = rand() % (GAMEBOARD_COLUMN - 20) + GAMEBOARD_ORIGIN_Y + 6;
-			npc[n].distance = rand() % (GAMEBOARD_ROW / 2 - 40) + 6;
+			npc[n].distance = rand() % (GAMEBOARD_ROW / 2 - 30) + 6;
 			break;
 		}
 	}

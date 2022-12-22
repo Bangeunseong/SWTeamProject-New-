@@ -50,7 +50,7 @@ int StageOver() {
 		HideScore();
 		mciSendCommandW(dwID, MCI_PLAY, MCI_RESUME, (DWORD)(LPVOID)&playBgm);
 
-		PlayerInputTime = 0; Invinsible = 0; UsingSkill = 0; P_BulletLaunchTime = 0;
+		PlayerInputTime = 0; Invinsible = 0; UsingSkill = 0; P_BulletLaunchTime = 0; P_BulletSpeed = 1.0; 
 		EnemyInputTime = EnemyMovementTiming = 0; EnemySpeed = 1.0;
 		NpcInputTime = 0; NpcDirection = 0; NpcIsMoving = 0; NpcPatternStartTime = NpcPatternEndTime = 0; NpcKilledOver = 0; NpcKillCount = 0;
 		ItemInputTime = 0; ItemCreationLoop = 1; flashFLAG = 0; flashCount = 0; itemFLAG = 0;

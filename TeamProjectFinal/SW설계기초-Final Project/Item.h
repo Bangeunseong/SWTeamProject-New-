@@ -74,7 +74,7 @@ void flashRight() {
 //---------------------------------------------------------------------------
 //------------------------Ability of each item------------------------------
 
-void itemSpeedUp() { CurSpeed += SPEEDINCREASERATE; }	//Speed Increase to +0.5
+void itemSpeedUp() { CurSpeed += SPEEDINCREASERATE; P_BulletSpeed += SPEEDINCREASERATE; }	//Speed Increase to +0.5
 void itemBulletSpeedDown() { BulletSpeed /= 2.0; };					//BulletSpeed down to divided 2.0
 void itemInvinsibility() { Invinsible = 1; }										//Invinsible
 void itemFlash() {																		//Flash to direction
@@ -142,7 +142,7 @@ void itemTrigger(int UsingSkill) {
 //Deactivate item(Invalidate Using Skill)
 void DeactivateSkillItem() { 
 	switch (UsingSkill) {
-	case 1: CurSpeed = SelectedSpeed; break;
+	case 1: CurSpeed = SelectedSpeed; P_BulletSpeed = 1.0; break;
 	case 2: BulletSpeed *= 2.0; break;
 	case 3: Invinsible = 0; break;
 	case 4: flashFLAG = 0; flashCount = 0; break;

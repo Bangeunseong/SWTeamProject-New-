@@ -182,7 +182,7 @@ double EnemyInputTime = 0;							//Enemy Invalidation Time
 #define ENEMYMOVEMENTDURATION_ver1 0.3		//When Enemy needs to move stop 0.3 sec and move
 double EnemyMovementTiming = 0;				//Enemy Movement start time
 
-int Enemy_Health[3] = { 300, 450, 600 };		//Enemy Health
+int Enemy_Health[3] = { 200, 300, 400 };		//Enemy Health
 int StageEnemyHealth;
 #define ENEMYSIZE_H 5		//Enemy Height
 #define ENEMYSIZE_W 11		//Enemy Width
