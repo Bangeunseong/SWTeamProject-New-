@@ -160,8 +160,8 @@ void ClearNpcPosition() {
 //Npc 랜덤 패턴 넘버 지정
 void SetNpcRandomPatternNumber() {
 	if (StageNumber < 2) NpcPatternNumber = rand() % (NPCPATTERNCOUNT - 3) + 1;
-	else if(StageNumber < 3) rand() % (NPCPATTERNCOUNT - 2) + 1;
-	else rand() % NPCPATTERNCOUNT + 1;
+	else if (StageNumber < 3) NpcPatternNumber = rand() % (NPCPATTERNCOUNT - 2) + 1;
+	else NpcPatternNumber = rand() % NPCPATTERNCOUNT + 1;
 }
 
 //----------------------------------------------------------

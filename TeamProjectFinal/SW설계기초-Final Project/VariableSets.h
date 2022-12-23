@@ -235,7 +235,7 @@ double NpcInputTime = 0;							//Npc Invalidation Time
 #define NPCSIZE_H 2		//Npc Height
 #define NPCSIZE_W 5		//Npc Width
 #define NPC_COUNT 5	//Npc Count
-#define NPCPATTERNCOUNT 5
+#define NPCPATTERNCOUNT 6
 #define NPC_PATTERNTIME_STAIRS 10.0//Stairs 패턴 지속시간
 #define NPC_PATTERNTIME_HEADBUTT 10.0//HeadButt 패턴 지속시간
 #define NPC_PATTERNTIME_SWEEPDOWN 10.0//SweepDown 패턴 지속시간
