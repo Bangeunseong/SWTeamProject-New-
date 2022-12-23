@@ -19,14 +19,22 @@ DWORD mode;
 
 //게임 종료 조건 (모든 항목 초기화)
 int GameOver() {
-	if (CurrentLife <= 0) { 
+	if (CurrentLife <= 0 || StageNumber > 3) { 
 		TotalSec += (int)(TimeCheckerEnd() - PausingTime);
 		HidePlayer(); HideEnemy(); HideItem(); for (int i = 0; i < NPC_COUNT; i++) HideNpc(i);
 		ClearPlayerPosition(); ClearEnemyPosition(); ClearBulletPosition(); ClearAll_PBulletPosition(); ClearBulletPatternVisit(); ClearNpcPosition(); ClearAllExp(); ClearAllWeapon();
 		DeactivateEnemySkill_Prison();
 
 		mciSendCommandW(dwID, MCI_CLOSE, 0, (DWORD)(LPVOID)NULL);
-		PlayMISSIONFAILEDSound();
+		mciSendCommandW(dwIDSE_B, MCI_CLOSE, 0, (DWORD)(LPVOID)NULL);
+		mciSendCommandW(dwIDSE_D, MCI_CLOSE, 0, (DWORD)(LPVOID)NULL);
+		mciSendCommandW(dwIDSE_EXP, MCI_CLOSE, 0, (DWORD)(LPVOID)NULL);
+		mciSendCommandW(dwIDSE_ITEM, MCI_CLOSE, 0, (DWORD)(LPVOID)NULL);
+		mciSendCommandW(dwIDSE_NPCD, MCI_CLOSE, 0, (DWORD)(LPVOID)NULL);
+		mciSendCommandW(dwIDSE_R, MCI_CLOSE, 0, (DWORD)(LPVOID)NULL);
+		mciSendCommandW(dwIDSE_W, MCI_CLOSE, 0, (DWORD)(LPVOID)NULL);
+		if (CurrentLife <= 0) PlayMISSIONFAILEDSound();
+		else PlayMISSIONCOMPLETESound();
 		ShowScore();
 		TimeCheckerStart();
 		while (TimeCheckerEnd() < ScorePrintDurationTime);
@@ -43,7 +51,8 @@ int GameOver() {
 		PausedTime = PausingTime = 0; StageNumber = 1;
 		Min = Sec = MiSec = 0;
 		free(LifeGauge);
-		
+		mciSendCommandW(dwID_MC, MCI_CLOSE, 0, (DWORD)(LPVOID)NULL);
+		mciSendCommandW(dwID_MF, MCI_CLOSE, 0, (DWORD)(LPVOID)NULL);
 		return 1;
 	}
 	return 0;

@@ -45,9 +45,10 @@ void StoryMode() {
 					ShowWarningSign();
 				}
 			}
-			if (GameOver()) return; if (StageOver()) break;
+			if (StageOver()) break; if (GameOver()) return;
 		}
 	}
+
 }
 
 //무한 모드

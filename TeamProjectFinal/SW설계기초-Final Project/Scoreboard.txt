@@ -1,3 +1,4 @@
+Jack 15036
 Gary 11870
 Bangeunseong 10215
 Moonjoonho 7233
@@ -7,4 +8,3 @@ Parkjaewo 4541
 Barbara 2500
 Gary 2300
 Jason 1974
-Harrison 1854
