@@ -266,8 +266,8 @@ void ClearSingle_PBulletPosition(int P_bulletnumber) {
 }
 
 void InvalidateP_BulletDamageNModel(int P_bulletnumber) {
-	if (PlayerWeapon == 0) { PB[P_bulletnumber].BulletDamage = 1 + PlayerLevel / 2; PB[P_bulletnumber].BulletModel = PLAYERBULLETMODEL[PlayerWeapon]; }
-	else if (PlayerWeapon == 1) { PB[P_bulletnumber].BulletDamage = 1; PB[P_bulletnumber].BulletModel = PLAYERBULLETMODEL[PlayerWeapon]; }
+	if (PlayerWeapon == 0) { PB[P_bulletnumber].BulletDamage = 1 + PlayerLevel; PB[P_bulletnumber].BulletModel = PLAYERBULLETMODEL[PlayerWeapon]; }
+	else if (PlayerWeapon == 1) { PB[P_bulletnumber].BulletDamage = 2; PB[P_bulletnumber].BulletModel = PLAYERBULLETMODEL[PlayerWeapon]; }
 	else if (PlayerWeapon == 2) { PB[P_bulletnumber].BulletDamage = 4 + PlayerLevel / 3; PB[P_bulletnumber].BulletModel = PLAYERBULLETMODEL[PlayerWeapon]; }
 }
 

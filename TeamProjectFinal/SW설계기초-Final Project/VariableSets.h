@@ -241,6 +241,17 @@ double NpcInputTime = 0;							//Npc Invalidation Time
 #define NPC_PATTERNTIME_SWEEPDOWN 10.0//SweepDown 패턴 지속시간
 #define NPC_PATTERNTIME_SPIRALMOVE 10.0//RandomMove 패턴 지속시간
 #define NPC_PATTERNTIME_TRACKING 10.0
+#define NPC_PATTERNTIME_RANDOMEDIRECTION 10.0 // NpcPattern_Random 패턴 지속시간 - 추가
+
+#define NPC_BOUNCECOUNT 6 // NPC가 벽에 충돌하는 횟수 - 추가
+#define NORTH_EAST 20// 방향을 나타내는 변수
+#define NORTH 21
+#define NORTH_WEST 22
+#define WEST 23
+#define SOUTH_WEST 24
+#define SOUTH 25
+#define SOUTH_EAST 26
+#define EAST 27
 
 typedef struct Npc {						//Npc 위치 저장 공간 구조체
 	int NPC_POS_X, NPC_POS_Y;
@@ -250,12 +261,13 @@ typedef struct Npc {						//Npc 위치 저장 공간 구조체
 	int CollisionPbullet;
 	int distance; int Movecount;
 	int destinationX, destinationY; int arrived;
+	int BounceCount, Direction;
 	int life;
 }Npc;
 
 Npc npc[NPC_COUNT];
 
-int Npc_Health[3] = { 4, 8, 12 };			//Npc Health
+int Npc_Health[3] = { 4, 6, 8 };			//Npc Health
 double NpcSpeed = 0.35;						//Npc Speed
 double NpcPatternStartTime = 0;				//패턴 시작시간
 double NpcPatternEndTime = 0;				//패턴 종료시간
@@ -377,24 +389,24 @@ typedef struct Bullet {						//Bullet 위치 저장 공간 구조체
 }Bullet;						
 Bullet bullet[1000];							//Bullet 구조체 배열
 
-#define STAGEPATTERNCOUNT 6
-int PatternStage1[] = { 1, 2, 3, 4, 5, 6 };
-int PatternStage2[] = { 2, 3, 4, 6, 7, 8 };
-int PatternStage3[] = { 5, 6, 7, 8, 9, 10 };
-int PatternStageVisit[] = { 0, 0, 0, 0, 0, 0 };
+#define STAGEPATTERNCOUNT 5
+int PatternStage1[] = { 1, 2, 3, 4, 5 };
+int PatternStage2[] = { 2, 5, 6, 7, 9 };
+int PatternStage3[] = { 1, 6, 8, 9, 10 };
+int PatternStageVisit[] = { 0, 0, 0, 0, 0 };
 
 #define TOTALPATTERNCOUNT 10	//총 패턴 갯수
 #define PATTERNDURATION 0.5		//패턴 durationtime
-#define PATTERNTIME_SPREAD 12.0//Spread 패턴 지속시간
-#define PATTERNTIME_LASER 12.0//Laser 패턴 지속시간
-#define PATTERNTIME_3WAY 12.0//3way 패턴 지속시간
-#define PATTERNTIME_SPIRAL 6.0 //Spiral 패턴 지속시간
+#define PATTERNTIME_SPREAD 8.0//Spread 패턴 지속시간
+#define PATTERNTIME_LASER 8.0//Laser 패턴 지속시간
+#define PATTERNTIME_3WAY 8.0//3way 패턴 지속시간
+#define PATTERNTIME_SPIRAL 4.0 //Spiral 패턴 지속시간
 #define PATTERNTIME_GYRO 6.0 //Gyro 패턴 지속시간
-#define PATTERNTIME_SHOTGUN 10.0 //Shotgun 패턴 지속시간
-#define PATTERNTIME_CIRCLESPREAD 10.0	//원형 Spread 패턴 지속시간
-#define PATTERNTIME_CHAOS 10.0 //Spiral 패턴 지속시간
-#define PATTERNTIME_METEOR 10.0 //Meteor 패턴 지속시간
-#define PATTERNTIME_ROAD 8.0 //Road 패턴 지속시간
+#define PATTERNTIME_SHOTGUN 6.0 //Shotgun 패턴 지속시간
+#define PATTERNTIME_CIRCLESPREAD 6.0	//원형 Spread 패턴 지속시간
+#define PATTERNTIME_CHAOS 6.0 //Spiral 패턴 지속시간
+#define PATTERNTIME_METEOR 6.0 //Meteor 패턴 지속시간
+#define PATTERNTIME_ROAD 6.0 //Road 패턴 지속시간
 
 
 double BulletInputTime = 0;				//Bullet 인풋 시작 시간

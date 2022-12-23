@@ -52,6 +52,36 @@ void NpcPositionRenewal(int n) { // n = Npc number
 			break;
 		}
 	}
+	else if (NpcPatternNumber == 6) {
+		npc[n].BounceCount = 0;
+		switch (n) {
+		case 0:
+			npc[n].NPC_POS_X = GAMEBOARD_ORIGIN_X + 2;
+			npc[n].NPC_POS_Y = GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN / 5;
+			npc[n].Direction = SOUTH_EAST;// 추가 : 아래 오른쪽 대각선으로 이동 - 초기세팅
+			break;
+		case 1:
+			npc[n].NPC_POS_X = GAMEBOARD_ORIGIN_X + 2;
+			npc[n].NPC_POS_Y = GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN / 3;
+			npc[n].Direction = SOUTH_EAST;// 추가 : 아래 오른쪽 대각선으로 이동
+			break;
+		case 2:
+			npc[n].NPC_POS_X = GAMEBOARD_ORIGIN_X + 2;
+			npc[n].NPC_POS_Y = GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN / 2;
+			npc[n].Direction = SOUTH_EAST;// 추가 : 아래 오른쪽 대각선으로 이동
+			break;
+		case 3:
+			npc[n].NPC_POS_X = GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW - 6;
+			npc[n].NPC_POS_Y = GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN / 5;
+			npc[n].Direction = SOUTH_WEST;// 추가 : 아래 왼쪽 대각선으로 이동
+			break;
+		case 4:
+			npc[n].NPC_POS_X = GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW - 6;
+			npc[n].NPC_POS_Y = GAMEBOARD_ORIGIN_Y + GAMEBOARD_COLUMN / 3;
+			npc[n].Direction = SOUTH_WEST;// 추가 : 아래 왼쪽 대각선으로 이동
+			break;
+		}
+	}
 	else {
 		switch (n) {
 		case 0:
@@ -115,6 +145,7 @@ void ClearNpcPosition() {
 		HideNpc(i);
 		NpcPositionRenewal(i);
 		npc[i].distance = npc[i].Movecount = npc[i].NpcActivation = npc[i].CollisionPlayer = npc[i].CollisionPbullet = npc[i].CollisionWall = 0;
+		npc[i].BounceCount = npc[i].Direction = 0;
 		npc[i].life = Npc_Health[StageNumber - 1];
 	}
 	NpcPatternStart = 0;
@@ -128,8 +159,9 @@ void ClearNpcPosition() {
 
 //Npc 랜덤 패턴 넘버 지정
 void SetNpcRandomPatternNumber() {
-	if (StageNumber < 2) NpcPatternNumber = rand() % (NPCPATTERNCOUNT - 2) + 1;
-	else NpcPatternNumber = rand() % NPCPATTERNCOUNT + 1;
+	if (StageNumber < 2) NpcPatternNumber = rand() % (NPCPATTERNCOUNT - 3) + 1;
+	else if(StageNumber < 3) rand() % (NPCPATTERNCOUNT - 2) + 1;
+	else rand() % NPCPATTERNCOUNT + 1;
 }
 
 //----------------------------------------------------------
@@ -189,7 +221,17 @@ int MoveNpc_N(int n) {
 	HideNpc(n);
 	if (DetectCollision_NpcwithPlayer(npc[n].NPC_POS_X, npc[n].NPC_POS_Y, n)) { npc[n].NpcActivation = 0; npc[n].CollisionPlayer = 1; return 0; }//플레이어와 부딪혔으면 npc 비활성화, 플레이어와 부딪혔다는 인디케이터 1로 갱신 0을 리턴하며 종료
 	if (!DetectCollision_NpcwithWall(npc[n].NPC_POS_X, npc[n].NPC_POS_Y - 1)) npc[n].NPC_POS_Y--;
-	else { npc[n].NpcActivation = 0; npc[n].CollisionWall = 1; return 0; }
+	else { 
+		if (NpcPatternNumber == 6 && npc[n].BounceCount < NPC_BOUNCECOUNT) {
+			switch (rand() % 3) {
+			case 0: npc[n].Direction = SOUTH_EAST; break;
+			case 1: npc[n].Direction = SOUTH; break;
+			case 2: npc[n].Direction = SOUTH_WEST; break;
+			}
+			npc[n].BounceCount++;
+		}
+		else { npc[n].NpcActivation = 0; npc[n].CollisionWall = 1; return 0; }
+	}
 	ShowNpc(n); return 1;
 }
 
@@ -200,7 +242,31 @@ int MoveNpc_NW(int n) {
 	HideNpc(n);
 	if (DetectCollision_NpcwithPlayer(npc[n].NPC_POS_X, npc[n].NPC_POS_Y, n)) { npc[n].NpcActivation = 0; npc[n].CollisionPlayer = 1; return 0; }//플레이어와 부딪혔으면 npc 비활성화, 플레이어와 부딪혔다는 인디케이터 1로 갱신 0을 리턴하며 종료
 	if (!DetectCollision_NpcwithWall(npc[n].NPC_POS_X - 1, npc[n].NPC_POS_Y - 1)) { npc[n].NPC_POS_X--; npc[n].NPC_POS_Y--; }
-	else { npc[n].NpcActivation = 0; npc[n].CollisionWall = 1; return 0; }
+	else { 
+		if (NpcPatternNumber == 6 && npc[n].BounceCount < NPC_BOUNCECOUNT) {
+			int flag1 = 0, flag2 = 0;
+			if (DetectCollision_NpcwithWall(npc[n].NPC_POS_X, npc[n].NPC_POS_Y - 1)) { flag1 = 1; }
+			else if (DetectCollision_NpcwithWall(npc[n].NPC_POS_X - 1, npc[n].NPC_POS_Y)) { flag2 = 1; }
+
+			if (flag1 && flag2) npc[n].Direction = SOUTH_EAST;
+			else if (flag1) {
+				switch (rand() % 3) {
+				case 0: npc[n].Direction = SOUTH_EAST; break;
+				case 1: npc[n].Direction = SOUTH; break;
+				case 2: npc[n].Direction = SOUTH_WEST; break;
+				}
+			}
+			else {
+				switch (rand() % 3) {
+				case 0: npc[n].Direction = NORTH_WEST; break;
+				case 1: npc[n].Direction = EAST; break;
+				case 2: npc[n].Direction = SOUTH_EAST; break;
+				}
+			}
+			npc[n].BounceCount++;
+		}
+		else { npc[n].NpcActivation = 0; npc[n].CollisionWall = 1; return 0; }
+	}
 	ShowNpc(n); return 1;
 }
 
@@ -211,7 +277,31 @@ int MoveNpc_NE(int n) {
 	HideNpc(n);
 	if (DetectCollision_NpcwithPlayer(npc[n].NPC_POS_X, npc[n].NPC_POS_Y, n)) { npc[n].NpcActivation = 0; npc[n].CollisionPlayer = 1; return 0; }//플레이어와 부딪혔으면 npc 비활성화, 플레이어와 부딪혔다는 인디케이터 1로 갱신 0을 리턴하며 종료
 	if (!DetectCollision_NpcwithWall(npc[n].NPC_POS_X + 1, npc[n].NPC_POS_Y - 1)) { npc[n].NPC_POS_X++; npc[n].NPC_POS_Y--; }
-	else { npc[n].NpcActivation = 0; npc[n].CollisionWall = 1; return 0; }
+	else { 
+		if (NpcPatternNumber == 6 && npc[n].BounceCount < NPC_BOUNCECOUNT) {
+			int flag1 = 0, flag2 = 0;
+			if (DetectCollision_NpcwithWall(npc[n].NPC_POS_X, npc[n].NPC_POS_Y - 1)) { flag1 = 1; }
+			else if (DetectCollision_NpcwithWall(npc[n].NPC_POS_X + 1, npc[n].NPC_POS_Y)) { flag2 = 1; }
+
+			if (flag1 && flag2) npc[n].Direction = SOUTH_WEST;
+			else if (flag1) {
+				switch (rand() % 3) {
+				case 0: npc[n].Direction = SOUTH_EAST; break;
+				case 1: npc[n].Direction = SOUTH; break;
+				case 2: npc[n].Direction = SOUTH_WEST; break;
+				}
+			}
+			else {
+				switch (rand() % 3) {
+				case 0: npc[n].Direction = NORTH_WEST; break;
+				case 1: npc[n].Direction = WEST; break;
+				case 2: npc[n].Direction = SOUTH_WEST; break;
+				}
+			}
+			npc[n].BounceCount++;
+		}
+		else { npc[n].NpcActivation = 0; npc[n].CollisionWall = 1; return 0; }
+	}
 	ShowNpc(n); return 1;
 }
 
@@ -222,7 +312,17 @@ int MoveNpc_W(int n) {
 	HideNpc(n);
 	if (DetectCollision_NpcwithPlayer(npc[n].NPC_POS_X, npc[n].NPC_POS_Y, n)) { npc[n].NpcActivation = 0; npc[n].CollisionPlayer = 1; return 0; }//플레이어와 부딪혔으면 npc 비활성화, 플레이어와 부딪혔다는 인디케이터 1로 갱신 0을 리턴하며 종료
 	if (!DetectCollision_NpcwithWall(npc[n].NPC_POS_X - 1, npc[n].NPC_POS_Y)) npc[n].NPC_POS_X--;
-	else { npc[n].NpcActivation = 0; npc[n].CollisionWall = 1; return 0; }
+	else { 
+		if (NpcPatternNumber == 6 && npc[n].BounceCount < NPC_BOUNCECOUNT) {
+			switch (rand() % 3) {
+			case 0: npc[n].Direction = NORTH_EAST; break;
+			case 1: npc[n].Direction = EAST; break;
+			case 2: npc[n].Direction = SOUTH_EAST; break;
+			}
+			npc[n].BounceCount++;
+		}
+		else { npc[n].NpcActivation = 0; npc[n].CollisionWall = 1; return 0; }
+	}
 	ShowNpc(n); return 1;
 }
 
@@ -233,7 +333,31 @@ int MoveNpc_SW(int n) {
 	HideNpc(n);
 	if (DetectCollision_NpcwithPlayer(npc[n].NPC_POS_X, npc[n].NPC_POS_Y, n)) { npc[n].NpcActivation = 0; npc[n].CollisionPlayer = 1; return 0; }//플레이어와 부딪혔으면 npc 비활성화, 플레이어와 부딪혔다는 인디케이터 1로 갱신 0을 리턴하며 종료
 	if (!DetectCollision_NpcwithWall(npc[n].NPC_POS_X - 1, npc[n].NPC_POS_Y + 1)) { npc[n].NPC_POS_X--; npc[n].NPC_POS_Y++; }
-	else { npc[n].NpcActivation = 0; npc[n].CollisionWall = 1; return 0; }
+	else { 
+		if (NpcPatternNumber == 6 && npc[n].BounceCount < NPC_BOUNCECOUNT) {
+			int flag1 = 0, flag2 = 0;
+			if (DetectCollision_NpcwithWall(npc[n].NPC_POS_X, npc[n].NPC_POS_Y + 1)) { flag1 = 1; }
+			else if (DetectCollision_NpcwithWall(npc[n].NPC_POS_X - 1, npc[n].NPC_POS_Y)) { flag2 = 1; }
+
+			if (flag1 && flag2) npc[n].Direction = NORTH_EAST;
+			else if (flag1) {
+				switch (rand() % 3) {
+				case 0: npc[n].Direction = NORTH_EAST; break;
+				case 1: npc[n].Direction = NORTH; break;
+				case 2: npc[n].Direction = NORTH_WEST; break;
+				}
+			}
+			else {
+				switch (rand() % 3) {
+				case 0: npc[n].Direction = NORTH_EAST; break;
+				case 1: npc[n].Direction = EAST; break;
+				case 2: npc[n].Direction = SOUTH_EAST; break;
+				}
+			}
+			npc[n].BounceCount++;
+		}
+		else { npc[n].NpcActivation = 0; npc[n].CollisionWall = 1; return 0; }
+	}
 	ShowNpc(n); return 1;
 }
 
@@ -244,7 +368,17 @@ int MoveNpc_S(int n) {
 	HideNpc(n);
 	if (DetectCollision_NpcwithPlayer(npc[n].NPC_POS_X, npc[n].NPC_POS_Y, n)) { npc[n].NpcActivation = 0; npc[n].CollisionPlayer = 1; return 0; }//플레이어와 부딪혔으면 npc 비활성화, 플레이어와 부딪혔다는 인디케이터 1로 갱신 0을 리턴하며 종료
 	if (!DetectCollision_NpcwithWall(npc[n].NPC_POS_X, npc[n].NPC_POS_Y + 1)) { npc[n].NPC_POS_Y++; }
-	else { npc[n].NpcActivation = 0; npc[n].CollisionWall = 1; return 0; }
+	else { 
+		if (NpcPatternNumber == 6 && npc[n].BounceCount < NPC_BOUNCECOUNT) {
+			switch (rand() % 3) {
+			case 0: npc[n].Direction = NORTH_EAST; break;
+			case 1: npc[n].Direction = NORTH; break;
+			case 2: npc[n].Direction = NORTH_WEST; break;
+			}
+			npc[n].BounceCount++;
+		}
+		else { npc[n].NpcActivation = 0; npc[n].CollisionWall = 1; return 0; }
+	}
 	ShowNpc(n); return 1;
 }
 
@@ -255,7 +389,31 @@ int MoveNpc_SE(int n) {
 	HideNpc(n);
 	if (DetectCollision_NpcwithPlayer(npc[n].NPC_POS_X, npc[n].NPC_POS_Y, n)) { npc[n].NpcActivation = 0; npc[n].CollisionPlayer = 1; return 0; }//플레이어와 부딪혔으면 npc 비활성화, 플레이어와 부딪혔다는 인디케이터 1로 갱신 0을 리턴하며 종료
 	if (!DetectCollision_NpcwithWall(npc[n].NPC_POS_X + 1, npc[n].NPC_POS_Y + 1)) { npc[n].NPC_POS_X++; npc[n].NPC_POS_Y++; }
-	else { npc[n].NpcActivation = 0; npc[n].CollisionWall = 1; return 0; }
+	else { 
+		if (NpcPatternNumber == 6 && npc[n].BounceCount < NPC_BOUNCECOUNT) {
+			int flag1 = 0, flag2 = 0;
+			if (DetectCollision_NpcwithWall(npc[n].NPC_POS_X, npc[n].NPC_POS_Y + 1)) { flag1 = 1; }
+			else if (DetectCollision_NpcwithWall(npc[n].NPC_POS_X + 1, npc[n].NPC_POS_Y)) { flag2 = 1; }
+
+			if (flag1 && flag2) npc[n].Direction = NORTH_WEST;
+			else if (flag1) {
+				switch (rand() % 3) {
+				case 0: npc[n].Direction = NORTH_EAST; break;
+				case 1: npc[n].Direction = NORTH; break;
+				case 2: npc[n].Direction = NORTH_WEST; break;
+				}
+			}
+			else {
+				switch (rand() % 3) {
+				case 0: npc[n].Direction = NORTH_WEST; break;
+				case 1: npc[n].Direction = WEST; break;
+				case 2: npc[n].Direction = SOUTH_WEST; break;
+				}
+			}
+			npc[n].BounceCount++;
+		}
+		else { npc[n].NpcActivation = 0; npc[n].CollisionWall = 1; return 0; }
+	}
 	ShowNpc(n); return 1;
 }
 
@@ -266,7 +424,17 @@ int MoveNpc_E(int n) {
 	HideNpc(n);
 	if (DetectCollision_NpcwithPlayer(npc[n].NPC_POS_X, npc[n].NPC_POS_Y, n)) { npc[n].NpcActivation = 0; npc[n].CollisionPlayer = 1; return 0; }//플레이어와 부딪혔으면 npc 비활성화, 플레이어와 부딪혔다는 인디케이터 1로 갱신 0을 리턴하며 종료
 	if (!DetectCollision_NpcwithWall(npc[n].NPC_POS_X + 1, npc[n].NPC_POS_Y)) { npc[n].NPC_POS_X++; }
-	else { npc[n].NpcActivation = 0; npc[n].CollisionWall = 1; return 0; }
+	else {
+		if (NpcPatternNumber == 6 && npc[n].BounceCount < NPC_BOUNCECOUNT) {
+			switch (rand() % 3) {
+			case 0: npc[n].Direction = NORTH_WEST; break;
+			case 1: npc[n].Direction = WEST; break;
+			case 2: npc[n].Direction = SOUTH_WEST; break;
+			}
+			npc[n].BounceCount++;
+		}
+		else { npc[n].NpcActivation = 0; npc[n].CollisionWall = 1; return 0; }
+	}
 	ShowNpc(n); return 1;
 }
 
@@ -333,7 +501,7 @@ int NpcPattern_HeadButt() {
 		}
 		flag += npc[i].NpcActivation;
 	}
-	if (!flag && !NpcIsMoving) { NpcPatternEndTime = TimeCheckerEnd() - PausingTime; return 1; }
+	if (!flag || !NpcIsMoving) { NpcPatternEndTime = TimeCheckerEnd() - PausingTime; return 1; }
 	return 0;
 }
 
@@ -365,7 +533,7 @@ int NpcPattern_Stairs() {
 		}
 		flag += npc[i].NpcActivation;
 	}
-	if (!flag && !NpcIsMoving) { NpcPatternEndTime = TimeCheckerEnd() - PausingTime; return 1; }
+	if (!flag || !NpcIsMoving) { NpcPatternEndTime = TimeCheckerEnd() - PausingTime; return 1; }
 	return 0;
 }
 
@@ -393,12 +561,12 @@ int NpcPattern_SweepDown() {
 			case 2: MoveNpc_E(i); break;
 			}
 		}
-		else if (npc[0].NPC_POS_X > GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW / 2 || (!npc[0].NpcActivation && !npc[1].NpcActivation && !npc[2].NpcActivation)) {
+		else if (npc[0].NPC_POS_X > GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW / 2 || npc[1].NPC_POS_X > GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW / 2 || npc[2].NPC_POS_X > GAMEBOARD_ORIGIN_X + GAMEBOARD_ROW / 2 || (!npc[0].NpcActivation && !npc[1].NpcActivation && !npc[2].NpcActivation)) {
 			NpcSweepDownChecker = 1;
 		}
 		flag += npc[i].NpcActivation;
 	}
-	if (!flag && !NpcIsMoving) { NpcPatternEndTime = TimeCheckerEnd() - PausingTime; return 1; }
+	if (!flag || !NpcIsMoving) { NpcPatternEndTime = TimeCheckerEnd() - PausingTime; return 1; }
 	return 0;
 }
 
@@ -464,7 +632,7 @@ int NpcPattern_Tracking() {
 			}
 		}
 	}
-	if (!flag && !NpcIsMoving) { NpcPatternEndTime = TimeCheckerEnd() - PausingTime; return 1; }
+	if (!flag || !NpcIsMoving) { NpcPatternEndTime = TimeCheckerEnd() - PausingTime; return 1; }
 	return 0;
 }
 
@@ -578,10 +746,32 @@ int NpcPattern_SpiralMove() {
 			npc[i].Movecount++; break;
 		}
 	}
-	if (!flag && !NpcIsMoving) { NpcPatternEndTime = TimeCheckerEnd() - PausingTime; return 1; }
+	if (!flag || !NpcIsMoving) { NpcPatternEndTime = TimeCheckerEnd() - PausingTime; return 1; }
 	return 0;
 }
 
+int NpcPattern_Random() {
+	int flag = 0;
+	double CheckedTime = TimeCheckerEnd() - PausingTime;
+	if (CheckedTime < NPC_PATTERNTIME_RANDOMEDIRECTION + NpcPatternStartTime && CheckedTime > NpcPatternStartTime) NPCCOUNT = 5; //패턴 지속시간일때 패턴사이클 및 bulletcount 증가
+	else NpcPatternTimeEnded = 1;	//패턴 지속시간 끝날시 patterntimeended 1로 갱신
+	for (int i = 0; i < 5; i++) {
+		if (!npc[i].NpcActivation && !npc[i].CollisionPlayer && !npc[i].CollisionWall && !npc[i].CollisionPbullet) { NpcPositionRenewal(i); npc[i].NpcActivation = 1; ShowNpc(i); }	//만약 npc 나타나지 않은 것이라면 초기 위치를 패턴에 맞게 초기화를 시키고 npc 출력
+		switch (npc[i].Direction) {
+		case NORTH_EAST: MoveNpc_NE(i); break;
+		case NORTH: MoveNpc_N(i); break;
+		case NORTH_WEST:	MoveNpc_NW(i); break;
+		case SOUTH_EAST: MoveNpc_SE(i); break;
+		case SOUTH: MoveNpc_S(i); break;
+		case SOUTH_WEST: MoveNpc_SW(i); break;
+		case EAST: MoveNpc_E(i); break;
+		case WEST: MoveNpc_W(i); break;
+		}
+		flag += npc[i].NpcActivation;
+	}
+	if (!flag || !NpcIsMoving) { NpcPatternEndTime = TimeCheckerEnd() - PausingTime; return 1; }// NpcIsMoving 문제로 보인다. 이걸 지운다면?
+	return 0;
+}
 
 //--------------------------------------------------------------
 //-------------------Invalidation 함수-------------------------
@@ -598,6 +788,7 @@ void InvalidateNpc() {
 				case 3: if (NpcPattern_SweepDown()) ClearNpcPosition(); break;
 				case 4: if (NpcPattern_Tracking()) ClearNpcPosition(); break;
 				case 5: if (NpcPattern_SpiralMove()) ClearNpcPosition(); break;
+				case 6: if(NpcPattern_Random()) ClearNpcPosition(); break;
 				default: break;
 				}
 			}
